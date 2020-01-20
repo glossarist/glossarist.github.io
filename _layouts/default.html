@@ -1,0 +1,83 @@
+<!doctype html>
+
+<html
+  {% if site.google_analytics %}data-gaid="{{ site.google_analytics.id }}"{% endif %}
+  lang="{{ page.lang | default: site.lang | default: "en" }}">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>
+      {%- if page.title -%}
+        {{ page.title | escape }} —
+      {%- endif -%}
+      {{ site.title | escape }} —
+      {{ site.description }}
+    </title>
+
+    <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/images/android-chrome-192x192.png" sizes="192x192" />
+    <link rel="icon" type="image/png" href="/images/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta name="msapplication-TileImage" content="/images/mstile-144x144.png" />
+    <meta name="msapplication-config" content="/browserconfig.xml" />
+    <meta name="theme-color" content="#ffffff" />
+
+    <link rel="canonical" href="{{ page.url | replace: 'index.html', '' | relative_url }}" />
+
+    {% assign extra_stylesheets = page.extra_stylesheets | default: layout.extra_stylesheets %}
+
+    {% if page.stylesheets and layout.stylesheets %}
+      {% assign extra_stylesheets = page.stylesheets | concat: layout.stylesheets %}
+    {% else %}
+      {% assign extra_stylesheets = page.stylesheets | default: layout.stylesheets %}
+    {% endif %}
+    {% if extra_stylesheets %}
+      {% for link in extra_stylesheets %}
+        <link rel="stylesheet"
+          href="{{ link.href }}"
+          {% if link.integrity %}integrity="{{ link.integrity }}"{% endif %}
+          {% if link.crossorigin %}crossorigin="{{ link.crossorigin }}"{% endif %}>
+      {% endfor %}
+    {% endif %}
+
+    <link rel="stylesheet" type="text/css" href="{{ "/assets/css/style.css" | relative_url }}" />
+
+    {% if site.font_awesome_kit_url %}
+      <script src="{{ site.font_awesome_kit_url }}"></script>
+    {% endif %}
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    {% if jekyll.environment == "production" and site.google_analytics %}
+      <script src="{{ "/assets/js/ga.js" | relative_url }}"></script>
+    {% endif %}
+  </head>
+  
+  <body class="{{ page.bodyClass | default: layout.bodyClass }}">
+    <header>
+      <h1>{{ site.title }}</h1>
+    </header>
+
+    {{ content }}
+
+    {% if page.scripts and layout.scripts %}
+      {% assign extra_scripts = page.scripts | concat: layout.scripts %}
+    {% else %}
+      {% assign extra_scripts = page.scripts | default: layout.scripts %}
+    {% endif %}
+    {% for script in extra_scripts %}
+      <script src="{{ script.src }}"></script>
+    {% endfor %}
+  </body>
+</html>

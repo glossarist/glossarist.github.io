@@ -1,0 +1,78 @@
+---
+bodyClass: home
+layout: home
+---
+
+<section class="problem">
+  <p>
+    <span class="value-precision">Precision is important</span>
+    when authoring standards and&nbsp;other&nbsp;consequential&nbsp;documents.
+    Since problem domains and&nbsp;terminologies are&nbsp;constantly evolving,
+    accurate authoring and&nbsp;interpretation of&nbsp;documents is&nbsp;difficult without a&nbsp;shared&nbsp;vocabulary.
+
+  <p>
+    Maintaining a&nbsp;vocabulary involves many challenges, including
+    tracking up-to-date definitions and preferred term expressions,
+    managing relationships between concepts,
+    and making the vocabulary database continuously accessible by&nbsp;authors&nbsp;and&nbsp;readers.
+
+  <p>
+    Dissatisfied by&nbsp;how&nbsp;general-purpose&nbsp;tools such&nbsp;as&nbsp;wikis and&nbsp;spreadsheets handle these challenges,
+    and&nbsp;inspired by&nbsp;vocabulary&nbsp;management workflows at&nbsp;ISO,
+    we’ve built a&nbsp;special-purpose open&nbsp;solution that&nbsp;embodies&nbsp;those&nbsp;workflows.
+  
+  <div class="existing-users">
+    <p>Glossarist is currently being adopted by:</p>
+    <div class="user-list">
+      {% for user in site.users %}
+        <article class="user">
+          <h4>{{ user.entity }}</h4>
+          <p><a href="{{ user.link.href }}">{{ user.link.title }}</a></p>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="why-glossarist">
+  <h3>What is Glossarist and why use it?</h3>
+
+  <p>
+    Glossarist is a suite of open software
+    for managing the vocabulary
+    and for exposing that vocabulary via accessible human- and machine-friendly interfaces.
+
+    Underlying that software
+    is a framework for thinking about vocabulary lifecycle and evolution
+    that was inspired by ISO terminology management processes.
+
+  <div class="uses">
+    <div class="use-group">
+      <p>
+      With Glossarist, <strong>vocabulary&nbsp;curators</strong>&nbsp;can:
+
+      <ul>
+        <li>Manage concept hierarchy and inter-concept relationships.</li>
+        <li>Keep track of each concept’s preferred terms in multiple languages.</li>
+        <li>Register lifecycle events that affect obsolete/preferred statuses for terms and concept definitions.</li>
+        <li>Enable vocabulary users to exploring vocabulary.</li>
+        <li>Enable vocabulary contributors to propose changes to term expressions or definitions.</li>
+      </ul>
+    </div>
+
+    <div class="use-group">
+      <p>
+      Subsequently, <strong>document authors and&nbsp;readers</strong>&nbsp;can:
+
+      <ul>
+        <li>Quickly locate the most accurate and up-to-date term to express a concept in a given language.</li>
+        <li>Quickly locate current definitions for unfamiliar terms and disambiguate meaning.</li>
+        <li>Explore adjacent concepts relevant to the topic at hand.</li>
+        <li>Track down definitions of outated terms when reading documents authored in the past.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+</footer>
