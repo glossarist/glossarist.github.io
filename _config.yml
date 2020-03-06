@@ -19,10 +19,10 @@ users:
     use_case_summary: >-
       ISO Technical Committee 211 “Geographic information/Geomatics”
       uses Glossarist for its MLGT database resource website.
-  - entity: OSGeo
-    link:
-      href: "https://osgeo.geolexica.org/"
-      title: OSGeo.Geolexica.org
+  #- entity: OSGeo
+  #  link:
+  #    href: "https://osgeo.geolexica.org/"
+  #    title: OSGeo.Geolexica.org
   - entity: IHO
     link:
       href: "https://iho.glossarist.org/"
