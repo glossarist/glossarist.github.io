@@ -14,7 +14,7 @@ github_username:  riboseinc
 users:
   - entity: ISO/TC 211
     link:
-      href: "https://geolexica.org/"
+      href: "https://isotc211.geolexica.org/"
       title: Geolexica.org
     use_case_summary: >-
       ISO Technical Committee 211 “Geographic information/Geomatics”
