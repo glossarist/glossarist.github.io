@@ -33,6 +33,8 @@ GEM
       jekyll (~> 4.0)
     jekyll-feed (0.13.0)
       jekyll (>= 3.7, < 5.0)
+    jekyll-plugin-frontend-build (0.0.3)
+      jekyll (~> 4.0)
     jekyll-sass-converter (2.0.1)
       sassc (> 2.0.1, < 3.0)
     jekyll-seo-tag (2.6.1)
@@ -78,6 +80,7 @@ DEPENDENCIES
   jekyll (~> 4.0.0)
   jekyll-duplicate
   jekyll-feed (~> 0.12)
+  jekyll-plugin-frontend-build
   minima (~> 2.5)
   tzinfo (~> 1.2)
   tzinfo-data
