@@ -1,0 +1,13 @@
+---
+layout: nil
+site_header: Using Glossarist desktop app
+site_home_link: /docs/
+
+extra_scripts:
+  - src: /assets/js/electron-helpers.js
+---
+
+{
+    "excerpt": {{ page.excerpt | jsonify }},
+    "link": "{{ page.url | replace: "_in_app_help", "docs" | replace: ".json", "/" }}"
+}

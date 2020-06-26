@@ -11,6 +11,16 @@ baseurl: ""
 twitter_username: riboseUS
 github_username:  riboseinc
 
+collections:
+  docs:
+    output: true
+
+duplicate_documents:
+  in_collection: docs
+  under_url_prefix: /_in_app_help/
+  with_layout: docs-bare
+  format: json
+
 users:
   - entity: ISO/TC 211
     link:
