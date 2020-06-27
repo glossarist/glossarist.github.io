@@ -29,7 +29,7 @@ GEM
       rouge (~> 3.0)
       safe_yaml (~> 1.0)
       terminal-table (~> 1.8)
-    jekyll-duplicate (0.1.0)
+    jekyll-duplicate (0.1.1)
       jekyll (~> 4.0)
     jekyll-feed (0.13.0)
       jekyll (>= 3.7, < 5.0)
@@ -78,7 +78,7 @@ PLATFORMS
 
 DEPENDENCIES
   jekyll (~> 4.0.0)
-  jekyll-duplicate
+  jekyll-duplicate (~> 0.1.1)
   jekyll-feed (~> 0.12)
   jekyll-plugin-frontend-build
   minima (~> 2.5)
