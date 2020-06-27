@@ -1,20 +1,26 @@
 ---
 layout: docs
 permalink: /docs/panels/revisions-panel/
-title: The “Revisions” panel
+title: Panel “Revisions”
 excerpt: >-
-  Lists revisions of the currently selected registry item.
-  Selected revision determines which version to show,
-  and controls the “Selected revision” panel.
+  Lists revision history of selected registry item in selected language.
 ---
 
 <p>
-The Revisions panel determines currently selected revision.
+The Revisions panel shows revision history (lineage) for selected registry item
+in selected language.
 
 <p>
-Selected revision determines the version of currently selected registry item data
-shown in different modules.
+Each revision is identified by a hexadecimal code and a timestamp.
 
 <p>
-In Edit/Translate modules, the latest revision of currrent item must be selected
+The selected revision affects data shown elsewhere.
+
+<p>
+In context of Edit and Translate modules,
+the latest revision of currrent item must be selected for changes to be made
 (building changes on top of obsolete revisions is not supported).
+
+<p>
+In Review module context, selected revision affects the target
+that the proposed change will be compared with.
