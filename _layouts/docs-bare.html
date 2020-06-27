@@ -8,6 +8,7 @@ extra_scripts:
 ---
 
 {
+    "title": {{ page.title | jsonify }},
     "excerpt": {{ page.excerpt | jsonify }},
     "link": "{{ page.url | replace: "_in_app_help", "docs" | replace: ".json", "/" }}"
 }
