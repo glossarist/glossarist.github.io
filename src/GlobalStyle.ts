@@ -41,18 +41,18 @@ export default createGlobalStyle`
     flex-flow: column nowrap;
   }
 
-  body, body > #root, ${app} {
-    flex: 1;
-    display: flex;
-    flex-flow: column nowrap;
-  }
-
   ${app} {
     margin-left: 1rem;
     margin-right: 1rem;
   }
 
   @media screen and (min-width: 800px) {
+
+    body, body > #root, ${app} {
+      flex: 1;
+      display: flex;
+      flex-flow: column nowrap;
+    }
     ${app} {
       margin-left: 10vw;
       margin-right: 10vw;
@@ -73,7 +73,7 @@ export default createGlobalStyle`
     display: flex;
     flex-flow: row nowrap;
     justify-content: flex-end;
-    padding: 2rem 0;
+    padding: 1.5rem 2rem;
     opacity: .5;
 
     &:hover {

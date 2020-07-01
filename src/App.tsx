@@ -35,7 +35,7 @@ const App: React.FC<{}> = function () {
 
       <footer>
         <a href="https://open.ribose.com">
-          <SymbolImage size={16} src={organizationLogoImage} className="org-logo" />
+          <SymbolImage size={10} src={organizationLogoImage} className="org-logo" />
         </a>
       </footer>
     </Root>

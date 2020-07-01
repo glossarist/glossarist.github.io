@@ -147,12 +147,22 @@ const GlobalStyle = createGlobalStyle`
   @media screen and (min-width: 800px) {
     ${app} {
       margin-left: 0;
-      margin-right: 2rem;
+      margin-right: 0;
     }
 
     ${app} > main {
       margin-left: ${NAV_WIDTH_REM + 2}rem;
       padding-top: 2rem;
+      padding-right: 2rem;
+    }
+
+    ${app} > footer {
+      width: ${NAV_WIDTH_REM}rem;
+      overflow: hidden;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      justify-content: center;
     }
 
     ${app} > header {
@@ -215,6 +225,10 @@ const DocsPageWrapper = styled.div`
         margin-top: 1rem;
       }
     }
+
+    .summary {
+      margin-bottom: 1rem;
+    }
   }
 
   @media screen and (min-width: 800px) {
@@ -223,10 +237,6 @@ const DocsPageWrapper = styled.div`
 
       h2 {
         margin-top: 0;
-      }
-
-      .summary {
-        margin-bottom: 1rem;
       }
     }
     > nav {
