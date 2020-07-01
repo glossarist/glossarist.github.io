@@ -21,7 +21,7 @@ const Page: React.FC<{}> = function () {
             <Audience>Managing concept registries with&nbsp;Glossarist?</Audience>
             <Button className="action" to="desktop">Learn desktop&nbsp;app</Button>
           </EntryPoint>
-          <EntryPoint>
+          <EntryPoint style={{ flex: 0.5 }}>
             <Audience>Operating infrastructure?</Audience>
             <Button disabled className="action" to="desktop">Read the docs</Button>
           </EntryPoint>
