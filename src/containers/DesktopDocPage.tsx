@@ -227,6 +227,7 @@ const DocsPageWrapper = styled.div`
     > .backlink {
       margin-top: -.5rem;
       margin-bottom: 1rem;
+
       a {
         text-decoration: none;
         font-size: 90%;
@@ -273,11 +274,13 @@ const DocsPageWrapper = styled.div`
 
 
 const DocsPageNav = styled.ul`
-  font-size: 94%;
-
   &, ul {
     list-style: none;
-    padding-left: 1rem;
+    padding-left: 0;
+  }
+
+  li ul {
+    padding-left: 1.2rem;
   }
 
   li {
