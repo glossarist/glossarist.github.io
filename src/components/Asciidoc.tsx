@@ -14,4 +14,9 @@ function ({ className, content }) {
 
 const AsciidocStyled = styled.div`
   ${asciidocBaseCSS}
+
+  img {
+    max-width: 50vw;
+    max-height: 50vh;
+  }
 `
