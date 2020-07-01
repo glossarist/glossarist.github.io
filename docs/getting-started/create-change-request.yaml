@@ -1,0 +1,50 @@
+title: Making a change request
+
+summary: |
+  Edit concept data and propose changes to register manager.
+
+media:
+  - review-screen-for-draft-cr.png
+  - propose-cr.png
+
+contents: |
+  
+  == Making changes
+
+  . Depending on the change you want to make,
+    pick either Create, Edit or Translate module.
+
+  . Start a draft Change Request by clicking the “plus” button
+    on top right of “My draft change requests” panel.
+
+    New CR will be assigned a unique, random-looking ID.
+
+  . Make the necessary changes in the main module view,
+    and click “Add to change request”.
+
+  == Reviewing changes
+
+  . Navigate to Review module.
+
+  . Using the “Change requests” panel, select the CR you are drafting.
+
+  . Using the “Proposed revisions” panel, select an item you changed.
+
+  image::./review-screen-for-draft-cr.png[Reviewing a draft change request]
+
+  Item details will be shown in the main view.
+
+  Item information will be compared to previously accepted revision,
+  or to another revision or language you select using “Language” or “Revisions” panels
+  under “Comparison target” label.
+
+  Changes you have made will be highlighted in red (deletions) and green (additions).
+
+  == Proposing changes
+
+  . If changes look satisfactory, click the “Propose” button to submit the change request.
+  +
+  image::./propose-cr.png[Proposing CR]
+
+  . Click the green “Synchronize” button on the top of the window
+    and wait for the process to complete.
