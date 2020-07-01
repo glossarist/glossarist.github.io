@@ -16,7 +16,8 @@ const DESKTOP_DOCS_ROOT = '/desktop/docs/'
 
 export default () => {
   const { docPage, docsNav }: { docPage: DocPage, docsNav: DocsPageNavItem[] } = useRouteData()
-  const items = (docPage.items || []).filter(showOnPage)
+  const items = sortByImportance(docPage.items || []).filter(showOnPage)
+  const navSorted = sortByImportance(docsNav || [])
 
   return (
     <DocsPageWrapper>
@@ -53,10 +54,10 @@ export default () => {
           : null}
       </div>
 
-      {docsNav?.length > 0
+      {navSorted.length > 0
         ? <nav>
             <DocsPageNav>
-              {docsNav.map(i =>
+              {navSorted.map(i =>
                 <li key={i.path}>
                   <DocsNavLink item={i} childFilter={showInNav} />
                 </li>
@@ -70,6 +71,13 @@ export default () => {
 }
 
 
+function sortByImportance(items: DocsPageNavItem[]): DocsPageNavItem[] {
+  var importances = items.map((i, idx) => ({ idx, importance: i.importance || 0 }))
+  importances.sort((i1, i2) => i2.importance - i1.importance);
+  return importances.map(i => items[i.idx]);
+}
+
+
 interface DocsNavLinkProps {
   item: DocsPageNavItem
   relative?: boolean
@@ -78,7 +86,7 @@ interface DocsNavLinkProps {
 }
 const DocsNavLink: React.FC<DocsNavLinkProps> = function ({ item, relative, childLevels, childFilter }) {
   const itemFilter = childFilter || showOnPage;
-  const items = (item.items || []).filter(itemFilter);
+  const items = sortByImportance((item.items || []).filter(itemFilter));
   return (
     <>
       {item.hasContents || item.items?.length > 0
@@ -114,6 +122,7 @@ interface DocsPageProps {
   item: DocsPageItem
 }
 const DocsPageItemBlock: React.FC<DocsPageProps> = function ({ item }) {
+  const items = sortByImportance((item.items || []).filter(showOnPage));
   return (
     <DocsPageBlock>
       {item.hasContents || item.items?.length > 0
@@ -126,9 +135,9 @@ const DocsPageItemBlock: React.FC<DocsPageProps> = function ({ item }) {
         ? <Asciidoc content={item.summary} />
         : null}
       
-      {item.items?.length > 0
+      {items.length > 0
         ? <ul className="subitems">
-            {item.items.filter(showOnPage).map(p =>
+            {items.map(p =>
               <li key={p.path}>
                 <DocsNavLink item={p} relative childLevels={0} />
               </li>

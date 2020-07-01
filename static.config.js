@@ -97,6 +97,7 @@ async function getDocsPageItems(e, prefix) {
   return {
     id: noExt(e.name),
     path: urlPath,
+    importance: data.importance,
     title: data.title || 'NO TITLE',
     hasContents: (data.contents || '').trim() !== '',
     excerpt: data.excerpt,

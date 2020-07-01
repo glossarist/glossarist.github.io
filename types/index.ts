@@ -25,6 +25,7 @@ export interface DocPage {
 
 export interface DocsPageNavItem {
   id: string
+  importance?: number
   hasContents: boolean
   path: string
   title?: string
