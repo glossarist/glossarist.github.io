@@ -39,6 +39,7 @@
     "isomorphic-git": "^1.5.0",
     "js-yaml": "^3.14.0",
     "react-hot-loader": "^4.12.11",
+    "react-static-plugin-file-watch-reload": "^1.0.3",
     "serve": "^11.1.0",
     "typescript": "^3.5.3"
   }
