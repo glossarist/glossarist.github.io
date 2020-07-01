@@ -65,6 +65,7 @@ function getDocsRouteData(entry, docsNav) {
     const data = {
       ..._data,
       contents: asciidoctor.convert(_data.contents || ''),
+      summary: asciidoctor.convert(_data.summary || ''),
     };
 
     return {
