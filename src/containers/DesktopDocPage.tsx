@@ -1,4 +1,5 @@
 import React from 'react'
+import { Helmet } from 'react-helmet'
 import styled from 'styled-components'
 import { createGlobalStyle } from 'styled-components'
 import { useRouteData } from 'react-static'
@@ -19,6 +20,9 @@ export default () => {
 
   return (
     <DocsPageWrapper>
+      <Helmet>
+        <title>{docPage.data?.title} — Glossarist Desktop app reference</title>
+      </Helmet>
 
       <GlobalStyle />
 

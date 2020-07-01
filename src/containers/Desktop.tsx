@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Helmet } from 'react-helmet'
 import { Button } from 'components/Links'
 import { PageTitle, Lead } from 'components/typography'
 import { Octokit } from '@octokit/rest'
@@ -39,7 +40,12 @@ export default () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Glossarist Desktop application</title>
+      </Helmet>
+
       <PageTitle>Glossarist Desktop</PageTitle>
+
       <Lead>
         <p>
           Manage your concept system from an app that runs on your computer.
