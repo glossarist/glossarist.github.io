@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import * as theme from '../theme/colors'
 import asciidocBaseCSS from '!!raw-loader!../assets/css/asciidoctor.css'
 
 
@@ -14,6 +15,10 @@ function ({ className, content }) {
 
 const AsciidocStyled = styled.div`
   ${asciidocBaseCSS}
+
+  a, a:link, a:visited {
+    color: ${theme.scale[0].darken(1).css()};
+  }
 
   @media screen and (min-width: 800px) {
     img {
