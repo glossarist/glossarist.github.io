@@ -75,13 +75,6 @@ export default () => {
           : null}
       </EntryPoints>
 
-      <h3>Contribute</h3>
-      <EntryPoints>
-        <EntryPoint>
-          <Button to={`https://github.com/${repoOwner}/${repoName}/`}>Visit our GitHub</Button>
-        </EntryPoint>
-      </EntryPoints>
-
     </div>
   )
 }
