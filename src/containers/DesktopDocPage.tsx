@@ -232,7 +232,9 @@ const DocsHeader = styled.header`
 
 const DocsPageWrapper = styled.div`
   > nav {
-    margin-top: 2rem;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
   }
 
   > .main {
@@ -268,6 +270,7 @@ const DocsPageWrapper = styled.div`
     }
     > nav {
       margin-top: 0;
+      display: block;
 
       width: ${NAV_WIDTH_REM}rem;
       position: fixed;
