@@ -1,0 +1,20 @@
+title: Setting up the application
+
+summary: |
+  Get Glossarist Desktop and connect it to concept system registry.
+
+media:
+  - initial-settings-window.png
+
+contents: |
+  
+  == Download
+
+  Download the latest release link:/desktop[here].
+  Currently, installers for Windows and macOS are available, with Linux coming soon.
+
+  == First launch
+
+  On first launch, Glossarist will ask you to specify the repository URL.
+
+  image::./initial-settings-window.png[]
