@@ -116,7 +116,7 @@ const DocsPageItemBlock: React.FC<DocsPageProps> = function ({ item }) {
     <DocsPageBlock>
       {item.hasContents || item.items?.length > 0
         ? <h3><Link to={item.path}>{item.title}</Link></h3>
-        : <h3>{item.title}</h3>}
+        : <h3 id={item.id}>{item.title}</h3>}
 
       <p>{item.excerpt}</p> 
       
