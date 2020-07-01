@@ -16,8 +16,8 @@ contents: |
 
   . Start a draft Change Request by clicking the “plus” button
     on top right of “My draft change requests” panel.
-
-    New CR will be assigned a unique, random-looking ID.
+  +
+  New CR will be assigned a unique, random-looking ID.
 
   . Make the necessary changes in the main module view,
     and click “Add to change request”.
