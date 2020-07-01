@@ -18,5 +18,9 @@ const AsciidocStyled = styled.div`
   img {
     max-width: 50vw;
     max-height: 50vh;
+    box-shadow: rgba(0, 0, 0, 0.15) .1rem .1rem 1rem;
+  }
+  .imageblock {
+    padding-left: 2rem;
   }
 `
