@@ -5,6 +5,7 @@ summary: |
 
 media:
   - initial-settings-window.png
+  - ready-screen.png
 
 contents: |
   
@@ -22,16 +23,17 @@ contents: |
   for hosting concept system data repository.
 
   If you don’t have a GitHub account yet, head to https://github.com/[github.com] and sign up
-  (it’s free). Take note of your username and password.
-
-  NOTE: If you want to enable second-factor authentication, you would need to
-  generate a Personal Access Token and provide it to the app instead of your password later.
+  (it’s free).
 
   == First launch
 
+  Make sure you have an online internet connection before proceeding.
+
+  === Initial settings
+
   On first launch, Glossarist will ask you to specify some necessary settings.
 
-  Fill them in and press the “Save All” button below.
+  After you fill all of them in, press “Save All” button below.
 
   image::./initial-settings-window.png[The initial settings window]
 
@@ -45,3 +47,26 @@ contents: |
 
   - *Git author email:* specify your relevant work email.
     This is even more important, as it identifies your edits and change requests as yours.
+
+  After you save the settings, the initial settings window will close.
+
+  === Password
+
+  Before the app can access register data, it will ask for your password.
+  Specify your GitHub account password (unless you have second-factor authentication enabled).
+
+  NOTE: If you have enabled the second-factor authentication on GitHub,
+  you will need to provide your Personal Access Token instead of your password.
+  https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token[Learn how to create this token.]
+  When creating the token, enable _public_repo_ scope (“Access public repositories”).
+  
+  Currently, the password is _not_ saved on your computer.
+  You will need to provide the password each time you start the application.
+
+  === Initial synchronization
+
+  Once you have provided settings and password, the app will start downloading register data.
+  This may take a minute.
+  After this completes, the “Ready” message should appear. You can dismiss it.
+
+  image::./ready-screen.png[The ready screen]
