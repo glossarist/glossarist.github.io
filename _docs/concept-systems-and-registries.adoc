@@ -16,8 +16,8 @@ To knowledge with others, we come up with verbal *definitions* of our concepts.
 To make referring to a concept easier, we map it to a succint representation.
 In ISO 704, it is called a “designation”.
 
-A common type of designation is a word, but
-phrases, abbreviations, math notation or other graphic symbols—all are used to refer to certain concepts.
+Words, phrases, abbreviations, math notation or other graphic symbols—both verbal and non-verbal
+designations can be used to refer to concepts.
 
 As we share knowledge, it may turn out that:
 
