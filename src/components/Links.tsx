@@ -13,6 +13,7 @@ interface LinkProps {
 export const Link: React.FC<LinkProps> =
 function ({ to, className, disabled, children, relative }) {
   const loc = useLocation().pathname
+  const hasAnchor = to.indexOf('#') >= 0
 
   if (to?.startsWith('http') || disabled) {
     return <a className={className} href={disabled ? undefined : to}>{children}</a>;
@@ -23,7 +24,7 @@ function ({ to, className, disabled, children, relative }) {
     const prefix = _relative === true
       ? `/${locWithoutSlashes}${locWithoutSlashes !== '' ? '/' : ''}`
       : (_relative || '/');
-    const trailingSlash = to.indexOf('#') >= 0 ? false : true;
+    const trailingSlash = hasAnchor ? false : true;
     const _to = `${prefix}${to.replace(/^\/|\/$/g, '')}${trailingSlash ? '/' : ''}`
 
     return (
