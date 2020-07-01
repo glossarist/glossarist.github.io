@@ -216,6 +216,8 @@ const DocsPageWrapper = styled.div`
   }
 
   > .main {
+    padding-bottom: 2rem;
+
     > .backlink {
       margin-top: -.5rem;
       margin-bottom: 1rem;
@@ -290,8 +292,9 @@ const DocsPageBlock = styled.article`
   ul.subitems {
     display: flex;
     margin: 0 -1rem;
-    padding: 0;
+    padding: 0 0 1rem 0;
     list-style: none;
+    overflow-x: auto;
 
     > * + * {
       margin-left: .25rem;
