@@ -61,12 +61,6 @@ export default createGlobalStyle`
     }
   }
 
-  ${app} > header {
-  }
-
-  ${app} > main {
-  }
-
   ${app} > footer {
     flex-shrink: 0;
     display: flex;
