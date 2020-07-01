@@ -173,6 +173,9 @@ const GlobalStyle = createGlobalStyle`
       margin-left: ${NAV_WIDTH_REM + 2}rem;
       padding-top: 2rem;
       padding-right: 2rem;
+
+      flex: 1;
+      overflow-y: auto;
     }
 
     ${app} > footer {
@@ -189,6 +192,8 @@ const GlobalStyle = createGlobalStyle`
       width: ${NAV_WIDTH_REM}rem;
       overflow: hidden;
       position: fixed;
+      top: 0;
+      left: 0;
 
       > a {
         justify-content: center;

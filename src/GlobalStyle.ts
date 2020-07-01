@@ -47,7 +47,6 @@ export default createGlobalStyle`
   }
 
   @media screen and (min-width: 800px) {
-
     body, body > #root, ${app} {
       flex: 1;
       display: flex;
@@ -56,16 +55,16 @@ export default createGlobalStyle`
     ${app} {
       margin-left: 10vw;
       margin-right: 10vw;
+      align-self: center;
+      align-items: stretch;
+      justify-content: center;
     }
   }
 
   ${app} > header {
-    align-self: stretch;
   }
 
   ${app} > main {
-    flex: 1;
-    overflow-y: auto;
   }
 
   ${app} > footer {
@@ -73,7 +72,7 @@ export default createGlobalStyle`
     display: flex;
     flex-flow: row nowrap;
     justify-content: flex-end;
-    padding: 1.5rem 2rem;
+    padding: 1.5rem 0;
     opacity: .5;
 
     &:hover {
