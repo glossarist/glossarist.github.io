@@ -9,7 +9,7 @@ contents: |
 
   [NOTE]
   ====
-  To bring application more in line with how registry data is manageed,
+  To bring application more in line with how registry data is managed,
   in the next version of the app
   language-specific registry item data will be split into subregistries,
   and the Languages panel will no longer work the way described on this page.
