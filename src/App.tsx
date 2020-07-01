@@ -25,7 +25,7 @@ const App: React.FC<{}> = function () {
       </header>
 
       <main>
-        <React.Suspense fallback={<em>Loading...</em>}>
+        <React.Suspense fallback={<em>Loading…</em>}>
           <Router>
             {/* <Dynamic path="dynamic" /> */}
             <Routes path="*" />
