@@ -121,7 +121,7 @@ const DocsPageItemBlock: React.FC<DocsPageProps> = function ({ item }) {
       <p>{item.excerpt}</p> 
       
       {item.summary
-        ? <div dangerouslySetInnerHTML={{ __html: item.summary }} />
+        ? <Asciidoc content={item.summary} />
         : null}
       
       {item.items?.length > 0
