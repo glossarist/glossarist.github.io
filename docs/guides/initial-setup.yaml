@@ -13,8 +13,27 @@ contents: |
   Download the latest release link:/desktop[here].
   Currently, installers for Windows and macOS are available, with Linux coming soon.
 
+  Run the installer and proceed according to instructions shown.
+
+  == Set up a GitHub account
+
+  This guide is written with the assumption that your organization relies on GitHub
+  for hosting concept system data repository.
+
+  If you don’t have a GitHub account yet, head to https://github.com/[github.com] and sign up
+  (it’s free). Take note of your username and password.
+
+  NOTE: If you want to enable second-factor authentication, you would need to
+  generate a Personal Access Token and provide it to the app instead of your password later.
+
   == First launch
 
-  On first launch, Glossarist will ask you to specify the repository URL.
+  On first launch, Glossarist will ask you to specify some necessary settings.
 
   image::./initial-settings-window.png[]
+
+  - *Repository URL:* this should be provided your Glossarist support team, ask them!
+  - *Git username:* this is the username you chose when signing up for GitHub.
+  - *Git author name:* specify your name. This is important, as it will show on edits you make.
+  - *Git author email:* specify your relevant work email.
+    This is even more important, as it identifies your edits and change requests as yours.
