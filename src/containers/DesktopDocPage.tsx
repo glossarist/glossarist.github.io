@@ -58,7 +58,7 @@ export default () => {
             <DocsPageNav>
               {docsNav.map(i =>
                 <li key={i.path}>
-                  <DocsNavLink item={i} />
+                  <DocsNavLink item={i} childFilter={showInNav} />
                 </li>
               )}
             </DocsPageNav>
@@ -74,8 +74,11 @@ interface DocsNavLinkProps {
   item: DocsPageNavItem
   relative?: boolean
   childLevels?: number
+  childFilter?: (item: DocsPageNavItem) => boolean
 }
-const DocsNavLink: React.FC<DocsNavLinkProps> = function ({ item, relative, childLevels }) {
+const DocsNavLink: React.FC<DocsNavLinkProps> = function ({ item, relative, childLevels, childFilter }) {
+  const itemFilter = childFilter || showOnPage;
+  const items = (item.items || []).filter(itemFilter);
   return (
     <>
       {item.hasContents || item.items?.length > 0
@@ -84,19 +87,18 @@ const DocsNavLink: React.FC<DocsNavLinkProps> = function ({ item, relative, chil
               relative={relative ? true : DESKTOP_DOCS_ROOT}>
             {item.title}
           </Link>
-        : <Link
-              to={`${item.path}/../#${item.id}`}
-              relative={relative ? true : DESKTOP_DOCS_ROOT}>
+        : <span>
             {item.title}
-          </Link>}
+          </span>}
 
-      {(childLevels === undefined || childLevels > 0) && item.items?.length > 0
+      {(childLevels === undefined || childLevels > 0) && items.length > 0
         ? <ul>
-            {item.items.filter(showOnPage).map(p =>
+            {items.map(p =>
               <li key={p.path}>
                 <DocsNavLink
                   item={p}
                   relative={relative}
+                  childFilter={childFilter}
                   childLevels={childLevels !== undefined
                     ? childLevels - 1
                     : undefined} />
@@ -140,6 +142,10 @@ const DocsPageItemBlock: React.FC<DocsPageProps> = function ({ item }) {
 
 function showOnPage(i: DocsPageItem) {
   return i.items?.length > 0 || i.hasContents || i.excerpt || i.summary;
+}
+
+function showInNav(i: DocsPageNavItem) {
+  return i.items?.length > 0 || i.hasContents;
 }
 
 
@@ -291,24 +297,24 @@ const DocsPageBlock = styled.article`
 
   ul.subitems {
     display: flex;
-    margin: 0 -1rem;
+    margin: 0;
     padding: 0 0 1rem 0;
     list-style: none;
     overflow-x: auto;
 
     > * + * {
-      margin-left: .25rem;
+      margin-left: .5rem;
+
+      &:before {
+        content: "•";
+        margin-right: .5rem;
+      }
     }
 
     > * {
       white-space: nowrap;
-      padding: .25rem 1rem;
-      background: ${theme.scale[0].darken(.5).desaturate(0).css()};
-
-      > a {
-        color: white;
-        text-decoration: none;
-      }
+      font-size: 90%;
+      color: grey;
     }
   }
 `
