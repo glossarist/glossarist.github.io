@@ -52,7 +52,7 @@ export default () => {
         </p>
       </Lead>
 
-      <h3>Download{releaseName ? ` v${releaseName}` : null}</h3>
+      <h3>Download{releaseName ? ` latest release (v${releaseName})` : null}</h3>
       <EntryPoints>
         {!dlMac && !dlWin
           ? <EntryPoint>
