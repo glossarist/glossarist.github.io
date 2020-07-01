@@ -52,6 +52,13 @@ export default () => {
         </p>
       </Lead>
 
+      <h3>Learn</h3>
+      <EntryPoints>
+        <EntryPoint>
+          <Button to="docs/getting-started">Get started</Button>
+        </EntryPoint>
+      </EntryPoints>
+
       <h3>Download{releaseName ? ` latest release (v${releaseName})` : null}</h3>
       <EntryPoints>
         {!dlMac && !dlWin
@@ -71,16 +78,10 @@ export default () => {
           : null}
       </EntryPoints>
 
-      <h3>Learn</h3>
+      <h3>Contribute</h3>
       <EntryPoints>
         <EntryPoint>
-          <Button to="docs/guides" disabled>Get started</Button>
-        </EntryPoint>
-        <EntryPoint>
-          <Button to="docs/ui">Read UI reference</Button>
-        </EntryPoint>
-        <EntryPoint>
-          <Button to={`https://github.com/${repoOwner}/${repoName}/`}>Visit GitHub</Button>
+          <Button to={`https://github.com/${repoOwner}/${repoName}/`}>Visit our GitHub</Button>
         </EntryPoint>
       </EntryPoints>
 
