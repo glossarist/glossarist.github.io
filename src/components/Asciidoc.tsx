@@ -15,9 +15,14 @@ function ({ className, content }) {
 const AsciidocStyled = styled.div`
   ${asciidocBaseCSS}
 
+  @media screen and (min-width: 800px) {
+    img {
+      max-width: 50vw;
+      max-height: 50vh;
+    }
+  }
+
   img {
-    max-width: 50vw;
-    max-height: 50vh;
     box-shadow: rgba(0, 0, 0, 0.15) .1rem .1rem 1rem;
   }
   .imageblock {
