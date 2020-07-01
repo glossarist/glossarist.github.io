@@ -31,7 +31,7 @@ const AsciidocStyled = styled.div`
     box-shadow: rgba(0, 0, 0, 0.15) .1rem .1rem 1rem;
   }
   .imageblock {
-    padding: 1rem;
+    padding: 1.2rem;
     background: whiteSmoke;
 
     .content {
