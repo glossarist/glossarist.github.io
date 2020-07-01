@@ -41,6 +41,6 @@ contents: |
   **Special:** Review module.
   In Review, the main view always shows proposed change in the language originally recorded in the change request.
 
-  In this module, the Languages panel affects <em>the comparison target</em>:
+  In this module, the Languages panel affects *the comparison target*:
   If a different language is selected using the Languages panel,
   then the main view shows a diff between the original language and the selected language.
