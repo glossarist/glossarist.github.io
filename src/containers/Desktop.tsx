@@ -50,14 +50,11 @@ export default () => {
         <p>
           Manage your concept system from an app that runs on your computer.
         </p>
+        <br />
+        <Button to="docs/getting-started">Get started</Button>
       </Lead>
 
-      <h3>Learn</h3>
-      <EntryPoints>
-        <EntryPoint>
-          <Button to="docs/getting-started">Get started</Button>
-        </EntryPoint>
-      </EntryPoints>
+      <br />
 
       <h3>Download{releaseName ? ` latest release (v${releaseName})` : null}</h3>
       <EntryPoints>
