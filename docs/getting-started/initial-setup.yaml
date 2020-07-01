@@ -70,3 +70,8 @@ contents: |
   After this completes, the “Ready” message should appear. You can dismiss it.
 
   image::./ready-screen.png[The ready screen]
+
+  == Next
+
+  - link:../../ui/modules/[Read about the different modules]
+  - link:../create-change-request/[Learn how to create a change request]
