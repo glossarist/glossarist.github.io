@@ -167,6 +167,7 @@ const GlobalStyle = createGlobalStyle`
     ${app} {
       margin-left: 0;
       margin-right: 0;
+      align-self: stretch;
     }
 
     ${app} > main {
