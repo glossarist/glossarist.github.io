@@ -10,7 +10,9 @@ contents: |
   
   == Download
 
-  Download the latest release link:/desktop[here].
+  Find the link to download the latest release of Glossarist Desktop
+  for your system link:/desktop[here].
+
   Currently, installers for Windows and macOS are available, with Linux coming soon.
 
   Run the installer and proceed according to instructions shown.
@@ -30,7 +32,7 @@ contents: |
 
   On first launch, Glossarist will ask you to specify some necessary settings.
 
-  image::./initial-settings-window.png[]
+  image::./initial-settings-window.png[The initial settings window]
 
   - *Repository URL:* this should be provided your Glossarist support team, ask them!
   - *Git username:* this is the username you chose when signing up for GitHub.
