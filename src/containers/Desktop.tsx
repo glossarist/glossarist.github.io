@@ -25,8 +25,17 @@ export default () => {
     })()
   }, [])
 
-  const dlMac = `https://github.com/${repoOwner}/${repoName}/releases/download/v${releaseName}/glossarist-desktop-${releaseName}.dmg`
-  const dlWin = `https://github.com/${repoOwner}/${repoName}/releases/download/v${releaseName}/install-glossarist-desktop-${releaseName}.exe`
+  let dlMac: string | undefined
+  let dlWin: string | undefined
+  const dlDefault = `https://github.com/${repoOwner}/${repoName}/releases/`
+
+  if (releaseName) {
+    dlMac = `https://github.com/${repoOwner}/${repoName}/releases/download/v${releaseName}/glossarist-desktop-${releaseName}.dmg`
+    dlWin = `https://github.com/${repoOwner}/${repoName}/releases/download/v${releaseName}/install-glossarist-desktop-${releaseName}.exe`
+  } else {
+    dlMac = undefined
+    dlWin = undefined
+  }
 
   return (
     <div>
@@ -39,12 +48,21 @@ export default () => {
 
       <h3>Download{releaseName ? ` v${releaseName}` : null}</h3>
       <EntryPoints>
-        <EntryPoint>
-          <Button to={dlMac}>macOS</Button>
-        </EntryPoint>
-        <EntryPoint>
-          <Button to={dlWin}>Windows</Button>
-        </EntryPoint>
+        {!dlMac && !dlWin
+          ? <EntryPoint>
+              <Button to={dlDefault}>Latest release</Button>
+            </EntryPoint>
+          : null}
+        {dlMac
+          ? <EntryPoint>
+              <Button to={dlMac}>macOS</Button>
+            </EntryPoint>
+          : null}
+        {dlWin
+          ? <EntryPoint>
+              <Button to={dlWin}>Windows</Button>
+            </EntryPoint>
+          : null}
       </EntryPoints>
 
       <h3>Learn</h3>
