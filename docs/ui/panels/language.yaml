@@ -16,14 +16,14 @@ contents: |
   ====
 
 
-  ==== Listed languages
+  == Listed languages
 
   Languages supported by the registry are listed.
   If currently selected registry item had not been translated to certain language,
   that language will appear with a red “translate” icon.
 
 
-  ==== Selected language
+  == Selected language
 
   The selected language determines the language of registry information displayed,
   and in most ways is essentially like selecting a language subregistry.

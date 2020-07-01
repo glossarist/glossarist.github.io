@@ -70,7 +70,7 @@ function getDocsRouteData(entry, docsNav) {
 
     const data = {
       ..._data,
-      contents: asciidoctor.convert(_data.contents || ''),
+      contents: asciidoctor.convert(`:leveloffset: 2\n\n${_data.contents || ''}`),
       summary: asciidoctor.convert(_data.summary || ''),
     };
 
