@@ -1,1 +1,6 @@
 title: Modules
+
+summary: >-
+  Module are selected at the top of main application window.
+  Each module allows to perform a specific task with the register,
+  or with the currently selected register item.
