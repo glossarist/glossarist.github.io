@@ -129,12 +129,12 @@ const DocsPageItemBlock: React.FC<DocsPageProps> = function ({ item }) {
         ? <h3><Link to={item.path}>{item.title}</Link></h3>
         : <h3 id={item.id}>{item.title}</h3>}
 
-      <p>{item.excerpt}</p> 
-      
+      <p>{item.excerpt}</p>
+
       {item.summary
         ? <Asciidoc content={item.summary} />
         : null}
-      
+
       {items.length > 0
         ? <ul className="subitems">
             {items.map(p =>
