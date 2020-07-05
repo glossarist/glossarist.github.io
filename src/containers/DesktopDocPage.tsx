@@ -185,7 +185,8 @@ const GlobalStyle = createGlobalStyle`
       position: fixed;
       bottom: 0;
       left: 0;
-      justify-content: center;
+      padding-left: 2rem;
+      justify-content: flex-start;
     }
 
     ${app} > header {
@@ -197,7 +198,7 @@ const GlobalStyle = createGlobalStyle`
       left: 0;
 
       > a {
-        justify-content: center;
+        justify-content: flex-end;
         height: ${HEADER_HEIGHT_REM}rem;
         padding: 0;
         margin: 0;

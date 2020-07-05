@@ -65,7 +65,7 @@ export default createGlobalStyle`
     flex-shrink: 0;
     display: flex;
     flex-flow: row nowrap;
-    justify-content: flex-end;
+    justify-content: center;
     padding: 1.5rem 0;
     opacity: .5;
 
