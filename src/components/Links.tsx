@@ -6,7 +6,7 @@ import * as theme from '../theme/colors'
 
 interface LinkProps {
   to: string
-  className?: string 
+  className?: string
   disabled?: boolean
   relative?: string | boolean
 }
