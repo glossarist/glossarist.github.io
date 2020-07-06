@@ -1,8 +1,8 @@
 import React from 'react'
-import styled from 'styled-components';
+import styled from 'styled-components'
 import { Link } from '@reach/router'
 
-import symbolImage from 'assets/Symbol.svg';
+import symbolImage from 'assets/Symbol.svg'
 
 
 export const Logo: React.FC<{ size: number }> = function ({ size }) {
