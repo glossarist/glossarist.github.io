@@ -72,6 +72,10 @@ export default createGlobalStyle`
     &:hover {
       opacity: 1;
     }
+
+    @media screen and (min-width: 800px) {
+      justify-content: flex-end;
+    }
   }
 
   a {
