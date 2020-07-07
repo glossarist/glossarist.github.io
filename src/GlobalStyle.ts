@@ -6,7 +6,7 @@ import sFont from 'assets/fonts/Lora-Regular.ttf'
 import * as theme from './theme/colors'
 
 
-export const app = 'body > #root > :first-child'
+export const app = 'body > #root > :first-child > :first-child'
 
 
 export default createGlobalStyle`
@@ -47,7 +47,7 @@ export default createGlobalStyle`
   }
 
   @media screen and (min-width: 800px) {
-    body, body > #root, ${app} {
+    body, body > #root, body > #root > :first-child, ${app} {
       flex: 1;
       display: flex;
       flex-flow: column nowrap;

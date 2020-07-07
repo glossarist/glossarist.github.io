@@ -3,11 +3,13 @@ import { Helmet } from 'react-helmet'
 import styled from 'styled-components'
 import { createGlobalStyle } from 'styled-components'
 import { useRouteData } from 'react-static'
+
 import { DocPage, DocsPageNavItem, DocsPageItem } from '../../types'
+import { default as Page } from 'containers/Page'
 import { Backlink, Link } from 'components/Links'
-import { app } from '../GlobalStyle'
 import { PageTitle, Lead } from 'components/typography'
 import { Asciidoc } from 'components/Asciidoc'
+import { app } from '../GlobalStyle'
 import * as theme from '../theme/colors'
 
 
@@ -20,53 +22,50 @@ export default () => {
   const navSorted = sortByImportance(docsNav || [])
 
   return (
-    <DocsPageWrapper>
-      <Helmet>
-        <title>{docPage.data?.title} — Glossarist Desktop app reference</title>
-      </Helmet>
+    <Page title="Glossarist Desktop" logoSize={32} logoLink="/desktop/">
+      <DocsPageWrapper>
+        <Helmet>
+          <title>{docPage.data?.title} — Glossarist Desktop app reference</title>
+        </Helmet>
 
-      <GlobalStyle />
+        <GlobalStyle />
 
-      <DocsHeader><h1>Glossarist Desktop documentation</h1></DocsHeader>
+        <div className="main">
+          <PageTitle>{docPage.data?.title}</PageTitle>
 
-      <div className="main">
-        <PageTitle>{docPage.data?.title}</PageTitle>
+          <div className="backlink">
+            <Backlink />
+          </div>
 
-        <div className="backlink">
-          <Backlink />
+          <DocsPageLead>
+            <Asciidoc className="summary" content={docPage.data?.summary || ''} />
+          </DocsPageLead>
+
+          <Asciidoc className="contents" content={docPage.data?.contents || ''} />
+
+          {items.length > 0
+            ? <div className="items">
+                {items.map(p =>
+                  <DocsPageItemBlock key={p.path} item={p} />
+                )}
+              </div>
+            : null}
         </div>
 
-        <Lead>
-          <p>
-            {docPage.data?.excerpt}
-          </p>
-        </Lead>
-
-        <Asciidoc className="summary" content={docPage.data?.summary || ''} />
-        <Asciidoc className="contents" content={docPage.data?.contents || ''} />
-
-        {items.length > 0
-          ? <div className="items">
-              {items.map(p =>
-                <DocsPageItemBlock key={p.path} item={p} />
-              )}
-            </div>
+        {navSorted.length > 0
+          ? <nav>
+              <DocsPageNav>
+                {navSorted.map(i =>
+                  <li key={i.path}>
+                    <DocsNavLink item={i} childFilter={showInNav} />
+                  </li>
+                )}
+              </DocsPageNav>
+            </nav>
           : null}
-      </div>
 
-      {navSorted.length > 0
-        ? <nav>
-            <DocsPageNav>
-              {navSorted.map(i =>
-                <li key={i.path}>
-                  <DocsNavLink item={i} childFilter={showInNav} />
-                </li>
-              )}
-            </DocsPageNav>
-          </nav>
-        : null}
-
-    </DocsPageWrapper>
+      </DocsPageWrapper>
+    </Page>
   )
 }
 
@@ -129,11 +128,9 @@ const DocsPageItemBlock: React.FC<DocsPageProps> = function ({ item }) {
         ? <h3><Link to={item.path}>{item.title}</Link></h3>
         : <h3 id={item.id}>{item.title}</h3>}
 
-      <p>{item.excerpt}</p>
-
       {item.summary
         ? <Asciidoc content={item.summary} />
-        : null}
+        : <p>{item.excerpt}</p>}
 
       {items.length > 0
         ? <ul className="subitems">
@@ -163,6 +160,12 @@ const HEADER_HEIGHT_REM = 8;
 
 
 const GlobalStyle = createGlobalStyle`
+  ${app} > header {
+    h1 {
+      font-size: 100%;
+      text-transform: uppercase;
+    }
+  }
   @media screen and (min-width: 800px) {
     ${app} {
       margin-left: 0;
@@ -194,41 +197,22 @@ const GlobalStyle = createGlobalStyle`
       width: ${NAV_WIDTH_REM}rem;
       overflow: hidden;
       position: fixed;
+      padding-left: 1rem;
       top: 0;
       left: 0;
 
       > a {
-        justify-content: flex-end;
         height: ${HEADER_HEIGHT_REM}rem;
         padding: 0;
         margin: 0;
-      }
-
-      h1 {
-        display: none;
       }
     }
   }
 `
 
 
-const DocsHeader = styled.header`
-  @media screen and (min-width: 800px) {
-    margin-top: -2rem;
-    height: ${HEADER_HEIGHT_REM}rem;
-    display: flex;
-    flex-flow: row nowrap;
-    align-items: center;
-  }
-
-  h1 {
-    font-family: Lora;
-    margin: 0;
-    padding: 0;
-    font-size: 100%;
-    text-transform: uppercase;
-    letter-spacing: .02em;
-  }
+const DocsPageLead = styled(Lead)`
+  margin-bottom: 2rem;
 `
 
 
@@ -240,7 +224,7 @@ const DocsPageWrapper = styled.div`
   }
 
   > .main {
-    padding-bottom: 2rem;
+    padding-bottom: 1rem;
 
     > .backlink {
       margin-top: -.5rem;
@@ -264,6 +248,7 @@ const DocsPageWrapper = styled.div`
 
   @media screen and (min-width: 800px) {
     > .main {
+      padding-top: 1rem;
       max-width: 50rem;
 
       h2 {

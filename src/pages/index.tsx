@@ -1,14 +1,15 @@
 import React from 'react'
+import { default as Page } from 'containers/Page'
 import { Button, Link } from 'components/Links'
 import { Lead } from 'components/typography'
-import { EntryPoints, EntryPoint, Audience } from '../components/entryPoints'
+import { EntryPoints, EntryPoint, Audience } from 'components/entryPoints'
 import styled from 'styled-components'
 import isoSymbol from 'assets/iso-symbol.svg'
 
 
-const Page: React.FC<{}> = function () {
+const Home: React.FC<{}> = function () {
   return (
-    <>
+    <Page>
       <Lead>
         <p>
           Open-source software suite
@@ -40,11 +41,11 @@ const Page: React.FC<{}> = function () {
           </li>
         </Users>
       </Section>
-    </>
+    </Page>
   )
 }
 
-export default Page
+export default Home
 
 
 const Section: React.FC<{
@@ -64,6 +65,11 @@ const RowSection = styled.section`
   display: flex;
   flex-flow: row nowrap;
   align-items: flex-start;
+  justify-content: center;
+
+  @media screen and (min-width: 800px) {
+    justify-content: flex-start;
+  }
 
   & + & {
     margin-top: 1rem;

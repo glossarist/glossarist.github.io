@@ -5,13 +5,23 @@ import { Link } from '@reach/router'
 import symbolImage from 'assets/Symbol.svg'
 
 
-export const Logo: React.FC<{ size: number }> = function ({ size }) {
+interface LogoProps {
+  size: number
+  title: string
+  linkTo?: string
+}
+export const Logo: React.FC<LogoProps> = function ({ size, title, linkTo }) {
   return (
-    <LogoWrapper to="/">
-      <SymbolImage size={size} src={symbolImage} className="symbol" />
-      <TextWrapper size={size}>Glossarist</TextWrapper>
+    <LogoWrapper to={linkTo || "/"}>
+      <Symbol size={size} />
+      <TextWrapper size={size}>{title}</TextWrapper>
     </LogoWrapper>
   )
+}
+
+
+export const Symbol: React.FC<{ size: number }> = function ({ size }) {
+  return <SymbolImage size={size} src={symbolImage} className="symbol" />;
 }
 
 
@@ -21,10 +31,10 @@ export const SymbolImage = styled.img`
 `
 
 const TextWrapper = styled.h1`
-  font-size: ${(props: { size: number }) => props.size * 0.88}px;
+  font-size: ${(props: { size: number }) => props.size * 0.80}px;
 
   font-family: LoraRegular, Georgia, serif;
-  letter-spacing: -.020em;
+  letter-spacing: -.018em;
 
   margin: 0;
   padding: 0;
@@ -42,10 +52,14 @@ const LogoWrapper = styled(Link)`
   text-decoration: none;
 
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: row wrap;
   align-items: center;
 
   padding: 1rem;
 
   margin-left: -32px;
+
+  @media screen and (min-width: 800px) {
+    flex-flow: row nowrap;
+  }
 `

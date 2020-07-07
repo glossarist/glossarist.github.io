@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet'
+import { default as Page } from 'containers/Page'
 import { Button } from 'components/Links'
-import { PageTitle, Lead } from 'components/typography'
+import { Lead } from 'components/typography'
 import { Octokit } from '@octokit/rest'
 import { EntryPoints, EntryPoint } from 'components/entryPoints';
 
@@ -39,12 +40,11 @@ export default () => {
   }
 
   return (
-    <div>
+    <Page title="Glossarist Desktop">
+
       <Helmet>
         <title>Glossarist Desktop application</title>
       </Helmet>
-
-      <PageTitle>Glossarist Desktop</PageTitle>
 
       <Lead>
         <p>
@@ -57,6 +57,7 @@ export default () => {
       <br />
 
       <h3>Download{releaseName ? ` latest release (v${releaseName})` : null}</h3>
+
       <EntryPoints>
         {!dlMac && !dlWin
           ? <EntryPoint>
@@ -75,6 +76,6 @@ export default () => {
           : null}
       </EntryPoints>
 
-    </div>
+    </Page>
   )
 }

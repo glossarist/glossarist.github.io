@@ -3,8 +3,7 @@ import { Root, Routes } from 'react-static'
 import { Router } from '@reach/router'
 import { Helmet } from 'react-helmet'
 import { default as GlobalStyle } from './GlobalStyle'
-import { SymbolImage, Logo } from './components/Logo'
-import organizationLogoImage from 'assets/riboseopen-logo-dark.svg';
+import { Symbol } from './components/Logo'
 
 
 // Any routes that start with 'dynamic' will be treated as non-static routes
@@ -14,6 +13,7 @@ import organizationLogoImage from 'assets/riboseopen-logo-dark.svg';
 const App: React.FC<{}> = function () {
   return (
     <Root>
+
       <GlobalStyle />
 
       <Helmet>
@@ -23,24 +23,13 @@ const App: React.FC<{}> = function () {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Helmet>
 
-      <header>
-        <Logo size={42} />
-      </header>
+      <React.Suspense fallback={<Symbol size={42} />}>
+        <Router>
+          {/* <Dynamic path="dynamic" /> */}
+          <Routes path="*" />
+        </Router>
+      </React.Suspense>
 
-      <main>
-        <React.Suspense fallback={<em>Loading…</em>}>
-          <Router>
-            {/* <Dynamic path="dynamic" /> */}
-            <Routes path="*" />
-          </Router>
-        </React.Suspense>
-      </main>
-
-      <footer>
-        <a href="https://open.ribose.com">
-          <SymbolImage size={10} src={organizationLogoImage} className="org-logo" />
-        </a>
-      </footer>
     </Root>
   )
 }
