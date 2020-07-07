@@ -20,6 +20,11 @@ const AsciidocStyled = styled.div`
     color: ${theme.scale[0].darken(1).css()};
   }
 
+  .paragraph p {
+    margin-bottom: 1rem;
+    font-size: inherit;
+  }
+
   @media screen and (min-width: 800px) {
     img {
       max-width: 50vw;
