@@ -74,13 +74,17 @@ export const Button = styled(Link)`
       background: silver;
     `
     : `
-      text-shadow: rgba(0, 0, 0, 0.2) 0 0 .1rem;
-      box-shadow: rgba(0, 0, 0, 0.3) 0 0 .2rem inset;
+      text-shadow: rgba(0, 0, 0, 0.4) .05rem .05rem .1rem;
+      box-shadow:
+        ${theme.link.darken(.5).css()} 0 0 0rem .1rem inset,
+        rgba(255, 255, 255, 0.3) .1rem .4rem .7em -.2em inset;
 
       &:hover, &:active, &:focus {
         background-position: 100% 100%;
         text-shadow: rgba(0, 0, 0, 0.2) .05rem .05rem .25rem;
-        box-shadow: rgba(0, 0, 0, 0.2) .05rem .05rem .5rem inset;
+        box-shadow:
+          ${theme.link.darken(.5).css()} 0 0 0rem .1rem inset,
+          rgba(255, 255, 255, 0) .1rem .4rem 1rem inset;
       }
     `}
 `
