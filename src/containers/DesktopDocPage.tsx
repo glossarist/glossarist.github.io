@@ -155,7 +155,8 @@ function showInNav(i: DocsPageNavItem) {
 }
 
 
-const NAV_WIDTH_REM = 18;
+const SIDEBAR_WIDTH_REM = 18;
+const SIDEBAR_BACKGROUND = 'whiteSmoke';
 const HEADER_HEIGHT_REM = 8;
 
 
@@ -174,7 +175,7 @@ const GlobalStyle = createGlobalStyle`
     }
 
     ${app} > main {
-      margin-left: ${NAV_WIDTH_REM + 2}rem;
+      margin-left: ${SIDEBAR_WIDTH_REM + 2}rem;
       padding-top: 2rem;
       padding-right: 2rem;
 
@@ -183,7 +184,7 @@ const GlobalStyle = createGlobalStyle`
     }
 
     ${app} > footer {
-      width: ${NAV_WIDTH_REM}rem;
+      width: ${SIDEBAR_WIDTH_REM}rem;
       overflow: hidden;
       position: fixed;
       bottom: 0;
@@ -194,12 +195,13 @@ const GlobalStyle = createGlobalStyle`
 
     ${app} > header {
       align-self: unset;
-      width: ${NAV_WIDTH_REM}rem;
+      width: ${SIDEBAR_WIDTH_REM}rem;
       overflow: hidden;
       position: fixed;
       padding-left: 1rem;
       top: 0;
       left: 0;
+      background: ${SIDEBAR_BACKGROUND};
 
       > a {
         height: ${HEADER_HEIGHT_REM}rem;
@@ -259,7 +261,7 @@ const DocsPageWrapper = styled.div`
       margin-top: 0;
       display: block;
 
-      width: ${NAV_WIDTH_REM}rem;
+      width: ${SIDEBAR_WIDTH_REM}rem;
       position: fixed;
       top: ${HEADER_HEIGHT_REM}rem;
       left: 0;
@@ -269,6 +271,7 @@ const DocsPageWrapper = styled.div`
       overflow-y: auto;
       overflow-x: hidden;
 
+      background: ${SIDEBAR_BACKGROUND};
       a:visited {
         opacity: .9;
       }
