@@ -51,7 +51,7 @@ export default () => {
 
       <Lead>
         <p>
-          Manage your concept system from an app that runs on your computer.
+          Manage a concept system from an app that runs on your computer.
         </p>
         <br />
         <Button to="docs/getting-started">Get started</Button>
