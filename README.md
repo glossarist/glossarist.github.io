@@ -1,1 +1,1 @@
-New Glossarist.org site, to replace glossarist/glossarist.org repository.
+= Glossarist.org site

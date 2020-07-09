@@ -29,14 +29,17 @@ export default () => {
 
   let dlMac: string | undefined
   let dlWin: string | undefined
+  let dlWinPort: string | undefined
   const dlDefault = `https://github.com/${repoOwner}/${repoName}/releases/`
 
   if (releaseName) {
     dlMac = `https://github.com/${repoOwner}/${repoName}/releases/download/v${releaseName}/glossarist-desktop-${releaseName}.dmg`
     dlWin = `https://github.com/${repoOwner}/${repoName}/releases/download/v${releaseName}/install-glossarist-desktop-${releaseName}.exe`
+    dlWinPort = `https://github.com/${repoOwner}/${repoName}/releases/download/v${releaseName}/glossarist-desktop-${releaseName}-portable.exe`
   } else {
     dlMac = undefined
     dlWin = undefined
+    dlWinPort = undefined
   }
 
   return (
@@ -59,7 +62,7 @@ export default () => {
       <h3>Download{releaseName ? ` latest release (v${releaseName})` : null}</h3>
 
       <EntryPoints>
-        {!dlMac && !dlWin
+        {!dlMac && !dlWin && !dlWinPort
           ? <EntryPoint>
               <Button to={dlDefault}>Latest release</Button>
             </EntryPoint>
@@ -72,6 +75,11 @@ export default () => {
         {dlWin
           ? <EntryPoint>
               <Button to={dlWin}>Windows</Button>
+            </EntryPoint>
+          : null}
+        {dlWinPort
+          ? <EntryPoint>
+              <Button to={dlWinPort}>Windows (no install needed)</Button>
             </EntryPoint>
           : null}
       </EntryPoints>
