@@ -38,7 +38,9 @@ export default () => {
           </div>
 
           <DocsPageLead>
-            <Asciidoc className="summary" content={docPage.data?.summary || ''} />
+            {docPage.data?.summary
+              ? <Asciidoc className="summary" content={docPage.data?.summary || ''} />
+              : <p>{docPage.data?.excerpt}</p>}
           </DocsPageLead>
 
           <Asciidoc className="contents" content={docPage.data?.contents || ''} />
