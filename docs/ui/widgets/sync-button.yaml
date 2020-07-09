@@ -1,5 +1,9 @@
 title: Synchronize button
 excerpt: >-
   Synchronizes with registry’s main data repository.
-  Equivalent of “Save” button.
-  Requires online connection.
+  Use it often, like an equivalent of “Save” button.
+
+contents: |
+  NOTE: Register data cannot be edited until synchronization is complete.
+
+  Read more about link:../../../topics/synchronization/[data synchronization].
