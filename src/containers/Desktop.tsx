@@ -4,7 +4,7 @@ import { default as Page } from 'containers/Page'
 import { Button } from 'components/Links'
 import { Lead } from 'components/typography'
 import { Octokit } from '@octokit/rest'
-import { EntryPoints, EntryPoint } from 'components/entryPoints';
+import { EntryPoints, EntryPoint } from 'components/entryPoints'
 
 
 const octokit = new Octokit()
@@ -14,16 +14,16 @@ const repoName = 'glossarist-desktop'
 
 
 export default () => {
-  const [releaseName, setReleaseName] = useState<string | undefined>(undefined);
+  const [releaseName, setReleaseName] = useState<string | undefined>(undefined)
 
   useEffect(() => {
     (async () => {
       const release = await octokit.repos.getLatestRelease({
         owner: 'glossarist',
         repo: 'glossarist-desktop',
-      });
+      })
 
-      setReleaseName(release.data.name);
+      setReleaseName(release.data.name)
     })()
   }, [])
 
