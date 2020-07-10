@@ -303,6 +303,7 @@ const DocsPageWrapper = styled.div`
       left: 0;
       bottom: 0;
       padding-left: 2rem;
+      padding-right: 1rem;
 
       overflow-y: auto;
       overflow-x: hidden;
