@@ -11,9 +11,9 @@ const Home: React.FC<{}> = function () {
   return (
     <Page>
       <Lead>
-        <p>
-          Open-source software suite
-          for maintaining multi-language concept systems.
+        <p style={{ textAlign: 'center' }}>
+          Open-source&nbsp;software
+          for&nbsp;maintaining multi-language concept&nbsp;systems.
         </p>
         <EntryPoints fill>
           <EntryPoint>
@@ -31,12 +31,12 @@ const Home: React.FC<{}> = function () {
         </EntryPoints>
       </Lead>
 
-      <Section title="Used by" style={{ marginTop: '2rem', opacity: .5 }}>
+      <Section title={<>Used&nbsp;by</>} style={{ marginTop: '2rem', opacity: .5 }}>
         <Users>
           <li>
             <img src={isoSymbol} />
             <Link to="https://isotc211.geolexica.org/">
-              Geolexica for ISO/TC 211 MLGT
+              Geolexica for ISO/TC&nbsp;211&nbsp;MLGT
             </Link>
           </li>
         </Users>
@@ -49,7 +49,7 @@ export default Home
 
 
 const Section: React.FC<{
-  title: string
+  title: JSX.Element | string
   style?: React.CSSProperties
   className?: string
 }> = function ({ title, style, className, children }) {
