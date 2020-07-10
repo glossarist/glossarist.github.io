@@ -35,7 +35,7 @@ export default pluginOptions => ({
           const data = {
             title: _data.title,
             excerpt: _data.excerpt,
-            link: `/${r.path}`,
+            link: _data.contents ? `/${r.path}` : undefined,
           };
           const dataJSON = JSON.stringify(data);
           fs.mkdirSync(`${appDocsOutPrefix}${path.dirname(id)}`, { recursive: true });
