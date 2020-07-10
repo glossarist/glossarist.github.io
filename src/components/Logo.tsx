@@ -40,6 +40,7 @@ const TextWrapper = styled.h1`
   padding: 0;
 
   margin-left: .5rem;
+  font-weight: 400;
 
   @supports (font-variation-settings: 'wdth' 400) {
     font-family: Lora, Georgia, serif;
