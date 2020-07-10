@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link as RouterLink, useLocation } from '@reach/router'
+import { useRoutePath } from 'react-static'
 import styled from 'styled-components'
 import * as theme from '../theme/colors'
 
@@ -14,6 +15,7 @@ export const Link: React.FC<LinkProps> =
 function ({ to, className, disabled, children, relative }) {
   const loc = useLocation().pathname
   const hasAnchor = to.indexOf('#') >= 0
+  const routePath = (useRoutePath as () => string)()
 
   if (to?.startsWith('http') || disabled) {
     return <a className={className} href={disabled ? undefined : to}>{children}</a>;
@@ -26,7 +28,7 @@ function ({ to, className, disabled, children, relative }) {
       : (_relative || '/');
     const trailingSlash = hasAnchor ? false : true;
     const _to = `${prefix}${to.replace(/^\/|\/$/g, '')}${trailingSlash ? '/' : ''}`
-    const isActive = loc === _to
+    const isActive = `/${routePath}/` === _to
 
     return (
       <InternalLink
