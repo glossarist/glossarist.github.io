@@ -209,7 +209,7 @@ const GlobalStyle = createGlobalStyle`
     ${app} > main {
       margin-left: ${SIDEBAR_WIDTH_REM}rem;
       padding-left: 2rem;
-      padding-top: 1.25rem;
+      padding-top: 1.75rem;
       padding-right: 2rem;
 
       flex: 1;
