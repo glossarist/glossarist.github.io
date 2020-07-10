@@ -10,7 +10,6 @@ import { Backlink, Link } from 'components/Links'
 import { PageTitle, Lead } from 'components/typography'
 import { Asciidoc } from 'components/Asciidoc'
 import { app } from '../GlobalStyle'
-import * as theme from '../theme/colors'
 
 
 const DESKTOP_DOCS_ROOT = '/desktop/docs/'
@@ -209,7 +208,8 @@ const GlobalStyle = createGlobalStyle`
     }
 
     ${app} > main {
-      margin-left: ${SIDEBAR_WIDTH_REM + 2}rem;
+      margin-left: ${SIDEBAR_WIDTH_REM}rem;
+      padding-left: 2rem;
       padding-top: 2rem;
       padding-right: 2rem;
 
@@ -275,6 +275,7 @@ const DocsPageWrapper = styled.div`
     > .items {
       article + article {
         margin-top: 1rem;
+        border-top: 1px solid silver;
       }
     }
 
@@ -336,8 +337,6 @@ const DocsPageNav = styled.ul`
 
 
 const DocsPageBlock = styled.article`
-  border: ${theme.scale[0].darken(.5).desaturate(0).css()} .1rem solid;
-  padding: 0 1rem;
   overflow: hidden;
 
   ul.subitems {
