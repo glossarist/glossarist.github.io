@@ -163,6 +163,9 @@ function ({ src, dimensions }) {
     style={{
       width: `${dimensions.width / 2}px`,
       height: `${dimensions.height / 2}px`,
+      objectFit: 'contain',
+      objectPosition: 'top left',
+      maxHeight: '10rem',
     }} />
 }
 
