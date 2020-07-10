@@ -17,12 +17,12 @@ const Home: React.FC<{}> = function () {
         </p>
         <EntryPoints fill>
           <EntryPoint>
-            <Audience>Not using Glossarist in&nbsp;your&nbsp;organization&nbsp;yet?</Audience>
-            <Button disabled className="action" to="adopt">Learn how to&nbsp;adopt&nbsp;Glossarist</Button>
-          </EntryPoint>
-          <EntryPoint>
             <Audience>Managing concept registries with&nbsp;Glossarist?</Audience>
             <Button className="action" to="desktop">Learn to&nbsp;use the desktop&nbsp;app</Button>
+          </EntryPoint>
+          <EntryPoint>
+            <Audience>Not using Glossarist in&nbsp;your&nbsp;organization&nbsp;yet?</Audience>
+            <Button disabled className="action" to="adopt">Learn how to&nbsp;adopt&nbsp;Glossarist</Button>
           </EntryPoint>
           <EntryPoint style={{ flex: 0.5 }}>
             <Audience>Operating infrastructure?</Audience>
