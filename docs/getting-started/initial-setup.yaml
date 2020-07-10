@@ -10,7 +10,7 @@ media:
   - ready-screen.png
 
 contents: |
-  
+
   == Download
 
   Find the link to download the latest release of Glossarist Desktop
@@ -61,7 +61,7 @@ contents: |
   you will need to provide your Personal Access Token instead of your password.
   https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token[Learn how to create this token.]
   When creating the token, enable _public_repo_ scope (“Access public repositories”).
-  
+
   Currently, the password is _not_ saved on your computer.
   You will need to provide the password each time you start the application.
 
