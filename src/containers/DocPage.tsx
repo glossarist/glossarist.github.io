@@ -12,7 +12,7 @@ import { Asciidoc } from 'components/Asciidoc'
 import { app } from '../GlobalStyle'
 
 
-const DESKTOP_DOCS_ROOT = '/desktop/docs/'
+const DOCS_ROOT = '/docs/'
 
 
 export default () => {
@@ -21,10 +21,10 @@ export default () => {
   const navSorted = sortByImportance(docsNav || [])
 
   return (
-    <Page title="Glossarist Desktop" logoSize={32} logoLink="/desktop/">
+    <Page title="Glossarist" logoSize={32} logoLink="/">
       <DocsPageWrapper>
         <Helmet>
-          <title>{docPage.data?.title} — Glossarist Desktop app reference</title>
+          <title>{docPage.data?.title} — Glossarist documentation</title>
         </Helmet>
 
         <GlobalStyle />
@@ -92,7 +92,7 @@ const DocsNavLink: React.FC<DocsNavLinkProps> = function ({ item, relative, chil
       {item.hasContents || item.items?.length > 0
         ? <Link
               to={item.path}
-              relative={relative ? true : DESKTOP_DOCS_ROOT}>
+              relative={relative ? true : DOCS_ROOT}>
             {item.title}
           </Link>
         : <span>
@@ -195,9 +195,8 @@ const GlobalStyle = createGlobalStyle`
       margin: 0;
     }
     h1 {
-      font-size: 100%;
+      font-size: 110%;
       text-align: left;
-      text-transform: uppercase;
     }
   }
   @media screen and (min-width: 800px) {
@@ -210,7 +209,7 @@ const GlobalStyle = createGlobalStyle`
     ${app} > main {
       margin-left: ${SIDEBAR_WIDTH_REM}rem;
       padding-left: 2rem;
-      padding-top: 2rem;
+      padding-top: 1.25rem;
       padding-right: 2rem;
 
       flex: 1;
@@ -242,6 +241,7 @@ const GlobalStyle = createGlobalStyle`
         height: ${HEADER_HEIGHT_REM}rem;
         padding: 0;
         margin: 0;
+        justify-content: flex-start;
       }
     }
   }

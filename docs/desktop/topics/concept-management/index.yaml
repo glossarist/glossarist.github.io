@@ -1,0 +1,40 @@
+title: "Terminology management & concept systems"
+
+summary: |
+  The concept of a concept, and why it is not a term.
+
+contents: |
+  Let’s call any unit of our understanding a *concept*.
+
+  To knowledge with others, we come up with verbal *definitions* of our concepts.
+
+  To make referring to a concept easier, we map it to a succint representation.
+  In ISO 704, it is called a *designation*.
+
+  NOTE: Words, phrases, abbreviations, math notation or other graphic symbols—both verbal and non-verbal
+  designations can be used to refer to concepts.
+
+  As we share knowledge, it may turn out that:
+
+  * Someone else has independently thought of the same concept, and gave it a different term.
+  * The same term can mean another concept to someone else.
+  * Same designation can map to different concepts in different fields of knowledge.
+
+  As a consequence,
+
+  * a single unit of understanding can have more than one verbal/graphical designation,
+  * the same word, phrase or symbol can be used to refer more than one concept.
+
+  This may be especially inconvenient in standards and other technical documentation,
+  where even subtle ambiguities in interpretation may cause trouble.
+
+  To make sure everyone is on the same page, we may want to establish a *concept system* (ISO 704).
+
+  A concept system would, for example,
+
+  * track how designations map to concepts in a given field of knowledge,
+  * mark which designations are preferred,
+  * ensure that a given word or symbol is not used as _preferred_ designation on more than one concept,
+  * track how concepts relate to each other.
+
+  Glossarist offers an approach to managing such a system.

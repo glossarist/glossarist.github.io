@@ -5,11 +5,11 @@ import path from 'path';
 export default pluginOptions => ({
   afterExport: async state => {
     const appDocsOutPrefix = 'dist/_in_app_help/';
-    const appDocsURLPrefix = 'desktop/docs/ui/'
+    const appDocsURLPrefix = 'docs/desktop/ui/';
 
-    const docsURLPrefix = 'desktop/docs/';
+    const docsURLPrefix = 'docs/';
     const docsSrcPrefix = 'docs/';
-    const docsOutPrefix = 'dist/desktop/docs'
+    const docsOutPrefix = 'dist/docs'
 
     for (const r of state.routes) {
 

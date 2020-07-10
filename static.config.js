@@ -17,15 +17,16 @@ export default {
   entry: path.join(__dirname, 'src', 'index.tsx'),
   getRoutes: async () => {
     const docsDirTree = dirTree(DOCS_PATH, { extensions:/\.yaml$/ });
-    const desktopAppDocsNav = await Promise.all(docsDirTree.children.filter(isValid).map(c => getDocsPageItems(c)));
-    const desktopAppRoutes = [docsDirTree].map(e => dirEntryToDocsRoute(e, desktopAppDocsNav));
+    const docsNav = await Promise.all(docsDirTree.children.filter(isValid).map(c => getDocsPageItems(c)));
+    const docsRoutes = [docsDirTree].map(e => dirEntryToDocsRoute(e, docsNav));
+    console.info(docsRoutes)
 
     return [
       {
         path: 'desktop',
         template: 'src/containers/Desktop',
-        children: desktopAppRoutes,
       },
+      ...docsRoutes,
     ];
   },
   plugins: [
@@ -55,7 +56,7 @@ function dirEntryToDocsRoute(entry, nav) {
     children: entry.type !== 'file'
       ? entry.children.filter(isValid).map(c => dirEntryToDocsRoute(c, nav))
       : undefined,
-    template: 'src/containers/DesktopDocPage',
+    template: 'src/containers/DocPage',
     getData: getDocsRouteData(entry, nav),
   };
   return route;

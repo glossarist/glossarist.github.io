@@ -96,7 +96,7 @@ export default () => {
 
         <EntryPoints style={{ justifyContent: 'center', textAlign: 'center' }}>
           <EntryPoint>
-            <Button to="docs/getting-started">Get started</Button>
+            <Button to="/docs/desktop/getting-started">Get started</Button>
           </EntryPoint>
           <EntryPoint>
 
