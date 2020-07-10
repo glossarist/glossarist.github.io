@@ -18,7 +18,7 @@ const Home: React.FC<{}> = function () {
         <EntryPoints fill>
           <EntryPoint>
             <Audience>Managing concept registries with&nbsp;Glossarist?</Audience>
-            <Button className="action" to="desktop">Learn to&nbsp;use the desktop&nbsp;app</Button>
+            <Button className="action" to="desktop">Use the desktop&nbsp;application</Button>
           </EntryPoint>
           <EntryPoint>
             <Audience>Not using Glossarist in&nbsp;your&nbsp;organization&nbsp;yet?</Audience>
