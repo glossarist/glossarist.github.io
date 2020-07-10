@@ -102,6 +102,7 @@ async function getDocsPageItems(e, prefix) {
     hasContents: (data.contents || '').trim() !== '',
     excerpt: data.excerpt,
     summary: asciidoctor.convert(data.summary || ''),
+    media: data.media,
     items: await Promise.all(children.map(c => getDocsPageItems(c, urlPath))),
   };
 }

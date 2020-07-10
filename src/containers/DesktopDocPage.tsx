@@ -126,6 +126,10 @@ const DocsPageItemBlock: React.FC<DocsPageProps> = function ({ item }) {
   const items = sortByImportance((item.items || []).filter(showOnPage));
   return (
     <DocsPageBlock>
+      {item.media?.length > 0
+        ? <img src={`./${item.path}/${item.media[0]}`} />
+        : null}
+
       {item.hasContents || item.items?.length > 0
         ? <h3><Link to={item.path}>{item.title}</Link></h3>
         : <h3 id={item.id}>{item.title}</h3>}

@@ -17,6 +17,7 @@ export interface DocPage {
 
     summary?: string // Longer than excerpt, AsciiDoc
     contents?: string // AsciiDoc
+    media?: string[]
   }
 
   items?: DocsPageItem[]
@@ -36,4 +37,5 @@ export interface DocsPageNavItem {
 export interface DocsPageItem extends DocsPageNavItem {
   excerpt?: string
   summary?: string
+  media?: string[]
 }
