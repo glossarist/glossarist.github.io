@@ -20,7 +20,7 @@ const AsciidocStyled = styled.div`
     color: ${theme.scale[0].darken(1).css()};
   }
 
-  .paragraph p {
+  p, .admonitionblock .content {
     margin-bottom: 1rem;
     font-size: inherit;
   }
