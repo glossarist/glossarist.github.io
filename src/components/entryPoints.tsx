@@ -1,3 +1,4 @@
+import React from 'react'
 import styled from 'styled-components'
 
 
@@ -6,9 +7,11 @@ interface EntryPointsProps {
 }
 
 
-export const EntryPoints: React.FC<EntryPointsProps> = styled.div`
-  > * + * {
-    margin-top: .5rem;
+export const EntryPoints:
+React.FC<EntryPointsProps & { style?: React.CSSProperties, className?: string }> =
+styled.div`
+  > * {
+    margin-top: 2rem;
   }
 
   @media screen and (min-width: 800px) {
