@@ -21,7 +21,7 @@ function ({ to, className, disabled, children, relative }) {
     return <a className={className} href={disabled ? undefined : to}>{children}</a>;
 
   } else {
-    const _relative = relative === undefined ? true : relative
+    const _relative = relative === undefined ? to.indexOf('/') !== 0 : relative
     const locWithoutSlashes = loc.replace(/^\/|\/$/g, '')
     const prefix = _relative === true
       ? `/${locWithoutSlashes}${locWithoutSlashes !== '' ? '/' : ''}`
