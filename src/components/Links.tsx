@@ -26,10 +26,12 @@ function ({ to, className, disabled, children, relative }) {
       : (_relative || '/');
     const trailingSlash = hasAnchor ? false : true;
     const _to = `${prefix}${to.replace(/^\/|\/$/g, '')}${trailingSlash ? '/' : ''}`
+    const isActive = loc === _to
 
     return (
       <InternalLink
           className={className}
+          style={{ fontWeight: isActive ? 'bold' : undefined }}
           to={_to}>
         {children}
       </InternalLink>
