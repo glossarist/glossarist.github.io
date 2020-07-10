@@ -33,7 +33,7 @@ function ({ to, className, disabled, children, relative }) {
     return (
       <InternalLink
           className={className}
-          style={{ fontWeight: isActive ? 'bold' : undefined }}
+          style={{ fontWeight: isActive ? 'bold' : undefined, color: isActive ? 'black' : undefined }}
           to={_to}>
         {children}
       </InternalLink>
