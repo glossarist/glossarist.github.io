@@ -17,10 +17,21 @@ export interface DocPage {
 
     summary?: string // Longer than excerpt, AsciiDoc
     contents?: string // AsciiDoc
-    media?: string[]
+    media?: MediaItem[]
   }
 
   items?: DocsPageItem[]
+}
+
+
+// TODO: Make a union type out of image, video, etc.
+export interface MediaItem {
+  type: 'image'
+  filename: string
+  dimensions: {
+    width: number
+    height: number
+  }
 }
 
 
@@ -37,5 +48,5 @@ export interface DocsPageNavItem {
 export interface DocsPageItem extends DocsPageNavItem {
   excerpt?: string
   summary?: string
-  media?: string[]
+  media?: MediaItem[]
 }

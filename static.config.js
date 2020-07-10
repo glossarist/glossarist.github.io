@@ -3,6 +3,7 @@ import dirTree from 'directory-tree'
 import fs from 'fs'
 import yaml from 'js-yaml'
 import _asciidoctor from 'asciidoctor'
+import probe from 'probe-image-size'
 
 
 const asciidoctor = _asciidoctor();
@@ -66,11 +67,14 @@ function getDocsRouteData(entry, docsNav) {
     const children = (entry.children || []).filter(isValid);
     const dataPath = entry.type === 'file' ? entry.path : `${entry.path}/index.yaml`;
     const _data = await yaml.load(fs.readFileSync(dataPath, { encoding: 'utf-8' }));
+    const directoryPath = path.dirname(dataPath);
+    const media = await prepareMedia(directoryPath, _data.media);
 
     const data = {
       ..._data,
       contents: asciidoctor.convert(`:leveloffset: 2\n\n${_data.contents || ''}`),
       summary: asciidoctor.convert(_data.summary || ''),
+      media,
     };
 
     return {
@@ -90,8 +94,10 @@ function getDocsRouteData(entry, docsNav) {
 async function getDocsPageItems(e, prefix) {
   const children = (e.children || []).filter(isValid);
   const dataPath = e.type === 'file' ? e.path : `${e.path}/index.yaml`;
+  const directoryPath = path.dirname(dataPath);
   const urlPath = path.join(prefix || '', noExt(e.name));
   const data = await yaml.load(fs.readFileSync(dataPath, { encoding: 'utf-8' }));
+  const media = await prepareMedia(directoryPath, data.media);
 
   return {
     id: noExt(e.name),
@@ -101,7 +107,7 @@ async function getDocsPageItems(e, prefix) {
     hasContents: (data.contents || '').trim() !== '',
     excerpt: data.excerpt,
     summary: asciidoctor.convert(data.summary || ''),
-    media: data.media,
+    media,
     items: await Promise.all(children.map(c => getDocsPageItems(c, urlPath))),
   };
 }
@@ -118,4 +124,44 @@ function isValid(entry) {
     entry.name[0] !== '.' &&
     ((entry.children || []).length > 0 || entry.type === 'file')
   );
+}
+
+
+async function prepareMedia(basePath, filenames) {
+  if ((filenames || []).length < 1) {
+    return [];
+  }
+
+  var media = [];
+
+  for (const fn of filenames) {
+
+    if (path.extname(fn) === '.png') {
+      const imagePath = path.join(basePath, fn);
+      const stream = fs.createReadStream(imagePath);
+
+      let width, height;
+      try {
+        const probeResult = await probe(stream);
+        width = parseInt(probeResult.width, 10);
+        height = parseInt(probeResult.height, 10);
+      } catch (e) {
+        width = null;
+        height = null;
+        console.error("Failed to parse media data", basePath, fn, e);
+      } finally {
+        stream.close();
+      }
+
+      if (width !== null && height !== null) {
+        media.push({
+          filename: fn,
+          type: 'image',
+          dimensions: { width, height },
+        });
+      }
+    }
+  }
+
+  return media;
 }

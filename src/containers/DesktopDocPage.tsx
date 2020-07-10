@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { createGlobalStyle } from 'styled-components'
 import { useRouteData } from 'react-static'
 
-import { DocPage, DocsPageNavItem, DocsPageItem } from '../../types'
+import { DocPage, DocsPageNavItem, DocsPageItem, MediaItem } from '../../types'
 import { default as Page } from 'containers/Page'
 import { Backlink, Link } from 'components/Links'
 import { PageTitle, Lead } from 'components/typography'
@@ -124,10 +124,13 @@ interface DocsPageProps {
 }
 const DocsPageItemBlock: React.FC<DocsPageProps> = function ({ item }) {
   const items = sortByImportance((item.items || []).filter(showOnPage));
+  const coverMedia: MediaItem | null = item.media?.length > 0 ? item.media[0] : null;
   return (
     <DocsPageBlock>
-      {item.media?.length > 0
-        ? <img src={`./${item.path}/${item.media[0]}`} />
+      {coverMedia
+        ? <HiDPIImage
+            src={`./${item.path}/${coverMedia.filename}`}
+            dimensions={coverMedia.dimensions} />
         : null}
 
       {item.hasContents || item.items?.length > 0
@@ -149,6 +152,18 @@ const DocsPageItemBlock: React.FC<DocsPageProps> = function ({ item }) {
         : null}
     </DocsPageBlock>
   )
+}
+
+
+const HiDPIImage:
+React.FC<{ src: string, dimensions: { width: number, height: number } }> =
+function ({ src, dimensions }) {
+  return <img
+    src={src}
+    style={{
+      width: `${dimensions.width / 2}px`,
+      height: `${dimensions.height / 2}px`,
+    }} />
 }
 
 
