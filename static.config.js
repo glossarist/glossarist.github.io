@@ -64,9 +64,8 @@ function dirEntryToDocsRoute(entry, nav) {
 function getDocsRouteData(entry, docsNav) {
   return async () => {
     const children = (entry.children || []).filter(isValid);
-    const _data = entry.type === 'file'
-      ? await yaml.load(fs.readFileSync(entry.path, { encoding: 'utf-8' }))
-      : await yaml.load(fs.readFileSync(`${entry.path}/index.yaml`, { encoding: 'utf-8' }));
+    const dataPath = entry.type === 'file' ? entry.path : `${entry.path}/index.yaml`;
+    const _data = await yaml.load(fs.readFileSync(dataPath, { encoding: 'utf-8' }));
 
     const data = {
       ..._data,
