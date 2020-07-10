@@ -13,6 +13,8 @@ summary: >-
   Affects all modules (but in “Review”, only affects comparison target).
 
 contents: |
+  image::./language.png[Language panel with a list of languages]
+
   [NOTE]
   ====
   To bring application more in line with how registry data is managed,
