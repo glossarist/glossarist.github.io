@@ -13,8 +13,6 @@ summary: >-
   Affects all modules (but in “Review”, only affects comparison target).
 
 contents: |
-  The “Languages” panel lists available languages.
-
   [NOTE]
   ====
   To bring application more in line with how registry data is managed,
