@@ -164,8 +164,18 @@ const HEADER_HEIGHT_REM = 8;
 
 const GlobalStyle = createGlobalStyle`
   ${app} > header {
+    margin: 0 -1rem;
+    background: ${SIDEBAR_BACKGROUND};
+
+    > a {
+      flex-flow: row nowrap;
+    }
+    img {
+      margin: 0;
+    }
     h1 {
       font-size: 100%;
+      text-align: left;
       text-transform: uppercase;
     }
   }
@@ -204,6 +214,7 @@ const GlobalStyle = createGlobalStyle`
       top: 0;
       left: 0;
       background: ${SIDEBAR_BACKGROUND};
+      margin: 0;
 
       > a {
         height: ${HEADER_HEIGHT_REM}rem;

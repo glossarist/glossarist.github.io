@@ -14,17 +14,20 @@ styled.div`
     margin-top: 2rem;
   }
 
+  text-align: center;
+
   @media screen and (min-width: 800px) {
     display: flex;
     flex-flow: row nowrap;
     align-items: flex-end;
+    text-align: left;
 
     > * {
-      ${(props: EntryPointsProps) => props.fill ? 'flex: 1' : ''}
+      ${(props: EntryPointsProps) => props.fill ? 'flex: 1;' : ''}
+      margin-top: 0;
     }
 
     > * + * {
-      margin-top: 0;
       margin-left: 1rem;
     }
   }
@@ -32,10 +35,10 @@ styled.div`
 
 
 export const EntryPoint = styled.div`
-  display: flex;
-  flex-flow: column nowrap;
 
   @media screen and (min-width: 800px) {
+    display: flex;
+    flex-flow: column nowrap;
     align-items: stretch;
   }
 
@@ -48,5 +51,8 @@ export const EntryPoint = styled.div`
 export const Audience = styled.p`
   font-size: 80%;
   color: grey;
-  padding-right: 2rem;
+
+  @media screen and (min-width: 800px) {
+    padding-right: 2rem;
+  }
 `

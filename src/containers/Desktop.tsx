@@ -90,11 +90,11 @@ export default () => {
       </Helmet>
 
       <Lead>
-        <p>
-          Manage a concept system from an app that runs on your computer.
+        <p style={{ textAlign: 'center' }}>
+          Manage a&nbsp;concept&nbsp;system from&nbsp;an&nbsp;app that&nbsp;runs on&nbsp;your&nbsp;computer.
         </p>
 
-        <EntryPoints>
+        <EntryPoints style={{ justifyContent: 'center', textAlign: 'center' }}>
           <EntryPoint>
             <Button to="docs/getting-started">Get started</Button>
           </EntryPoint>
