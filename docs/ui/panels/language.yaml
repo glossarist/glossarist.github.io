@@ -8,7 +8,9 @@ excerpt: >-
   (In “Review”, only affects comparison target.)
 
 summary: >-
-  Choose language to view or edit localized versions of items.
+  Lists available languages, and allows
+  choosing a language to view or edit localized versions of items in.
+  Affects all modules (but in “Review”, only affects comparison target).
 
 contents: |
   The “Languages” panel lists available languages.
