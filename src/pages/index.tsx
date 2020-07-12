@@ -1,6 +1,6 @@
 import React from 'react'
 import { default as Page } from '../containers/Page'
-import { Button, Link } from '../components/links'
+import { Button, Link } from '../components/linksButtons'
 import { Lead } from '../components/typography'
 import { EntryPoints, EntryPoint, Audience } from '../components/entryPoints'
 import { Section } from '../components/RowSection'
