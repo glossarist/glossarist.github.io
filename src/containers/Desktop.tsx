@@ -8,7 +8,7 @@ import { Octokit } from '@octokit/rest'
 import { ReposGetLatestReleaseResponseData } from '@octokit/types'
 import { ReposListReleasesResponseData } from '@octokit/types'
 
-import { repoOwner, repoName } from 'src/github'
+import { repoOwner, repoName } from '@app/github'
 import { default as Page } from 'containers/Page'
 import { Link, Button } from 'components/links'
 import { Lead } from 'components/typography'
