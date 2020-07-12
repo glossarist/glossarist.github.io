@@ -8,13 +8,15 @@ import { Octokit } from '@octokit/rest'
 import { ReposGetLatestReleaseResponseData } from '@octokit/types'
 import { ReposListReleasesResponseData } from '@octokit/types'
 
-import { repoOwner, repoName } from '@app/github'
 import { default as Page } from 'containers/Page'
 import { Link, Button } from 'components/links'
 import { Lead } from 'components/typography'
 import { EntryPoints, EntryPoint, Label } from 'components/entryPoints'
 import styled from 'styled-components'
 
+
+const repoOwner = 'glossarist'
+const repoName = 'glossarist-desktop'
 
 const octokit = new Octokit()
 

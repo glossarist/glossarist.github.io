@@ -5,16 +5,16 @@ import yaml from 'js-yaml'
 import _asciidoctor from 'asciidoctor'
 import probe from 'probe-image-size'
 
-import { repoOwner, repoName } from './github'
 import { Octokit } from '@octokit/rest'
 import marked from 'marked'
 
 
+const repoOwner = 'glossarist'
+const repoName = 'glossarist-desktop'
+
 const asciidoctor = _asciidoctor();
 
-
 const octokit = new Octokit();
-
 
 const DOCS_PATH = path.join(__dirname, 'docs');
 
