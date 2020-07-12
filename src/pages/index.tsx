@@ -1,11 +1,11 @@
 import React from 'react'
-import { default as Page } from 'containers/Page'
-import { Button, Link } from 'components/links'
-import { Lead } from 'components/typography'
-import { EntryPoints, EntryPoint, Audience } from 'components/entryPoints'
+import { default as Page } from '../containers/Page'
+import { Button, Link } from '../components/links'
+import { Lead } from '../components/typography'
+import { EntryPoints, EntryPoint, Audience } from '../components/entryPoints'
+import { Section } from '../components/RowSection'
 import styled from 'styled-components'
 import isoSymbol from 'assets/iso-symbol.svg'
-import { Section } from '../components/RowSection'
 
 
 const Home: React.FC<{}> = function () {
