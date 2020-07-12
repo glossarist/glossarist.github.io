@@ -19,7 +19,6 @@ export default {
     const docsDirTree = dirTree(DOCS_PATH, { extensions:/\.yaml$/ });
     const docsNav = await Promise.all(docsDirTree.children.filter(isValid).map(c => getDocsPageItems(c)));
     const docsRoutes = [docsDirTree].map(e => dirEntryToDocsRoute(e, docsNav));
-    console.info(docsRoutes)
 
     return [
       {
