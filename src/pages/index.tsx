@@ -5,6 +5,7 @@ import { Lead } from 'components/typography'
 import { EntryPoints, EntryPoint, Audience } from 'components/entryPoints'
 import styled from 'styled-components'
 import isoSymbol from 'assets/iso-symbol.svg'
+import { Section } from '../components/RowSection'
 
 
 const Home: React.FC<{}> = function () {
@@ -46,43 +47,6 @@ const Home: React.FC<{}> = function () {
 }
 
 export default Home
-
-
-const Section: React.FC<{
-  title: JSX.Element | string
-  style?: React.CSSProperties
-  className?: string
-}> = function ({ title, style, className, children }) {
-  return (
-    <RowSection style={style} className={className}>
-      <h4 className="title">{title}</h4>
-      <div className="contents">{children}</div>
-    </RowSection>
-  )
-}
-
-const RowSection = styled.section`
-  display: flex;
-  flex-flow: row nowrap;
-  align-items: flex-start;
-  justify-content: center;
-
-  @media screen and (min-width: 800px) {
-    justify-content: flex-start;
-  }
-
-  & + & {
-    margin-top: 1rem;
-  }
-
-  .title {
-    text-transform: uppercase;
-    font-weight: normal;
-    margin: 1em 0;
-    padding: 0;
-    margin-right: 1rem;
-  }
-`
 
 
 const Users = styled.ul`
