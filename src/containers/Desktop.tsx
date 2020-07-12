@@ -1,21 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet'
+import { useRouteData } from 'react-static'
+
+import moment from 'moment'
 
 import { Octokit } from '@octokit/rest'
 import { ReposGetLatestReleaseResponseData } from '@octokit/types'
+import { ReposListReleasesResponseData } from '@octokit/types'
 
 import { repoOwner, repoName } from '@app/github'
 import { default as Page } from 'containers/Page'
-import { Button } from 'components/Links'
+import { Link, Button } from 'components/links'
 import { Lead } from 'components/typography'
-import { EntryPoints, EntryPoint } from 'components/entryPoints'
+import { EntryPoints, EntryPoint, Label } from 'components/entryPoints'
+import styled from 'styled-components'
 
 
 const octokit = new Octokit()
 
+type ReleaseList = (ReposListReleasesResponseData[number] & { bodyHTML: string })[]
 
 type OS = 'macOS' | 'Windows'
-
 
 function getGithubLink(
   githubRepoOwner: string,
@@ -26,6 +31,8 @@ function getGithubLink(
 
 
 export default () => {
+  const routeData: { releases: ReleaseList } = useRouteData()
+
   const [releaseData, setReleaseData] =
     useState<ReposGetLatestReleaseResponseData | undefined>(undefined)
 
@@ -34,8 +41,6 @@ export default () => {
 
   const [specificDLLink, setSpecificDLLink] =
     useState<string | undefined>(undefined);
-
-  const releaseName = releaseData?.name
 
   useEffect(() => {
     (async () => {
@@ -77,7 +82,17 @@ export default () => {
     }
   }, [])
 
-  const releasesURL = `${getGithubLink(repoOwner, repoName)}/releases`;
+  const releasesURL = `${getGithubLink(repoOwner, repoName)}/releases`
+
+  const releases = routeData.releases
+
+  const releaseName = releaseData?.name
+
+  const releaseDate = releaseData ? moment(releaseData.published_at) : null
+
+  const release = releases[0]
+
+  const releaseNotes = release?.bodyHTML?.trim() || ''
 
   return (
     <Page title="Glossarist Desktop">
@@ -91,19 +106,27 @@ export default () => {
           Manage a&nbsp;concept&nbsp;system from&nbsp;an&nbsp;app that&nbsp;runs on&nbsp;your&nbsp;computer.
         </p>
 
-        <EntryPoints style={{ justifyContent: 'center', textAlign: 'center' }}>
+        <EntryPoints fill labelPosition="bottom">
           <EntryPoint>
-            <Button to="/docs/desktop/getting-started">Get started</Button>
-          </EntryPoint>
-          <EntryPoint>
-
             {userOS && specificDLLink
-              ? <Button to={specificDLLink}>
-                  Download{releaseName ? ` v${releaseName}` : null} for {userOS}
+              ? <Button to={specificDLLink} title={`Download${releaseName ? ` v${releaseName}` : null} for ${userOS}`}>
+                  Download for {userOS}
                 </Button>
               : <Button to={releasesURL}>
-                  View releases
+                  Download
                 </Button>}
+            {specificDLLink && userOS && releaseName
+              ? <Label>
+                  <strong>{releaseName}</strong>
+                  {releaseDate ? <span style={{ whiteSpace: 'nowrap' }}>&emsp;•&emsp;{releaseDate.fromNow()}</span> : null}
+                  {releaseDate ? <span style={{ whiteSpace: 'nowrap' }}>&emsp;•&emsp;{releaseDate.format('MMMM YYYY')}</span> : null}
+                  {release.name === releaseName && releaseNotes !== '' ? <ReleaseBody dangerouslySetInnerHTML={{ __html: releaseNotes }} /> : null}
+                  <Link to={releasesURL}>Read release notes</Link>
+                </Label>
+              : null}
+          </EntryPoint>
+          <EntryPoint>
+            <Button to="/docs/desktop/getting-started">Get started</Button>
           </EntryPoint>
         </EntryPoints>
       </Lead>
@@ -111,3 +134,12 @@ export default () => {
     </Page>
   )
 }
+
+
+const ReleaseBody = styled.div`
+  font-size: 90%;
+
+  p {
+    margin: .5rem 0;
+  }
+`

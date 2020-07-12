@@ -6,7 +6,7 @@ import { useRouteData } from 'react-static'
 
 import { DocPage, DocsPageNavItem, DocsPageItem, MediaItem } from '../../types'
 import { default as Page } from 'containers/Page'
-import { Backlink, Link } from 'components/Links'
+import { Backlink, Link } from '@app/src/components/links'
 import { PageTitle, Lead } from 'components/typography'
 import { Asciidoc } from 'components/Asciidoc'
 import { app } from '../GlobalStyle'

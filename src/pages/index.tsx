@@ -1,6 +1,6 @@
 import React from 'react'
 import { default as Page } from 'containers/Page'
-import { Button, Link } from 'components/Links'
+import { Button, Link } from 'components/links'
 import { Lead } from 'components/typography'
 import { EntryPoints, EntryPoint, Audience } from 'components/entryPoints'
 import styled from 'styled-components'
@@ -19,15 +19,15 @@ const Home: React.FC<{}> = function () {
         <EntryPoints fill>
           <EntryPoint>
             <Audience>Managing concept registries with&nbsp;Glossarist?</Audience>
-            <Button className="action" to="desktop">Use the desktop&nbsp;application</Button>
+            <Button to="desktop">Use the desktop&nbsp;application</Button>
           </EntryPoint>
           <EntryPoint>
             <Audience>Not using Glossarist in&nbsp;your&nbsp;organization&nbsp;yet?</Audience>
-            <Button disabled className="action" to="adopt">Learn how to&nbsp;adopt&nbsp;Glossarist</Button>
+            <Button disabled to="adopt">Learn how to&nbsp;adopt&nbsp;Glossarist</Button>
           </EntryPoint>
           <EntryPoint style={{ flex: 0.5 }}>
             <Audience>Operating infrastructure?</Audience>
-            <Button disabled className="action" to="desktop">Read the docs</Button>
+            <Button disabled to="desktop">Read the docs</Button>
           </EntryPoint>
         </EntryPoints>
       </Lead>
