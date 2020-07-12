@@ -37,6 +37,7 @@
     "directory-tree": "^2.2.4",
     "fs-extra": "^9.0.1",
     "js-yaml": "^3.14.0",
+    "marked": "^1.1.0",
     "probe-image-size": "^5.0.0",
     "react-hot-loader": "^4.12.11",
     "react-static-plugin-file-watch-reload": "^1.0.3",

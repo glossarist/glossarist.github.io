@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet'
 import { Octokit } from '@octokit/rest'
 import { ReposGetLatestReleaseResponseData } from '@octokit/types'
 
+import { repoOwner, repoName } from '@app/github'
 import { default as Page } from 'containers/Page'
 import { Button } from 'components/Links'
 import { Lead } from 'components/typography'
@@ -11,10 +12,6 @@ import { EntryPoints, EntryPoint } from 'components/entryPoints'
 
 
 const octokit = new Octokit()
-
-
-const repoOwner = 'glossarist'
-const repoName = 'glossarist-desktop'
 
 
 type OS = 'macOS' | 'Windows'

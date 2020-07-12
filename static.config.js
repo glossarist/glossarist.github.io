@@ -5,16 +5,29 @@ import yaml from 'js-yaml'
 import _asciidoctor from 'asciidoctor'
 import probe from 'probe-image-size'
 
+import { repoOwner, repoName } from './github'
+import { Octokit } from '@octokit/rest'
+import marked from 'marked'
+
 
 const asciidoctor = _asciidoctor();
+
+
+const octokit = new Octokit();
 
 
 const DOCS_PATH = path.join(__dirname, 'docs');
 
 
+function convertFirstBlockToHTML(markdown) {
+  return marked.parser([marked.lexer(markdown)[0]]);
+}
+
+
 export default {
   siteRoot: 'https://www.glossarist.org',
   entry: path.join(__dirname, 'src', 'index.tsx'),
+
   getRoutes: async () => {
     const docsDirTree = dirTree(DOCS_PATH, { extensions:/\.yaml$/ });
     const docsNav = await Promise.all(docsDirTree.children.filter(isValid).map(c => getDocsPageItems(c)));
@@ -24,6 +37,22 @@ export default {
       {
         path: 'desktop',
         template: 'src/containers/Desktop',
+        getData: async () => {
+          let releases;
+          try {
+            releases = (await octokit.repos.listReleases({ owner: repoOwner, repo: repoName }))?.data || [];
+          } catch (e) {
+            console.error("Error fetching product releases");
+            throw e;
+          }
+          if (releases.length < 1) {
+            console.warn("Fetched zero product releases")
+            return { releases: [] };
+          }
+          return { releases: releases.slice(0, 2).map(r => ({
+            ...r,
+            bodyHTML: r.body ? convertFirstBlockToHTML(r.body) : '' })) };
+        },
       },
       ...docsRoutes,
     ];
