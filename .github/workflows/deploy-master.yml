@@ -19,7 +19,7 @@ jobs:
           yarn install
       - name: Build site
         run: |
-          yarn build -d
+          yarn build
 
 
       - name: Deploy to glossarist.org
