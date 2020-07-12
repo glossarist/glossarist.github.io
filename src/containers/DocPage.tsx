@@ -4,11 +4,11 @@ import styled from 'styled-components'
 import { createGlobalStyle } from 'styled-components'
 import { useRouteData } from 'react-static'
 
-import { DocPage, DocsPageNavItem, DocsPageItem, MediaItem } from 'types'
-import { default as Page } from 'src/containers/Page'
-import { Backlink, Link } from 'src/components/links'
-import { PageTitle, Lead } from 'src/components/typography'
-import { Asciidoc } from 'src/components/Asciidoc'
+import { DocPage, DocsPageNavItem, DocsPageItem, MediaItem } from '../../types'
+import { default as Page } from 'containers/Page'
+import { Backlink, Link } from 'components/links'
+import { PageTitle, Lead } from 'components/typography'
+import { Asciidoc } from 'components/Asciidoc'
 import { app } from '../GlobalStyle'
 
 
