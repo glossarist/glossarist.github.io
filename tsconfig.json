@@ -17,7 +17,7 @@
     "noEmit": true,
     "baseUrl": ".",
     "paths": {
-      "@app/*": ["./*"],
+      "src/*": ["src/*"],
       "components/*": ["src/components/*"],
       "containers/*": ["src/containers/*"],
       "types/*": ["types/*"]
