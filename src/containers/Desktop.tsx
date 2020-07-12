@@ -30,7 +30,7 @@ function getGithubLink(
 
 export default () => {
   const [releaseData, setReleaseData] =
-    useState<ReposGetLatestReleaseResponseData | undefined>(undefined);
+    useState<ReposGetLatestReleaseResponseData | undefined>(undefined)
 
   const [userOS, setUserOS] =
     useState<OS | undefined>(undefined)
@@ -64,7 +64,7 @@ export default () => {
       const asset = assets.find(a => a.name === expectedOSAssetName)
 
       if (asset && asset.browser_download_url) {
-        setSpecificDLLink(asset.browser_download_url);
+        setSpecificDLLink(asset.browser_download_url)
       }
     }
   }, [userOS, releaseData])
