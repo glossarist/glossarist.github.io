@@ -122,7 +122,7 @@ export default () => {
                   <strong>{releaseName}</strong>
                   {releaseDate ? <span style={{ whiteSpace: 'nowrap' }}>&emsp;•&emsp;{releaseDate.fromNow()}</span> : null}
                   {releaseDate ? <span style={{ whiteSpace: 'nowrap' }}>&emsp;•&emsp;{releaseDate.format('MMMM YYYY')}</span> : null}
-                  {release.name === releaseName && releaseNotes !== '' ? <ReleaseBody dangerouslySetInnerHTML={{ __html: releaseNotes }} /> : null}
+                  {release.name === releaseName && releaseNotes !== '' ? <ReleaseBody dangerouslySetInnerHTML={{ __html: releaseNotes }} /> : <br />}
                   <Link to={releasesURL}>Read release notes</Link>
                 </Label>
               : null}
