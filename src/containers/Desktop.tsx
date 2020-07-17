@@ -128,7 +128,7 @@ export default () => {
                 </Button>}
             {specificDLLink && userOS && releaseName
               ? <Label>
-                  <strong>{releaseName}</strong>
+                  <strong>Version {releaseName}</strong>
                   {releaseDate ? <span style={{ whiteSpace: 'nowrap' }}>&emsp;•&emsp;{releaseDate.fromNow()}</span> : null}
                   {releaseDate ? <span style={{ whiteSpace: 'nowrap' }}>&emsp;•&emsp;{releaseDate.format('MMMM YYYY')}</span> : null}
                   {release.name === releaseName && effectiveReleaseNotes !== '' ? <ReleaseBody dangerouslySetInnerHTML={{ __html: effectiveReleaseNotes }} /> : <br />}
