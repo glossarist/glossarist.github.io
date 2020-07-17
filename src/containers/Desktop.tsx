@@ -94,7 +94,16 @@ export default () => {
 
   const release = releases[0]
 
-  const releaseNotes = release?.bodyHTML?.trim() || ''
+  const releaseNotesAtBuild = release?.bodyHTML?.trim() || ''
+
+  const effectiveReleaseNotes = release.name === releaseName
+    ? releaseNotesAtBuild
+    : `<p>${releaseData?.body.split('\n')[0] || ''}</p>`
+      // TODO: If there was a new release since last build,
+      // we naively extract the first paragraph from release notes.
+      // It may contain unparsed Markdown inline formatting
+      // as we aren’t bringing Markdown parser to client-side yet
+      // for performance reasons.
 
   return (
     <Page title="Glossarist Desktop">
@@ -122,7 +131,7 @@ export default () => {
                   <strong>{releaseName}</strong>
                   {releaseDate ? <span style={{ whiteSpace: 'nowrap' }}>&emsp;•&emsp;{releaseDate.fromNow()}</span> : null}
                   {releaseDate ? <span style={{ whiteSpace: 'nowrap' }}>&emsp;•&emsp;{releaseDate.format('MMMM YYYY')}</span> : null}
-                  {release.name === releaseName && releaseNotes !== '' ? <ReleaseBody dangerouslySetInnerHTML={{ __html: releaseNotes }} /> : <br />}
+                  {release.name === releaseName && effectiveReleaseNotes !== '' ? <ReleaseBody dangerouslySetInnerHTML={{ __html: effectiveReleaseNotes }} /> : <br />}
                   <Link to={releasesURL}>Read release notes</Link>
                 </Label>
               : null}
