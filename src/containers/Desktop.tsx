@@ -124,9 +124,10 @@ export default () => {
                 {releaseName ? <strong>Version {releaseName}</strong> : null}
                 &emsp;•&emsp;
                 {releaseDate
-                  ? <time dateTime={releaseDate.toISOString()}>
-                      <span style={{ whiteSpace: 'nowrap' }}>{releaseDate.fromNow()}</span>
-                      <span style={{ whiteSpace: 'nowrap' }}>&emsp;•&emsp;{releaseDate.format('MMMM YYYY')}</span>
+                  ? <time dateTime={releaseDate.toISOString()} style={{ whiteSpace: 'nowrap' }}>
+                      {releaseDate.fromNow()}
+                      &emsp;•&emsp;
+                      {releaseDate.format('MMMM YYYY')}
                     </time>
                   : null}
                 {release.name === releaseName && effectiveReleaseNotes !== '' ? <ReleaseBody dangerouslySetInnerHTML={{ __html: effectiveReleaseNotes }} /> : <br />}
