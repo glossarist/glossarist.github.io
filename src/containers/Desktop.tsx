@@ -50,7 +50,7 @@ export default () => {
         owner: repoOwner,
         repo: repoName,
       })
-      setReleaseData(release.data);
+      setReleaseData(release.data)
     })()
   }, [])
 
