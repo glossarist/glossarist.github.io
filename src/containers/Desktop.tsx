@@ -122,9 +122,10 @@ export default () => {
                 </Button>}
               <Label>
                 {releaseName ? <strong>Version {releaseName}</strong> : null}
+                &emsp;•&emsp;
                 {releaseDate
                   ? <time dateTime={releaseDate.toISOString()}>
-                      <span style={{ whiteSpace: 'nowrap' }}>&emsp;•&emsp;{releaseDate.fromNow()}</span>
+                      <span style={{ whiteSpace: 'nowrap' }}>{releaseDate.fromNow()}</span>
                       <span style={{ whiteSpace: 'nowrap' }}>&emsp;•&emsp;{releaseDate.format('MMMM YYYY')}</span>
                     </time>
                   : null}
