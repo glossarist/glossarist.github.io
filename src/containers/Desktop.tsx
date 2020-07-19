@@ -122,8 +122,12 @@ export default () => {
                 </Button>}
               <Label>
                 {releaseName ? <strong>Version {releaseName}</strong> : null}
-                {releaseDate ? <span style={{ whiteSpace: 'nowrap' }}>&emsp;•&emsp;{releaseDate.fromNow()}</span> : null}
-                {releaseDate ? <span style={{ whiteSpace: 'nowrap' }}>&emsp;•&emsp;{releaseDate.format('MMMM YYYY')}</span> : null}
+                {releaseDate
+                  ? <time dateTime={releaseDate.toISOString()}>
+                      <span style={{ whiteSpace: 'nowrap' }}>&emsp;•&emsp;{releaseDate.fromNow()}</span>
+                      <span style={{ whiteSpace: 'nowrap' }}>&emsp;•&emsp;{releaseDate.format('MMMM YYYY')}</span>
+                    </time>
+                  : null}
                 {release.name === releaseName && effectiveReleaseNotes !== '' ? <ReleaseBody dangerouslySetInnerHTML={{ __html: effectiveReleaseNotes }} /> : <br />}
                 <Link to={releasesURL}>Read release notes</Link>
               </Label>
