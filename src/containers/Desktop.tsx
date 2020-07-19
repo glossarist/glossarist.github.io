@@ -35,14 +35,18 @@ function getGithubLink(
 export default () => {
   const routeData: { releases: ReleaseList } = useRouteData()
 
+  const releaseAtBuild = routeData.releases[0] || undefined
+
   const [releaseData, setReleaseData] =
-    useState<ReposGetLatestReleaseResponseData | undefined>(undefined)
+    useState<ReposGetLatestReleaseResponseData | undefined>(releaseAtBuild)
 
   const [userOS, setUserOS] =
     useState<OS | undefined>(undefined)
 
   const [specificDLLink, setSpecificDLLink] =
-    useState<string | undefined>(undefined);
+    useState<string | undefined>(releaseAtBuild && userOS
+      ? getSpecificDLLink(routeData.releases[0]?.assets || [], releaseAtBuild.name, userOS)
+      : undefined)
 
   useEffect(() => {
     (async () => {
@@ -55,20 +59,10 @@ export default () => {
   }, [])
 
   useEffect(() => {
-    if (userOS && releaseName) {
-      const assets = releaseData.assets
-
-      let expectedOSAssetName: string
-      if (userOS === 'Windows') {
-        expectedOSAssetName = `glossarist-desktop-${releaseName}-portable.exe`
-      } else if (userOS === 'macOS') {
-        expectedOSAssetName = `glossarist-desktop-${releaseName}.dmg`
-      }
-
-      const asset = assets.find(a => a.name === expectedOSAssetName)
-
-      if (asset && asset.browser_download_url) {
-        setSpecificDLLink(asset.browser_download_url)
+    if (releaseData && userOS) {
+      const link = getSpecificDLLink(releaseData.assets, releaseData.name, userOS)
+      if (link) {
+        setSpecificDLLink(link)
       }
     }
   }, [userOS, releaseData])
@@ -90,7 +84,7 @@ export default () => {
 
   const releaseName = releaseData?.name
 
-  const releaseDate = releaseData ? moment(releaseData.published_at) : null
+  const releaseDate = releaseData ? moment(releaseData.published_at) : undefined
 
   const release = releases[0]
 
@@ -126,15 +120,13 @@ export default () => {
               : <Button to={releasesURL}>
                   Download
                 </Button>}
-            {specificDLLink && userOS && releaseName
-              ? <Label>
-                  <strong>Version {releaseName}</strong>
-                  {releaseDate ? <span style={{ whiteSpace: 'nowrap' }}>&emsp;•&emsp;{releaseDate.fromNow()}</span> : null}
-                  {releaseDate ? <span style={{ whiteSpace: 'nowrap' }}>&emsp;•&emsp;{releaseDate.format('MMMM YYYY')}</span> : null}
-                  {release.name === releaseName && effectiveReleaseNotes !== '' ? <ReleaseBody dangerouslySetInnerHTML={{ __html: effectiveReleaseNotes }} /> : <br />}
-                  <Link to={releasesURL}>Read release notes</Link>
-                </Label>
-              : null}
+              <Label>
+                {releaseName ? <strong>Version {releaseName}</strong> : null}
+                {releaseDate ? <span style={{ whiteSpace: 'nowrap' }}>&emsp;•&emsp;{releaseDate.fromNow()}</span> : null}
+                {releaseDate ? <span style={{ whiteSpace: 'nowrap' }}>&emsp;•&emsp;{releaseDate.format('MMMM YYYY')}</span> : null}
+                {release.name === releaseName && effectiveReleaseNotes !== '' ? <ReleaseBody dangerouslySetInnerHTML={{ __html: effectiveReleaseNotes }} /> : <br />}
+                <Link to={releasesURL}>Read release notes</Link>
+              </Label>
           </EntryPoint>
           <EntryPoint>
             <Button to="/docs/desktop/getting-started">Get started</Button>
@@ -154,3 +146,19 @@ const ReleaseBody = styled.div`
     margin: .5rem 0;
   }
 `
+
+
+function getSpecificDLLink(assets: ReposGetLatestReleaseResponseData["assets"], releaseName: string, userOS: OS): string | undefined {
+  let expectedOSAssetName: string
+  if (userOS === 'Windows') {
+    expectedOSAssetName = `glossarist-desktop-${releaseName}-portable.exe`
+  } else if (userOS === 'macOS') {
+    expectedOSAssetName = `glossarist-desktop-${releaseName}.dmg`
+  }
+  const asset = assets.find(a => a.name === expectedOSAssetName)
+  if (asset && asset.browser_download_url) {
+    return asset.browser_download_url
+  } else {
+    return undefined;
+  }
+}
