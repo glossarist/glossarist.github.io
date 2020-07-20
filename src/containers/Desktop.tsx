@@ -8,6 +8,9 @@ import { Octokit } from '@octokit/rest'
 import { ReposGetLatestReleaseResponseData } from '@octokit/types'
 import { ReposListReleasesResponseData } from '@octokit/types'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faDownload } from '@fortawesome/free-solid-svg-icons/faDownload'
+
 import { default as Page } from '../containers/Page'
 import { Link, Button } from '../components/linksButtons'
 import { Lead } from '../components/typography'
@@ -115,6 +118,8 @@ export default () => {
           <EntryPoint>
             {userOS && specificDLLink
               ? <Button to={specificDLLink} title={`Download${releaseName ? ` v${releaseName}` : null} for ${userOS}`}>
+                  <FontAwesomeIcon icon={faDownload} />
+                  &ensp;
                   Download for {userOS}
                 </Button>
               : <Button to={releasesURL}>
