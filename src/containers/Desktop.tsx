@@ -130,7 +130,9 @@ export default () => {
                       {releaseDate.format('MMMM YYYY')}
                     </time>
                   : null}
-                {release.name === releaseName && effectiveReleaseNotes !== '' ? <ReleaseBody dangerouslySetInnerHTML={{ __html: effectiveReleaseNotes }} /> : <br />}
+                {release.name === releaseName && effectiveReleaseNotes !== ''
+                  ? <ReleaseBody dangerouslySetInnerHTML={{ __html: effectiveReleaseNotes }} />
+                  : <br />}
                 <Link to={releasesURL}>Read release notes</Link>
               </Label>
           </EntryPoint>
