@@ -18,6 +18,7 @@
     "moment": "^2.27.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
+    "react-is": "^16.13.1",
     "react-static": "^7.4.2",
     "react-static-plugin-reach-router": "^7.4.2",
     "react-static-plugin-sitemap": "^7.4.2",
