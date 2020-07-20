@@ -172,6 +172,6 @@ function getSpecificDLLink(assets: ReposGetLatestReleaseResponseData["assets"], 
   if (asset && asset.browser_download_url) {
     return asset.browser_download_url
   } else {
-    return undefined;
+    return undefined
   }
 }
