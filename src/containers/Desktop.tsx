@@ -10,6 +10,7 @@ import { ReposListReleasesResponseData } from '@octokit/types'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faDownload } from '@fortawesome/free-solid-svg-icons/faDownload'
+import { faBookOpen } from '@fortawesome/free-solid-svg-icons/faBookOpen'
 
 import { default as Page } from '../containers/Page'
 import { Link, Button } from '../components/linksButtons'
@@ -142,7 +143,11 @@ export default () => {
               </Label>
           </EntryPoint>
           <EntryPoint>
-            <Button to="/docs/desktop/getting-started">Get started</Button>
+            <Button to="/docs/desktop/getting-started">
+              <FontAwesomeIcon icon={faBookOpen} />
+              &ensp;
+              Get started
+            </Button>
           </EntryPoint>
         </EntryPoints>
       </Lead>
