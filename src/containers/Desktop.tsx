@@ -122,7 +122,7 @@ export default () => {
                 </Button>}
               <Label>
                 {releaseName ? <strong>Version {releaseName}</strong> : null}
-                &emsp;•&emsp;
+                {releaseName ? <>&emsp;•&emsp;</> : null}
                 {releaseDate
                   ? <time dateTime={releaseDate.toISOString()} style={{ whiteSpace: 'nowrap' }}>
                       {releaseDate.fromNow()}
