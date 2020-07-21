@@ -11,6 +11,7 @@ import { ReposListReleasesResponseData } from '@octokit/types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faDownload } from '@fortawesome/free-solid-svg-icons/faDownload'
 import { faBookOpen } from '@fortawesome/free-solid-svg-icons/faBookOpen'
+import { faGithub } from '@fortawesome/free-brands-svg-icons/faGithub'
 
 import { default as Page } from '../containers/Page'
 import { Link, Button } from '../components/linksButtons'
@@ -139,7 +140,11 @@ export default () => {
                 {release.name === releaseName && effectiveReleaseNotes !== ''
                   ? <ReleaseBody dangerouslySetInnerHTML={{ __html: effectiveReleaseNotes }} />
                   : <br />}
-                <Link to={releasesURL}>Read release notes</Link>
+                <Link to={releasesURL}>
+                  <FontAwesomeIcon icon={faGithub} />
+                  &ensp;
+                  Read release notes
+                </Link>
               </Label>
           </EntryPoint>
           <EntryPoint>
