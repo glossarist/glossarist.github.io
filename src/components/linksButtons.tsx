@@ -59,7 +59,7 @@ function ({ to, title, style, className, disabled, children, relative }) {
 
 
 export const Backlink: React.FC<{ className?: string }> = function ({ className }) {
-  return <Link className={className} to="..">&larr; Back</Link>
+  return <UnstyledLink className={className} to="..">&larr; Back</UnstyledLink>
 }
 
 
@@ -85,10 +85,9 @@ export const enabledButtonStyle = `
 
 export const buttonStyle = `
   border: none;
+  border-radius: .25rem;
   padding: .5em 1rem;
   color: white;
-  text-decoration: none;
-  border-radius: .25rem;
 
   & + & {
     margin-left: .5rem;
@@ -106,12 +105,21 @@ export const buttonStyle = `
 
 
 const InternalLink = styled(RouterLink)`
+  border-bottom: 1px dotted ${theme.link.css()};
+  text-decoration: none;
+
   &[aria-current=page] {
     font-weight: bold;
-    text-decoration: none;
+    border-bottom: none;
     color: inherit;
     cursor: default;
   }
+`
+
+
+export const UnstyledLink = styled(Link)`
+  border-bottom: none;
+  color: inherit;
 `
 
 

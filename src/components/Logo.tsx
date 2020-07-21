@@ -61,7 +61,7 @@ const TextWrapper = styled.h1`
 
 const LogoWrapper = styled(Link)`
   color: inherit;
-  text-decoration: none;
+  border-bottom: none;
 
   display: flex;
   flex-flow: row wrap;

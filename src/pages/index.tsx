@@ -1,6 +1,6 @@
 import React from 'react'
 import { default as Page } from '../containers/Page'
-import { Button, Link } from '../components/linksButtons'
+import { Button, UnstyledLink } from '../components/linksButtons'
 import { Lead } from '../components/typography'
 import { EntryPoints, EntryPoint, Audience } from '../components/entryPoints'
 import { Section } from '../components/RowSection'
@@ -36,9 +36,9 @@ const Home: React.FC<{}> = function () {
         <Users>
           <li>
             <img src={isoSymbol} />
-            <Link to="https://isotc211.geolexica.org/">
+            <UnstyledLink to="https://isotc211.geolexica.org/">
               Geolexica for ISO/TC&nbsp;211&nbsp;MLGT
-            </Link>
+            </UnstyledLink>
           </li>
         </Users>
       </Section>

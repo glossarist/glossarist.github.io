@@ -6,7 +6,7 @@ import { useRouteData } from 'react-static'
 
 import { DocPage, DocsPageNavItem, DocsPageItem, MediaItem } from '../../types'
 import { default as Page } from '../containers/Page'
-import { Backlink, Link } from '../components/linksButtons'
+import { Backlink, UnstyledLink, Link } from '../components/linksButtons'
 import { PageTitle, Lead } from '../components/typography'
 import { Asciidoc } from '../components/Asciidoc'
 import { app } from '../GlobalStyle'
@@ -58,7 +58,11 @@ export default () => {
               <DocsPageNav>
                 {navSorted.map(i =>
                   <li key={i.path}>
-                    <DocsNavLink item={i} childFilter={showInNav} />
+                    <DocsNavLink
+                      linkStyle={{ color: '#666' }}
+                      unstyled
+                      item={i}
+                      childFilter={showInNav} />
                   </li>
                 )}
               </DocsPageNav>
@@ -82,19 +86,24 @@ interface DocsNavLinkProps {
   item: DocsPageNavItem
   relative?: boolean
   childLevels?: number
+  unstyled?: boolean
+  linkStyle?: React.CSSProperties
   childFilter?: (item: DocsPageNavItem) => boolean
 }
-const DocsNavLink: React.FC<DocsNavLinkProps> = function ({ item, relative, childLevels, childFilter }) {
-  const itemFilter = childFilter || showOnPage;
-  const items = sortByImportance((item.items || []).filter(itemFilter));
+const DocsNavLink: React.FC<DocsNavLinkProps> =
+function ({ item, unstyled, linkStyle, relative, childLevels, childFilter }) {
+  const itemFilter = childFilter || showOnPage
+  const items = sortByImportance((item.items || []).filter(itemFilter))
+  const Comp = unstyled ? UnstyledLink : Link
   return (
     <>
       {item.hasContents || item.items?.length > 0
-        ? <Link
+        ? <Comp
+              style={linkStyle}
               to={item.path}
               relative={relative ? true : DOCS_ROOT}>
             {item.title}
-          </Link>
+          </Comp>
         : <span>
             {item.title}
           </span>}
@@ -105,6 +114,8 @@ const DocsNavLink: React.FC<DocsNavLinkProps> = function ({ item, relative, chil
               <li key={p.path}>
                 <DocsNavLink
                   item={p}
+                  linkStyle={linkStyle}
+                  unstyled={unstyled}
                   relative={relative}
                   childFilter={childFilter}
                   childLevels={childLevels !== undefined
@@ -258,6 +269,7 @@ const DocsPageWrapper = styled.div`
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
+    font-size: 92%;
   }
 
   > .main {
@@ -266,12 +278,9 @@ const DocsPageWrapper = styled.div`
     > .backlink {
       margin-top: -.5rem;
       margin-bottom: 1rem;
-
-      a {
-        text-decoration: none;
-        font-size: 90%;
-      }
+      font-size: 90%;
     }
+
     > .items {
       article + article {
         margin-top: 1rem;
@@ -309,9 +318,6 @@ const DocsPageWrapper = styled.div`
       overflow-x: hidden;
 
       background: ${SIDEBAR_BACKGROUND};
-      a:visited {
-        opacity: .9;
-      }
     }
   }
 `
@@ -329,10 +335,6 @@ const DocsPageNav = styled.ul`
 
   li {
     margin-top: .5rem;
-
-    a {
-      text-decoration: none;
-    }
   }
 `
 

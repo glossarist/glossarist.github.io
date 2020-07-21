@@ -80,6 +80,7 @@ export default createGlobalStyle`
 
   a {
     color: ${theme.link.css()};
+    text-decoration: none;
   }
 
   img {
