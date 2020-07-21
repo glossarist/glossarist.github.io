@@ -8,12 +8,13 @@ import * as theme from '../theme/colors'
 interface LinkProps {
   to: string
   className?: string
+  style?: React.CSSProperties
   disabled?: boolean
   relative?: string | boolean
   title?: string
 }
 export const Link: React.FC<LinkProps> =
-function ({ to, title, className, disabled, children, relative }) {
+function ({ to, title, style, className, disabled, children, relative }) {
   const loc = useLocation().pathname
   const hasAnchor = to.indexOf('#') >= 0
   const routePath = (useRoutePath as () => string)()
@@ -23,6 +24,7 @@ function ({ to, title, className, disabled, children, relative }) {
       <a
           title={title}
           className={className}
+          style={style}
           href={disabled ? undefined : to}>
         {children}
       </a>
@@ -43,9 +45,10 @@ function ({ to, title, className, disabled, children, relative }) {
           title={title}
           className={className}
           style={{
-            fontWeight: isActive ? 'bold' : undefined,
-            color: isActive ? 'black' : undefined,
-            cursor: isActive ? 'default' : undefined,
+            ...(style || {}),
+            fontWeight: isActive ? 'bold' : (style?.fontWeight || undefined),
+            color: isActive ? 'black' : (style?.color || undefined),
+            cursor: isActive ? 'default' : (style?.cursor || undefined),
           }}
           to={_to}>
         {children}
