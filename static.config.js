@@ -24,6 +24,25 @@ function convertFirstBlockToHTML(markdown) {
 }
 
 
+function getAssetData(a) {
+  return {
+    name: a.name,
+    browser_download_url: a.browser_download_url,
+  }
+}
+
+
+function getReleaseData(r) {
+  return {
+    name: r.name,
+    assets: r.assets.map(getAssetData),
+    body: r.body,
+    published_at: r.published_at,
+    bodyHTML: r.body ? convertFirstBlockToHTML(r.body) : '',
+  };
+}
+
+
 export default {
   siteRoot: 'https://www.glossarist.org',
   entry: path.join(__dirname, 'src', 'index.tsx'),
@@ -49,9 +68,7 @@ export default {
             console.warn("Fetched zero product releases")
             return { releases: [] };
           }
-          return { releases: releases.slice(0, 2).map(r => ({
-            ...r,
-            bodyHTML: r.body ? convertFirstBlockToHTML(r.body) : '' })) };
+          return { releases: releases.slice(0, 2).map(getReleaseData) };
         },
       },
       ...docsRoutes,
@@ -111,7 +128,7 @@ function getDocsRouteData(entry, docsNav) {
       docPage: {
         id: noExt(entry.name),
         items: entry.type !== 'file'
-          ? await Promise.all(children.map(c => getDocsPageItems(c)))
+          ? await Promise.all(children.map(c => getDocsPageItems(c, true)))
           : undefined,
         data,
       },
@@ -120,25 +137,32 @@ function getDocsRouteData(entry, docsNav) {
 }
 
 
-async function getDocsPageItems(e, prefix) {
+async function getDocsPageItems(e, readContents, prefix) {
   const children = (e.children || []).filter(isValid);
   const dataPath = e.type === 'file' ? e.path : `${e.path}/index.yaml`;
   const directoryPath = path.dirname(dataPath);
   const urlPath = path.join(prefix || '', noExt(e.name));
   const data = await yaml.load(fs.readFileSync(dataPath, { encoding: 'utf-8' }));
-  const media = await prepareMedia(directoryPath, data.media);
 
-  return {
+  const itemData = {
     id: noExt(e.name),
     path: urlPath,
     importance: data.importance,
     title: data.title || 'NO TITLE',
     hasContents: (data.contents || '').trim() !== '',
-    excerpt: data.excerpt,
-    summary: asciidoctor.convert(data.summary || ''),
-    media,
-    items: await Promise.all(children.map(c => getDocsPageItems(c, urlPath))),
-  };
+    items: await Promise.all(children.map(c => getDocsPageItems(c, readContents, urlPath))),
+  }
+
+  if (readContents !== true) {
+    return itemData;
+  } else {
+    return {
+      ...itemData,
+      excerpt: data.excerpt,
+      summary: asciidoctor.convert(data.summary || ''),
+      media: await prepareMedia(directoryPath, data.media),
+    };
+  }
 }
 
 
