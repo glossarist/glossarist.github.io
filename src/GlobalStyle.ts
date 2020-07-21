@@ -83,6 +83,11 @@ export default createGlobalStyle`
     text-decoration: none;
   }
 
+  :global .svg-inline--fa {
+    height: 1em;
+    width: 1em;
+  }
+
   img {
     max-width: 100%;
   }
