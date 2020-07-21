@@ -5,6 +5,10 @@ import { Helmet } from 'react-helmet'
 import { default as GlobalStyle } from './GlobalStyle'
 import { Symbol } from './components/Logo'
 
+// https://github.com/FortAwesome/react-fontawesome/issues/134
+import '@fortawesome/fontawesome-svg-core/styles.css';
+import { config } from '@fortawesome/fontawesome-svg-core';
+config.autoAddCss = false;
 
 // Any routes that start with 'dynamic' will be treated as non-static routes
 //addPrefetchExcludes(['dynamic'])
