@@ -85,17 +85,13 @@ export default () => {
 
   const releasesURL = `${getGithubLink(repoOwner, repoName)}/releases`
 
-  const releases = routeData.releases
-
   const releaseName = releaseData?.name
 
   const releaseDate = releaseData ? moment(releaseData.published_at) : undefined
 
-  const release = releases[0]
+  const releaseNotesAtBuild = releaseAtBuild?.bodyHTML?.trim() || ''
 
-  const releaseNotesAtBuild = release?.bodyHTML?.trim() || ''
-
-  const effectiveReleaseNotes = release.name === releaseName
+  const effectiveReleaseNotes = releaseAtBuild.name === releaseName
     ? releaseNotesAtBuild
     : `<p>${(releaseData?.body || '').split('\n')[0] || ''}</p>`
       // TODO: If there was a new release since last build,
@@ -136,7 +132,7 @@ export default () => {
                       {releaseDate.format('MMMM YYYY')}
                     </time>
                   : null}
-                {release.name === releaseName && effectiveReleaseNotes !== ''
+                {releaseAtBuild.name === releaseName && effectiveReleaseNotes !== ''
                   ? <ReleaseBody dangerouslySetInnerHTML={{ __html: effectiveReleaseNotes }} />
                   : <br />}
                 <Link to={releasesURL}>
