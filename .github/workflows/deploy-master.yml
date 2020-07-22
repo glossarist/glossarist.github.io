@@ -2,7 +2,9 @@ name: deploy-master
 
 on:
   push:
-    branches: [master]
+    branches: [ master ]
+  repository_dispatch:
+    types: [ deploy_master ]
 
 jobs:
   build:
