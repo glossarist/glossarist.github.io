@@ -97,7 +97,7 @@ export default () => {
 
   const effectiveReleaseNotes = release.name === releaseName
     ? releaseNotesAtBuild
-    : `<p>${releaseData?.body.split('\n')[0] || ''}</p>`
+    : `<p>${(releaseData?.body || '').split('\n')[0] || ''}</p>`
       // TODO: If there was a new release since last build,
       // we naively extract the first paragraph from release notes.
       // It may contain unparsed Markdown inline formatting
