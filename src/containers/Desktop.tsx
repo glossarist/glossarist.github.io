@@ -128,8 +128,7 @@ export default () => {
                   Download
                 </Button>}
               <Label>
-                {releaseName ? <strong>Version {releaseName}</strong> : null}
-                {releaseName ? <>&emsp;•&emsp;</> : null}
+                {releaseName ? <><strong>Version {releaseName}</strong>&emsp;•&emsp;</> : null}
                 {releaseDate
                   ? <time dateTime={releaseDate.toISOString()} style={{ whiteSpace: 'nowrap' }}>
                       {releaseDate.fromNow()}
