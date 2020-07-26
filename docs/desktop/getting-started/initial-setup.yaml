@@ -62,9 +62,6 @@ contents: |
   https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token[Learn how to create this token.]
   When creating the token, enable _public_repo_ scope (“Access public repositories”).
 
-  Currently, the password is _not_ saved on your computer.
-  You will need to provide the password each time you start the application.
-
   === Initial synchronization
 
   Once you have provided settings and password, the app will start downloading register data.
