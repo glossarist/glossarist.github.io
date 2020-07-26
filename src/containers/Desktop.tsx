@@ -91,7 +91,7 @@ export default () => {
 
   const releaseNotesAtBuild = releaseAtBuild?.bodyHTML?.trim() || ''
 
-  const effectiveReleaseNotes = releaseAtBuild.name === releaseName
+  const effectiveReleaseNotes = releaseAtBuild?.name === releaseName
     ? releaseNotesAtBuild
     : `<p>${(releaseData?.body || '').split('\n')[0] || ''}</p>`
       // TODO: If there was a new release since last build,
@@ -132,7 +132,7 @@ export default () => {
                       {releaseDate.format('MMMM YYYY')}
                     </time>
                   : null}
-                {releaseAtBuild.name === releaseName && effectiveReleaseNotes !== ''
+                {releaseAtBuild?.name === releaseName && effectiveReleaseNotes !== ''
                   ? <ReleaseBody dangerouslySetInnerHTML={{ __html: effectiveReleaseNotes }} />
                   : <br />}
                 <Link to={releasesURL}>
