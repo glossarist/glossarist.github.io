@@ -140,7 +140,7 @@ export default () => {
                 <Link to={releasesURL}>
                   <FontAwesomeIcon icon={faGithub} />
                   &ensp;
-                  Read release notes
+                  Read all release notes
                 </Link>
               </Label>
           </EntryPoint>
