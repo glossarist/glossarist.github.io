@@ -1,6 +1,8 @@
 name: deploy-master
 
 on:
+  schedule:
+    - cron: '42 */12 * * *'
   push:
     branches: [ master ]
   repository_dispatch:
