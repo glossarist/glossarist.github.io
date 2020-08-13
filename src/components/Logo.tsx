@@ -24,7 +24,7 @@ export const Symbol: React.FC<{ size: number }> = function ({ size }) {
   return <SymbolImage
     size={size}
     src={symbolImage}
-    className="symbol" />;
+    className="symbol" />
 }
 
 

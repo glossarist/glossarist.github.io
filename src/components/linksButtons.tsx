@@ -28,7 +28,7 @@ function ({ to, title, style, className, disabled, children, relative }) {
           href={disabled ? undefined : to}>
         {children}
       </a>
-    );
+    )
 
   } else {
     const _relative = relative === undefined ? to.indexOf('/') !== 0 : relative
@@ -53,7 +53,7 @@ function ({ to, title, style, className, disabled, children, relative }) {
           to={_to}>
         {children}
       </InternalLink>
-    );
+    )
   }
 }
 

@@ -168,14 +168,21 @@ const ReleaseBody = styled.div`
 `
 
 
-function getSpecificDLLink(assets: ReposGetLatestReleaseResponseData["assets"], releaseName: string, userOS: OS): string | undefined {
+function getSpecificDLLink(
+    assets: ReposGetLatestReleaseResponseData["assets"],
+    releaseName: string,
+    userOS: OS): string | undefined {
+
   let expectedOSAssetName: string
+
   if (userOS === 'Windows') {
     expectedOSAssetName = `glossarist-desktop-${releaseName}-portable.exe`
   } else if (userOS === 'macOS') {
     expectedOSAssetName = `glossarist-desktop-${releaseName}.dmg`
   }
+
   const asset = assets.find(a => a.name === expectedOSAssetName)
+
   if (asset && asset.browser_download_url) {
     return asset.browser_download_url
   } else {

@@ -17,6 +17,7 @@ const DOCS_ROOT = '/docs/'
 
 export default () => {
   const { docPage, docsNav }: { docPage: DocPage, docsNav: DocsPageNavItem[] } = useRouteData()
+
   const items = sortByImportance(docPage.items || []).filter(showOnPage)
   const navSorted = sortByImportance(docsNav || [])
 
@@ -77,8 +78,8 @@ export default () => {
 
 function sortByImportance(items: DocsPageNavItem[]): DocsPageNavItem[] {
   var importances = items.map((i, idx) => ({ idx, importance: i.importance || 0 }))
-  importances.sort((i1, i2) => i2.importance - i1.importance);
-  return importances.map(i => items[i.idx]);
+  importances.sort((i1, i2) => i2.importance - i1.importance)
+  return importances.map(i => items[i.idx])
 }
 
 
@@ -95,6 +96,7 @@ function ({ item, unstyled, linkStyle, relative, childLevels, childFilter }) {
   const itemFilter = childFilter || showOnPage
   const items = sortByImportance((item.items || []).filter(itemFilter))
   const Comp = unstyled ? UnstyledLink : Link
+
   return (
     <>
       {item.hasContents || item.items?.length > 0
@@ -133,8 +135,9 @@ interface DocsPageProps {
   item: DocsPageItem
 }
 const DocsPageItemBlock: React.FC<DocsPageProps> = function ({ item }) {
-  const items = sortByImportance((item.items || []).filter(showOnPage));
-  const coverMedia: MediaItem | null = item.media?.length > 0 ? item.media[0] : null;
+  const items = sortByImportance((item.items || []).filter(showOnPage))
+  const coverMedia: MediaItem | null = item.media?.length > 0 ? item.media[0] : null
+
   return (
     <DocsPageBlock>
       {coverMedia
@@ -181,17 +184,17 @@ function ({ src, dimensions }) {
 
 
 function showOnPage(i: DocsPageItem) {
-  return i.items?.length > 0 || i.hasContents || i.excerpt || i.summary;
+  return i.items?.length > 0 || i.hasContents || i.excerpt || i.summary
 }
 
 function showInNav(i: DocsPageNavItem) {
-  return i.items?.length > 0 || i.hasContents;
+  return i.items?.length > 0 || i.hasContents
 }
 
 
-const SIDEBAR_WIDTH_REM = 18;
-const SIDEBAR_BACKGROUND = 'whiteSmoke';
-const HEADER_HEIGHT_REM = 8;
+const SIDEBAR_WIDTH_REM = 18
+const SIDEBAR_BACKGROUND = 'whiteSmoke'
+const HEADER_HEIGHT_REM = 8
 
 
 const GlobalStyle = createGlobalStyle`
