@@ -29,13 +29,6 @@ type ReleaseList = (ReposListReleasesResponseData[number] & { bodyHTML: string }
 
 type OS = 'macOS' | 'Windows'
 
-function getGithubLink(
-  githubRepoOwner: string,
-  githubRepoName: string,
-): string {
-  return `https://github.com/${githubRepoOwner}/${githubRepoName}`
-}
-
 
 export default () => {
   const routeData: { releases: ReleaseList } = useRouteData()
@@ -50,7 +43,10 @@ export default () => {
 
   const [specificDLLink, setSpecificDLLink] =
     useState<string | undefined>(releaseAtBuild && userOS
-      ? getSpecificDLLink(routeData.releases[0]?.assets || [], releaseAtBuild.name, userOS)
+      ? getSpecificDLLink(
+          routeData.releases[0]?.assets || [],
+          releaseAtBuild.name,
+          userOS)
       : undefined)
 
   useEffect(() => {
@@ -65,7 +61,10 @@ export default () => {
 
   useEffect(() => {
     if (releaseData && userOS) {
-      const link = getSpecificDLLink(releaseData.assets, releaseData.name, userOS)
+      const link = getSpecificDLLink(
+        releaseData.assets,
+        releaseData.name,
+        userOS)
       if (link) {
         setSpecificDLLink(link)
       }
@@ -87,7 +86,9 @@ export default () => {
 
   const releaseName = releaseData?.name
 
-  const releaseDate = releaseData ? moment(releaseData.published_at) : undefined
+  const releaseDate = releaseData
+    ? moment(releaseData.published_at)
+    : undefined
 
   const releaseNotesAtBuild = releaseAtBuild?.bodyHTML?.trim() || ''
 
@@ -109,13 +110,17 @@ export default () => {
 
       <Lead>
         <p style={{ textAlign: 'center' }}>
-          Manage a&nbsp;concept&nbsp;system from&nbsp;an&nbsp;app that&nbsp;runs on&nbsp;your&nbsp;computer.
+          Manage a&nbsp;concept&nbsp;system
+          from&nbsp;an&nbsp;app that&nbsp;runs
+          on&nbsp;your&nbsp;computer.
         </p>
 
         <EntryPoints fill labelPosition="bottom">
           <EntryPoint>
             {userOS && specificDLLink
-              ? <Button to={specificDLLink} title={`Download${releaseName ? ` v${releaseName}` : null} for ${userOS}`}>
+              ? <Button
+                    to={specificDLLink}
+                    title={`Download${releaseName ? ` v${releaseName}` : null} for ${userOS}`}>
                   <FontAwesomeIcon icon={faDownload} />
                   &ensp;
                   Download for {userOS}
@@ -125,7 +130,9 @@ export default () => {
                 </Button>}
               <Label>
                 <span style={{ whiteSpace: 'nowrap'}}>
-                  {releaseName ? <><strong>Version {releaseName}</strong>&emsp;•&emsp;</> : null}
+                  {releaseName
+                    ? <><strong>Version {releaseName}</strong>&emsp;•&emsp;</>
+                    : null}
                   {releaseDate
                     ? <time dateTime={releaseDate.toISOString()}>
                         {releaseDate.fromNow()}
@@ -169,10 +176,10 @@ const ReleaseBody = styled.div`
 
 
 function getSpecificDLLink(
-    assets: ReposGetLatestReleaseResponseData["assets"],
-    releaseName: string,
-    userOS: OS): string | undefined {
-
+  assets: ReposGetLatestReleaseResponseData["assets"],
+  releaseName: string,
+  userOS: OS,
+): string | undefined {
   let expectedOSAssetName: string
 
   if (userOS === 'Windows') {
@@ -188,4 +195,12 @@ function getSpecificDLLink(
   } else {
     return undefined
   }
+}
+
+
+function getGithubLink(
+  githubRepoOwner: string,
+  githubRepoName: string,
+): string {
+  return `https://github.com/${githubRepoOwner}/${githubRepoName}`
 }
