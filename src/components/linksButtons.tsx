@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import * as theme from '../theme/colors'
 
 
-interface LinkProps {
+export interface LinkProps {
   to: string
   className?: string
   style?: React.CSSProperties

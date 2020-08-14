@@ -6,7 +6,11 @@ import sFont from 'assets/fonts/Lora-Regular.ttf'
 import * as theme from './theme/colors'
 
 
-export const app = 'body > #root > :first-child > :first-child'
+export const pageContainerSelector = 'body > #root > :first-child > :first-child'
+// If a subsection of the site needs to redefine
+// style of page wrapper (immediate descendant of the router),
+// its container should create a global style and add extra rules
+// inside this selector.
 
 
 export default createGlobalStyle`
@@ -41,40 +45,28 @@ export default createGlobalStyle`
     flex-flow: column nowrap;
   }
 
-  ${app} {
-    margin-left: 1rem;
-    margin-right: 1rem;
-  }
-
   @media screen and (min-width: 800px) {
-    body, body > #root, body > #root > :first-child, ${app} {
+    body, body > #root, body > #root > :first-child {
       flex: 1;
       display: flex;
       flex-flow: column nowrap;
     }
-    ${app} {
+  }
+
+  ${pageContainerSelector} {
+    margin-left: 1rem;
+    margin-right: 1rem;
+
+    @media screen and (min-width: 800px) {
+      flex: 1;
+      display: flex;
+      flex-flow: column nowrap;
+
       margin-left: 10vw;
       margin-right: 10vw;
       align-self: center;
       align-items: stretch;
       justify-content: center;
-    }
-  }
-
-  ${app} > footer {
-    flex-shrink: 0;
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: center;
-    padding: 1.5rem 0;
-    opacity: .5;
-
-    &:hover {
-      opacity: 1;
-    }
-
-    @media screen and (min-width: 800px) {
-      justify-content: flex-end;
     }
   }
 
