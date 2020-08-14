@@ -5,9 +5,11 @@ import * as theme from '../theme/colors'
 import asciidocBaseCSS from '!!raw-loader!../assets/css/asciidoctor.css'
 
 
-export const Asciidoc: React.FC<{ className?: string, content: string }> =
-function ({ className, content }) {
+export const Asciidoc:
+React.FC<{ className?: string, style?: React.CSSProperties, content: string }> =
+function ({ className, style, content }) {
   return <AsciidocStyled
+    style={style}
     className={className}
     dangerouslySetInnerHTML={{ __html: content }} />
 }
