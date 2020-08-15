@@ -16,8 +16,8 @@ interface PageProps {
 const Page: React.FC<PageProps> =
 function ({ title, logoSize, logoLink, children, Header, Main, Footer }) {
 
-  const HeaderComponent: React.ElementType = Header || 'header'
-  const MainComponent: React.ElementType = Main || 'main'
+  const HeaderComponent: React.ElementType = Header || DefaultHeader
+  const MainComponent: React.ElementType = Main || DefaultMain
   const FooterComponent: React.ElementType = Footer || DefaultFooter
 
   return (
@@ -38,6 +38,12 @@ function ({ title, logoSize, logoLink, children, Header, Main, Footer }) {
     </>
   )
 }
+
+
+export const DefaultMain = styled.main``
+
+
+export const DefaultHeader = styled.header``
 
 
 export const DefaultFooter = styled.footer`
