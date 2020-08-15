@@ -137,8 +137,8 @@ function getDocsRouteData(entry, docsNav) {
     const data = {
       ..._data,
       contents: asciidoctor.convert(`:leveloffset: 2\n\n${_data.contents || ''}`),
-      summary: asciidoctor.convert(_data.summary || ''),
       sections: JSON.parse(asciidoctor.convert(_data.contents || '', { backend: 'sectionJSON' }) || '[]'),
+      summary: asciidoctor.convert(_data.summary || '', { doctype: 'inline' }),
       media,
     };
 
@@ -178,7 +178,7 @@ async function getDocsPageItems(e, readContents, prefix) {
     return {
       ...itemData,
       excerpt: data.excerpt,
-      summary: asciidoctor.convert(data.summary || ''),
+      summary: asciidoctor.convert(data.summary || '', { doctype: 'inline' }),
       media: await prepareMedia(directoryPath, data.media),
     };
   }
