@@ -14,6 +14,24 @@ const repoName = 'glossarist-desktop'
 
 const asciidoctor = _asciidoctor();
 
+class SectionJSONExtractor {
+  convert(node, transform) {
+    const nodeName = transform || node.getNodeName()
+    if (nodeName === 'embedded') {
+      return `[\n${node.getContent().replace(/,$/, '')}\n]`
+    } else if (nodeName === 'section' && node.getLevel() === 1) {
+      return `\n  ${JSON.stringify({
+        id: node.getId(),
+        title: node.getTitle(),
+      })},`
+    } else {
+      return ''
+    }
+  }
+}
+
+asciidoctor.ConverterFactory.register(new SectionJSONExtractor(), ['sectionJSON'])
+
 const octokit = new Octokit();
 
 const DOCS_PATH = path.join(__dirname, 'docs');
@@ -120,6 +138,7 @@ function getDocsRouteData(entry, docsNav) {
       ..._data,
       contents: asciidoctor.convert(`:leveloffset: 2\n\n${_data.contents || ''}`),
       summary: asciidoctor.convert(_data.summary || ''),
+      sections: JSON.parse(asciidoctor.convert(_data.contents || '', { backend: 'sectionJSON' }) || '[]'),
       media,
     };
 

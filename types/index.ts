@@ -15,8 +15,12 @@ export interface DocPage {
     excerpt?: string // Super short
     // TODO: Rename “excerpt” to “in-app tooltip”?
 
-    summary?: string // Longer than excerpt, AsciiDoc
-    contents?: string // AsciiDoc
+    summary?: string // Longer than excerpt, AsciiDoc rendered as HTML
+    contents?: string // Asciidoc rendered as HTML
+
+    // Sections extracted from Asciidoc; `name` should correspond to HTML anchor ID
+    sections?: { title: string, id: string }[]
+
     media?: MediaItem[]
   }
 
