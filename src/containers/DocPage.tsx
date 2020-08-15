@@ -30,9 +30,9 @@ export default () => {
         title="Glossarist"
         logoSize={32}
         logoLink="/"
-        Header={PageHeader}
-        Footer={PageFooter}
-        Main={PageMain}>
+        PageHeader={PageHeader}
+        PageFooter={PageFooter}
+        PageMain={PageMain}>
 
       <GlobalStyle />
 

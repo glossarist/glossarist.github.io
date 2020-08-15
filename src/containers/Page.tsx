@@ -9,16 +9,16 @@ interface PageProps {
   title?: string
   logoSize?: number
   logoLink?: string
-  Header?: React.ElementType
-  Main?: React.ElementType
-  Footer?: React.ElementType
+  PageHeader?: React.ElementType
+  PageMain?: React.ElementType
+  PageFooter?: React.ElementType
 }
 const Page: React.FC<PageProps> =
-function ({ title, logoSize, logoLink, children, Header, Main, Footer }) {
+function ({ title, logoSize, logoLink, children, PageHeader, PageMain, PageFooter }) {
 
-  const HeaderComponent: React.ElementType = Header || DefaultHeader
-  const MainComponent: React.ElementType = Main || DefaultMain
-  const FooterComponent: React.ElementType = Footer || DefaultFooter
+  const HeaderComponent: React.ElementType = PageHeader || DefaultHeader
+  const MainComponent: React.ElementType = PageMain || DefaultMain
+  const FooterComponent: React.ElementType = PageFooter || DefaultFooter
 
   return (
     <>
