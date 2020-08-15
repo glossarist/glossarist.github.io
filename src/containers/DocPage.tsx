@@ -5,13 +5,13 @@ import { createGlobalStyle } from 'styled-components'
 import { useRouteData } from 'react-static'
 
 import { DocPage, DocsPageNavItem } from '../../types'
-import { default as Page, DefaultFooter as BasicFooter } from '../containers/Page'
+import { default as Page, DefaultFooter } from '../containers/Page'
 import { Backlink } from '../components/linksButtons'
 import { PageTitle } from '../components/typography'
 import { Asciidoc } from '../components/Asciidoc'
 import { pageContainerSelector } from '../GlobalStyle'
 import { sortItemsByImportance, itemIsNonEmpty } from '../components/docs/util'
-import { Main, Lead, GlobalNav, SIDEBAR_BACKGROUND, SIDEBAR_WIDTH_REM, HEADER_HEIGHT_REM } from '../components/docs/pageElements'
+import { Main, Lead, GlobalNav, NavItemList, SIDEBAR_BACKGROUND, SIDEBAR_WIDTH_REM, HEADER_HEIGHT_REM } from '../components/docs/pageElements'
 import PageBlock from '../components/docs/PageBlock'
 import NavItem from '../components/docs/NavItem'
 
@@ -68,16 +68,18 @@ export default () => {
 
       {navSorted.length > 0
         ? <GlobalNav>
-            {navSorted.map(i =>
-              <li key={i.path}>
-                <NavItem
-                  linkStyle={{ color: '#666' }}
-                  relative={DOCS_ROOT}
-                  unstyled
-                  item={i}
-                  childFilter={i => i.items?.length > 0 || i.hasContents} />
-              </li>
-            )}
+            <NavItemList>
+              {navSorted.map(i =>
+                <li key={i.path}>
+                  <NavItem
+                    linkStyle={{ color: '#666' }}
+                    relative={DOCS_ROOT}
+                    unstyled
+                    item={i}
+                    childFilter={i => i.items?.length > 0 || i.hasContents} />
+                </li>
+              )}
+            </NavItemList>
           </GlobalNav>
         : null}
 
@@ -154,7 +156,7 @@ const PageMain = styled.div`
 `
 
 
-const PageFooter = styled(BasicFooter)`
+const PageFooter = styled(DefaultFooter)`
   @media screen and (min-width: 800px) {
     width: ${SIDEBAR_WIDTH_REM}rem;
     overflow: hidden;

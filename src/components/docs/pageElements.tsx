@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from 'styled-components'
 import { Lead as BasicLead } from '../typography'
 
@@ -13,18 +12,7 @@ export const Lead = styled(BasicLead)`
 `
 
 
-export const GlobalNav: React.FC<{}> = function ({ children }) {
-  return (
-    <NavWrapper>
-      <NavItemList>
-        {children}
-      </NavItemList>
-    </NavWrapper>
-  )
-}
-
-
-const NavWrapper = styled.nav`
+export const GlobalNav = styled.nav`
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
@@ -71,7 +59,7 @@ export const Main = styled.main`
 `
 
 
-const NavItemList = styled.ul`
+export const NavItemList = styled.ul`
   &, ul {
     list-style: none;
     padding-left: 0;
