@@ -8,6 +8,34 @@ import * as theme from '../theme/colors'
 const LINK_BORDER = `1px dotted ${theme.link.css()}`
 
 
+function withoutTrailingSlashes(path: string): string {
+  return path.replace(/^\/|\/$/g, '')
+}
+
+
+export function useNormalizedInternalHRef(to: string, relative?: string | boolean): string {
+  const loc = useLocation().pathname
+
+  const hasAnchor = to.indexOf('#') >= 0
+  const trailingSlash = hasAnchor ? false : true
+
+  const _relative = relative === undefined ? to.indexOf('/') !== 0 : relative
+  const locWithoutSlashes = withoutTrailingSlashes(loc)
+  const prefix = _relative === true
+    ? `/${locWithoutSlashes}${locWithoutSlashes !== '' ? '/' : ''}`
+    : (_relative || '/')
+
+  return `${prefix}${withoutTrailingSlashes(to)}${trailingSlash ? '/' : ''}`
+}
+
+
+export function useInternalLinkCurrentState(normalizedPath: string): boolean {
+  const routePath = (useRoutePath as () => string)()
+
+  return `/${routePath}/` === normalizedPath
+}
+
+
 export interface LinkProps {
   to: string
   className?: string
@@ -18,9 +46,8 @@ export interface LinkProps {
 }
 export const Link: React.FC<LinkProps> =
 function ({ to, title, style, className, disabled, children, relative }) {
-  const loc = useLocation().pathname
-  const hasAnchor = to.indexOf('#') >= 0
-  const routePath = (useRoutePath as () => string)()
+  const _to = useNormalizedInternalHRef(to, relative)
+  const isActive = useInternalLinkCurrentState(_to)
 
   if (to?.startsWith('http') || disabled) {
     return (
@@ -34,27 +61,13 @@ function ({ to, title, style, className, disabled, children, relative }) {
     )
 
   } else {
-    const _relative = relative === undefined ? to.indexOf('/') !== 0 : relative
-    const locWithoutSlashes = loc.replace(/^\/|\/$/g, '')
-    const prefix = _relative === true
-      ? `/${locWithoutSlashes}${locWithoutSlashes !== '' ? '/' : ''}`
-      : (_relative || '/');
-    const trailingSlash = hasAnchor ? false : true;
-    const _to = `${prefix}${to.replace(/^\/|\/$/g, '')}${trailingSlash ? '/' : ''}`
-    const isActive = `/${routePath}/` === _to
 
     return (
       <InternalLink
           title={title}
           className={className}
-          style={{
-            ...(style || {}),
-            fontWeight: isActive ? 'bold' : (style?.fontWeight || undefined),
-            color: isActive ? 'black' : (style?.color || undefined),
-            cursor: isActive ? 'default' : (style?.cursor || undefined),
-            borderBottom: isActive ? 'none' : undefined,
-            textDecoration: isActive ? 'none' : undefined,
-          }}
+          aria-current={isActive ? 'page' : undefined}
+          style={style}
           to={_to}>
         {children}
       </InternalLink>
@@ -118,10 +131,14 @@ const InternalLink = styled(RouterLink)`
   }
 
   &[aria-current=page] {
-    font-weight: bold;
     border-bottom: none;
+    text-decoration: none;
     color: inherit;
     cursor: default;
+  }
+  &[aria-current=page]:hover {
+    border-bottom: none;
+    text-decoration: none;
   }
 `
 

@@ -8,6 +8,7 @@ import { Link } from 'components/linksButtons'
 
 import { sortItemsByImportance, itemIsNonEmpty } from './util'
 import NavItem from './NavItem'
+import { ToCItemList } from './pageElements'
 
 
 interface PageBlockProps {
@@ -34,13 +35,13 @@ const PageBlock: React.FC<PageBlockProps> = function ({ item }) {
         : <p>{item.excerpt}</p>}
 
       {items.length > 0
-        ? <ul className="subitems">
+        ? <ToCItemList>
             {items.map(p =>
               <li key={p.path}>
-                <NavItem item={p} relative childLevels={0} />
+                <NavItem item={p} relative />
               </li>
             )}
-          </ul>
+          </ToCItemList>
         : null}
     </DocsPageBlock>
   )
@@ -49,29 +50,6 @@ const PageBlock: React.FC<PageBlockProps> = function ({ item }) {
 
 const DocsPageBlock = styled.article`
   overflow: hidden;
-
-  ul.subitems {
-    display: flex;
-    margin: 0;
-    padding: 0 0 1rem 0;
-    list-style: none;
-    overflow-x: auto;
-
-    > * + * {
-      margin-left: .5rem;
-
-      &:before {
-        content: "•";
-        margin-right: .5rem;
-      }
-    }
-
-    > * {
-      white-space: nowrap;
-      font-size: 90%;
-      color: grey;
-    }
-  }
 `
 
 

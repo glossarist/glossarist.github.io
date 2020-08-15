@@ -35,7 +35,7 @@ export default createGlobalStyle`
 
   body {
     font-family: 'Helvetica Neue', Helvetica, 'Lucida Grande', Arial, sans-serif;
-    font-size: 16px;
+    font-size: 17px;
     margin: 0;
     padding: 0;
 
@@ -68,6 +68,11 @@ export default createGlobalStyle`
       align-items: stretch;
       justify-content: center;
     }
+  }
+
+  p {
+    font-size: 100%;
+    line-height: 1.5;
   }
 
   a {

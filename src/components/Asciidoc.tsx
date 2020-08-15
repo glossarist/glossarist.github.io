@@ -21,6 +21,9 @@ export default Asciidoc
 const AsciidocStyled = styled.div`
   ${asciidocBaseCSS}
 
+  font-size: 100%;
+  line-height: 1.5;
+
   a, a:link, a:visited {
     color: ${theme.scale[0].darken(1).css()};
   }

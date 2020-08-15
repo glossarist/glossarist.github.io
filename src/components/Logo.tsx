@@ -32,7 +32,7 @@ export const Symbol: React.FC<{ size: number }> = function ({ size }) {
 
 
 export const SymbolImage = styled.img`
-  height: ${(props: { size: number }) => props.size * 2}px;
+  height: ${(props: { size: number }) => props.size * 1.75}px;
   max-height: 100%;
   margin: 1rem 0;
   @media screen and (min-width: 800px) {
@@ -53,7 +53,7 @@ const TextWrapper = styled.h1`
 
   @media screen and (min-width: 800px) {
     text-align: left;
-    font-size: ${(props: { size: number }) => props.size * 0.80}px;
+    font-size: ${(props: { size: number }) => props.size * 0.90}px;
   }
 
   @supports (font-variation-settings: 'wdth' 400) {

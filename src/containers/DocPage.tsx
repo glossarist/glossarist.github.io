@@ -10,14 +10,15 @@ import { PageTitle } from 'components/typography'
 import Asciidoc from 'components/Asciidoc'
 
 import PageBlock from 'components/docs/PageBlock'
-import NavItem from 'components/docs/NavItem'
+import GlobalNavMenuItem from 'components/docs/GlobalNavMenuItem'
 import Logo from 'components/Logo'
 import MaintainingOrgBanner from 'components/MaintainingOrgBanner'
 
 import { sortItemsByImportance, itemIsNonEmpty } from 'components/docs/util'
 import {
-  Main, Lead, GlobalNav, NavItemList,
+  Main, Lead,
   SIDEBAR_BACKGROUND, SIDEBAR_WIDTH_REM, HEADER_HEIGHT_REM, SIDEBAR_BORDER,
+  GlobalNav, GlobalNavTopLevelItemList, PageToC, ToCItemList,
 } from 'components/docs/pageElements'
 
 import { pageContainerSelector } from '../GlobalStyle'
@@ -62,6 +63,19 @@ export default () => {
               : <p>{docPage.data?.excerpt}</p>}
           </Lead>
 
+          {docPage.data.sections.length > 0
+            ? <PageToC>
+                <h3 className="header">In this article</h3>
+                <ToCItemList>
+                  {docPage.data.sections.map(s =>
+                    <li>
+                      <a href={`#${s.id}`}>{s.title}</a>
+                    </li>
+                  )}
+                </ToCItemList>
+              </PageToC>
+            : null}
+
           <Asciidoc content={docPage.data?.contents || ''} />
 
           {items.length > 0
@@ -75,18 +89,11 @@ export default () => {
 
         {navSorted.length > 0
           ? <GlobalNav>
-              <NavItemList>
+              <GlobalNavTopLevelItemList>
                 {navSorted.map(i =>
-                  <li key={i.path}>
-                    <NavItem
-                      linkStyle={{ color: '#666' }}
-                      relative={DOCS_ROOT}
-                      unstyled
-                      item={i}
-                      childFilter={i => i.items?.length > 0 || i.hasContents} />
-                  </li>
+                  <GlobalNavMenuItem item={i} relative={DOCS_ROOT} />
                 )}
-              </NavItemList>
+              </GlobalNavTopLevelItemList>
             </GlobalNav>
           : null}
       </DocsPageMain>
@@ -143,12 +150,12 @@ const DocsPageHeader = styled.header`
     padding-left: 1rem;
     top: 0;
     left: 0;
-    background: ${SIDEBAR_BACKGROUND};
     margin: 0;
 
     > a {
       height: ${HEADER_HEIGHT_REM}rem;
       padding: 0;
+      padding-top: 1rem;
       margin: 0;
       justify-content: flex-start;
     }
