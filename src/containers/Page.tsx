@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Logo } from '../components/Logo'
-import { MaintainingOrgBanner } from '../components/MaintainingOrgBanner'
+import Logo from '../components/Logo'
+import MaintainingOrgBanner from '../components/MaintainingOrgBanner'
 
 
 interface PageProps {

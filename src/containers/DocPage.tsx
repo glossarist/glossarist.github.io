@@ -4,22 +4,24 @@ import styled from 'styled-components'
 import { createGlobalStyle } from 'styled-components'
 import { useRouteData } from 'react-static'
 
-import { DocPage, DocsPageNavItem } from '../../types'
-import { Backlink } from '../components/linksButtons'
-import { PageTitle } from '../components/typography'
-import { Asciidoc } from '../components/Asciidoc'
-import { pageContainerSelector } from '../GlobalStyle'
+import { DocPage, DocsPageNavItem } from 'types'
+import { Backlink } from 'components/linksButtons'
+import { PageTitle } from 'components/typography'
+import Asciidoc from 'components/Asciidoc'
 
-import { sortItemsByImportance, itemIsNonEmpty } from '../components/docs/util'
+import PageBlock from 'components/docs/PageBlock'
+import NavItem from 'components/docs/NavItem'
+import Logo from 'components/Logo'
+import MaintainingOrgBanner from 'components/MaintainingOrgBanner'
+
+import { sortItemsByImportance, itemIsNonEmpty } from 'components/docs/util'
 import {
   Main, Lead, GlobalNav, NavItemList,
   SIDEBAR_BACKGROUND, SIDEBAR_WIDTH_REM, HEADER_HEIGHT_REM,
-} from '../components/docs/pageElements'
+} from 'components/docs/pageElements'
 
-import PageBlock from '../components/docs/PageBlock'
-import NavItem from '../components/docs/NavItem'
-import { Logo } from '../components/Logo'
-import { MaintainingOrgBanner } from '../components/MaintainingOrgBanner'
+import { pageContainerSelector } from '../GlobalStyle'
+
 import { Footer } from './Page'
 
 

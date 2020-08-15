@@ -1,10 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
-import { sortItemsByImportance, itemIsNonEmpty } from './util'
+
 import { DocsPageItem, MediaItem } from 'types'
-import DoubleDPIImage from '../DoubleDPIImage'
-import { Asciidoc } from '../Asciidoc'
-import { Link } from '../linksButtons'
+import DoubleDPIImage from 'components/DoubleDPIImage'
+import Asciidoc from 'components/Asciidoc'
+import { Link } from 'components/linksButtons'
+
+import { sortItemsByImportance, itemIsNonEmpty } from './util'
 import NavItem from './NavItem'
 
 

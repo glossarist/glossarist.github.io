@@ -1,7 +1,9 @@
 import React from 'react'
+
 import { DocsPageNavItem } from 'types'
+import { Link, UnstyledLink, LinkProps } from 'components/linksButtons'
+
 import { sortItemsByImportance, itemIsNonEmpty } from './util'
-import { Link, UnstyledLink, LinkProps } from '../linksButtons'
 
 
 interface NavItemProps {

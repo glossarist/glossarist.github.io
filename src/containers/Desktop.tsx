@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet'
 import { useRouteData } from 'react-static'
+import styled from 'styled-components'
 
 import moment from 'moment'
 
@@ -13,11 +14,10 @@ import { faDownload } from '@fortawesome/free-solid-svg-icons/faDownload'
 import { faBookOpen } from '@fortawesome/free-solid-svg-icons/faBookOpen'
 import { faGithub } from '@fortawesome/free-brands-svg-icons/faGithub'
 
-import { default as Page } from '../containers/Page'
-import { Link, Button } from '../components/linksButtons'
-import { Lead } from '../components/typography'
-import { EntryPoints, EntryPoint, Label } from '../components/entryPoints'
-import styled from 'styled-components'
+import Page from 'containers/Page'
+import { Link, Button } from 'components/linksButtons'
+import { Lead } from 'components/typography'
+import { EntryPoints, EntryPoint, Label } from 'components/entryPoints'
 
 
 const repoOwner = 'glossarist'

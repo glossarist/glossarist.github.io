@@ -10,7 +10,7 @@ interface LogoProps {
   title: string
   linkTo?: string
 }
-export const Logo: React.FC<LogoProps> = function ({ size, title, linkTo }) {
+const Logo: React.FC<LogoProps> = function ({ size, title, linkTo }) {
   return (
     <LogoWrapper to={linkTo || "/"}>
       <Symbol size={size} />
@@ -18,6 +18,9 @@ export const Logo: React.FC<LogoProps> = function ({ size, title, linkTo }) {
     </LogoWrapper>
   )
 }
+
+
+export default Logo
 
 
 export const Symbol: React.FC<{ size: number }> = function ({ size }) {
