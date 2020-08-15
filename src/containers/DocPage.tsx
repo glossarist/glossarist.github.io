@@ -63,7 +63,7 @@ export default () => {
               : <p>{docPage.data?.excerpt}</p>}
           </Lead>
 
-          {docPage.data.sections.length > 0
+          {(docPage.data?.sections || []).length > 0
             ? <PageToC>
                 <h3 className="header">In this article</h3>
                 <ToCItemList>
