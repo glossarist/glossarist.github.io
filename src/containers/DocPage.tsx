@@ -10,11 +10,10 @@ import { Backlink } from '../components/linksButtons'
 import { PageTitle } from '../components/typography'
 import { Asciidoc } from '../components/Asciidoc'
 import { pageContainerSelector } from '../GlobalStyle'
-import {
-  PageBlock, NavItem, PageMain, PageLead, PageNav,
-  SIDEBAR_WIDTH_REM, HEADER_HEIGHT_REM, SIDEBAR_BACKGROUND,
-  sortItemsByImportance, itemIsNonEmpty,
-} from '../components/docs'
+import { sortItemsByImportance, itemIsNonEmpty } from '../components/docs/util'
+import { Main, Lead, GlobalNav, SIDEBAR_BACKGROUND, SIDEBAR_WIDTH_REM, HEADER_HEIGHT_REM } from '../components/docs/pageElements'
+import PageBlock from '../components/docs/PageBlock'
+import NavItem from '../components/docs/NavItem'
 
 
 const DOCS_ROOT = '/docs/'
@@ -31,9 +30,9 @@ export default () => {
         title="Glossarist"
         logoSize={32}
         logoLink="/"
-        Header={Header}
-        Footer={Footer}
-        Main={Main}>
+        Header={PageHeader}
+        Footer={PageFooter}
+        Main={PageMain}>
 
       <GlobalStyle />
 
@@ -41,20 +40,20 @@ export default () => {
         <title>{docPage.data?.title} — Glossarist documentation</title>
       </Helmet>
 
-      <PageMain>
+      <Main>
         <PageTitle>{docPage.data?.title}</PageTitle>
 
         <BacklinkWrapper role="presentation">
           <Backlink />
         </BacklinkWrapper>
 
-        <PageLead>
+        <Lead>
           {docPage.data?.summary
             ? <Asciidoc
                 style={{ marginBottom: '1rem' }}
                 content={docPage.data?.summary || ''} />
             : <p>{docPage.data?.excerpt}</p>}
-        </PageLead>
+        </Lead>
 
         <Asciidoc content={docPage.data?.contents || ''} />
 
@@ -65,10 +64,10 @@ export default () => {
               )}
             </div>
           : null}
-      </PageMain>
+      </Main>
 
       {navSorted.length > 0
-        ? <PageNav>
+        ? <GlobalNav>
             {navSorted.map(i =>
               <li key={i.path}>
                 <NavItem
@@ -79,7 +78,7 @@ export default () => {
                   childFilter={i => i.items?.length > 0 || i.hasContents} />
               </li>
             )}
-          </PageNav>
+          </GlobalNav>
         : null}
 
     </Page>
@@ -105,7 +104,7 @@ const BacklinkWrapper = styled.div`
 `
 
 
-const Header = styled.header`
+const PageHeader = styled.header`
   margin: 0 -1rem;
   background: ${SIDEBAR_BACKGROUND};
 
@@ -142,7 +141,7 @@ const Header = styled.header`
   }
 `
 
-const Main = styled.div`
+const PageMain = styled.div`
   @media screen and (min-width: 800px) {
     margin-left: ${SIDEBAR_WIDTH_REM}rem;
     padding-left: 2rem;
@@ -155,7 +154,7 @@ const Main = styled.div`
 `
 
 
-const Footer = styled(BasicFooter)`
+const PageFooter = styled(BasicFooter)`
   @media screen and (min-width: 800px) {
     width: ${SIDEBAR_WIDTH_REM}rem;
     overflow: hidden;
