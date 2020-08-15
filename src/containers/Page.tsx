@@ -9,44 +9,40 @@ interface PageProps {
   title?: string
   logoSize?: number
   logoLink?: string
-  PageHeader?: React.ElementType
-  PageMain?: React.ElementType
-  PageFooter?: React.ElementType
 }
 const Page: React.FC<PageProps> =
-function ({ title, logoSize, logoLink, children, PageHeader, PageMain, PageFooter }) {
-
-  const HeaderComponent: React.ElementType = PageHeader || DefaultHeader
-  const MainComponent: React.ElementType = PageMain || DefaultMain
-  const FooterComponent: React.ElementType = PageFooter || DefaultFooter
+function ({ title, logoSize, logoLink, children }) {
 
   return (
     <>
-      <HeaderComponent>
+      <header>
         <Logo size={logoSize || 42} title={title || 'Glossarist'} linkTo={logoLink} />
-      </HeaderComponent>
+      </header>
 
-      <MainComponent>
+      <main>
         {children}
-      </MainComponent>
+      </main>
 
-      <FooterComponent>
-        <UnstyledLink to="https://open.ribose.com">
-          <SymbolImage size={10} src={organizationLogoImage} className="org-logo" />
-        </UnstyledLink>
-      </FooterComponent>
+      <Footer>
+        <FooterContents />
+      </Footer>
     </>
   )
 }
 
 
-export const DefaultMain = styled.main``
+export const FooterContents: React.FC<{}> = function () {
+  return (
+    <>
+      <UnstyledLink to="https://open.ribose.com">
+        <SymbolImage size={10} src={organizationLogoImage} className="org-logo" />
+      </UnstyledLink>
+    </>
+  )
+}
 
 
-export const DefaultHeader = styled.header``
-
-
-export const DefaultFooter = styled.footer`
+export const Footer = styled.footer`
   flex-shrink: 0;
   display: flex;
   flex-flow: row nowrap;

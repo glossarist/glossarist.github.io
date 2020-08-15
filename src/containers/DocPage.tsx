@@ -5,7 +5,6 @@ import { createGlobalStyle } from 'styled-components'
 import { useRouteData } from 'react-static'
 
 import { DocPage, DocsPageNavItem } from '../../types'
-import { default as Page, DefaultFooter } from '../containers/Page'
 import { Backlink } from '../components/linksButtons'
 import { PageTitle } from '../components/typography'
 import { Asciidoc } from '../components/Asciidoc'
@@ -14,6 +13,8 @@ import { sortItemsByImportance, itemIsNonEmpty } from '../components/docs/util'
 import { Main, Lead, GlobalNav, NavItemList, SIDEBAR_BACKGROUND, SIDEBAR_WIDTH_REM, HEADER_HEIGHT_REM } from '../components/docs/pageElements'
 import PageBlock from '../components/docs/PageBlock'
 import NavItem from '../components/docs/NavItem'
+import { Logo } from '../components/Logo'
+import { FooterContents, Footer } from './Page'
 
 
 const DOCS_ROOT = '/docs/'
@@ -26,64 +27,66 @@ export default () => {
   const navSorted = sortItemsByImportance(docsNav || [])
 
   return (
-    <Page
-        title="Glossarist"
-        logoSize={32}
-        logoLink="/"
-        PageHeader={PageHeader}
-        PageFooter={PageFooter}
-        PageMain={PageMain}>
-
+    <>
       <GlobalStyle />
 
       <Helmet>
         <title>{docPage.data?.title} — Glossarist documentation</title>
       </Helmet>
 
-      <Main>
-        <PageTitle>{docPage.data?.title}</PageTitle>
+      <PageHeader>
+        <Logo size={32} title="Glossarist" linkTo="/" />
+      </PageHeader>
 
-        <BacklinkWrapper role="presentation">
-          <Backlink />
-        </BacklinkWrapper>
+      <PageMain role="presentation">
+        <Main>
+          <PageTitle>{docPage.data?.title}</PageTitle>
 
-        <Lead>
-          {docPage.data?.summary
-            ? <Asciidoc
-                style={{ marginBottom: '1rem' }}
-                content={docPage.data?.summary || ''} />
-            : <p>{docPage.data?.excerpt}</p>}
-        </Lead>
+          <BacklinkWrapper role="presentation">
+            <Backlink />
+          </BacklinkWrapper>
 
-        <Asciidoc content={docPage.data?.contents || ''} />
+          <Lead>
+            {docPage.data?.summary
+              ? <Asciidoc
+                  style={{ marginBottom: '1rem' }}
+                  content={docPage.data?.summary || ''} />
+              : <p>{docPage.data?.excerpt}</p>}
+          </Lead>
 
-        {items.length > 0
-          ? <div className="blocks">
-              {items.map(p =>
-                <PageBlock key={p.path} item={p} />
-              )}
-            </div>
+          <Asciidoc content={docPage.data?.contents || ''} />
+
+          {items.length > 0
+            ? <div className="blocks">
+                {items.map(p =>
+                  <PageBlock key={p.path} item={p} />
+                )}
+              </div>
+            : null}
+        </Main>
+
+        {navSorted.length > 0
+          ? <GlobalNav>
+              <NavItemList>
+                {navSorted.map(i =>
+                  <li key={i.path}>
+                    <NavItem
+                      linkStyle={{ color: '#666' }}
+                      relative={DOCS_ROOT}
+                      unstyled
+                      item={i}
+                      childFilter={i => i.items?.length > 0 || i.hasContents} />
+                  </li>
+                )}
+              </NavItemList>
+            </GlobalNav>
           : null}
-      </Main>
+      </PageMain>
 
-      {navSorted.length > 0
-        ? <GlobalNav>
-            <NavItemList>
-              {navSorted.map(i =>
-                <li key={i.path}>
-                  <NavItem
-                    linkStyle={{ color: '#666' }}
-                    relative={DOCS_ROOT}
-                    unstyled
-                    item={i}
-                    childFilter={i => i.items?.length > 0 || i.hasContents} />
-                </li>
-              )}
-            </NavItemList>
-          </GlobalNav>
-        : null}
-
-    </Page>
+      <DocsPageFooter>
+        <FooterContents />
+      </DocsPageFooter>
+    </>
   )
 }
 
@@ -156,7 +159,7 @@ const PageMain = styled.div`
 `
 
 
-const PageFooter = styled(DefaultFooter)`
+const DocsPageFooter = styled(Footer)`
   @media screen and (min-width: 800px) {
     width: ${SIDEBAR_WIDTH_REM}rem;
     overflow: hidden;
