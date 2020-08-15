@@ -9,12 +9,18 @@ import { Backlink } from '../components/linksButtons'
 import { PageTitle } from '../components/typography'
 import { Asciidoc } from '../components/Asciidoc'
 import { pageContainerSelector } from '../GlobalStyle'
+
 import { sortItemsByImportance, itemIsNonEmpty } from '../components/docs/util'
-import { Main, Lead, GlobalNav, NavItemList, SIDEBAR_BACKGROUND, SIDEBAR_WIDTH_REM, HEADER_HEIGHT_REM } from '../components/docs/pageElements'
+import {
+  Main, Lead, GlobalNav, NavItemList,
+  SIDEBAR_BACKGROUND, SIDEBAR_WIDTH_REM, HEADER_HEIGHT_REM,
+} from '../components/docs/pageElements'
+
 import PageBlock from '../components/docs/PageBlock'
 import NavItem from '../components/docs/NavItem'
 import { Logo } from '../components/Logo'
-import { FooterContents, Footer } from './Page'
+import { MaintainingOrgBanner } from '../components/MaintainingOrgBanner'
+import { Footer } from './Page'
 
 
 const DOCS_ROOT = '/docs/'
@@ -34,11 +40,11 @@ export default () => {
         <title>{docPage.data?.title} — Glossarist documentation</title>
       </Helmet>
 
-      <PageHeader>
+      <DocsPageHeader>
         <Logo size={32} title="Glossarist" linkTo="/" />
-      </PageHeader>
+      </DocsPageHeader>
 
-      <PageMain role="presentation">
+      <DocsPageMain role="presentation">
         <Main>
           <PageTitle>{docPage.data?.title}</PageTitle>
 
@@ -81,10 +87,10 @@ export default () => {
               </NavItemList>
             </GlobalNav>
           : null}
-      </PageMain>
+      </DocsPageMain>
 
       <DocsPageFooter>
-        <FooterContents />
+        <MaintainingOrgBanner />
       </DocsPageFooter>
     </>
   )
@@ -109,7 +115,7 @@ const BacklinkWrapper = styled.div`
 `
 
 
-const PageHeader = styled.header`
+const DocsPageHeader = styled.header`
   margin: 0 -1rem;
   background: ${SIDEBAR_BACKGROUND};
 
@@ -146,7 +152,7 @@ const PageHeader = styled.header`
   }
 `
 
-const PageMain = styled.div`
+const DocsPageMain = styled.div`
   @media screen and (min-width: 800px) {
     margin-left: ${SIDEBAR_WIDTH_REM}rem;
     padding-left: 2rem;

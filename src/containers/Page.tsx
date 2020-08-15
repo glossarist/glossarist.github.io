@@ -1,8 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import { SymbolImage, Logo } from '../components/Logo'
-import organizationLogoImage from '../assets/riboseopen-logo-dark.svg'
-import { UnstyledLink } from '../components/linksButtons'
+import { Logo } from '../components/Logo'
+import { MaintainingOrgBanner } from '../components/MaintainingOrgBanner'
 
 
 interface PageProps {
@@ -24,19 +23,8 @@ function ({ title, logoSize, logoLink, children }) {
       </main>
 
       <Footer>
-        <FooterContents />
+        <MaintainingOrgBanner />
       </Footer>
-    </>
-  )
-}
-
-
-export const FooterContents: React.FC<{}> = function () {
-  return (
-    <>
-      <UnstyledLink to="https://open.ribose.com">
-        <SymbolImage size={10} src={organizationLogoImage} className="org-logo" />
-      </UnstyledLink>
     </>
   )
 }
