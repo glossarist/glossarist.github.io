@@ -1,9 +1,11 @@
 import styled from 'styled-components'
 import { Lead as BasicLead } from '../typography'
+import chroma from 'chroma-js'
 
 
-export const SIDEBAR_WIDTH_REM = 18
+export const SIDEBAR_WIDTH_REM = 16
 export const SIDEBAR_BACKGROUND = 'whiteSmoke'
+export const SIDEBAR_BORDER = `${chroma('whiteSmoke').darken(0.4).css()} 1px solid`
 export const HEADER_HEIGHT_REM = 8
 
 
@@ -16,7 +18,7 @@ export const GlobalNav = styled.nav`
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
-  font-size: 92%;
+  font-size: 85%;
 
   @media screen and (min-width: 800px) {
     margin-top: 0;
@@ -34,6 +36,7 @@ export const GlobalNav = styled.nav`
     overflow-x: hidden;
 
     background: ${SIDEBAR_BACKGROUND};
+    border-right: ${SIDEBAR_BORDER};
   }
 `
 
@@ -71,5 +74,8 @@ export const NavItemList = styled.ul`
 
   li {
     margin-top: .5rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
   }
 `

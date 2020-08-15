@@ -5,6 +5,9 @@ import styled from 'styled-components'
 import * as theme from '../theme/colors'
 
 
+const LINK_BORDER = `1px dotted ${theme.link.css()}`
+
+
 export interface LinkProps {
   to: string
   className?: string
@@ -49,6 +52,8 @@ function ({ to, title, style, className, disabled, children, relative }) {
             fontWeight: isActive ? 'bold' : (style?.fontWeight || undefined),
             color: isActive ? 'black' : (style?.color || undefined),
             cursor: isActive ? 'default' : (style?.cursor || undefined),
+            borderBottom: isActive ? 'none' : undefined,
+            textDecoration: isActive ? 'none' : undefined,
           }}
           to={_to}>
         {children}
@@ -105,8 +110,12 @@ export const buttonStyle = `
 
 
 const InternalLink = styled(RouterLink)`
-  border-bottom: 1px dotted ${theme.link.css()};
+  border-bottom: ${LINK_BORDER};
   text-decoration: none;
+
+  &:hover {
+    border-bottom-style: solid;
+  }
 
   &[aria-current=page] {
     font-weight: bold;
@@ -120,11 +129,20 @@ const InternalLink = styled(RouterLink)`
 export const UnstyledLink = styled(Link)`
   border-bottom: none;
   color: inherit;
+
+  &:hover {
+    border-bottom: none;
+    text-decoration: underline;
+  }
 `
 
 
-export const Button = styled(Link)`
+export const Button = styled(UnstyledLink)`
   ${buttonStyle}
+
+  &:hover {
+    text-decoration: none;
+  }
 
   ${(props: { disabled?: boolean }) => props.disabled
     ? disabledButtonStyle

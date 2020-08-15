@@ -17,7 +17,7 @@ import MaintainingOrgBanner from 'components/MaintainingOrgBanner'
 import { sortItemsByImportance, itemIsNonEmpty } from 'components/docs/util'
 import {
   Main, Lead, GlobalNav, NavItemList,
-  SIDEBAR_BACKGROUND, SIDEBAR_WIDTH_REM, HEADER_HEIGHT_REM,
+  SIDEBAR_BACKGROUND, SIDEBAR_WIDTH_REM, HEADER_HEIGHT_REM, SIDEBAR_BORDER,
 } from 'components/docs/pageElements'
 
 import { pageContainerSelector } from '../GlobalStyle'
@@ -120,6 +120,7 @@ const BacklinkWrapper = styled.div`
 const DocsPageHeader = styled.header`
   margin: 0 -1rem;
   background: ${SIDEBAR_BACKGROUND};
+  border-right: ${SIDEBAR_BORDER};
 
   > a {
     flex-flow: row nowrap;
