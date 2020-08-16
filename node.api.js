@@ -8,7 +8,7 @@ export default pluginOptions => ({
     const appDocsURLPrefix = 'docs/desktop/ui/';
 
     const docsURLPrefix = 'docs/';
-    const docsSrcPrefix = 'docs/';
+    const docsSrcPrefix = 'docs';
     const docsOutPrefix = 'dist/docs'
 
     for (const r of state.routes) {
