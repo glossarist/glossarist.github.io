@@ -114,8 +114,10 @@ export default {
 
 
 function dirEntryToDocsRoute(entry, nav) {
+  const _isIndexFile = entry.type !== 'file';
   const route = {
-    path: `${noExt(entry.name).replace(/index$/g, '') || '/'}`,
+    path: `${noExt(entry.name) || '/'}`,
+    _isIndexFile,
     children: entry.type !== 'file'
       ? entry.children.filter(isValid).map(c => dirEntryToDocsRoute(c, nav))
       : undefined,

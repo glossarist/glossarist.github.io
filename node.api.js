@@ -21,7 +21,7 @@ export default pluginOptions => ({
           const media = (_data.media || []);
           for (const f of media) {
             fs.copyFileSync(
-              `${docsSrcPrefix}/${path.dirname(id)}/${f.filename}`,
+              `${docsSrcPrefix}/${r._isIndexFile ? id : path.dirname(id)}/${f.filename}`,
               `${docsOutPrefix}/${id}/${f.filename}`);
           }
         }
