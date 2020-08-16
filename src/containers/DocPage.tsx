@@ -53,6 +53,7 @@ export default () => {
           <Lead>
             {docPage.data?.summary
               ? <Asciidoc
+                  inline
                   style={{ marginBottom: '1rem' }}
                   content={docPage.data?.summary || ''} />
               : <p>{docPage.data?.excerpt}</p>}
