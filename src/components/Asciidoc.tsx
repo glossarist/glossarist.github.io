@@ -30,7 +30,9 @@ function ({ content, inline, className, style }) {
 export default Asciidoc
 
 
-const asciidocStyleOverrides = css`
+const asciidocBase = css`
+  ${asciidocBaseCSS}
+
   &, p {
     font-size: 100%;
     line-height: 1.6;
@@ -43,13 +45,11 @@ const asciidocStyleOverrides = css`
 `
 
 const AsciidocStyledInline = styled.p`
-  ${asciidocBaseCSS}
-  ${asciidocStyleOverrides}
+  ${asciidocBase}
 `
 
 const AsciidocStyled = styled.div`
-  ${asciidocBaseCSS}
-  ${asciidocStyleOverrides}
+  ${asciidocBase}
 
   .admonitionblock .content {
     margin-bottom: 1em;
