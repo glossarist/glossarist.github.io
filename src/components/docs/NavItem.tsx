@@ -28,9 +28,9 @@ function ({ item, active, unstyled, relative }) {
     )
   } else if (isActive) {
     label = (
-      <strong aria-current="page">
+      <em aria-current="page">
         {item.title}
-      </strong>
+      </em>
     )
   } else {
     label = (
