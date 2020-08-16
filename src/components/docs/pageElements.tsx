@@ -155,7 +155,6 @@ export const ToCItemList = styled.ul`
 
   > * {
     white-space: nowrap;
-    font-size: 90%;
     color: #444;
   }
 `

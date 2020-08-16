@@ -30,9 +30,11 @@ const PageBlock: React.FC<PageBlockProps> = function ({ item }) {
         ? <h3 className="title"><Link to={item.path}>{item.title}</Link></h3>
         : <h3 className="title" id={item.id}>{item.title}</h3>}
 
-      {item.summary
-        ? <Asciidoc inline className="excerpt" content={item.summary} />
-        : <p className="excerpt">{item.excerpt}</p>}
+      <Excerpt>
+        {item.summary
+          ? <Asciidoc inline content={item.summary} />
+          : <p>{item.excerpt}</p>}
+      </Excerpt>
 
       {items.length > 0
         ? <ToCItemList>
@@ -100,11 +102,12 @@ const DocsPageBlock = styled.article`
     margin-bottom: .25rem;
     z-index: 3;
   }
+`
 
-  > .excerpt {
-    font-size: 85%;
-    z-index: 3;
-  }
+
+const Excerpt = styled.div`
+  font-size: 90%;
+  z-index: 3;
 `
 
 
