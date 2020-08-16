@@ -3,7 +3,7 @@ import dirTree from 'directory-tree'
 import fs from 'fs'
 import yaml from 'js-yaml'
 import _asciidoctor from 'asciidoctor'
-import probe from 'probe-image-size'
+import probeImageSize from 'probe-image-size'
 
 import { Octokit } from '@octokit/rest'
 import marked from 'marked'
@@ -214,7 +214,7 @@ async function prepareMedia(basePath, filenames) {
 
       let width, height;
       try {
-        const probeResult = await probe(stream);
+        const probeResult = await probeImageSize(stream);
         width = parseInt(probeResult.width, 10);
         height = parseInt(probeResult.height, 10);
       } catch (e) {
