@@ -16,8 +16,8 @@ export const Lead = styled(BasicLead)`
 
 export const PageToC = styled.nav`
   background: ${SIDEBAR_BACKGROUND};
-  margin-bottom: 1rem;
-  padding: .25rem 2rem;
+  margin-bottom: 1em;
+  padding: .25rem 1rem;
 
   > .header {
     font-size: 90%;
@@ -27,6 +27,10 @@ export const PageToC = styled.nav`
 
 export const PageBlocks = styled.section`
   margin-top: 2rem;
+
+  > * {
+    margin-bottom: .5rem;
+  }
 
   @media screen and (min-width: 800px) {
     box-sizing: border-box;
@@ -156,4 +160,10 @@ export const ToCItemList = styled.ul`
     white-space: nowrap;
     color: #444;
   }
+`
+
+
+export const PageToCItemList = styled(ToCItemList)`
+  margin: 0 -1rem;
+  padding-left: 1rem;
 `

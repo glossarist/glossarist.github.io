@@ -34,7 +34,7 @@ const asciidocBase = css`
   ${asciidocBaseCSS}
 
   &, p {
-    font-size: 100%;
+    font-size: .95em;
     line-height: 1.6;
     font-weight: 300;
   }
@@ -54,6 +54,16 @@ const AsciidocStyled = styled.div`
   .admonitionblock .content {
     margin-bottom: 1em;
     font-size: inherit;
+  }
+
+  @media screen and (max-width: 800px) {
+    .admonitionblock {
+      > table > tbody > tr {
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: flex-start;
+      }
+    }
   }
 
   p, ol > li p, ul > li p {

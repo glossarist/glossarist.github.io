@@ -17,7 +17,7 @@ import { sortItemsByImportance, itemIsNonEmpty } from 'components/docs/util'
 import {
   Main, Lead,
   SIDEBAR_BACKGROUND, SIDEBAR_WIDTH_REM, HEADER_HEIGHT_REM, SIDEBAR_BORDER,
-  GlobalNav, GlobalNavTopLevelItemList, PageToC, ToCItemList, PageBlocks,
+  GlobalNav, GlobalNavTopLevelItemList, PageToC, PageBlocks, PageToCItemList,
 } from 'components/docs/pageElements'
 
 import { pageContainerSelector } from '../GlobalStyle'
@@ -62,13 +62,13 @@ export default () => {
           {(docPage.data?.sections || []).length > 0
             ? <PageToC>
                 <h3 className="header">In this article</h3>
-                <ToCItemList>
+                <PageToCItemList>
                   {docPage.data.sections.map(s =>
                     <li>
                       <a href={`#${s.id}`}>{s.title}</a>
                     </li>
                   )}
-                </ToCItemList>
+                </PageToCItemList>
               </PageToC>
             : null}
 

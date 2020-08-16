@@ -37,13 +37,13 @@ const PageBlock: React.FC<PageBlockProps> = function ({ item }) {
       </Excerpt>
 
       {items.length > 0
-        ? <ToCItemList>
+        ? <BlockToC>
             {items.map(p =>
               <li key={p.path}>
                 <NavItem item={p} relative />
               </li>
             )}
-          </ToCItemList>
+          </BlockToC>
         : null}
     </DocsPageBlock>
   )
@@ -89,6 +89,9 @@ const CoverMediaImage = styled(DoubleDPIImage)`
 `
 
 
+const BLOCK_SIDE_PADDING = '1rem'
+
+
 const DocsPageBlock = styled.article`
   position: relative;
   overflow: hidden;
@@ -96,7 +99,7 @@ const DocsPageBlock = styled.article`
   flex-flow: column nowrap;
   justify-content: space-between;
 
-  padding: 0 1rem;
+  padding: 0 ${BLOCK_SIDE_PADDING};
   border: ${SIDEBAR_BORDER};
 
   > .title {
@@ -111,6 +114,12 @@ const DocsPageBlock = styled.article`
 const Excerpt = styled.div`
   font-size: 90%;
   z-index: 3;
+`
+
+
+const BlockToC = styled(ToCItemList)`
+  margin: 0 -${BLOCK_SIDE_PADDING};
+  padding-left: ${BLOCK_SIDE_PADDING};
 `
 
 
