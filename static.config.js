@@ -204,6 +204,10 @@ function isValid(entry) {
 }
 
 
+/* Goes through spceified files and attaches metadata
+   (such as image dimensions).
+   TODO: Can also handle resizing. */
+
 async function prepareMedia(basePath, filenames) {
   if ((filenames || []).length < 1) {
     return [];

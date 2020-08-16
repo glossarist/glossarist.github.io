@@ -13,6 +13,7 @@ export default pluginOptions => ({
 
     for (const r of state.routes) {
 
+      // Images
       if (r.path.indexOf(docsURLPrefix) === 0) {
         const id = r.path.replace(docsURLPrefix, '');
         const _data = r.data?.docPage?.data;
@@ -27,6 +28,7 @@ export default pluginOptions => ({
         }
       }
 
+      // In-app docs
       if (r.path.indexOf(appDocsURLPrefix) === 0) {
         const id = r.path.replace(appDocsURLPrefix, '');
         const _data = r.data?.docPage?.data;
