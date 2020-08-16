@@ -185,8 +185,11 @@ async function getDocsPageItems(e, readContents, prefix) {
 }
 
 
+const DATA_FILE_EXT = '.yaml'
+
+
 function noExt(filename) {
-  return path.basename(filename, '.yaml')
+  return path.basename(filename, DATA_FILE_EXT)
 }
 
 
