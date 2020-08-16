@@ -5,7 +5,6 @@ import { createGlobalStyle } from 'styled-components'
 import { useRouteData } from 'react-static'
 
 import { DocPage, DocsPageNavItem } from 'types'
-import { Backlink } from 'components/linksButtons'
 import { PageTitle } from 'components/typography'
 import Asciidoc from 'components/Asciidoc'
 
@@ -50,10 +49,6 @@ export default () => {
       <DocsPageMain role="presentation">
         <Main>
           <PageTitle>{docPage.data?.title}</PageTitle>
-
-          <BacklinkWrapper role="presentation">
-            <Backlink />
-          </BacklinkWrapper>
 
           <Lead>
             {docPage.data?.summary
@@ -114,13 +109,6 @@ const GlobalStyle = createGlobalStyle`
       align-self: stretch;
     }
   }
-`
-
-
-const BacklinkWrapper = styled.div`
-  margin-top: -.5rem;
-  margin-bottom: 1rem;
-  font-size: 90%;
 `
 
 
