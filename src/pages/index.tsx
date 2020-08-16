@@ -57,9 +57,10 @@ const Users = styled.ul`
 
   > * {
     display: block;
-    margin: 1em 0;
+    margin: 1rem 0;
     padding-left: 2.5em;
     position: relative;
+    line-height: 1;
 
     a:link, a:visited {
       color: inherit;
@@ -68,7 +69,7 @@ const Users = styled.ul`
     > img:first-child {
       vertical-align: middle;
       height: 2em;
-      top: -.35em;
+      top: -.5em;
       left: 0;
       position: absolute;
     }

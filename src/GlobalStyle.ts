@@ -1,6 +1,5 @@
 import { createGlobalStyle } from 'styled-components'
 
-import vFont from 'assets/fonts/Lora.ttf'
 import sFont from 'assets/fonts/Lora-Regular.ttf'
 
 import * as theme from './theme/colors'
@@ -21,21 +20,16 @@ export default createGlobalStyle`
     font-style: normal;
   }
 
-  @font-face {
-    font-family: Lora;
-    src: url('${vFont}');
-    font-weight: 400;
-    font-style: normal;
-  }
-
   * {
     scroll-behavior: smooth;
     box-sizing: border-box;
   }
 
   body {
-    font-family: 'Helvetica Neue', Helvetica, 'Lucida Grande', Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     font-size: 17px;
+    font-weight: 300;
+    -moz-osx-font-smoothing: grayscale;
     margin: 0;
     padding: 0;
 

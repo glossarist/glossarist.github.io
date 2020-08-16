@@ -18,7 +18,7 @@ import { sortItemsByImportance, itemIsNonEmpty } from 'components/docs/util'
 import {
   Main, Lead,
   SIDEBAR_BACKGROUND, SIDEBAR_WIDTH_REM, HEADER_HEIGHT_REM, SIDEBAR_BORDER,
-  GlobalNav, GlobalNavTopLevelItemList, PageToC, ToCItemList,
+  GlobalNav, GlobalNavTopLevelItemList, PageToC, ToCItemList, PageBlocks,
 } from 'components/docs/pageElements'
 
 import { pageContainerSelector } from '../GlobalStyle'
@@ -79,11 +79,11 @@ export default () => {
           <Asciidoc content={docPage.data?.contents || ''} />
 
           {items.length > 0
-            ? <div className="blocks">
+            ? <PageBlocks>
                 {items.map(p =>
                   <PageBlock key={p.path} item={p} />
                 )}
-              </div>
+              </PageBlocks>
             : null}
         </Main>
 

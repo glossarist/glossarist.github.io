@@ -20,7 +20,7 @@ function ({ item, active, unstyled, relative }) {
   if (showAsLink) {
     label = (
       <LinkComponent
-          style={{ color: '#666' }}
+          style={{ color: '#444' }}
           to={item.path}
           relative={relative}>
         {item.title}
@@ -28,9 +28,9 @@ function ({ item, active, unstyled, relative }) {
     )
   } else if (isActive) {
     label = (
-      <em aria-current="page">
+      <strong aria-current="page">
         {item.title}
-      </em>
+      </strong>
     )
   } else {
     label = (

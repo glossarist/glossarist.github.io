@@ -2,8 +2,8 @@ import styled from 'styled-components'
 
 
 export const PageTitle = styled.h2`
-  font-weight: normal;
-  font-size: 2rem;
+  font-weight: 300;
+  font-size: 3em;
 `
 
 export const Lead = styled.div`

@@ -64,7 +64,7 @@ export const EntryPoint = styled.div`
 
 export const Label = styled.div`
   font-size: 80%;
-  color: grey;
+  color: #444;
   margin: 0;
   margin-left: .1rem;
 

@@ -10,18 +10,37 @@ export const HEADER_HEIGHT_REM = 4
 
 
 export const Lead = styled(BasicLead)`
-  margin-bottom: 2rem;
 `
 
 
 export const PageToC = styled.nav`
   background: ${SIDEBAR_BACKGROUND};
-  margin: 0 -2rem;
   margin-bottom: 1rem;
   padding: .25rem 2rem;
 
   > .header {
     font-size: 90%;
+  }
+`
+
+
+export const PageBlocks = styled.section`
+  margin-top: 2rem;
+
+  @media screen and (min-width: 800px) {
+    box-sizing: border-box;
+
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+
+    > * {
+      box-sizing: border-box;
+      flex: 1 1 20em;
+      padding: 0 1rem;
+      margin: 0 1rem 1rem 0;
+      border: ${SIDEBAR_BORDER};
+    }
   }
 `
 
@@ -53,7 +72,7 @@ export const GlobalNav = styled.nav`
 
 
 export const Main = styled.main`
-  padding-bottom: 1rem;
+  margin-bottom: 2em;
 
   > .blocks {
     article + article {
@@ -116,7 +135,6 @@ export const GlobalNavTopLevelItemList = styled(GlobalNavItemList)`
 
 export const ToCItemList = styled.ul`
   margin: 0;
-  margin-top: 1rem;
 
   font-size: 90%;
   line-height: 1.5;
@@ -138,6 +156,6 @@ export const ToCItemList = styled.ul`
   > * {
     white-space: nowrap;
     font-size: 90%;
-    color: grey;
+    color: #444;
   }
 `

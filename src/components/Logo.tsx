@@ -55,11 +55,6 @@ const TextWrapper = styled.h1`
     text-align: left;
     font-size: ${(props: { size: number }) => props.size * 0.90}px;
   }
-
-  @supports (font-variation-settings: 'wdth' 400) {
-    font-family: Lora, Georgia, serif;
-    font-variation-settings: 'wght' 400;
-  }
 `
 
 const LogoWrapper = styled(Link)`

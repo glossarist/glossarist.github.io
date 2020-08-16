@@ -106,6 +106,7 @@ export const buttonStyle = `
   border-radius: .25rem;
   padding: .5em 1rem;
   color: white;
+  font-weight: 400;
 
   & + & {
     margin-left: .5rem;

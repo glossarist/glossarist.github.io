@@ -6,31 +6,72 @@ import asciidocBaseCSS from '!!raw-loader!../assets/css/asciidoctor.css'
 
 
 const Asciidoc:
-React.FC<{ className?: string, style?: React.CSSProperties, content: string }> =
-function ({ className, style, content }) {
-  return <AsciidocStyled
-    style={style}
-    className={className}
-    dangerouslySetInnerHTML={{ __html: content }} />
+React.FC<{
+  content: string
+  inline?: boolean
+  className?: string
+  style?: React.CSSProperties
+}> =
+function ({ content, inline, className, style }) {
+  if (inline) {
+    return <AsciidocStyledInline
+      style={style}
+      className={className}
+      dangerouslySetInnerHTML={{ __html: content }} />
+  } else {
+    return <AsciidocStyled
+      style={style}
+      className={className}
+      dangerouslySetInnerHTML={{ __html: content }} />
+  }
 }
 
 
 export default Asciidoc
 
 
-const AsciidocStyled = styled.div`
-  ${asciidocBaseCSS}
-
-  font-size: 100%;
-  line-height: 1.5;
+const asciidocStyleOverrides = `
+  &, p {
+    font-size: 100%;
+    line-height: 1.6;
+    font-weight: 300;
+  }
 
   a, a:link, a:visited {
     color: ${theme.scale[0].darken(1).css()};
   }
+`
 
-  p, .admonitionblock .content {
-    margin-bottom: 1rem;
+const AsciidocStyledInline = styled.p`
+  ${asciidocBaseCSS}
+  ${asciidocStyleOverrides}
+`
+
+const AsciidocStyled = styled.div`
+  ${asciidocBaseCSS}
+  ${asciidocStyleOverrides}
+
+  .admonitionblock .content {
+    margin-bottom: 1em;
     font-size: inherit;
+  }
+
+  p, ol > li p, ul > li p {
+    margin-bottom: 0;
+  }
+
+  p + p {
+    text-indent: 1.5em;
+  }
+
+  .imageblock, .admonitionblock {
+    margin-top: 1em;
+  }
+
+  .paragraph + .paragraph {
+    p {
+      text-indent: 1.5em;
+    }
   }
 
   @media screen and (min-width: 800px) {
