@@ -8,7 +8,7 @@ import { Link } from 'components/linksButtons'
 
 import { sortItemsByImportance, itemIsNonEmpty } from './util'
 import NavItem from './NavItem'
-import { ToCItemList } from './pageElements'
+import { ToCItemList, SIDEBAR_BORDER } from './pageElements'
 
 
 interface PageBlockProps {
@@ -95,6 +95,9 @@ const DocsPageBlock = styled.article`
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
+
+  padding: 0 1rem;
+  border: ${SIDEBAR_BORDER};
 
   > .title {
     font-weight: 300;

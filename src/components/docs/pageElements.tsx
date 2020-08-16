@@ -36,11 +36,9 @@ export const PageBlocks = styled.section`
     justify-content: center;
 
     > * {
-      box-sizing: border-box;
       flex: 1 1 20em;
-      padding: 0 1rem;
+      box-sizing: border-box;
       margin: 0 1rem 1rem 0;
-      border: ${SIDEBAR_BORDER};
     }
   }
 `
