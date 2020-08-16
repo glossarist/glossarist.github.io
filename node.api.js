@@ -44,6 +44,6 @@ export default pluginOptions => ({
       }
 
     }
-    return state
+    return state;
   },
-})
+});
