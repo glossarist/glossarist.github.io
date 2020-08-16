@@ -10,6 +10,7 @@ export const HEADER_HEIGHT_REM = 4
 
 
 export const Lead = styled(BasicLead)`
+  margin-bottom: 1em;
 `
 
 
