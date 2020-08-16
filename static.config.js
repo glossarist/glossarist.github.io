@@ -66,7 +66,7 @@ export default {
   entry: path.join(__dirname, 'src', 'index.tsx'),
 
   getRoutes: async () => {
-    const docsDirTree = dirTree(DOCS_PATH, { extensions:/\.yaml$/ });
+    const docsDirTree = dirTree(DOCS_PATH, { extensions: /\.yaml$/ });
     const docsNav = await Promise.all(docsDirTree.children.filter(isValid).map(c => getDocsPageItems(c)));
     const docsRoutes = [docsDirTree].map(e => dirEntryToDocsRoute(e, docsNav));
 
