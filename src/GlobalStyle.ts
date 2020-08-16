@@ -16,7 +16,7 @@ export default createGlobalStyle`
   @font-face {
     font-family: LoraRegular;
     src: url('${sFont}');
-    font-weight: normal;
+    font-weight: 400;
     font-style: normal;
   }
 
