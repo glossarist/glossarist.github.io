@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import { DocsPageNavItem } from 'types'
 import {
@@ -52,7 +52,7 @@ function ({ item, relative, childLevels }) {
 const GlobalNavMenuLI = styled.li`
 ${(props: { active: boolean }) =>
     props.active
-    ? `
+    ? css`
         background: rgba(255, 255, 255, 0.7);
         box-shadow: rgba(0, 0, 0, 0.2) -.5rem 0 0 0;
       `

@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { Link } from '@reach/router'
 
 import symbolImage from 'assets/Symbol.svg'
@@ -32,7 +32,7 @@ export const Symbol: React.FC<{ size: number }> = function ({ size }) {
 
 
 export const SymbolImage = styled.img`
-  height: ${(props: { size: number }) => props.size * 1.75}px;
+  height: ${(props: { size: number }) => css`${props.size * 1.75}px`};
   max-height: 100%;
   margin: 1rem 0;
   @media screen and (min-width: 800px) {
@@ -53,7 +53,7 @@ const TextWrapper = styled.h1`
 
   @media screen and (min-width: 800px) {
     text-align: left;
-    font-size: ${(props: { size: number }) => props.size * 0.90}px;
+    font-size: ${(props: { size: number }) => css`${props.size * 0.90}px`};
   }
 `
 

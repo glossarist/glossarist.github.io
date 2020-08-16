@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link as RouterLink, useLocation } from '@reach/router'
 import { useRoutePath } from 'react-static'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import * as theme from '../theme/colors'
 
 
@@ -81,12 +81,12 @@ export const Backlink: React.FC<{ className?: string }> = function ({ className 
 }
 
 
-export const disabledButtonStyle = `
+export const disabledButtonStyle = css`
   cursor: not-allowed;
   background: silver;
 `
 
-export const enabledButtonStyle = `
+export const enabledButtonStyle = css`
   text-shadow: rgba(0, 0, 0, 0.4) .05rem .05rem .1rem;
   box-shadow:
     ${theme.link.darken(.5).css()} 0 0 0rem .1rem inset,
@@ -101,7 +101,7 @@ export const enabledButtonStyle = `
   }
 `
 
-export const buttonStyle = `
+export const buttonStyle = css`
   border: none;
   border-radius: .25rem;
   padding: .5em 1rem;

@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import * as theme from '../theme/colors'
 import asciidocBaseCSS from '!!raw-loader!../assets/css/asciidoctor.css'
@@ -30,7 +30,7 @@ function ({ content, inline, className, style }) {
 export default Asciidoc
 
 
-const asciidocStyleOverrides = `
+const asciidocStyleOverrides = css`
   &, p {
     font-size: 100%;
     line-height: 1.6;

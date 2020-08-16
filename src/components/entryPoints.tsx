@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 
 interface EntryPointsProps {
@@ -40,7 +40,7 @@ styled.div`
       : 'flex-start'};
 
     > * {
-      ${(props: EntryPointsProps) => props.fill ? 'flex: 1;' : ''}
+      ${(props: EntryPointsProps) => props.fill ? css`flex: 1;` : ''}
       margin-top: 0;
     }
 
