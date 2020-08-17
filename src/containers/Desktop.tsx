@@ -16,7 +16,7 @@ import { faGithub } from '@fortawesome/free-brands-svg-icons/faGithub'
 
 import Page from 'containers/Page'
 import { Link, Button } from 'components/linksButtons'
-import { Lead } from 'components/typography'
+import { Lead } from '@riboseinc/aperis-doc-pages/typography'
 import { EntryPoints, EntryPoint, Label } from 'components/entryPoints'
 
 

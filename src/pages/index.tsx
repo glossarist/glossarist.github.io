@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 import Page from 'containers/Page'
 import { Button, UnstyledLink } from 'components/linksButtons'
-import { Lead } from 'components/typography'
+import { Lead } from '@riboseinc/aperis-doc-pages/typography'
 import { EntryPoints, EntryPoint, Audience } from 'components/entryPoints'
 import { Section } from 'components/RowSection'
 import isoSymbol from 'assets/iso-symbol.svg'

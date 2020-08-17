@@ -13,9 +13,7 @@ function withoutTrailingSlashes(path: string): string {
 }
 
 
-export function useNormalizedInternalHRef(to: string, relative?: string | boolean): string {
-  const loc = useLocation().pathname
-
+export function normalizeInternalHRef(loc: string, to: string, relative?: string | boolean): string {
   const hasAnchor = to.indexOf('#') >= 0
   const trailingSlash = hasAnchor ? false : true
 
@@ -38,15 +36,16 @@ export function useInternalLinkCurrentState(normalizedPath: string): boolean {
 
 export interface LinkProps {
   to: string
+  relative?: string | boolean
+  unstyled?: boolean
+  disabled?: boolean
+  title?: string
   className?: string
   style?: React.CSSProperties
-  disabled?: boolean
-  relative?: string | boolean
-  title?: string
 }
 export const Link: React.FC<LinkProps> =
-function ({ to, title, style, className, disabled, children, relative }) {
-  const _to = useNormalizedInternalHRef(to, relative)
+function ({ to, relative, unstyled, disabled, title, className, style, children }) {
+  const _to = normalizeInternalHRef(useLocation().pathname, to, relative)
   const isActive = useInternalLinkCurrentState(_to)
 
   if (to?.startsWith('http') || disabled) {
@@ -59,14 +58,13 @@ function ({ to, title, style, className, disabled, children, relative }) {
         {children}
       </a>
     )
-
   } else {
-
     return (
       <InternalLink
           title={title}
           className={className}
           aria-current={isActive ? 'page' : undefined}
+          unstyled={unstyled}
           style={style}
           to={_to}>
         {children}
@@ -76,9 +74,46 @@ function ({ to, title, style, className, disabled, children, relative }) {
 }
 
 
-export const Backlink: React.FC<{ className?: string }> = function ({ className }) {
-  return <UnstyledLink className={className} to="..">&larr; Back</UnstyledLink>
-}
+const InternalLink = styled(RouterLink)`
+  text-decoration: none;
+
+  ${(props: { unstyled?: boolean }) => !props.unstyled
+    ? css`
+        border-bottom: ${LINK_BORDER};
+        &:hover {
+          border-bottom-style: solid;
+        }
+      `
+    : css`
+        color: inherit;
+        &:hover {
+          border-bottom: none;
+          text-decoration: underline;
+        }
+      `}
+
+  &[aria-current=page] {
+    border-bottom: none;
+    text-decoration: none;
+    color: inherit;
+    cursor: default;
+  }
+  &[aria-current=page]:hover {
+    border-bottom: none;
+    text-decoration: none;
+  }
+`
+
+
+export const UnstyledLink = styled(Link)`
+  border-bottom: none;
+  color: inherit;
+
+  &:hover {
+    border-bottom: none;
+    text-decoration: underline;
+  }
+`
 
 
 export const disabledButtonStyle = css`
@@ -120,38 +155,6 @@ export const buttonStyle = css`
   transition: box-shadow .1s linear, text-shadow .1s linear, background-position .1s linear;
   background-size: 200% 200%;
   background-position: 0% 30%;
-`
-
-
-const InternalLink = styled(RouterLink)`
-  border-bottom: ${LINK_BORDER};
-  text-decoration: none;
-
-  &:hover {
-    border-bottom-style: solid;
-  }
-
-  &[aria-current=page] {
-    border-bottom: none;
-    text-decoration: none;
-    color: inherit;
-    cursor: default;
-  }
-  &[aria-current=page]:hover {
-    border-bottom: none;
-    text-decoration: none;
-  }
-`
-
-
-export const UnstyledLink = styled(Link)`
-  border-bottom: none;
-  color: inherit;
-
-  &:hover {
-    border-bottom: none;
-    text-decoration: underline;
-  }
 `
 
 

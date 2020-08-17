@@ -1,25 +1,16 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
-import styled from 'styled-components'
-import { useRouteData } from 'react-static'
+import { useRouteData, useRoutePath } from 'react-static'
 
-import { DocPage, DocsPageNavItem } from 'types'
-import { PageTitle } from 'components/typography'
+import { DocPage as DocPageComponent } from '@riboseinc/aperis-doc-pages'
+import { DocPage, DocsPageNavItem } from '@riboseinc/aperis-doc-pages/types'
 import Asciidoc from 'components/Asciidoc'
 
-import PageBlock from 'components/docs/PageBlock'
-import GlobalNavMenuItem from 'components/docs/GlobalNavMenuItem'
 import Logo from 'components/Logo'
+
+import { Link, normalizeInternalHRef } from 'components/linksButtons'
 import MaintainingOrgBanner from 'components/MaintainingOrgBanner'
-
-import { sortItemsByImportance, itemIsNonEmpty } from 'components/docs/util'
-import {
-  Main, Lead,
-  SIDEBAR_BACKGROUND, SIDEBAR_WIDTH_REM, HEADER_HEIGHT_REM, SIDEBAR_BORDER,
-  GlobalNav, GlobalNavTopLevelItemList, PageToC, PageBlocks, PageToCItemList,
-} from 'components/docs/pageElements'
-
-import { Footer } from './Page'
+import { useLocation } from '@reach/router'
 
 
 const DOCS_ROOT = '/docs/'
@@ -27,9 +18,13 @@ const DOCS_ROOT = '/docs/'
 
 export default () => {
   const { docPage, docsNav }: { docPage: DocPage, docsNav: DocsPageNavItem[] } = useRouteData()
+  const loc = useLocation().pathname
+  const routePath = (useRoutePath as () => string)()
 
-  const items = sortItemsByImportance(docPage.items || []).filter(itemIsNonEmpty)
-  const navSorted = sortItemsByImportance(docsNav || [])
+  function pathIsCurrent(path: string, relative?: string | boolean) {
+    return normalizeInternalHRef(loc, path, relative) === `/${routePath}/`
+  }
+
 
   return (
     <>
@@ -37,128 +32,16 @@ export default () => {
         <title>{docPage.data?.title} — Glossarist documentation</title>
       </Helmet>
 
-      <DocsPageHeader>
-        <Logo size={32} title="Glossarist" linkTo="/" />
-      </DocsPageHeader>
-
-      <DocsPageMain role="presentation">
-        <Main>
-          <PageTitle>{docPage.data?.title}</PageTitle>
-
-          <Lead>
-            {docPage.data?.summary
-              ? <Asciidoc
-                  inline
-                  style={{ marginBottom: '1rem' }}
-                  content={docPage.data?.summary || ''} />
-              : <p>{docPage.data?.excerpt}</p>}
-          </Lead>
-
-          {(docPage.data?.sections || []).length > 0
-            ? <PageToC>
-                <h3 className="header">In this article</h3>
-                <PageToCItemList>
-                  {docPage.data.sections.map(s =>
-                    <li>
-                      <a href={`#${s.id}`}>{s.title}</a>
-                    </li>
-                  )}
-                </PageToCItemList>
-              </PageToC>
-            : null}
-
-          <Asciidoc content={docPage.data?.contents || ''} />
-
-          {items.length > 0
-            ? <PageBlocks>
-                {items.map(p =>
-                  <PageBlock key={p.path} item={p} />
-                )}
-              </PageBlocks>
-            : null}
-        </Main>
-
-        {navSorted.length > 0
-          ? <GlobalNav>
-              <GlobalNavTopLevelItemList>
-                {navSorted.map(i =>
-                  <GlobalNavMenuItem item={i} relative={DOCS_ROOT} />
-                )}
-              </GlobalNavTopLevelItemList>
-            </GlobalNav>
-          : null}
-      </DocsPageMain>
-
-      <DocsPageFooter>
-        <MaintainingOrgBanner />
-      </DocsPageFooter>
+      <DocPageComponent
+        AsciidocComponent={Asciidoc}
+        LinkComponent={Link}
+        pathIsCurrent={pathIsCurrent}
+        rootURLPath={DOCS_ROOT}
+        header={<Logo size={32} title="Glossarist" linkTo="/" />}
+        footer={<MaintainingOrgBanner />}
+        page={docPage}
+        nav={docsNav}
+      />
     </>
   )
 }
-
-
-const DocsPageHeader = styled.header`
-  margin: 0 -1rem;
-  background: ${SIDEBAR_BACKGROUND};
-  border-right: ${SIDEBAR_BORDER};
-
-  > a {
-    flex-flow: row nowrap;
-  }
-
-  img {
-    margin: 0;
-  }
-
-  h1 {
-    font-size: 110%;
-    text-align: left;
-  }
-
-  @media screen and (min-width: 800px) {
-    align-self: unset;
-    width: ${SIDEBAR_WIDTH_REM}rem;
-    overflow: hidden;
-    position: fixed;
-    padding-left: 1rem;
-    top: 0;
-    left: 0;
-    margin: 0;
-
-    > a {
-      height: ${HEADER_HEIGHT_REM}rem;
-      padding: 0;
-      padding-top: 1rem;
-      margin: 0;
-      justify-content: flex-start;
-    }
-  }
-`
-
-const DocsPageMain = styled.div`
-  margin: 0 1em;
-
-  @media screen and (min-width: 800px) {
-    margin-right: 0;
-    margin-left: ${SIDEBAR_WIDTH_REM}rem;
-    padding-left: 2rem;
-    padding-top: 1.75rem;
-    padding-right: 2rem;
-
-    flex: 1;
-    overflow-y: auto;
-  }
-`
-
-
-const DocsPageFooter = styled(Footer)`
-  @media screen and (min-width: 800px) {
-    width: ${SIDEBAR_WIDTH_REM}rem;
-    overflow: hidden;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    padding-left: 2rem;
-    justify-content: flex-start;
-  }
-`

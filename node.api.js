@@ -7,26 +7,7 @@ export default pluginOptions => ({
     const appDocsOutPrefix = 'dist/_in_app_help/';
     const appDocsURLPrefix = 'docs/desktop/ui/';
 
-    const docsURLPrefix = 'docs/';
-    const docsSrcPrefix = 'docs';
-    const docsOutPrefix = 'dist/docs';
-
     for (const r of state.routes) {
-
-      // Images
-      if (r.path.indexOf(docsURLPrefix) === 0) {
-        const id = r.path.replace(docsURLPrefix, '');
-        const _data = r.data?.docPage?.data;
-        if (!_data) {
-        } else {
-          const media = (_data.media || []);
-          for (const f of media) {
-            fs.copyFileSync(
-              `${docsSrcPrefix}/${r._isIndexFile ? id : path.dirname(id)}/${f.filename}`,
-              `${docsOutPrefix}/${id}/${f.filename}`);
-          }
-        }
-      }
 
       // In-app docs
       if (r.path.indexOf(appDocsURLPrefix) === 0) {
