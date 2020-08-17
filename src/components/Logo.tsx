@@ -9,10 +9,12 @@ interface LogoProps {
   size: number
   title: string
   linkTo?: string
+  style?: React.CSSProperties
+  className?: string
 }
-const Logo: React.FC<LogoProps> = function ({ size, title, linkTo }) {
+const Logo: React.FC<LogoProps> = function ({ size, title, linkTo, style, className }) {
   return (
-    <LogoWrapper to={linkTo || "/"}>
+    <LogoWrapper to={linkTo || "/"} style={style} className={className}>
       <Symbol size={size} />
       <TextWrapper size={size}>{title}</TextWrapper>
     </LogoWrapper>
@@ -32,9 +34,8 @@ export const Symbol: React.FC<{ size: number }> = function ({ size }) {
 
 
 export const SymbolImage = styled.img`
-  height: ${(props: { size: number }) => css`${props.size * 1.75}px`};
+  height: ${(props: { size: number }) => css`${props.size * 1.1}px`};
   max-height: 100%;
-  margin: 1rem 0;
   @media screen and (min-width: 800px) {
     margin: 0;
   }
@@ -48,13 +49,8 @@ const TextWrapper = styled.h1`
   padding: 0;
   text-align: center;
 
-  font-size: 1.7rem;
+  font-size: ${(props: { size: number }) => css`${props.size * 0.5}px`};
   font-weight: 400;
-
-  @media screen and (min-width: 800px) {
-    text-align: left;
-    font-size: ${(props: { size: number }) => css`${props.size * 0.90}px`};
-  }
 `
 
 const LogoWrapper = styled(Link)`
@@ -64,9 +60,7 @@ const LogoWrapper = styled(Link)`
   display: flex;
   flex-flow: row wrap;
   align-items: center;
-  justify-content: center;
-
-  padding: 1rem;
+  justify-content: flex-start;
 
   @media screen and (min-width: 800px) {
     flex-flow: row nowrap;

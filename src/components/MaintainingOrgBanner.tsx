@@ -8,10 +8,9 @@ const MaintainingOrgBanner: React.FC<{}> = function () {
   return (
     <UnstyledLink to="https://open.ribose.com">
       <SymbolImage
-        style={{ marginBottom: '1rem' }}
-        size={10}
-        src={organizationLogoImage}
-        className="org-logo" />
+        size={17}
+        style={{ paddingLeft: '.5rem' }}
+        src={organizationLogoImage} />
     </UnstyledLink>
   )
 }

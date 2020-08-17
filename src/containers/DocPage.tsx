@@ -11,6 +11,7 @@ import Logo from 'components/Logo'
 import { Link, normalizeInternalHRef } from 'components/linksButtons'
 import MaintainingOrgBanner from 'components/MaintainingOrgBanner'
 import { useLocation } from '@reach/router'
+import styled from 'styled-components'
 
 
 const DOCS_ROOT = '/docs/'
@@ -37,7 +38,10 @@ export default () => {
         LinkComponent={Link}
         pathIsCurrent={pathIsCurrent}
         rootURLPath={DOCS_ROOT}
-        header={<Logo size={32} title="Glossarist" linkTo="/" />}
+        header={<DocPageLogo
+          size={36}
+          title="Glossarist"
+          linkTo="/" />}
         footer={<MaintainingOrgBanner />}
         page={docPage}
         nav={docsNav}
@@ -45,3 +49,10 @@ export default () => {
     </>
   )
 }
+
+
+const DocPageLogo = styled(Logo)`
+  @media screen and (max-width: 800px) {
+    justify-content: center;
+  }
+`

@@ -48,7 +48,11 @@ function ({ title, logoSize, logoLink, children }) {
       <GlobalStyle />
 
       <header>
-        <Logo size={logoSize || 42} title={title || 'Glossarist'} linkTo={logoLink} />
+        <Logo
+          style={{ margin: '2rem 0', justifyContent: 'center' }}
+          size={logoSize || 60}
+          title={title || 'Glossarist'}
+          linkTo={logoLink} />
       </header>
 
       <main>
