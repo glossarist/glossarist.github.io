@@ -9,7 +9,7 @@ export default pluginOptions => ({
 
     const docsURLPrefix = 'docs/';
     const docsSrcPrefix = 'docs';
-    const docsOutPrefix = 'dist/docs'
+    const docsOutPrefix = 'dist/docs';
 
     for (const r of state.routes) {
 
