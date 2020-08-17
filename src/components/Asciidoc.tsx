@@ -35,7 +35,7 @@ const asciidocBase = css`
 
   &, p {
     font-size: .95em;
-    line-height: 1.6;
+    line-height: 1.7;
     font-weight: 300;
   }
 
