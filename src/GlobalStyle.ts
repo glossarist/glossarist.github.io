@@ -3,9 +3,6 @@ import { createGlobalStyle } from 'styled-components'
 import sFont from 'assets/fonts/Lora-Regular.ttf'
 
 import * as theme from './theme/colors'
-
-
-export const pageContainerSelector = 'body > #root > :first-child > :first-child'
 // If a subsection of the site needs to redefine
 // style of page wrapper (immediate descendant of the router),
 // its container should create a global style and add extra rules
@@ -37,31 +34,6 @@ export default createGlobalStyle`
 
     display: flex;
     flex-flow: column nowrap;
-  }
-
-  @media screen and (min-width: 800px) {
-    body, body > #root, body > #root > :first-child {
-      flex: 1;
-      display: flex;
-      flex-flow: column nowrap;
-    }
-  }
-
-  ${pageContainerSelector} {
-    margin-left: 1rem;
-    margin-right: 1rem;
-
-    @media screen and (min-width: 800px) {
-      flex: 1;
-      display: flex;
-      flex-flow: column nowrap;
-
-      margin-left: 10vw;
-      margin-right: 10vw;
-      align-self: center;
-      align-items: stretch;
-      justify-content: center;
-    }
   }
 
   p {

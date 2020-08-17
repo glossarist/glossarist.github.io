@@ -1,7 +1,38 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { createGlobalStyle } from 'styled-components'
 import Logo from '../components/Logo'
 import MaintainingOrgBanner from '../components/MaintainingOrgBanner'
+
+
+export const pageContainerSelector = 'body > #root > :first-child > :first-child'
+
+
+const GlobalStyle = createGlobalStyle`
+  @media screen and (min-width: 800px) {
+    body, body > #root, body > #root > :first-child {
+      flex: 1;
+      display: flex;
+      flex-flow: column nowrap;
+    }
+  }
+
+  ${pageContainerSelector} {
+    margin-left: 1rem;
+    margin-right: 1rem;
+
+    @media screen and (min-width: 800px) {
+      flex: 1;
+      display: flex;
+      flex-flow: column nowrap;
+
+      margin-left: 10vw;
+      margin-right: 10vw;
+      align-self: center;
+      align-items: stretch;
+      justify-content: center;
+    }
+  }
+`
 
 
 interface PageProps {
@@ -14,6 +45,8 @@ function ({ title, logoSize, logoLink, children }) {
 
   return (
     <>
+      <GlobalStyle />
+
       <header>
         <Logo size={logoSize || 42} title={title || 'Glossarist'} linkTo={logoLink} />
       </header>
