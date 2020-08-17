@@ -2,7 +2,7 @@ import React from 'react'
 import { Root, Routes } from 'react-static'
 import { Router } from '@reach/router'
 import { Helmet } from 'react-helmet'
-import { default as GlobalStyle } from './GlobalStyle'
+import GlobalStyle from './GlobalStyle'
 import { Symbol } from './components/Logo'
 
 // https://github.com/FortAwesome/react-fontawesome/issues/134
