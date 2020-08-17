@@ -37,7 +37,7 @@ function getReleaseData(r) {
 
 
 export default {
-  siteRoot: 'http://glossarist.org:8000',
+  siteRoot: 'https://www.glossarist.org',
   entry: path.join(__dirname, 'src', 'index.tsx'),
 
   getRoutes: async () => {
