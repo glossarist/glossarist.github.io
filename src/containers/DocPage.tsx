@@ -1,7 +1,6 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
 import styled from 'styled-components'
-import { createGlobalStyle } from 'styled-components'
 import { useRouteData } from 'react-static'
 
 import { DocPage, DocsPageNavItem } from 'types'
@@ -20,8 +19,6 @@ import {
   GlobalNav, GlobalNavTopLevelItemList, PageToC, PageBlocks, PageToCItemList,
 } from 'components/docs/pageElements'
 
-import { pageContainerSelector } from '../GlobalStyle'
-
 import { Footer } from './Page'
 
 
@@ -36,8 +33,6 @@ export default () => {
 
   return (
     <>
-      <GlobalStyle />
-
       <Helmet>
         <title>{docPage.data?.title} — Glossarist documentation</title>
       </Helmet>
@@ -102,17 +97,6 @@ export default () => {
 }
 
 
-const GlobalStyle = createGlobalStyle`
-  ${pageContainerSelector} {
-    @media screen and (min-width: 800px) {
-      margin-left: 0;
-      margin-right: 0;
-      align-self: stretch;
-    }
-  }
-`
-
-
 const DocsPageHeader = styled.header`
   margin: 0 -1rem;
   background: ${SIDEBAR_BACKGROUND};
@@ -152,7 +136,10 @@ const DocsPageHeader = styled.header`
 `
 
 const DocsPageMain = styled.div`
+  margin: 0 1em;
+
   @media screen and (min-width: 800px) {
+    margin-right: 0;
     margin-left: ${SIDEBAR_WIDTH_REM}rem;
     padding-left: 2rem;
     padding-top: 1.75rem;
