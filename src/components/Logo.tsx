@@ -35,10 +35,6 @@ export const Symbol: React.FC<{ size: number }> = function ({ size }) {
 
 export const SymbolImage = styled.img`
   height: ${(props: { size: number }) => css`${props.size * 1.1}px`};
-  max-height: 100%;
-  @media screen and (min-width: 800px) {
-    margin: 0;
-  }
 `
 
 const TextWrapper = styled.h1`
