@@ -68,7 +68,9 @@ export default {
     [
       '@riboseinc/react-static-plugin-aperis-doc-pages',
       {
-        docsPath: DOCS_PATH,
+        sourcePath: DOCS_PATH,
+        urlPrefix: 'docs',
+        template: 'src/containers/DocPage',
       }
     ],
     [
