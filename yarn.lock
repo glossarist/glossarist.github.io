@@ -1134,10 +1134,10 @@
     prop-types "^15.6.1"
     react-lifecycles-compat "^3.0.4"
 
-"@riboseinc/aperis-doc-pages@^1.0.0-pre4":
-  version "1.0.0-pre4"
-  resolved "https://registry.yarnpkg.com/@riboseinc/aperis-doc-pages/-/aperis-doc-pages-1.0.0-pre4.tgz#b0c734e08b09eb4dab0adadf24bce23dd40735bc"
-  integrity sha512-ifELv4w01D/zE263fLNwiiFjh7ytjTNk2RqXAim1Y23wIRy2DqElwe+xXqZ5yriaSkX34d2wWdoggPCVe1RHzw==
+"@riboseinc/aperis-doc-pages@^1.0.0-pre5":
+  version "1.0.0-pre5"
+  resolved "https://registry.yarnpkg.com/@riboseinc/aperis-doc-pages/-/aperis-doc-pages-1.0.0-pre5.tgz#15a78ecb22b46fc4ee796df8f7956358a364512b"
+  integrity sha512-KSjz/Zuubdc/AKkuP3kzSu0NjfqOFoLf33oyECxBodVdo5KTAlX3yrczFTY1kSH1M+kfwLkcsjOkX5lE/9lFxg==
 
 "@riboseinc/react-static-plugin-aperis-doc-pages@^1.0.0-pre2":
   version "1.0.0-pre2"

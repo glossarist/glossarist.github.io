@@ -16,7 +16,7 @@
     "@fortawesome/react-fontawesome": "^0.1.11",
     "@octokit/rest": "^18.0.0",
     "@reach/router": "^1.2.1",
-    "@riboseinc/aperis-doc-pages": "^1.0.0-pre4",
+    "@riboseinc/aperis-doc-pages": "^1.0.0-pre5",
     "@riboseinc/react-static-plugin-aperis-doc-pages": "^1.0.0-pre2",
     "chroma-js": "^2.1.0",
     "moment": "^2.27.0",
