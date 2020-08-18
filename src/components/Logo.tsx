@@ -34,7 +34,10 @@ export const Symbol: React.FC<{ size: number }> = function ({ size }) {
 
 
 export const SymbolImage = styled.img`
-  height: ${(props: { size: number }) => css`${props.size * 1.1}px`};
+  ${(props: { size: number }) => css`
+    height: ${props.size * 1.1}px;
+    margin-left: -${props.size * 0.2}px;
+  `}
 `
 
 const TextWrapper = styled.h1`
