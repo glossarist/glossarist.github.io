@@ -35,8 +35,8 @@ export const Symbol: React.FC<{ size: number }> = function ({ size }) {
 
 export const SymbolImage = styled.img`
   ${(props: { size: number }) => css`
-    height: ${props.size * 1.1}px;
-    margin-left: -${props.size * 0.2}px;
+    height: ${props.size * 1.15}px;
+    margin-left: -${props.size * 0.15}px;
   `}
 `
 
