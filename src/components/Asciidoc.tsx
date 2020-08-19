@@ -89,6 +89,10 @@ const AsciidocStyled = styled.div`
       max-width: 50vw;
       max-height: 50vh;
     }
+    .imageblock.unbounded-image img {
+      max-width: 100%;
+      max-height: unset;
+    }
   }
 
   img {
