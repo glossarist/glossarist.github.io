@@ -1134,15 +1134,15 @@
     prop-types "^15.6.1"
     react-lifecycles-compat "^3.0.4"
 
-"@riboseinc/aperis-doc-pages@^1.0.0-pre5":
-  version "1.0.0-pre5"
-  resolved "https://registry.yarnpkg.com/@riboseinc/aperis-doc-pages/-/aperis-doc-pages-1.0.0-pre5.tgz#15a78ecb22b46fc4ee796df8f7956358a364512b"
-  integrity sha512-KSjz/Zuubdc/AKkuP3kzSu0NjfqOFoLf33oyECxBodVdo5KTAlX3yrczFTY1kSH1M+kfwLkcsjOkX5lE/9lFxg==
+"@riboseinc/aperis-doc-pages@^1.0.0-pre6":
+  version "1.0.0-pre6"
+  resolved "https://registry.yarnpkg.com/@riboseinc/aperis-doc-pages/-/aperis-doc-pages-1.0.0-pre6.tgz#3797eddc64d989acdd781cf0e2cd8da054d7d667"
+  integrity sha512-Nnq2DctjZwHCYsm1gC2H1jiectTr48zwHzX9jhrt0NTNlYMoYrRrCkLbTrpC7ZZJ9XtMyw3JfT74qBLYYoWclA==
 
-"@riboseinc/react-static-plugin-aperis-doc-pages@^1.0.0-pre2":
-  version "1.0.0-pre2"
-  resolved "https://registry.yarnpkg.com/@riboseinc/react-static-plugin-aperis-doc-pages/-/react-static-plugin-aperis-doc-pages-1.0.0-pre2.tgz#e7fd19e9c9a56d1719bbb0aa47a78113166e991f"
-  integrity sha512-pGZ06Y8wPxsHtL0YS1VtSnaSes16iOwOS4/xAtQo2bClu6+VVl+4Ra4nbPqOsVdyBMj8IObwAXEfS6Nw/Fjrww==
+"@riboseinc/react-static-plugin-aperis-doc-pages@^1.0.0-pre3":
+  version "1.0.0-pre3"
+  resolved "https://registry.yarnpkg.com/@riboseinc/react-static-plugin-aperis-doc-pages/-/react-static-plugin-aperis-doc-pages-1.0.0-pre3.tgz#578832603dde54471ba71368930873c8f11b7567"
+  integrity sha512-sapHTOm1mdIcDWkKnDGRUYQx6YEUv1ehZffacOvDkTPry9mQ4zbExKVJWJqRCo7fbcHMfJnJs20gP1eDqxDctg==
   dependencies:
     asciidoctor "^2.2.0"
     directory-tree "^2.2.4"
