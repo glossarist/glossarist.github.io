@@ -24,7 +24,7 @@ const Home: React.FC<{}> = function () {
           </EntryPoint>
           <EntryPoint>
             <Audience>Not using Glossarist in&nbsp;your&nbsp;organization&nbsp;yet?</Audience>
-            <Button disabled to="adopt">Learn how to&nbsp;adopt&nbsp;Glossarist</Button>
+            <Button to="docs/adopt">Learn how to&nbsp;adopt&nbsp;Glossarist</Button>
           </EntryPoint>
           <EntryPoint style={{ flex: 0.5 }}>
             <Audience>Operating infrastructure?</Audience>

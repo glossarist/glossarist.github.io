@@ -1,0 +1,37 @@
+title: "2. Set up the infrastructure"
+importance: 3
+summary: |
+  Prepare a storage facility that Glossarist will use to hold registry data.
+
+contents: |
+  [NOTE]
+  ====
+  This article is intended for technical staff.
+  ====
+
+  Behind the scenes, Glossarist stores concepts & terms as YAML files,
+  and maintains the history of changes using Git decentralized version control system.
+
+  The easiest way to set up the requisite infrastructure is by using Github.
+
+  [NOTE]
+  ====
+  Using your own Git server as Glossarist data backend is possible,
+  since Glossarist does not make assumptions beyond the fact that you
+  use a Git server with HTTPS basic authentication.
+
+  However, that may change, and using other Git servers besides Github
+  is not yet covered in this documentation.
+  ====
+
+  . If you don’t have a GitHub account yet,
+    navigate to https://github.com/[github.com] and sign up (it’s free).
+
+  . On Github, open the link:https://github.com/glossarist/basic-concept-registry-template[Glossarist concept system template repository],
+    and create a new repository from this template (see “Use this template” button).
+
+  . After you create your new repository, edit the following files using Github.com interface
+    and enter details relevant to your concept system: `register.yaml` and `roles.yaml`.
+
+  . Take note of your repository URL
+    in the form of `https://github.com/<your username>/<your repository name>`.

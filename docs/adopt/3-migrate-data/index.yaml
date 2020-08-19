@@ -1,0 +1,59 @@
+title: "3. Migrate existing data"
+importance: 2
+
+media:
+  - migration-overview.svg
+
+summary: |
+  Convert your existing terms (if any) into Glossarist format.
+
+contents: |
+
+  The complexity of this stage depends on how many terms concepts you already have.
+  If you don’t have any concepts to migrate, you can skip this step.
+
+  Below is a diagram that gives a general overview of data migration steps.
+
+  [.unbounded-image]
+  image::./migration-overview.svg[Concept data migration overview diagram]
+
+  == Automating migration
+
+  If your existing terminology data is already stored in a structured machine-readable format,
+  it can be possible to write a software utility (an _import adapter_) to convert that data
+  to Glossarist’s supported import format.
+
+  Viable source formats for conversion include, for example, Excel spreadsheets and  CSV files.
+
+  Depending on how you keep track of your concepts,
+  it may be possible to preserve revision history and change requests.
+
+  == Existing terminology migration scripts
+
+  You can take a look at link:https://github.com/geolexica/tc211-termbase[ISO/TC 211 termbase migration utility],
+  written in Ruby.
+
+  NOTE: Since the latest update of that script, Glossarist data format has somewhat evolved,
+  but it can give you a general idea.
+
+  === Getting help with your import adapter
+
+  If you can make your original terminology database public, you can file a ticket
+  against the link:https://github.com/glossarist/migration-adapters/[Migration adapters] repository
+  on GitHub.
+
+  === Glossarist import format specification
+
+  We are bringing import specification details here.
+
+  === Getting in touch with Ribose
+
+  Glossarist is a project developed and maintained by Ribose Open.
+  If your original terminology database cannot be made public,
+  you’re welcome to reach out privately and we’ll do our best to help.
+
+  == Manual migration
+
+  If it’s not possible to convert your existing terminology data automatically,
+  or there’s not that many concepts to migrate,
+  the alternative is to simply use Glossarist Desktop app to enter concept & term data by hand.

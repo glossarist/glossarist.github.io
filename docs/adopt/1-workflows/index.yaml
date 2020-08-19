@@ -1,0 +1,36 @@
+title: "1. Review your processes"
+importance: 4
+summary: |
+  Glossarist’s approach is a bit more involved compared to ad-hoc concept bookkeeping.
+
+contents: |
+
+  == Concepts and designations
+
+  Treat terms as “shortcut” designations for _concepts_, and concepts as units of understanding.
+  footnote:[For details, read link:../../core-concepts/intro-to-concept-systems[intro to concept systems]
+  and link:../../core-concepts/concepts-and-terms[“Concepts & terms”].]
+
+  - A concept is assigned a definition, notes and examples.
+  - A term is associated with certain grammatical traits
+    and respective normative statuses.
+
+  === Normative status of a term
+
+  Since multiple terms can be used to represent a particular concept
+  and language in any field constantly evolves,
+  a Glossarist term is marked as “preferred”, “admitted” or “deprecated”
+  (in order of decreasing preference).
+
+  == Change workflow
+
+  Glossarist’s concept database is treated as a register,
+  and updates to concepts or terms are handled through the change request workflow.
+
+  Submitters will need to _request changes_, and register manager will need to review and accept them.
+  footnote:[For details, refer to link:../../core-concepts/registers[“Concept system as a register”].]
+
+  == Desktop software for editing data
+
+  Managing concept systems (proposing changes and reviewing changes) is done using Glossarist Desktop.
+  It is expected that you will use this software while working with the concept system register.
