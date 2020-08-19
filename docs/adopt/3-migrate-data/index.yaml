@@ -29,7 +29,7 @@ contents: |
   Depending on how you keep track of your concepts,
   it may be possible to preserve revision history and change requests.
 
-  == Existing terminology migration scripts
+  === Existing terminology migration scripts
 
   You can take a look at link:https://github.com/geolexica/tc211-termbase[ISO/TC 211 termbase migration utility],
   written in Ruby.
