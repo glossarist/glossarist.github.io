@@ -94,16 +94,25 @@ const AsciidocStyled = styled.div`
       max-height: unset;
     }
   }
-
-  img {
-    box-shadow: rgba(0, 0, 0, 0.15) .1rem .1rem 1rem;
-  }
   .imageblock {
     padding: 1.2rem;
     background: whiteSmoke;
 
     .content {
       text-align: center;
+    }
+
+    img {
+      box-shadow: rgba(0, 0, 0, 0.15) .1rem .1rem 1rem;
+    }
+
+    &.unbounded-image {
+      padding: unset;
+      background: unset;
+
+      img {
+        box-shadow: unset;
+      }
     }
   }
 `
