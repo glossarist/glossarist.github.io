@@ -34,4 +34,4 @@ contents: |
     and enter details relevant to your concept system: `register.yaml` and `roles.yaml`.
 
   . Take note of your repository URL
-    in the form of `https://github.com/<your username>/<your repository name>`.
+    in the form of `\https://github.com/<your username>/<your repository name>`.
