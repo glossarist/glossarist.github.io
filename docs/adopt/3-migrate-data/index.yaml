@@ -13,6 +13,7 @@ contents: |
   If you don’t have any concepts to migrate, you can skip this step.
 
   Below is a diagram that gives a general overview of data migration steps.
+  For blocks in blue, further explanation is given below.
 
   [.unbounded-image]
   image::./migration-overview.svg[Concept data migration overview diagram]
