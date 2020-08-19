@@ -28,7 +28,7 @@ const Home: React.FC<{}> = function () {
           </EntryPoint>
           <EntryPoint style={{ flex: 0.5 }}>
             <Audience>Operating infrastructure?</Audience>
-            <Button disabled to="desktop">Read the docs</Button>
+            <Button disabled to="infrastructure">Read the docs</Button>
           </EntryPoint>
         </EntryPoints>
       </Lead>
