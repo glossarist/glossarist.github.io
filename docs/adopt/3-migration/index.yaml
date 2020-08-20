@@ -1,6 +1,9 @@
 title: "3. Migrate existing data"
 importance: 2
 
+redirectFrom:
+  - adopt/3-migrate-data
+
 media:
   - migration-overview.svg
 
