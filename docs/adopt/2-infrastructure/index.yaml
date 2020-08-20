@@ -36,3 +36,7 @@ contents: |
   . Take note of your repository URL
     in the form of `\https://github.com/<your username>/<your repository name>`:
     concept system users will need to enter it into the Glossarist Desktop app on their computers.
+
+  == Read next
+
+  - link:../3-migration[Migrating existing terminology data]
