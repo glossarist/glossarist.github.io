@@ -1139,10 +1139,10 @@
   resolved "https://registry.yarnpkg.com/@riboseinc/aperis-doc-pages/-/aperis-doc-pages-1.0.0-pre6.tgz#3797eddc64d989acdd781cf0e2cd8da054d7d667"
   integrity sha512-Nnq2DctjZwHCYsm1gC2H1jiectTr48zwHzX9jhrt0NTNlYMoYrRrCkLbTrpC7ZZJ9XtMyw3JfT74qBLYYoWclA==
 
-"@riboseinc/react-static-plugin-aperis-doc-pages@^1.0.0-pre3":
-  version "1.0.0-pre3"
-  resolved "https://registry.yarnpkg.com/@riboseinc/react-static-plugin-aperis-doc-pages/-/react-static-plugin-aperis-doc-pages-1.0.0-pre3.tgz#578832603dde54471ba71368930873c8f11b7567"
-  integrity sha512-sapHTOm1mdIcDWkKnDGRUYQx6YEUv1ehZffacOvDkTPry9mQ4zbExKVJWJqRCo7fbcHMfJnJs20gP1eDqxDctg==
+"@riboseinc/react-static-plugin-aperis-doc-pages@^1.0.0-pre4":
+  version "1.0.0-pre4"
+  resolved "https://registry.yarnpkg.com/@riboseinc/react-static-plugin-aperis-doc-pages/-/react-static-plugin-aperis-doc-pages-1.0.0-pre4.tgz#6f1c5cef12e25d20717676fd210e9d093193382b"
+  integrity sha512-tYf8wRjdYyEVTwSJ5I2JLknPT0mLFXhVlld7KfvrWaqAaR88WfF/VfMBUiOLB0cdoLQVkBBM/Qv4VS++weaFwA==
   dependencies:
     asciidoctor "^2.2.0"
     directory-tree "^2.2.4"
