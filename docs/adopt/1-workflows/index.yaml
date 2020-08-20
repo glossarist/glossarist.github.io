@@ -11,8 +11,13 @@ contents: |
   footnote:[For details, read link:../../core-concepts/intro-to-concept-systems[intro to concept systems]
   and link:../../core-concepts/concepts-and-terms[“Concepts & terms”].]
 
-  - A concept is assigned a definition, notes and examples.
-  - A term is associated with certain grammatical traits
+  - Each concept has—for each supported language—a definition, notes, examples, and one or more terms.
+  +
+  Per each language you use, Glossarist maintains a revision history of concept properties and terms.
+  Each revision is a “snapshot” of concept state in that language,
+  and new revisions are created by accepting change requests (see below).
+
+  - Each term contains a vertbal designation for the concept and is associated with certain grammatical traits
     and respective normative statuses.
 
   === Normative status of a term
