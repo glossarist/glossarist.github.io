@@ -14,13 +14,18 @@ contents: |
   . Depending on the change you want to make,
     pick either Create, Edit or Translate module.
 
-  . Start a draft Change Request by clicking the “plus” button
-    on top right of “My draft change requests” panel.
+  . If you don’t have any change requests yet,
+    a new CR will be created for your change.
   +
   New CR will be assigned a unique, random-looking ID.
+  +
+  Alternatively, you can can select an existing CR—see
+  “My draft change requests” panel on top right.
 
   . Make the necessary changes in the main module view,
-    and click “Add to change request”.
+    and click button that says either “Start new CR” (if you don’t have a CR yet),
+    “Add to CR” (if you are adding a new change to a CR)
+    or “Update CR” (if you are editing an item already existing in your CR).
 
   == Reviewing changes
 
