@@ -17,7 +17,7 @@
     "@octokit/rest": "^18.0.0",
     "@reach/router": "^1.2.1",
     "@riboseinc/aperis-doc-pages": "^1.0.0-pre7",
-    "@riboseinc/react-static-plugin-aperis-doc-pages": "^1.0.0-pre6",
+    "@riboseinc/react-static-plugin-aperis-doc-pages": "^1.0.0-pre7",
     "chroma-js": "^2.1.0",
     "moment": "^2.27.0",
     "react": "^16.9.0",
