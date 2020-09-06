@@ -80,6 +80,8 @@ contents: |
   https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token[Learn how to create this token.]
   When creating the token, enable _public_repo_ scope (“Access public repositories”).
 
+  NOTE: On Ubuntu Linux, the app will ask for Git password on every launch. This is a known issue.
+
   === Initial synchronization
 
   Once you have provided settings and password, the app will start downloading register data.
