@@ -11,13 +11,31 @@ media:
 
 contents: |
 
-  == Download
+  == Get Glossarist Desktop
 
   Find the link to download the latest release of Glossarist Desktop
   for your system link:/desktop[here].
-  Installers for Windows and macOS are currently available, with Linux coming soon.
+  Distributions for Windows, macOS and Ubuntu Linux are currently available.
 
-  Run the installer and proceed according to instructions shown.
+  === Installation notes for Windows users
+
+  * We recommending using the portable version that does not require installation.
+
+  * Your OS may warn you about installing potentially dangerous software.
+    That is because our Windows executables are not currently signed.
+    We are working on adddressing that.
+
+  === Installation notes for Ubuntu Linux users
+
+  After download, install the snap as follows:
+
+  [source,sh]
+  --
+  $ sudo snap install --dangerous glossarist-desktop-<version>.snap
+  --
+
+  `--dangerous` flag is needed for the time being, while we are working on making
+  our Snap distribution properly signed.
 
   == Set up a GitHub account
 
