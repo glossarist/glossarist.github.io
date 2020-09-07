@@ -154,7 +154,7 @@ export default () => {
               </Label>
           </EntryPoint>
           <EntryPoint>
-            <Button to="/docs/desktop/getting-started">
+            <Button to="/docs/desktop/getting-started/installation">
               <FontAwesomeIcon icon={faBookOpen} />
               &ensp;
               Get started

@@ -1,4 +1,4 @@
-title: "3. Migrate existing data"
+title: "3. Migrating existing data"
 importance: 2
 
 redirectFrom:
@@ -8,12 +8,12 @@ media:
   - migration-overview.svg
 
 summary: |
-  Convert your existing terms (if any) into Glossarist format.
+  Convert your existing terms into Glossarist format.
+  If you don’t have any concepts to migrate, you can skip this step.
 
 contents: |
-
-  The complexity of this stage depends on how many terms concepts you already have.
-  If you don’t have any concepts to migrate, you can skip this step.
+  The complexity of this stage depends on how many pre-existing terms and concepts
+  you have.
 
   == Migration overview
 

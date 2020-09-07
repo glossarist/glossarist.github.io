@@ -1,7 +1,7 @@
-title: "2. Set up the infrastructure"
+title: "2. Infrastructure setup"
 importance: 3
 summary: |
-  Prepare concept registry data storage.
+  Prepare concept registry data storage with GitHub as repository hosting provider.
 
 contents: |
   [NOTE]
@@ -9,8 +9,8 @@ contents: |
   This article is intended for technical staff.
   ====
 
-  Behind the scenes, Glossarist stores concepts & terms as YAML files,
-  and maintains the history of changes using Git decentralized version control system.
+  Behind the scenes Glossarist Desktop stores concepts & terms as YAML files.
+  Files are versioned using Git decentralized version control system.
 
   The easiest way to set up the requisite infrastructure is by using Github.
 
@@ -35,7 +35,7 @@ contents: |
   . After you create your new repository, edit the following files using Github.com interface
     and enter details relevant to your concept system: `register.yaml` and `roles.yaml`.
 
-  . Take note of your repository URL
+  . Take note of your **repository URL**
     in the form of `\https://github.com/<your username>/<your repository name>`:
     concept system users will need to enter it into the Glossarist Desktop app on their computers.
 

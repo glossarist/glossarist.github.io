@@ -1,55 +1,19 @@
-title: Setting up the application
+title: First launch
 
-importance: 10
+importance: 9
 
 summary: |
-  Get Glossarist Desktop and connect it to your concept system registry.
+  During first launch, you configure Glossarist Desktop
+  with your concept data repository.
 
 media:
   - initial-settings-window.png
   - ready-screen.png
 
 contents: |
-
-  == Get Glossarist Desktop
-
-  Find the link to download the latest release of Glossarist Desktop
-  for your system link:/desktop[here].
-  Distributions for Windows, macOS and Ubuntu Linux are currently available.
-
-  === Installation notes for Windows users
-
-  * We recommending using the portable version that does not require installation.
-
-  * Your OS may warn you about installing potentially dangerous software.
-    That is because our Windows executables are not currently signed.
-    We are working on adddressing that.
-
-  === Installation notes for Ubuntu Linux users
-
-  After download, install the snap as follows:
-
-  [source,sh]
-  --
-  $ sudo snap install --dangerous glossarist-desktop-<version>.snap
-  --
-
-  `--dangerous` flag is needed for the time being, while we are working on making
-  our Snap distribution properly signed.
-
-  == Set up a GitHub account
-
-  This guide is written with the assumption that your organization relies on GitHub
-  for hosting concept system data repository.
-
-  If you don’t have a GitHub account yet, head to https://github.com/[github.com] and sign up
-  (it’s free).
-
-  == First launch
-
   Make sure you have an online internet connection before proceeding.
 
-  === Initial settings
+  == Initial settings
 
   On first launch, Glossarist will ask you to specify some necessary settings.
 
@@ -70,7 +34,7 @@ contents: |
 
   After you save the settings, the initial settings window will close.
 
-  === Password
+  == Password
 
   Before the app can access register data, it will ask for your password.
   Specify your GitHub account password (unless you have second-factor authentication enabled).
@@ -80,9 +44,10 @@ contents: |
   https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token[Learn how to create this token.]
   When creating the token, enable _public_repo_ scope (“Access public repositories”).
 
-  NOTE: On Ubuntu Linux, the app will ask for Git password on every launch. This is a known issue.
+  NOTE: On Ubuntu Linux, the app will ask for Git password on every launch. This is a known issue
+  (https://github.com/glossarist/glossarist-desktop/issues/129[#129]).
 
-  === Initial synchronization
+  == Initial synchronization
 
   Once you have provided settings and password, the app will start downloading register data.
   This may take a minute.

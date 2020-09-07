@@ -1,7 +1,10 @@
 title: Making a change request
 
 summary: |
-  Edit concept data and propose changes to register manager.
+  Create or edit a concept and propose changes to register manager.
+
+redirectFrom:
+  - desktop/getting-started/create-change-request
 
 media:
   - review-screen-for-draft-cr.png
