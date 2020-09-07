@@ -66,16 +66,22 @@ const AsciidocStyled = styled.div`
     }
   }
 
+  .imageblock, .admonitionblock {
+    margin-top: 1em;
+  }
+
+
+  // List item spacing
+
   p, ol > li p, ul > li p {
     margin-bottom: 0;
   }
 
+
+  // Paragraph indentation
+
   p + p {
     text-indent: 1.5em;
-  }
-
-  .imageblock, .admonitionblock {
-    margin-top: 1em;
   }
 
   .paragraph + .paragraph {
@@ -83,6 +89,9 @@ const AsciidocStyled = styled.div`
       text-indent: 1.5em;
     }
   }
+
+
+  // Image dimensions
 
   @media screen and (min-width: 800px) {
     img {
