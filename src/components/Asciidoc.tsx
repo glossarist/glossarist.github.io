@@ -70,6 +70,17 @@ const AsciidocStyled = styled.div`
     margin-top: 1em;
   }
 
+  .listingblock {
+    @media screen and (max-width: 800px) {
+      margin-left: -1rem;
+      margin-right: -1rem;
+
+      > .content > pre {
+        padding-left: 1rem;
+      }
+    }
+  }
+
 
   // List item spacing
 
@@ -103,6 +114,7 @@ const AsciidocStyled = styled.div`
       max-height: unset;
     }
   }
+
   .imageblock {
     padding: 1.2rem;
     background: whiteSmoke;
