@@ -66,7 +66,7 @@ const AsciidocStyled = styled.div`
     }
   }
 
-  .imageblock, .admonitionblock {
+  .imageblock, .admonitionblock, .listingblock {
     margin-top: 1em;
   }
 
