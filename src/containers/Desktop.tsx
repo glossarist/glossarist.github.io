@@ -27,7 +27,7 @@ const octokit = new Octokit()
 
 type ReleaseList = (ReposListReleasesResponseData[number] & { bodyHTML: string })[]
 
-type OS = 'macOS' | 'Windows'
+type OS = 'macOS' | 'Windows' | 'Ubuntu Linux'
 
 
 export default () => {
@@ -78,6 +78,8 @@ export default () => {
         setUserOS('macOS')
       } else if (ua.indexOf('Windows')) {
         setUserOS('Windows')
+      } else if (ua.indexOf('Ubuntu') >= 0) {
+        setUserOS('Ubuntu Linux')
       }
     }
   }, [])
@@ -186,6 +188,8 @@ function getSpecificDLLink(
     expectedOSAssetName = `glossarist-desktop-${releaseName}-portable.exe`
   } else if (userOS === 'macOS') {
     expectedOSAssetName = `glossarist-desktop-${releaseName}.dmg`
+  } else if (userOS === 'Ubuntu Linux') {
+    expectedOSAssetName = `glossarist-desktop-${releaseName}.snap`
   }
 
   const asset = assets.find(a => a.name === expectedOSAssetName)
