@@ -78,7 +78,7 @@ export default () => {
         setUserOS('macOS')
       } else if (ua.indexOf('Windows') >= 0) {
         setUserOS('Windows')
-      } else if (ua.indexOf('Ubuntu') >= 0) {
+      } else if (ua.indexOf('Ubuntu') >= 0 || ua.indexOf('Linux') >= 0) {
         setUserOS('Ubuntu Linux')
       }
     }
