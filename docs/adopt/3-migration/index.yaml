@@ -9,9 +9,12 @@ media:
 
 summary: |
   Convert your existing terms into Glossarist format.
-  If you don’t have any concepts to migrate, you can skip this step.
+  Intended for registry managers with some technical knowledge.
 
 contents: |
+
+  If you don’t have any concepts to migrate, you can skip this step.
+
   The complexity of this stage depends on how many pre-existing terms and concepts
   you have.
 
