@@ -86,14 +86,14 @@ contents: |
 
   NOTE: Every collaborator would be required to have a Github account of their own.
 
-  image::./repo-access.png[Inviting repository collaborators on Github]
-
   * Invite Github collaborators to the repository you’ve created.
   +
   Navigate to your your repository’s access settings page on Github
   and use the button that will be labeled either “Invite collaborator” or “Invite teams or people”.
   +
   Each collaborator you add must have at least “Write” role specified on Github.
+  +
+  image::./repo-access.png[Inviting repository collaborators on Github]
 
   * Let your collaborators know the repository URL necessary for desktop application setup.
   The URL will be in the form of `\https://github.com/<username or organization>/<repository name>`.
