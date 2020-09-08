@@ -26,7 +26,13 @@ contents: |
   +
   NOTE: Make sure that the URL is in the correct format. It should start with “https://”.
 
-  - *Git username:* this is the username you chose when signing up for GitHub.
+  - *Git username:* this is the username of your Git account.
+  +
+  .Github note
+  [NOTE]
+  ====
+  This would be the username you chose when creating your Github account.
+  ====
 
   - *Git author name:* specify your name. This is important, as it will show on edits you make.
 
@@ -38,14 +44,23 @@ contents: |
   == Password
 
   Before the app can access register data, it will ask for your password.
-  Specify your GitHub account password (unless you have second-factor authentication enabled).
+  Specify your Git password.
 
-  NOTE: If you have enabled the second-factor authentication on GitHub,
+  .Github note
+  [NOTE]
+  ====
+  Normally you would provide your Github password.
+
+  If you have enabled the **second-factor authentication** enabled on GitHub,
   you will need to provide your Personal Access Token instead of your password.
   https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token[Learn how to create this token.]
   When creating the token, enable _public_repo_ scope (“Access public repositories”).
+  ====
 
-  NOTE: On Ubuntu Linux, the app will ask for Git password on every launch. This is a known issue
+  The password will be stored using mechanism provided by your OS (e.g., Keychain on macOS)
+  and not sent anywhere except Git server.
+
+  NOTE: On Ubuntu Linux, the app will ask for password on every launch. This is a known issue
   (https://github.com/glossarist/glossarist-desktop/issues/129[#129]).
 
   == Initial synchronization
