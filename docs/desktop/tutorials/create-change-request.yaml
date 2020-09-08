@@ -1,4 +1,4 @@
-title: Making a change request
+title: Making a change
 
 summary: |
   Create or edit a concept and propose changes to register manager.
@@ -15,15 +15,15 @@ contents: |
   == Making changes
 
   . Depending on the change you want to make,
-    pick either Create, Edit or Translate module.
+    pick either *Create*, *Edit* or *Translate* module.
 
   . If you don’t have any change requests yet,
     a new CR will be created for your change.
   +
   New CR will be assigned a unique, random-looking ID.
   +
-  Alternatively, you can can select an existing CR—see
-  “My draft change requests” panel on top right.
+  If you want to add a change to an already existing CR,
+  select one in “My draft change requests” panel on top right.
 
   . Make the necessary changes in the main module view,
     and click button that says either “Start new CR” (if you don’t have a CR yet),
