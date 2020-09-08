@@ -79,7 +79,7 @@ contents: |
   * As a person who maintains the infrastructure, you are the _registry_ manager.
   * As a person who will coordinate the vocabulary and review change requests, you are the _register_ manager.
 
-  == 3. Adding contributors
+  == 3. Setting up contributor access
 
   (Skip this if you are the only contributor for now.
   You can revisit this part later when collaborators join you.)
@@ -92,6 +92,8 @@ contents: |
   +
   Navigate to your your repository’s access settings page on Github
   and use the button that will be labeled either “Invite collaborator” or “Invite teams or people”.
+  +
+  Each collaborator you add must have at least “Write” role specified on Github.
 
   * Let your collaborators know the repository URL necessary for desktop application setup.
   The URL will be in the form of `\https://github.com/<username or organization>/<repository name>`.
