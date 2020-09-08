@@ -2,43 +2,102 @@ title: "2. Infrastructure setup"
 importance: 3
 summary: |
   Prepare concept registry data storage with GitHub as repository hosting provider.
+  (Intended for registry managers without technical knowledge.)
+
+media:
+  - template-repo.png
+  - repo-settings.png
+  - repo-in-progress.png
+  - repo-page.png
+  - editing-files.png
+  - repo-access.png
 
 contents: |
+  // Behind the scenes Glossarist Desktop stores concepts & terms as YAML files.
+  // Files are versioned using Git decentralized version control system.
+
+  // The easiest way to set up the requisite infrastructure is by using Github.
+
+  // [NOTE]
+  // ====
+  // Using your own Git server as Glossarist data backend is possible,
+  // since Glossarist does not make assumptions beyond the fact that you
+  // use a Git server with HTTPS basic authentication.
+
+  // However, that may change, and using other Git servers besides Github
+  // is not yet covered in this documentation.
+  // ====
+
+  // == GitHub-based setup
+
+  If you don’t have a GitHub account yet,
+  navigate to https://github.com/[github.com] and sign up (it’s free).
+
+  == 1. Initializing the repository
+
+  On Github, open link:https://github.com/glossarist/basic-concept-registry-template[Glossarist concept system template repository],
+  and use the template to create a new repository (see “Use this template” button).
+
+  image::./template-repo.png[Template repository’s Github page screenshot]
+
+  After filling in the basic settings, click “Create repository from template”.
+
+  image::./repo-settings.png[New repository settings on Github]
+
+  You will be redirected to your new repository page.
+
   [NOTE]
   ====
-  This article is intended for technical staff.
+  Take note of your **repository URL**
+  in the form of `\https://github.com/<username or organization>/<repository name>`.
+  It will be needed to set up Glossarist Desktop app.
+
+  In our example, the new repository is being created under user `riboseinc` and is called `test-glossary`.
   ====
 
-  Behind the scenes Glossarist Desktop stores concepts & terms as YAML files.
-  Files are versioned using Git decentralized version control system.
+  == 2. Filling in register metadata & roles
 
-  The easiest way to set up the requisite infrastructure is by using Github.
+  After creating the repository from template,
+  edit register metadata and roles.
 
-  [NOTE]
-  ====
-  Using your own Git server as Glossarist data backend is possible,
-  since Glossarist does not make assumptions beyond the fact that you
-  use a Git server with HTTPS basic authentication.
+  You can open those files for editing from the Github page of your repository.
 
-  However, that may change, and using other Git servers besides Github
-  is not yet covered in this documentation.
-  ====
+  image::./editing-files.png[Editing files on Github]
 
-  == GitHub-based setup
+  === Register metadata
 
-  . If you don’t have a GitHub account yet,
-    navigate to https://github.com/[github.com] and sign up (it’s free).
+  Edit ``register.yaml`` and see comments inside the file.
+  This file contains the name and description for your register,
+  and list of supported languages as 3-letter ISO 639-2 T language codes.
 
-  . On Github, open the link:https://github.com/glossarist/basic-concept-registry-template[Glossarist concept system template repository],
-    and create a new repository from this template (see “Use this template” button).
+  === Roles
 
-  . After you create your new repository, edit the following files using Github.com interface
-    and enter details relevant to your concept system: `register.yaml` and `roles.yaml`.
+  Edit ``roles.yaml`` and see comments inside the file.
+  This file specifies which Github username corresponds to which role.
 
-  . Take note of your **repository URL**
-    in the form of `\https://github.com/<your username>/<your repository name>`:
-    concept system users will need to enter it into the Glossarist Desktop app on their computers.
+  * As a person who maintains the infrastructure, you are the _registry_ manager.
+  * As a person who will coordinate the vocabulary and review change requests, you are the _register_ manager.
+
+  == 3. Adding contributors
+
+  (Skip this if you are the only contributor for now.
+  You can revisit this part later when collaborators join you.)
+
+  NOTE: Every collaborator would be required to have a Github account of their own.
+
+  image::./repo-access.png[Inviting repository collaborators on Github]
+
+  * Invite Github collaborators to the repository you’ve created.
+  +
+  Navigate to your your repository’s access settings page on Github
+  and use the button that will be labeled either “Invite collaborator” or “Invite teams or people”.
+
+  * Let your collaborators know the repository URL necessary for desktop application setup.
+  The URL will be in the form of `\https://github.com/<username or organization>/<repository name>`.
+  They will enter it when setting up the app.
 
   == Read next
 
-  - link:../3-migration[Migrating existing terminology data]
+  - If you have existing concept database to convert to Glossarist, see
+    link:../3-migration/[Migrating existing terminology data]
+  - Otherwise you might want to link:../../getting-started/installation/[get started with the desktop app]
