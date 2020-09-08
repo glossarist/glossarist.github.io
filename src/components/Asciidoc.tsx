@@ -51,14 +51,25 @@ const AsciidocStyledInline = styled.p`
 const AsciidocStyled = styled.div`
   ${asciidocBase}
 
-  .admonitionblock .content {
-    margin-bottom: 1em;
-    font-size: inherit;
-  }
+  .admonitionblock {
+    .content {
+      font-size: inherit;
+    }
 
-  @media screen and (max-width: 800px) {
-    .admonitionblock {
-      > table > tbody > tr {
+    > table > tbody > tr {
+      > td.icon {
+        display: block;
+        padding: 0;
+        font-size: .95em; // matches asciidoctor.css
+        line-height: 1.7; // matches asciidoctor.css
+      }
+      > td.content {
+        display: table-cell;
+        padding-top: 0;
+        padding-bottom: 0;
+      }
+
+      @media screen and (max-width: 800px) {
         display: flex;
         flex-flow: column nowrap;
         align-items: flex-start;
