@@ -21,7 +21,8 @@ contents: |
 
   image::./initial-settings-window.png[The initial settings window]
 
-  - *Repository URL:* this should be provided your Glossarist support team.
+  - *Repository URL:* this should be provided by registry manager who
+    link:https://www.glossarist.org/docs/adopt/2-infrastructure/[set up the infrastructure] for you.
   +
   NOTE: Make sure that the URL is in the correct format. It should start with “https://”.
 
