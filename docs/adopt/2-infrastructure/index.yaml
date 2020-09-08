@@ -52,7 +52,8 @@ contents: |
   in the form of `\https://github.com/<username or organization>/<repository name>`.
   It will be needed to set up Glossarist Desktop app.
 
-  In our example, the new repository is being created under user `riboseinc` and is called `test-glossary`.
+  In our example, a glossary repository called `test-glossary`
+  is being created under organization `riboseinc`.
   ====
 
   == 2. Filling in register metadata & roles
