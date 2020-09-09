@@ -1,6 +1,7 @@
 name: deploy-master
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: '42 */12 * * *'
   push:
