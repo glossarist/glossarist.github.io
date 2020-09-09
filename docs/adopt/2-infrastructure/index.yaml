@@ -1,8 +1,8 @@
-title: "2. Infrastructure setup"
+title: "2. Infrastructure setup: beginner"
 importance: 3
 summary: |
   Prepare concept registry data storage with GitHub as repository hosting provider.
-  (Intended for registry managers without technical knowledge.)
+  Intended for registry managers without technical knowledge.
 
 media:
   - template-repo.png

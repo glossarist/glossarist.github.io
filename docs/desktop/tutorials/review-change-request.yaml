@@ -38,7 +38,7 @@ contents: |
   ====
   If the “Accept revision” button is disabled, this may be caused by the following:
 
-  * You are not listed in register roles as register manager.
+  * You are not listed in link:https://www.glossarist.org/docs/adopt/2-infrastructure/[register roles] as register manager.
   * The change request in question has not been submitted yet.
   ====
 
