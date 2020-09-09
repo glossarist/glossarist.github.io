@@ -58,13 +58,11 @@ const AsciidocStyled = styled.div`
 
     > table > tbody > tr {
       > td.icon {
-        display: block;
         padding: 0;
         font-size: .95em; // matches asciidoctor.css
         line-height: 1.7; // matches asciidoctor.css
       }
       > td.content {
-        display: table-cell;
         padding-top: 0;
         padding-bottom: 0;
       }
