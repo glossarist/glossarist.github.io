@@ -29,20 +29,17 @@ contents: |
 
   == Accepting a revision
 
-  If you are satisfied with the proposal, give the new concept an ID
-  and click Accept revision.
+  If you are satisfied with the proposal, you can click the Accept Revision button.
 
-  NOTE: You must choose a unique numeric ID.
+  If an entirely new concept is being proposed, you must specify a unique numeric ID.
 
-  NOTE: Change Request status is not affected by accepting revisions.
-  (See below.)
-
+  .Troubleshooting
   [NOTE]
   ====
   If the “Accept revision” button is disabled, this may be caused by the following:
 
   * You are not listed in register roles as register manager.
-  * The change request in question is not in “Submitted” state.
+  * The change request in question has not been submitted yet.
   ====
 
 
@@ -53,9 +50,12 @@ contents: |
 
   [NOTE]
   ====
-  The application does not enforce the stage.
+  Glossarist Desktop does not automatically advance CR stage when you accept revisions,
+  and it does not strictly enforce the stage based on whether revisions were accepted.
 
-  If you accepted only some of the proposed changes,
-  it is up to you and the policies of the organization whether to mark
-  the CR as Resolved or Rejected.
+  In other words, it is up to you to mark the CR as Resolved or Rejected.
+
+  If you accepted only _some_ of the proposed changes,
+  you can use either status Resolved or Rejected in accordance with your
+  or your organization’s policies.
   ====
