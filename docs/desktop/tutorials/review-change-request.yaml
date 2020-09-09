@@ -1,0 +1,61 @@
+title: Reviewing a change
+
+summary: |
+  Review proposed changes.
+
+media:
+  - review-screen-for-submitted-cr.png
+
+contents: |
+
+  == Selecting a revision to review
+
+  . Navigate to Review module
+
+  . Using Change Requests panel on the left,
+    select a change request you want to review
+
+  . Using Proposed Revisions panel on the right,
+    select a proposed concept entry revision to review
+
+
+  == Reviewing changes
+
+  Selected concept entry will be shown in the main module view.
+
+  You can switch between viewing _revision with changes highlighted_
+  and _final revision_ using buttons in the toolbar on the bottom.
+
+
+  == Accepting a revision
+
+  If you are satisfied with the proposal, give the new concept an ID
+  and click Accept revision.
+
+  NOTE: You must choose a unique numeric ID.
+
+  NOTE: Change Request status is not affected by accepting revisions.
+  (See below.)
+
+  [NOTE]
+  ====
+  If the “Accept revision” button is disabled, this may be caused by the following:
+
+  * You are not listed in register roles as register manager.
+  * The change request in question is not in “Submitted” state.
+  ====
+
+
+  == Updating Change Request stage
+
+  When you are finished reviewing a CR and accepting revisions,
+  you can change CR stage to Resolved or Rejected.
+
+  [NOTE]
+  ====
+  The application does not enforce the stage.
+
+  If you accepted only some of the proposed changes,
+  it is up to you and the policies of the organization whether to mark
+  the CR as Resolved or Rejected.
+  ====
