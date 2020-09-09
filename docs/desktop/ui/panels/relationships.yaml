@@ -1,0 +1,24 @@
+title: Panel “Relationships”
+
+media:
+  - relationships.png
+
+excerpt: >-
+  View all relationships, add or remove outgoing relationships.
+
+summary: >-
+  Shows all relationships to or from selected concept.
+  Allows to add or remove outgoing relationships.
+
+contents: |
+  image::./relationships.png[Relationships panel screenshot]
+
+  [NOTE]
+  ====
+  For users who are not register managers,
+  it is not currently possible to specify relationships.
+  ====
+
+  Read how to link:../../tutorials/linking-concepts[link concepts].
+
+  Read about link:../../topics/concept-relationships[concept relationships].

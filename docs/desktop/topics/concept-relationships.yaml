@@ -1,0 +1,44 @@
+title: Concept relationships
+
+summary: |
+  Relationships include domain relationships as well as sibling relations.
+
+media:
+  - relationships-panel.png
+
+contents: |
+
+  == Outgoing relationships
+
+  Outgoing relationships can be of two types:
+
+  - “Parent” relationship.
+    Known as “domain” in ISO 704 and as “broader” relation in SKOS.
+
+  - Generic sibling relationship.
+
+  Changing *outgoing concept relationships* is possible via the Relationships panel.
+
+  NOTE: Concept relationships are not currently part of Change Request flow.
+  Currently, only register manager can edit concept relationships.
+
+  == Incoming relationships
+
+  *Incoming concept relationships* are tracked by the software automatically.
+
+  For example, it is not necessary to specify “narrower” relationships:
+  all concepts that specify given concept A as a parent
+  are automatically considered as “narrower” concepts of concept A.
+
+  Same applies for generic sibling relationships:
+  if concept B is linked as related to concept A,
+  concept A will be shown as _linked by_ from concept B.
+
+  The Relationships panel shows incoming relationships in read-only mode.
+  To edit an incoming relationship to A from B, go to the linked concept B
+  and edit its outgoing relations to A.
+
+  == See also
+
+  - link:../../ui/panels/relationships/[Relationships panel]
+  - link:../tutorials/linking-concepts/[Linking concepts]

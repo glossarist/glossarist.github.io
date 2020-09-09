@@ -1,0 +1,27 @@
+title: Linking concepts
+
+summary: |
+  Specifying concept relationships is done via the Relationships panel.
+
+media:
+  - review-screen-for-submitted-cr.png
+
+contents: |
+
+  To specify domain (broader) concept or related concepts, you may want
+  to edit concept relationships.
+
+  NOTE: You must be register manager to edit concept relationships.
+
+  . Switch to List module and select the concept you want to link.
+
+  . Click the plus button on top of the Relationships panel and select the type
+    of relationship you want to add.
+
+  . In the field that appears, enter _only_ the ID of the concept
+    and click the circle tick button to the right.
+  +
+  NOTE: The ID of a concept is shown in grey to the left in lists,
+  and in the Item panel in List module.
+
+  See also: link:../topics/concept-relationships[Concept relationships].
