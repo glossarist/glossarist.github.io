@@ -74,10 +74,10 @@ contents: |
   === Roles
 
   Edit ``roles.yaml`` and see comments inside the file.
-  This file specifies which Github username corresponds to which role.
+  This file specifies which Github username has which roles.
 
-  * As a person who maintains the infrastructure, you are the _registry_ manager.
-  * As a person who will coordinate the vocabulary and review change requests, you are the _register_ manager.
+  * As a person who maintains the infrastructure, you are a _registry_ manager.
+  * As a person who coordinates the vocabulary and review change requests, you are a _register_ manager.
 
   == 3. Setting up contributor access
 
