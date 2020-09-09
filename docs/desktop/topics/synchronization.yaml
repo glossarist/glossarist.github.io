@@ -7,7 +7,9 @@ summary: |
 
 contents: |
 
-  Synchronization is triggered using the “Synchronize” button in the top panel.
+  Fetching changes happens automatically on each application launch.
+
+  Full synchronization can be triggered using the “Synchronize” button in the top panel.
 
   == What happens during synchronization
 
@@ -16,7 +18,9 @@ contents: |
 
   . Those changes (if any) are fetched and combined with your local changes (if any).
 
-  . The newly created registry version is then uploaded to data repository.
+  . On full synchronization,
+    the newly created registry version is then uploaded to data repository.
+    (This may not happen automatically during app startup.)
 
 
   == Merge conflicts
