@@ -103,4 +103,4 @@ contents: |
 
   - If you have existing concept database to convert to Glossarist, see
     link:../3-migration/[Migrating existing terminology data]
-  - Otherwise you might want to link:../../getting-started/installation/[get started with the desktop app]
+  - Otherwise you might want to link:../getting-started/installation/[get started with the desktop app]
