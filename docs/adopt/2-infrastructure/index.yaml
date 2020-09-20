@@ -5,11 +5,15 @@ summary: |
   Intended for registry managers without technical knowledge.
 
 media:
+  - tutorial.mp4
   - template-repo.png
   - repo-settings.png
   - repo-in-progress.png
   - editing-files.png
   - repo-access.png
+
+tutorial_video:
+  - tutorial.mp4
 
 contents: |
   // Behind the scenes Glossarist Desktop stores concepts & terms as YAML files.
