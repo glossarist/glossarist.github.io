@@ -19,7 +19,7 @@
     "@riboseinc/aperis-doc-pages": "^1.0.0-pre8",
     "@riboseinc/react-static-plugin-aperis-doc-pages": "^1.0.0",
     "chroma-js": "^2.1.0",
-    "moment": "^2.27.0",
+    "moment": "^2.29.4",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-is": "^16.13.1",
