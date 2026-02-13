@@ -41,7 +41,7 @@
     "@types/react-hot-loader": "^4.1.0",
     "@types/styled-components": "^5.1.0",
     "@types/webpack-env": "^1.14.0",
-    "marked": "^1.1.0",
+    "marked": "^4.0.10",
     "react-hot-loader": "^4.12.11",
     "react-static-plugin-file-watch-reload": "^1.0.3",
     "serve": "^11.1.0",
