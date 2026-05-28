@@ -1,0 +1,23 @@
+---
+title: Concepts & Terms
+description: Properties of concepts and terms in Glossarist
+---
+
+# Concepts & Terms
+
+In Glossarist, concepts are treated as units of understanding, and terms (designations) act as designated "shortcuts" to those units.
+
+The properties of a concept are:
+
+- Definition in each supported language
+- Notes and examples
+- Domain (field of knowledge, treated as "parent" concept)
+- Relationships to sibling concepts
+
+The properties of a term are:
+
+- Grammatical traits (as of now, only verbal designations are supported)
+- Usage context information (e.g., geographical area)
+- Normative status
+
+A given concept can have more than one term. Generally, one term is the preferred designation, while others act as synonyms or abbreviations.

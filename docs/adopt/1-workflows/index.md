@@ -1,0 +1,36 @@
+---
+title: 1. Concept Management Principles
+description: Terminology management processes expected by Glossarist are based on ISO 704 and ISO 10241
+---
+
+# 1. Concept Management Principles
+
+Terminology management processes expected by Glossarist are based on ISO 704 and ISO 10241.
+
+## Concepts and designations
+
+Treat terms as "shortcut" designations for _concepts_, and concepts as units of understanding. (For details, read [intro to concept systems](/docs/core-concepts/intro-to-concept-systems) and ["Concepts & terms"](/docs/core-concepts/concepts-and-terms).)
+
+- Each concept has—for each supported language—a definition, notes, examples, and one or more terms.
+
+  Per each language you use, Glossarist maintains a revision history of concept properties and terms. Each revision is a "snapshot" of concept state in that language, and new revisions are created by accepting change requests (see below).
+
+- Each term contains a verbal designation for the concept and is associated with certain grammatical traits and respective normative statuses.
+
+### Normative status of a term
+
+Since multiple terms can be used to represent a particular concept and language in any field constantly evolves, a Glossarist term is marked as "preferred", "admitted" or "deprecated" (in order of decreasing preference).
+
+## Change workflow
+
+Glossarist's concept database is treated as a register, and updates to concepts or terms are handled through the change request workflow.
+
+Submitters will need to _request changes_, and register manager will need to review and accept them. (For details, refer to ["Concept system as a register"](/docs/core-concepts/registers).)
+
+## Desktop software for editing data
+
+Managing concept systems (proposing changes and reviewing changes) is done using Glossarist Desktop. It is expected that you will use this software while working with the concept system register.
+
+## Next
+
+- [Infrastructure Setup](/docs/adopt/2-infrastructure/)

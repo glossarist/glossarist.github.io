@@ -1,0 +1,312 @@
+/* Glossarist Brand Colors — derived from logo palette */
+
+:root {
+  --glossarist-primary: #29415b;
+  --glossarist-primary-light: #385c7f;
+  --glossarist-primary-dark: #1c293e;
+
+  --vp-c-brand-1: var(--glossarist-primary);
+  --vp-c-brand-2: var(--glossarist-primary-light);
+  --vp-c-brand-3: var(--glossarist-primary-dark);
+  --vp-c-brand-soft: rgba(41, 65, 91, 0.14);
+
+  --vp-button-brand-border: transparent;
+  --vp-button-brand-text: #fff;
+  --vp-button-brand-bg: var(--glossarist-primary);
+  --vp-button-brand-hover-border: transparent;
+  --vp-button-brand-hover-text: #fff;
+  --vp-button-brand-hover-bg: var(--glossarist-primary-light);
+  --vp-button-brand-active-border: transparent;
+  --vp-button-brand-active-text: #fff;
+  --vp-button-brand-active-bg: var(--glossarist-primary-dark);
+}
+
+.dark {
+  --glossarist-primary: #4d8997;
+  --glossarist-primary-light: #63baae;
+  --glossarist-primary-dark: #29415b;
+
+  --vp-c-brand-1: #4d8997;
+  --vp-c-brand-2: #63baae;
+  --vp-c-brand-3: #385c7f;
+  --vp-c-brand-soft: rgba(77, 137, 151, 0.14);
+
+  --vp-button-brand-bg: #4d8997;
+  --vp-button-brand-hover-bg: #63baae;
+}
+
+:root {
+  --vp-nav-logo-height: 36px;
+}
+
+/* Home Page */
+.home-hero {
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.home-hero h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, var(--glossarist-primary), var(--glossarist-primary-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.home-hero p {
+  font-size: 1.25rem;
+  color: var(--vp-c-text-2);
+  max-width: 600px;
+  margin: 0 auto 2rem;
+}
+
+.home-hero-logo {
+  max-width: 140px;
+  margin: 0 auto 2rem;
+}
+
+/* Software Cards Grid */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.project-card {
+  background: var(--vp-c-bg-soft);
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.project-card:hover {
+  border-color: var(--glossarist-primary);
+  box-shadow: 0 4px 20px rgba(30, 64, 175, 0.15);
+  transform: translateY(-2px);
+}
+
+.project-card h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--glossarist-primary);
+}
+
+.project-card h3 .version {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--vp-c-text-2);
+  background: var(--vp-c-default-soft);
+  padding: 0.125rem 0.5rem;
+  border-radius: 4px;
+}
+
+.project-card p {
+  color: var(--vp-c-text-2);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.project-card .links {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.project-card .links a {
+  font-size: 0.85rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.project-card .links a.primary {
+  background: var(--glossarist-primary);
+  color: white;
+}
+
+.project-card .links a.primary:hover {
+  background: var(--glossarist-primary-light);
+}
+
+.project-card .links a.secondary {
+  background: var(--vp-c-default-soft);
+  color: var(--vp-c-text-1);
+}
+
+.project-card .links a.secondary:hover {
+  background: var(--vp-c-default-2);
+}
+
+/* Sections */
+.section {
+  margin: 4rem 0;
+}
+
+.section-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--vp-c-text-1);
+}
+
+.section-description {
+  color: var(--vp-c-text-2);
+  margin-bottom: 2rem;
+}
+
+/* Features Grid */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.feature-card {
+  padding: 1.5rem;
+  background: var(--vp-c-bg-soft);
+  border-radius: 12px;
+  border: 1px solid var(--vp-c-divider);
+}
+
+.feature-card h4 {
+  color: var(--glossarist-primary);
+  margin-bottom: 0.5rem;
+}
+
+.feature-card p {
+  color: var(--vp-c-text-2);
+  font-size: 0.9rem;
+}
+
+/* Used-by logos */
+.users-list {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin: 1.5rem 0;
+  opacity: 0.6;
+}
+
+.users-list a {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.users-list img {
+  height: 2em;
+}
+
+/* Hero actions */
+.home-hero-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.vp-button {
+  display: inline-block;
+  border: 1px solid transparent;
+  text-align: center;
+  font-weight: 600;
+  border-radius: 20px;
+  padding: 0 20px;
+  line-height: 38px;
+  font-size: 14px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.vp-button.brand {
+  background: var(--glossarist-primary);
+  color: white;
+}
+
+.vp-button.brand:hover {
+  background: var(--glossarist-primary-light);
+}
+
+.vp-button.alt {
+  border-color: var(--vp-c-divider);
+  background: var(--vp-c-bg-soft);
+  color: var(--vp-c-text-1);
+}
+
+.vp-button.alt:hover {
+  border-color: var(--glossarist-primary);
+}
+
+/* VitePress Custom Block Overrides */
+.vp-doc .custom-block {
+  margin: 1rem 0;
+}
+
+.vp-doc .custom-block.tip {
+  border-color: var(--glossarist-primary);
+}
+
+/* Footer Enhancement */
+.VPFooter {
+  border-top: 1px solid var(--vp-c-divider) !important;
+}
+
+/* Release Downloader */
+.release-downloader {
+  background: var(--vp-c-bg-soft);
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.release-downloader .download-btn {
+  display: inline-block;
+  background: var(--glossarist-primary);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.release-downloader .download-btn:hover {
+  background: var(--glossarist-primary-light);
+}
+
+.release-downloader .release-info {
+  margin-top: 1rem;
+  color: var(--vp-c-text-2);
+  font-size: 0.9rem;
+}
+
+.release-downloader .release-info strong {
+  color: var(--vp-c-text-1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .home-hero h1 {
+    font-size: 2rem;
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+}
