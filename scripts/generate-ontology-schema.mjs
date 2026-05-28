@@ -493,9 +493,11 @@ function parseAnnotationProperties(ttlText) {
 
 function main() {
   if (!existsSync(ONTOLOGY_TTL)) {
-    console.error(`Ontology file not found: ${ONTOLOGY_TTL}`);
-    console.error('Ensure concept-model is available. Run: git clone https://github.com/glossarist/concept-model.git concept-model');
-    process.exit(1);
+    console.warn(`Ontology file not found: ${ONTOLOGY_TTL}`);
+    console.warn('Writing empty placeholder. In CI, concept-model is cloned automatically.');
+    mkdirSync(dirname(OUTPUT), { recursive: true });
+    writeFileSync(OUTPUT, JSON.stringify({ classes: {}, classHierarchyRoots: [], properties: {}, propertiesByDomain: {}, shapes: {}, shapesByTargetClass: {}, annotationProperties: [], stats: { classCount: 0, objectPropertyCount: 0, datatypePropertyCount: 0, shapeCount: 0, annotationPropertyCount: 0 } }, null, 2) + '\n');
+    return;
   }
 
   const ttlText = readFileSync(ONTOLOGY_TTL, 'utf-8');
