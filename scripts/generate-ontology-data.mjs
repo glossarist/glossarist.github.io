@@ -155,9 +155,11 @@ const TAXONOMY_MAP = {
 
 function main() {
   if (!existsSync(TAXONOMY_DIR)) {
-    console.error(`Taxonomy directory not found: ${TAXONOMY_DIR}`);
-    console.error('Ensure concept-model is available. Run: git clone https://github.com/glossarist/concept-model.git concept-model');
-    process.exit(1);
+    console.warn(`Taxonomy directory not found: ${TAXONOMY_DIR}`);
+    console.warn('Writing empty placeholder. In CI, concept-model is cloned automatically.');
+    mkdirSync(dirname(OUTPUT), { recursive: true });
+    writeFileSync(OUTPUT, '{}\n');
+    return;
   }
 
   const result = {};
