@@ -1,5 +1,27 @@
-node_modules
-tmp
-artifacts
-dist
-yarn-error.log
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+.vitepress/dist/
+.vitepress/cache/
+
+# Build-time data (generated from concept-model repo)
+concept-model/
+public/data/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Editor directories
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Misc
+tmp/
+artifacts/

@@ -1,0 +1,26 @@
+---
+title: Synchronization
+description: Edits are saved locally. Synchronize to persist changes and see updates from others.
+---
+
+# Synchronization
+
+Edits that you make via Glossarist get saved on your computer. To persist your changes in the main repository and see new changes by others, it is required to synchronize.
+
+Fetching changes happens automatically on each application launch. Full synchronization can be triggered using the "Synchronize" button in the top panel.
+
+## What happens during synchronization
+
+1. Registry's data repository is checked for new changes made by collaborators, including submitting organizations and other registry managers.
+2. Those changes (if any) are fetched and combined with your local changes (if any).
+3. On full synchronization, the newly created registry version is then uploaded to data repository. (This may not happen automatically during app startup.)
+
+## Merge conflicts
+
+::: info
+To reduce the probability of merge conflicts, make sure to run synchronization often. Do not "hoard changes"—it is often easier to revert undesired changes than resolve a merge conflict. Generally, the only reason you'd want to postpone synchronization is if you are offline.
+:::
+
+If another collaborator has modified the same data as you, and they synchronized first, it is possible that your changes cannot be automatically incorporated (merged). You will know this happened if after sync you see a message on top of the window saying that remote changes cannot be incorporated and merge conflict has occurred.
+
+Such a scenario currently requires manual intervention. Please get in touch with your Glossarist integrator to resolve this situation.
