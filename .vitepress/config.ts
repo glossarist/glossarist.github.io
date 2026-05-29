@@ -24,8 +24,19 @@ export default defineConfig({
     siteTitle: 'Glossarist',
 
     nav: [
+      {
+        text: 'Model',
+        items: [
+          { text: 'Overview', link: '/docs/model/' },
+          { text: 'Concepts', link: '/docs/model/concepts' },
+          { text: 'Designations', link: '/docs/model/designations' },
+          { text: 'Relationships', link: '/docs/model/relationships' },
+          { text: 'Sources', link: '/docs/model/sources' },
+          { text: 'Schemas', link: '/docs/model/schemas' },
+          { text: 'Ontology Browser', link: '/docs/model/ontology' },
+        ]
+      },
       { text: 'Software', items: softwareNavItems },
-      { text: 'Model', link: '/docs/model/' },
       {
         text: 'Docs',
         items: [
