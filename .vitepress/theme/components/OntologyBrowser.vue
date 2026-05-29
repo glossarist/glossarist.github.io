@@ -286,7 +286,36 @@ const activeTaxonomyData = computed(() => {
   const tax = taxonomies.value[activeId.value]
   if (!tax) return null
   const all = Object.values(tax.concepts)
-  return { scheme: tax.scheme, concepts: all, top: all.filter(c => !c.broader) }
+  const alphaIndex: Record<string, typeof all> = {}
+  for (const c of all) {
+    const letter = (c.prefLabel || c.id).charAt(0).toUpperCase()
+    if (!alphaIndex[letter]) alphaIndex[letter] = []
+    alphaIndex[letter].push(c)
+  }
+  for (const letter of Object.keys(alphaIndex)) {
+    alphaIndex[letter].sort((a, b) => (a.prefLabel || a.id).localeCompare(b.prefLabel || b.id))
+  }
+  return {
+    scheme: tax.scheme,
+    definition: tax.schemeDefinition,
+    concepts: all,
+    top: all.filter(c => !c.broader),
+    alphaIndex,
+    alphaLetters: Object.keys(alphaIndex).sort(),
+  }
+})
+
+const taxonomyAlphaFilter = ref('')
+
+// Keyboard shortcut for search
+onMounted(() => {
+  document.addEventListener('keydown', (e: KeyboardEvent) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault()
+      const input = document.querySelector('.ob-search-input') as HTMLInputElement
+      if (input) input.focus()
+    }
+  })
 })
 </script>
 
@@ -307,9 +336,10 @@ const activeTaxonomyData = computed(() => {
             @focus="searchFocused = true"
             @blur="setTimeout(() => searchFocused = false, 200)"
             type="text"
-            placeholder="Search classes, properties, shapes..."
+            placeholder="Search classes, properties, shapes…"
             class="ob-search-input"
           />
+          <kbd class="ob-search-kbd">⌘K</kbd>
           <div v-if="searchQuery.length >= 2 && searchFocused && searchResults.length" class="ob-search-dropdown">
             <button v-for="r in searchResults" :key="r.compact" class="ob-search-item" @mousedown="searchSelect(r)">
               <span class="ob-dot" :class="'ob-dot-' + r.type"></span>
@@ -439,6 +469,25 @@ const activeTaxonomyData = computed(() => {
                 <div class="ob-stat-card" @click="sidebarTab = 'taxonomies'">
                   <span class="ob-stat-num ob-color-tax">{{ totalTaxonomyIndividuals }}</span>
                   <span class="ob-stat-label">Named Individuals</span>
+                </div>
+              </div>
+
+              <!-- Class hierarchy visual -->
+              <div class="ob-section">
+                <h3 class="ob-heading">Class Hierarchy</h3>
+                <div class="ob-hierarchy">
+                  <template v-for="rootId in roots" :key="rootId">
+                    <div class="ob-hier-node ob-hier-root">
+                      <span class="ob-dot ob-dot-class"></span>
+                      <button class="ob-hier-link" @click="navigate('class', rootId)">{{ getClass(rootId)?.label || rootId }}</button>
+                      <span class="ob-hier-count">{{ getClass(rootId)?.children.length || 0 }}</span>
+                    </div>
+                    <div v-for="childId in (getClass(rootId)?.children || [])" :key="childId" class="ob-hier-node ob-hier-l1">
+                      <span class="ob-dot ob-dot-class"></span>
+                      <button class="ob-hier-link" @click="navigate('class', childId)">{{ getClass(childId)?.label || childId }}</button>
+                      <span v-if="getClass(childId)?.children.length" class="ob-hier-count">{{ getClass(childId)?.children.length }}</span>
+                    </div>
+                  </template>
                 </div>
               </div>
 
@@ -676,19 +725,48 @@ const activeTaxonomyData = computed(() => {
               <div class="ob-detail-type ob-color-tax-badge">SKOS ConceptScheme</div>
               <h2 class="ob-title">{{ taxonomyLabels[activeId] }}</h2>
               <code class="ob-iri">{{ activeTaxonomyData.scheme }}</code>
+              <p v-if="activeTaxonomyData.definition" class="ob-desc">{{ activeTaxonomyData.definition }}</p>
             </div>
 
             <div class="ob-section">
-              <div v-for="concept in activeTaxonomyData.concepts" :key="concept.id" class="ob-concept-item">
-                <div class="ob-concept-head">
-                  <code class="ob-code-bold">{{ concept.id }}</code>
-                  <span class="ob-concept-label">{{ concept.prefLabel }}</span>
-                  <span v-if="concept.altLabel" class="ob-muted ob-text-sm">({{ concept.altLabel }})</span>
+              <div class="ob-tax-header">
+                <h3 class="ob-heading">{{ activeTaxonomyData.concepts.length }} Concepts</h3>
+                <div class="ob-alpha-nav">
+                  <button v-for="letter in activeTaxonomyData.alphaLetters" :key="letter"
+                    class="ob-alpha-letter" :class="{ active: taxonomyAlphaFilter === letter }"
+                    @click="taxonomyAlphaFilter = taxonomyAlphaFilter === letter ? '' : letter">
+                    {{ letter }}
+                  </button>
                 </div>
-                <p v-if="concept.definition" class="ob-concept-def">{{ concept.definition }}</p>
-                <div v-if="concept.broader" class="ob-concept-broader">
-                  broader: <code class="ob-code">{{ concept.broader }}</code>
-                </div>
+              </div>
+
+              <div class="ob-concept-list">
+                <template v-if="taxonomyAlphaFilter">
+                  <div v-for="concept in activeTaxonomyData.alphaIndex[taxonomyAlphaFilter]" :key="concept.id" class="ob-concept-item">
+                    <div class="ob-concept-head">
+                      <code class="ob-code-bold">{{ concept.id }}</code>
+                      <span class="ob-concept-label">{{ concept.prefLabel }}</span>
+                      <span v-if="concept.altLabel" class="ob-muted ob-text-sm">({{ concept.altLabel }})</span>
+                    </div>
+                    <p v-if="concept.definition" class="ob-concept-def">{{ concept.definition }}</p>
+                    <div v-if="concept.broader" class="ob-concept-broader">
+                      broader: <code class="ob-code">{{ concept.broader }}</code>
+                    </div>
+                  </div>
+                </template>
+                <template v-else>
+                  <div v-for="concept in activeTaxonomyData.concepts" :key="concept.id" class="ob-concept-item">
+                    <div class="ob-concept-head">
+                      <code class="ob-code-bold">{{ concept.id }}</code>
+                      <span class="ob-concept-label">{{ concept.prefLabel }}</span>
+                      <span v-if="concept.altLabel" class="ob-muted ob-text-sm">({{ concept.altLabel }})</span>
+                    </div>
+                    <p v-if="concept.definition" class="ob-concept-def">{{ concept.definition }}</p>
+                    <div v-if="concept.broader" class="ob-concept-broader">
+                      broader: <code class="ob-code">{{ concept.broader }}</code>
+                    </div>
+                  </div>
+                </template>
               </div>
             </div>
           </template>
@@ -773,6 +851,21 @@ const activeTaxonomyData = computed(() => {
 }
 
 .ob-search-input:focus { border-color: var(--vp-c-brand-1); }
+
+.ob-search-kbd {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.625rem;
+  font-family: var(--vp-font-family-mono);
+  padding: 0.125rem 0.375rem;
+  border-radius: 4px;
+  border: 1px solid var(--vp-c-divider);
+  color: var(--vp-c-text-3);
+  background: var(--vp-c-bg);
+  pointer-events: none;
+}
 
 .ob-search-dropdown {
   position: absolute;
@@ -1322,6 +1415,112 @@ const activeTaxonomyData = computed(() => {
   min-height: 200px;
   color: var(--vp-c-text-3);
 }
+
+/* Class hierarchy visual */
+.ob-hierarchy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.ob-hier-node {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.375rem 0.625rem;
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+
+.ob-hier-node:hover { background: var(--vp-c-bg-soft); }
+
+.ob-hier-root {
+  font-weight: 600;
+}
+
+.ob-hier-l1 {
+  padding-left: 2rem;
+  border-left: 2px solid var(--vp-c-divider);
+  margin-left: 0.75rem;
+}
+
+.ob-hier-link {
+  font-size: 0.8125rem;
+  font-weight: inherit;
+  color: var(--g-class);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: none;
+}
+
+.ob-hier-link:hover { text-decoration: underline; }
+
+.ob-hier-count {
+  font-size: 0.625rem;
+  color: var(--vp-c-text-3);
+  background: var(--vp-c-default-soft);
+  padding: 0.0625rem 0.375rem;
+  border-radius: 9999px;
+  margin-left: auto;
+}
+
+/* Taxonomy alphabetical index */
+.ob-tax-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.ob-tax-header .ob-heading { margin-bottom: 0; }
+
+.ob-alpha-nav {
+  display: flex;
+  gap: 0.125rem;
+  flex-wrap: wrap;
+}
+
+.ob-alpha-letter {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  border-radius: 4px;
+  border: 1px solid var(--vp-c-divider);
+  background: none;
+  color: var(--vp-c-text-3);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.ob-alpha-letter:hover {
+  border-color: var(--vp-c-brand-1);
+  color: var(--vp-c-brand-1);
+}
+
+.ob-alpha-letter.active {
+  background: var(--vp-c-brand-1);
+  border-color: var(--vp-c-brand-1);
+  color: #fff;
+}
+
+.ob-concept-list {
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.ob-concept-list .ob-concept-item {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--vp-c-divider);
+}
+
+.ob-concept-list .ob-concept-item:last-child { border-bottom: none; }
 
 /* ================================================================
    RESPONSIVE
