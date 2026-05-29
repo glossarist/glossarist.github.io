@@ -444,6 +444,20 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
             <span>1,507 concepts · 15 languages · Geographic information terminology</span>
           </div>
         </a>
+        <a href="https://isotc204.geolexica.org/" target="_blank" rel="noopener" class="user-card">
+          <img src="/images/iso-symbol.svg" alt="ISO" />
+          <div>
+            <strong>ISO/TC 204 Geolexica</strong>
+            <span>Intelligent transport systems terminology</span>
+          </div>
+        </a>
+        <a href="https://osgeo.geolexica.org/" target="_blank" rel="noopener" class="user-card">
+          <img src="/images/iso-symbol.svg" alt="OSGeo" />
+          <div>
+            <strong>OSGeo Geolexica</strong>
+            <span>Open Source Geospatial Foundation terminology</span>
+          </div>
+        </a>
       </div>
     </section>
   </div>

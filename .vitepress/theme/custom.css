@@ -8,6 +8,7 @@
   --g-navy: #1c293e;
   --g-steel: #385c7f;
   --g-teal: #3ba79e;
+  --g-teal-dark: #237a72;
   --g-sea: #63baae;
   --g-sage: #9cd0c8;
 
@@ -53,6 +54,16 @@
   --g-individual: #fb7185;
 }
 
+.dark .btn-primary {
+  background: var(--g-steel);
+  box-shadow: 0 2px 16px rgba(59, 167, 158, 0.2);
+}
+
+.dark .btn-primary:hover {
+  background: #4a6d94;
+  box-shadow: 0 4px 24px rgba(59, 167, 158, 0.35);
+}
+
 /* ================================================================
    HOMEPAGE
    ================================================================ */
@@ -90,7 +101,7 @@
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--g-teal);
+  color: var(--g-teal-dark);
   background: rgba(59, 167, 158, 0.1);
   border: 1px solid rgba(59, 167, 158, 0.2);
   padding: 0.3rem 0.875rem;
@@ -152,13 +163,14 @@
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--g-steel), var(--g-teal));
+  background: var(--g-navy);
   color: #fff;
-  box-shadow: 0 2px 12px rgba(59, 167, 158, 0.25);
+  box-shadow: 0 2px 16px rgba(59, 167, 158, 0.3);
 }
 
 .btn-primary:hover {
-  box-shadow: 0 4px 20px rgba(59, 167, 158, 0.4);
+  background: var(--g-steel);
+  box-shadow: 0 4px 24px rgba(59, 167, 158, 0.45);
   transform: translateY(-1px);
 }
 
@@ -205,7 +217,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: var(--g-teal);
+  color: var(--g-teal-dark);
   margin-bottom: 0.5rem;
 }
 
@@ -829,7 +841,7 @@
 .release-downloader .download-btn {
   display: inline-flex;
   align-items: center;
-  background: linear-gradient(135deg, var(--g-steel), var(--g-teal));
+  background: var(--g-navy);
   color: white;
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
@@ -839,10 +851,12 @@
   transition: all 0.2s ease;
   border: none;
   cursor: pointer;
+  box-shadow: 0 2px 12px rgba(59, 167, 158, 0.25);
 }
 
 .release-downloader .download-btn:hover {
-  box-shadow: 0 4px 16px rgba(59, 167, 158, 0.3);
+  background: var(--g-steel);
+  box-shadow: 0 4px 20px rgba(59, 167, 158, 0.4);
   transform: translateY(-1px);
 }
 
