@@ -31,7 +31,7 @@ Together, these two script traditions merge into a single mark. This mirrors Glo
 
 The logo is composed of overlapping colored shapes in blues, teals, and greens — not a single flat color. Each color region represents a distinct **property** of a concept:
 
-- **Dark navy** (#1c293e) — The concept identity itself, the stable core
+- **Dark navy** (#2d4164) — The concept identity itself, the stable core
 - **Steel blue** (#3a5c80) — Designations: the names and terms that identify a concept across languages
 - **Teal** (#3fb6b0) — Relationships: how one concept connects to and is defined by others
 - **Sea green** (#7ee0d4) — Sources and provenance: the authoritative references that ground each concept

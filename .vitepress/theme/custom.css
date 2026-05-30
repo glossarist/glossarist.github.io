@@ -2,14 +2,13 @@
    GLOSSARIST DESIGN SYSTEM — v2
    New York Professional Technology Style
 
-   Colors from the updated Glossarist logo (2026):
-   Navy:    #1c293e  — primary dark, headers, structure
+   Colors from the Glossarist logo mark:
+   Navy:    #2d4164  — primary dark, headers, structure
    Steel:   #3a5c80  — secondary, depth, links
    Teal:    #3fb6b0  — brand accent, CTAs, energy
    Deep:    #34798a  — mid-tone, properties
    Sea:     #7ee0d4  — bright accent, highlights
    Mint:    #b8f5ec  — light accent, backgrounds
-   Snow:    #dfebe6  — lightest, soft bg
 
    Logo gradient: #3fb6b0 → #b8f5ec (vivid cyan-to-mint)
 
@@ -23,13 +22,12 @@
 
 :root {
   /* Updated logo-derived brand palette */
-  --g-navy: #1c293e;
+  --g-navy: #2d4164;
   --g-steel: #3a5c80;
   --g-teal: #3fb6b0;
-  --g-teal-dark: #3aa69f;
+  --g-teal-dark: #34798a;
   --g-sea: #7ee0d4;
   --g-mint: #b8f5ec;
-  --g-snow: #dfebe6;
   --g-deep: #34798a;
 
   /* Semantic entity colors */

@@ -16,7 +16,7 @@ export default defineConfig({
   head: [
     ['link', { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }],
     ['link', { rel: 'shortcut icon', href: '/favicon.ico' }],
-    ['meta', { name: 'theme-color', content: '#1c293e' }],
+    ['meta', { name: 'theme-color', content: '#2d4164' }],
   ],
 
   themeConfig: {
