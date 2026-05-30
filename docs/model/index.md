@@ -29,7 +29,7 @@ A rich domain model for terminology management, aligned with ISO 10241-1, 704, 3
 <div class="mi-stat-row">
 <div class="mi-stat">
 <span class="mi-stat-number">24</span>
-<span class="mi-stat-label">OWL Classes</span>
+<span class="mi-stat-label">Ontology Classes</span>
 </div>
 <div class="mi-stat">
 <span class="mi-stat-number">48</span>
@@ -121,9 +121,9 @@ The model separates *what a concept is* (its identity, lifecycle, relationships)
 <div class="mi-entity mi-entity-onto">
 <div class="mi-entity-header">
 <span class="mi-entity-dot" style="background:linear-gradient(135deg, var(--g-steel), var(--g-teal))"></span>
-<h3><a href="/docs/model/ontology">OWL Ontology</a></h3>
+<h3><a href="/ontology">Semantic Web & Linked Data</a></h3>
 </div>
-<p>Formal RDF/OWL vocabulary with SHACL shapes for validation. Aligned with SKOS, SKOS-XL, ISO 25964, PROV-O, Dublin Core.</p>
+<p>Formal ontology with SHACL shapes for validation. Aligned with SKOS, SKOS-XL, ISO 25964, PROV-O, and Dublin Core — ready for the linked data ecosystem.</p>
 <div class="mi-entity-fields">
 <code>owl:Class</code> <code>sh:Shape</code> <code>skos:Concept</code> <code>skosxl:Label</code>
 </div>
@@ -181,7 +181,7 @@ Every entity in the Glossarist model maps to established international standards
 | **ISO 30042 / TBX** | Terminology markup framework — data exchange format |
 | **ISO 12620** | Data category registry — 34 term type classifications |
 | **ISO 25964** | Thesauri — hierarchical and mapping relationships (BTG/NTG, BTP/NTP, BTI/NTI) |
-| **OWL 2 / SHACL** | Formal ontology vocabulary with shape constraints for data validation |
+| **Semantic Web (OWL 2 / SHACL)** | Formal ontology vocabulary with shape constraints for data validation |
 | **SKOS / SKOS-XL** | Knowledge organization for the semantic web — concept schemes and reified labels |
 
 ## Processing with code
@@ -217,7 +217,7 @@ puts concept.localizations['eng'].definition
 - [Sources](/docs/model/sources) — Authoritative source hierarchy and provenance
 - [Term Types](/docs/model/term-types) — 34 ISO 12620 term type classifications
 - [Schemas](/docs/model/schemas) — V2 and V3 YAML schema reference and enum values
-- [Ontology Browser](/docs/model/ontology) — Interactive OWL ontology and SHACL shape browser
+- [Ontology Browser](/ontology) — Interactive ontology and SHACL shape browser
 
 </div>
 

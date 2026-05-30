@@ -59,27 +59,15 @@ Glossarist is designed around the principle that terminology management should f
 
 At the core of Glossarist is a rich [concept model](/docs/model/) aligned with multiple ISO standards:
 
-- **ISO 10241-1** — Terminology entries in standardized terminology
-- **ISO 704** — Terminology work: principles and methods
-- **ISO 30042 / TBX** — Terminology markup framework
-- **ISO 12620** — Data category registry
-- **ISO 25964 / SKOS** — Thesaurus interoperability
+- [**ISO 10241-1**](https://www.iso.org/standard/40362.html) — Terminology entries in standardized terminology
+- [**ISO 704**](https://www.iso.org/standard/79077.html) — Terminology work: principles and methods
+- [**ISO 30042 / TBX**](https://www.iso.org/standard/62510.html) — Terminology markup framework
+- [**ISO 12620**](https://www.iso.org/standard/69550.html) — Data category registry
+- [**ISO 25964 / SKOS**](https://www.iso.org/standard/53657.html) — Thesaurus interoperability
 
 The model supports multi-language concepts with designations, definitions, notes, examples, relationships, authoritative sources, and revision history.
 
-## The Ecosystem
-
-| Project | Description | Category |
-|---------|-------------|----------|
-| [glossarist-ruby](https://github.com/glossarist/glossarist-ruby) | Ruby gem implementing the concept model | Core |
-| [glossarist-js](https://github.com/glossarist/glossarist-js) | JavaScript SDK for GCR packages | Core |
-| [concept-model](https://github.com/glossarist/concept-model) | OWL ontology, SHACL shapes, SKOS taxonomies | Core |
-| [glossarist-desktop](https://github.com/glossarist/glossarist-desktop) | Desktop viewer and editor | Tooling |
-| [concept-browser](https://github.com/glossarist/glossarist-vocabulary-browser) | Interactive browser for terminology datasets | Tooling |
-
-## Used by
-
-- **Geolexica for ISO/TC 211 MLGT** — [isotc211.geolexica.org](https://isotc211.geolexica.org/)
+See the [full standards compliance reference](/docs/standards) for details on how each standard maps to Glossarist entities.
 
 ## Use Cases
 
@@ -102,19 +90,6 @@ The model supports multi-language concepts with designations, definitions, notes
   </div>
 </div>
 
-## Standards Support
-
-Glossarist supports a wide range of terminology and knowledge organization standards:
-
-- **ISO 10241-1** — Terminology entries in international standards
-- **ISO 704** — Terminology work: principles and methods
-- **ISO 30042 / TBX** — TermBase eXchange format
-- **ISO 12620** — Data category registry
-- **ISO 25964 / SKOS** — Thesauri and interoperability
-- **OWL 2** — Web Ontology Language for formal concept modeling
-- **SHACL** — Shapes Constraint Language for data validation
-- **SKOS-XL** — Extended SKOS for reified lexical labels
-
 ## Open Source
 
 Glossarist is an open source project. All repositories are available on GitHub under permissive licenses.
@@ -123,12 +98,14 @@ Glossarist is an open source project. All repositories are available on GitHub u
 - **Contributing**: We welcome contributions! Check individual repositories for guidelines.
 - **Issues**: Report bugs or request features on the respective GitHub issue trackers.
 
+Glossarist is used in production by standards bodies including [ISO/TC 211 Geolexica](https://isotc211.geolexica.org/) (1,507 concepts, 15 languages). See the [homepage](/) for the full list of adopters and the [software page](/docs/software/) for the complete tooling ecosystem.
+
 ## Get Started
 
 1. **Adopt Glossarist** — Read the [Adoption Guide](/docs/adopt/)
 2. **Try the Desktop App** — [Download](/docs/software/desktop) and get started
 3. **Explore the Model** — Read the [Concept Model docs](/docs/model/)
-4. **Browse the Ontology** — Explore the [interactive ontology browser](/docs/model/ontology)
+4. **Browse the Ontology** — Explore the [interactive ontology browser](/ontology)
 5. **View on GitHub** — Browse the [source code](https://github.com/glossarist)
 
 ---

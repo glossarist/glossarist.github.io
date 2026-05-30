@@ -7,7 +7,7 @@ description: Which ISO standards Glossarist implements and how
 
 Glossarist implements and aligns with multiple ISO standards for terminology management.
 
-## ISO 10241-1 — Terminology entries
+## [ISO 10241-1](https://www.iso.org/standard/40362.html) — Terminology entries
 
 Terminology entries in standardized terminology. Glossarist implements:
 
@@ -15,7 +15,7 @@ Terminology entries in standardized terminology. Glossarist implements:
 - [ManagedConcept](/docs/model/concepts), [LocalizedConcept](/docs/model/concepts), [ConceptSource](/docs/model/sources)
 - Relationship types: `deprecates`, `supersedes`, `compare`, `contrast`, `see`
 
-## ISO 704 — Terminology work: principles and methods
+## [ISO 704](https://www.iso.org/standard/79077.html) — Terminology work: principles and methods
 
 Concept systems and the concept-term interaction cycle. Glossarist implements:
 
@@ -23,7 +23,7 @@ Concept systems and the concept-term interaction cycle. Glossarist implements:
 - Hierarchical relationships (broader/narrower)
 - [Concept-term interaction cycle](/docs/model/)
 
-## ISO 30042 / TBX — Terminology markup framework
+## [ISO 30042](https://www.iso.org/standard/62510.html) / TBX — Terminology markup framework
 
 TBX-XML export via glossarist-ruby (tbx gem). Glossarist supports:
 
@@ -31,7 +31,7 @@ TBX-XML export via glossarist-ruby (tbx gem). Glossarist supports:
 - GCR package format as TBX exchange medium
 - [34 TBX term types](/docs/model/term-types)
 
-## ISO 12620 — Data category registry
+## [ISO 12620](https://www.iso.org/standard/69550.html) — Data category registry
 
 Term types and data category classifications. Glossarist implements:
 
@@ -40,7 +40,7 @@ Term types and data category classifications. Glossarist implements:
 - Part of speech
 - Source status/type
 
-## ISO 25964 / SKOS — Thesaurus interoperability
+## [ISO 25964](https://www.iso.org/standard/53657.html) / SKOS — Thesaurus interoperability
 
 SKOS concept schemes and mapping relationships. Glossarist implements:
 

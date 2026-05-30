@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { ref, computed, nextTick, onMounted } from 'vue'
+import { ref, computed, nextTick, onMounted, onUnmounted, watch } from 'vue'
 
 type View = 'overview' | 'class' | 'shape' | 'property' | 'taxonomy'
-type SidebarTab = 'classes' | 'properties' | 'shapes' | 'taxonomies'
+type SidebarTab = 'types' | 'properties' | 'taxonomies'
 
 interface OwlClass {
   iri: string
@@ -112,11 +112,11 @@ const taxonomies = ref<Record<string, TaxonomyData>>({})
 
 const currentView = ref<View>('overview')
 const activeId = ref('')
-const sidebarTab = ref<SidebarTab>('classes')
+const expandedSections = ref<Set<SidebarTab>>(new Set(['classes']))
 const sidebarOpen = ref(false)
 const searchQuery = ref('')
 const searchFocused = ref(false)
-const expandedNodes = ref<Set<string>>(new Set())
+const expandedNodes = ref<Set<string>>(new Set([]))
 
 // --- Data loading ---
 onMounted(async () => {
@@ -141,6 +141,12 @@ onMounted(async () => {
   // Expand all tree nodes by default
   expandedNodes.value = new Set(Object.keys(classes.value))
   loaded.value = true
+  parseHash()
+  window.addEventListener('popstate', onPopState)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('popstate', onPopState)
 })
 
 // --- Navigation ---
@@ -148,11 +154,36 @@ function navigate(view: View, id: string = '') {
   currentView.value = view
   activeId.value = id
   sidebarOpen.value = false
+  const hash = id ? `${view}/${id}` : (view === 'overview' ? '' : view)
+  window.history.pushState(null, '', hash ? `#${hash}` : location.pathname)
   nextTick(() => {
     const el = document.querySelector('.ob-main')
     if (el) el.scrollTo({ top: 0, behavior: 'smooth' })
   })
 }
+
+function toggleSection(tab: SidebarTab) {
+  const s = new Set(expandedSections.value)
+  if (s.has(tab)) s.delete(tab); else s.add(tab)
+  expandedSections.value = s
+}
+
+function parseHash() {
+  const hash = window.location.hash.slice(1)
+  if (!hash) return
+  const [view, ...rest] = hash.split('/')
+  const id = rest.join('/')
+  if (['overview', 'class', 'shape', 'property', 'taxonomy'].includes(view)) {
+    currentView.value = view as View
+    activeId.value = id
+    const sectionMap: Record<string, SidebarTab> = { class: 'classes', shape: 'shapes', property: 'properties', taxonomy: 'taxonomies' }
+    if (sectionMap[view]) {
+      expandedSections.value = new Set([...expandedSections.value, sectionMap[view]])
+    }
+  }
+}
+
+function onPopState() { parseHash() }
 
 function toggleNode(id: string) {
   const s = new Set(expandedNodes.value)
@@ -364,67 +395,97 @@ onMounted(() => {
           Browse
         </button>
 
+        <!-- Mobile overlay -->
+        <div v-if="sidebarOpen" class="ob-overlay" @click="sidebarOpen = false"></div>
+
         <!-- Sidebar -->
         <aside class="ob-sidebar" :class="{ 'ob-sidebar-open': sidebarOpen }">
-          <div class="ob-tabs">
-            <button v-for="tab in (['classes', 'properties', 'shapes', 'taxonomies'] as SidebarTab[])" :key="tab"
-              class="ob-tab" :class="{ active: sidebarTab === tab }"
-              @click="sidebarTab = tab">
-              {{ tab.charAt(0).toUpperCase() + tab.slice(1) }}
-            </button>
-          </div>
-
-          <!-- Classes tree -->
-          <div v-if="sidebarTab === 'classes'" class="ob-tree">
+          <div class="ob-tree ob-tree-top">
             <button class="ob-tree-item ob-tree-overview" :class="{ active: currentView === 'overview' }"
               @click="navigate('overview')">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
               Overview
             </button>
-            <template v-for="node in flatClassTree" :key="node.id">
-              <button class="ob-tree-item"
-                :class="{ active: currentView === 'class' && activeId === node.id }"
-                :style="{ paddingLeft: node.depth * 20 + 12 + 'px' }"
-                @click="navigate('class', node.id)">
-                <span v-if="node.hasChildren" class="ob-tree-toggle" @click.stop="toggleNode(node.id)">
-                  {{ node.expanded ? '▾' : '▸' }}
-                </span>
-                <span v-else class="ob-tree-leaf">&bull;</span>
-                <span class="ob-tree-label">{{ node.label }}</span>
+          </div>
+
+          <!-- Classes section -->
+          <div class="ob-sidebar-section">
+            <button class="ob-section-header" @click="toggleSection('classes')">
+              <span class="ob-section-dot ob-dot-class"></span>
+              <span class="ob-section-label">Classes</span>
+              <span class="ob-section-count">{{ allClasses.length }}</span>
+              <span class="ob-section-chevron">{{ expandedSections.has('classes') ? '▾' : '▸' }}</span>
+            </button>
+            <div v-if="expandedSections.has('classes')" class="ob-tree">
+              <template v-for="node in flatClassTree" :key="node.id">
+                <button class="ob-tree-item"
+                  :class="{ active: currentView === 'class' && activeId === node.id }"
+                  :style="{ paddingLeft: node.depth * 20 + 12 + 'px' }"
+                  @click="navigate('class', node.id)">
+                  <span v-if="node.hasChildren" class="ob-tree-toggle" @click.stop="toggleNode(node.id)">
+                    {{ node.expanded ? '▾' : '▸' }}
+                  </span>
+                  <span v-else class="ob-tree-leaf">&bull;</span>
+                  <span class="ob-tree-label">{{ node.label }}</span>
+                </button>
+              </template>
+            </div>
+          </div>
+
+          <!-- Properties section -->
+          <div class="ob-sidebar-section">
+            <button class="ob-section-header" @click="toggleSection('properties')">
+              <span class="ob-section-dot ob-dot-prop"></span>
+              <span class="ob-section-label">Properties</span>
+              <span class="ob-section-count">{{ allProperties.length }}</span>
+              <span class="ob-section-chevron">{{ expandedSections.has('properties') ? '▾' : '▸' }}</span>
+            </button>
+            <div v-if="expandedSections.has('properties')" class="ob-tree">
+              <button v-for="p in allProperties" :key="p.compact" class="ob-tree-item"
+                :class="{ active: currentView === 'property' && activeId === p.compact }"
+                @click="navigate('property', p.compact)">
+                <span class="ob-dot ob-dot-obj" v-if="p.type === 'object'"></span>
+                <span class="ob-dot ob-dot-dt" v-else></span>
+                <span class="ob-tree-label">{{ p.label }}</span>
               </button>
-            </template>
+            </div>
           </div>
 
-          <!-- Properties list -->
-          <div v-if="sidebarTab === 'properties'" class="ob-tree">
-            <button v-for="p in allProperties" :key="p.compact" class="ob-tree-item"
-              :class="{ active: currentView === 'property' && activeId === p.compact }"
-              @click="navigate('property', p.compact)">
-              <span class="ob-dot ob-dot-obj" v-if="p.type === 'object'"></span>
-              <span class="ob-dot ob-dot-dt" v-else></span>
-              <span class="ob-tree-label">{{ p.label }}</span>
+          <!-- Shapes section -->
+          <div class="ob-sidebar-section">
+            <button class="ob-section-header" @click="toggleSection('shapes')">
+              <span class="ob-section-dot ob-dot-shape"></span>
+              <span class="ob-section-label">Shapes</span>
+              <span class="ob-section-count">{{ allShapes.length }}</span>
+              <span class="ob-section-chevron">{{ expandedSections.has('shapes') ? '▾' : '▸' }}</span>
             </button>
+            <div v-if="expandedSections.has('shapes')" class="ob-tree">
+              <button v-for="s in allShapes" :key="s.compact" class="ob-tree-item"
+                :class="{ active: currentView === 'shape' && activeId === s.compact }"
+                @click="navigate('shape', s.compact)">
+                <span class="ob-dot ob-dot-shape"></span>
+                <span class="ob-tree-label">{{ s.label }}</span>
+              </button>
+            </div>
           </div>
 
-          <!-- Shapes list -->
-          <div v-if="sidebarTab === 'shapes'" class="ob-tree">
-            <button v-for="s in allShapes" :key="s.compact" class="ob-tree-item"
-              :class="{ active: currentView === 'shape' && activeId === s.compact }"
-              @click="navigate('shape', s.compact)">
-              <span class="ob-dot ob-dot-shape"></span>
-              <span class="ob-tree-label">{{ s.label }}</span>
+          <!-- Taxonomies section -->
+          <div class="ob-sidebar-section">
+            <button class="ob-section-header" @click="toggleSection('taxonomies')">
+              <span class="ob-section-dot ob-dot-taxonomy"></span>
+              <span class="ob-section-label">Taxonomies</span>
+              <span class="ob-section-count">{{ totalTaxonomyIndividuals }}</span>
+              <span class="ob-section-chevron">{{ expandedSections.has('taxonomies') ? '▾' : '▸' }}</span>
             </button>
-          </div>
-
-          <!-- Taxonomies list -->
-          <div v-if="sidebarTab === 'taxonomies'" class="ob-tree">
-            <button v-for="group in groupedIndividuals" :key="group.key" class="ob-tree-item"
-              :class="{ active: currentView === 'taxonomy' && activeId === group.key }"
-              @click="navigate('taxonomy', group.key)">
-              <span class="ob-dot ob-dot-taxonomy"></span>
-              <span class="ob-tree-label">{{ group.label }}</span>
-              <span class="ob-tree-count">{{ group.concepts.length }}</span>
-            </button>
+            <div v-if="expandedSections.has('taxonomies')" class="ob-tree">
+              <button v-for="group in groupedIndividuals" :key="group.key" class="ob-tree-item"
+                :class="{ active: currentView === 'taxonomy' && activeId === group.key }"
+                @click="navigate('taxonomy', group.key)">
+                <span class="ob-dot ob-dot-taxonomy"></span>
+                <span class="ob-tree-label">{{ group.label }}</span>
+                <span class="ob-tree-count">{{ group.concepts.length }}</span>
+              </button>
+            </div>
           </div>
         </aside>
 
@@ -454,19 +515,19 @@ onMounted(() => {
 
               <!-- Stats cards -->
               <div class="ob-stat-cards">
-                <div class="ob-stat-card" @click="sidebarTab = 'classes'">
+                <div class="ob-stat-card" @click="expandedSections = new Set([...expandedSections, 'classes']); navigate('overview')">
                   <span class="ob-stat-num ob-color-class">{{ stats.classCount }}</span>
                   <span class="ob-stat-label">Classes</span>
                 </div>
-                <div class="ob-stat-card" @click="sidebarTab = 'properties'">
+                <div class="ob-stat-card" @click="expandedSections = new Set([...expandedSections, 'properties'])">
                   <span class="ob-stat-num ob-color-prop">{{ stats.objectPropertyCount + stats.datatypePropertyCount }}</span>
                   <span class="ob-stat-label">Properties</span>
                 </div>
-                <div class="ob-stat-card" @click="sidebarTab = 'shapes'">
+                <div class="ob-stat-card" @click="expandedSections = new Set([...expandedSections, 'shapes'])">
                   <span class="ob-stat-num ob-color-shape">{{ stats.shapeCount }}</span>
                   <span class="ob-stat-label">SHACL Shapes</span>
                 </div>
-                <div class="ob-stat-card" @click="sidebarTab = 'taxonomies'">
+                <div class="ob-stat-card" @click="expandedSections = new Set([...expandedSections, 'taxonomies'])">
                   <span class="ob-stat-num ob-color-tax">{{ totalTaxonomyIndividuals }}</span>
                   <span class="ob-stat-label">Named Individuals</span>
                 </div>
@@ -476,18 +537,18 @@ onMounted(() => {
               <div class="ob-section">
                 <h3 class="ob-heading">Class Hierarchy</h3>
                 <div class="ob-hierarchy">
-                  <template v-for="rootId in roots" :key="rootId">
+                  <div v-for="rootId in roots" :key="rootId">
                     <div class="ob-hier-node ob-hier-root">
                       <span class="ob-dot ob-dot-class"></span>
                       <button class="ob-hier-link" @click="navigate('class', rootId)">{{ getClass(rootId)?.label || rootId }}</button>
-                      <span class="ob-hier-count">{{ getClass(rootId)?.children.length || 0 }}</span>
+                      <span v-if="getClass(rootId)?.children.length" class="ob-hier-count">{{ getClass(rootId).children.length }}</span>
                     </div>
                     <div v-for="childId in (getClass(rootId)?.children || [])" :key="childId" class="ob-hier-node ob-hier-l1">
                       <span class="ob-dot ob-dot-class"></span>
                       <button class="ob-hier-link" @click="navigate('class', childId)">{{ getClass(childId)?.label || childId }}</button>
-                      <span v-if="getClass(childId)?.children.length" class="ob-hier-count">{{ getClass(childId)?.children.length }}</span>
+                      <span v-if="getClass(childId)?.children.length" class="ob-hier-count">{{ getClass(childId).children.length }}</span>
                     </div>
-                  </template>
+                  </div>
                 </div>
               </div>
 
@@ -524,8 +585,8 @@ onMounted(() => {
               <code class="ob-iri">{{ activeClass.iri }}</code>
 
               <div v-if="activeClass.subClassOf" class="ob-rel-row">
-                <span class="ob-meta-label">subClassOf</span>
-                <button class="ob-link-badge ob-link-class" @click="navigate('class', activeClass.subClassOf)">{{ activeClass.subClassOf }}</button>
+                <span class="ob-meta-label">extends</span>
+                <button class="ob-link-badge ob-link-class" @click="navigate('class', activeClass.subClassOf)">{{ getClass(activeClass.subClassOf)?.label || activeClass.subClassOf }}</button>
                 <template v-if="activeClass.ancestors.length > 1">
                   <span class="ob-arrow">&rarr;</span>
                   <span class="ob-text-sm">{{ activeClass.ancestors.slice(1).map(a => getClass(a)?.label || a).join(' → ') }}</span>
@@ -544,24 +605,20 @@ onMounted(() => {
               </div>
             </div>
 
-            <!-- SHACL Shapes -->
-            <div v-if="activeClassShapes.length" class="ob-section">
-              <h3 class="ob-heading">SHACL Shape{{ activeClassShapes.length > 1 ? 's' : '' }}</h3>
-              <div v-for="shape in activeClassShapes" :key="shape.compact" class="ob-shape-block">
-                <div class="ob-shape-head">
-                  <span class="ob-color-shape-badge">{{ shape.label }}</span>
-                  <button class="ob-text-link" @click="navigate('shape', shape.compact)">View full shape &rarr;</button>
-                </div>
+            <!-- Fields (from SHACL shape — the primary schema) -->
+            <div v-if="activeClassShapes.length && activeClassShapes.some(s => s.constraints.length)" class="ob-section">
+              <h3 class="ob-heading">Fields</h3>
+              <template v-for="shape in activeClassShapes" :key="shape.compact">
                 <table class="ob-constraint-table">
                   <thead>
-                    <tr><th>Property</th><th>Type</th><th>Cardinality</th><th>Values</th></tr>
+                    <tr><th>Field</th><th>Type</th><th>Cardinality</th><th>Values</th></tr>
                   </thead>
                   <tbody>
                     <tr v-for="(c, ci) in shape.constraints" :key="c.path ?? ci">
-                      <td><code class="ob-code ob-code-shape">{{ c.path }}</code></td>
+                      <td><code class="ob-code ob-code-field">{{ c.path }}</code></td>
                       <td>
                         <span v-if="c.datatype"><code class="ob-code">{{ c.datatype }}</code></span>
-                        <button v-else-if="c.class" class="ob-link-badge ob-link-class" @click="navigate('class', c.class)">{{ c.class }}</button>
+                        <button v-else-if="c.class" class="ob-link-badge ob-link-class" @click="navigate('class', c.class)">{{ getClass(c.class)?.label || c.class }}</button>
                         <span v-else class="ob-muted">&mdash;</span>
                       </td>
                       <td>
@@ -577,46 +634,51 @@ onMounted(() => {
                     </tr>
                   </tbody>
                 </table>
+              </template>
+            </div>
+
+            <!-- OWL Properties (only if class has any) -->
+            <div v-if="activeProperties.object.length || activeProperties.datatype.length" class="ob-section">
+              <h3 class="ob-heading">OWL Properties ({{ activeProperties.object.length + activeProperties.datatype.length }})</h3>
+
+              <div v-if="activeProperties.object.length">
+                <div class="ob-sub-heading">Object Properties</div>
+                <table class="ob-prop-table">
+                  <thead><tr><th>Property</th><th>Range</th><th>Description</th></tr></thead>
+                  <tbody>
+                    <tr v-for="p in activeProperties.object" :key="p.compact">
+                      <td>
+                        <button class="ob-link-badge ob-link-prop" @click="navigate('property', p.compact)">{{ p.compact }}</button>
+                        <div v-if="p.inverseOf" class="ob-inverse">&harr; {{ p.inverseOf }}</div>
+                      </td>
+                      <td>
+                        <template v-if="p.rangeUnion">
+                          <button v-for="r in p.rangeUnion" :key="r" class="ob-link-badge ob-link-class" @click="navigate('class', r)">{{ getClass(r)?.label || r }}</button>
+                        </template>
+                        <button v-else-if="p.range" class="ob-link-badge ob-link-class" @click="navigate('class', p.range)">{{ getClass(p.range)?.label || p.range }}</button>
+                        <span v-else class="ob-muted">&mdash;</span>
+                      </td>
+                      <td class="ob-text-sm">{{ p.comment || '' }}</td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
-            </div>
 
-            <!-- Object Properties -->
-            <div v-if="activeProperties.object.length" class="ob-section">
-              <h3 class="ob-heading">Object Properties ({{ activeProperties.object.length }})</h3>
-              <table class="ob-prop-table">
-                <thead><tr><th>Property</th><th>Range</th><th>Description</th></tr></thead>
-                <tbody>
-                  <tr v-for="p in activeProperties.object" :key="p.compact">
-                    <td>
-                      <button class="ob-link-badge ob-link-prop" @click="navigate('property', p.compact)">{{ p.compact }}</button>
-                      <div v-if="p.inverseOf" class="ob-inverse">&harr; {{ p.inverseOf }}</div>
-                    </td>
-                    <td><code class="ob-code">{{ p.range || p.rangeUnion?.join(' | ') || '—' }}</code></td>
-                    <td class="ob-text-sm">{{ p.comment || '' }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <!-- Datatype Properties -->
-            <div v-if="activeProperties.datatype.length" class="ob-section">
-              <h3 class="ob-heading">Datatype Properties ({{ activeProperties.datatype.length }})</h3>
-              <table class="ob-prop-table">
-                <thead><tr><th>Property</th><th>Datatype</th><th>Description</th></tr></thead>
-                <tbody>
-                  <tr v-for="p in activeProperties.datatype" :key="p.compact">
-                    <td>
-                      <button class="ob-link-badge ob-link-prop" @click="navigate('property', p.compact)">{{ p.compact }}</button>
-                    </td>
-                    <td><code class="ob-code">{{ p.range || '—' }}</code></td>
-                    <td class="ob-text-sm">{{ p.comment || '' }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div v-if="!activeProperties.object.length && !activeProperties.datatype.length && !activeClassShapes.length" class="ob-empty">
-              No properties or shapes defined directly on this class.
+              <div v-if="activeProperties.datatype.length">
+                <div class="ob-sub-heading">Datatype Properties</div>
+                <table class="ob-prop-table">
+                  <thead><tr><th>Property</th><th>Datatype</th><th>Description</th></tr></thead>
+                  <tbody>
+                    <tr v-for="p in activeProperties.datatype" :key="p.compact">
+                      <td>
+                        <button class="ob-link-badge ob-link-prop" @click="navigate('property', p.compact)">{{ p.compact }}</button>
+                      </td>
+                      <td><code class="ob-code">{{ p.range || '—' }}</code></td>
+                      <td class="ob-text-sm">{{ p.comment || '' }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </template>
 
@@ -788,7 +850,7 @@ onMounted(() => {
    ONTOLOGY BROWSER — LAYOUT
    ================================================================ */
 
-.ob { margin: 0 -24px; font-size: 0.875rem; }
+.ob { font-size: 0.875rem; max-width: 90rem; margin: 0 auto; }
 
 .ob-loading {
   display: flex;
@@ -950,10 +1012,18 @@ onMounted(() => {
   margin: 0.75rem 1.5rem 0;
 }
 
+.ob-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 40;
+}
+
 /* --- Sidebar --- */
 .ob-sidebar {
-  width: 240px;
-  min-width: 240px;
+  width: 280px;
+  min-width: 280px;
   border-right: 1px solid var(--vp-c-divider);
   overflow-y: auto;
   max-height: calc(100vh - 120px);
@@ -961,35 +1031,54 @@ onMounted(() => {
   top: 56px;
 }
 
-.ob-tabs {
-  display: flex;
-  border-bottom: 1px solid var(--vp-c-divider);
-  padding: 0 0.5rem;
-}
+.ob-tree { padding: 0.25rem 0; }
 
-.ob-tab {
-  flex: 1;
-  padding: 0.625rem 0.25rem;
+.ob-tree-top { padding: 0.5rem 0; border-bottom: 1px solid var(--vp-c-divider); }
+
+.ob-sidebar-section { border-top: 1px solid var(--vp-c-divider); }
+
+.ob-section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
   background: none;
   border: none;
-  border-bottom: 2px solid transparent;
   cursor: pointer;
-  font-size: 0.6875rem;
-  font-weight: 600;
+  text-align: left;
+  color: var(--vp-c-text-1);
+  font-size: 0.75rem;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
+  transition: background 0.1s;
+}
+
+.ob-section-header:hover { background: var(--vp-c-bg-soft); }
+
+.ob-section-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.ob-section-label { flex: 1; }
+
+.ob-section-count {
+  font-size: 0.625rem;
+  font-weight: 500;
   color: var(--vp-c-text-3);
-  transition: all 0.15s;
+  background: var(--vp-c-default-soft);
+  padding: 0.0625rem 0.375rem;
+  border-radius: 9999px;
 }
 
-.ob-tab:hover { color: var(--vp-c-text-2); }
-
-.ob-tab.active {
-  color: var(--vp-c-brand-1);
-  border-bottom-color: var(--vp-c-brand-1);
+.ob-section-chevron {
+  font-size: 0.625rem;
+  color: var(--vp-c-text-3);
 }
-
-.ob-tree { padding: 0.5rem 0; }
 
 .ob-tree-item {
   display: flex;
@@ -1251,6 +1340,23 @@ onMounted(() => {
 
 .ob-code-shape { color: var(--g-shape); background: rgba(161, 98, 7, 0.08); }
 .dark .ob-code-shape { color: var(--g-shape); background: rgba(251, 191, 36, 0.1); }
+
+.ob-code-field {
+  color: var(--g-teal);
+  background: rgba(59, 167, 158, 0.08);
+  font-weight: 600;
+}
+.dark .ob-code-field { color: var(--g-sea); background: rgba(59, 167, 158, 0.12); }
+
+.ob-sub-heading {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--vp-c-text-3);
+  margin-bottom: 0.5rem;
+  margin-top: 1rem;
+}
 
 .ob-code-bold {
   font-size: 0.8125rem;
@@ -1523,11 +1629,57 @@ onMounted(() => {
 .ob-concept-list .ob-concept-item:last-child { border-bottom: none; }
 
 /* ================================================================
+   DARK MODE
+   ================================================================ */
+
+.dark .ob-topbar {
+  background: var(--vp-c-bg);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.dark .ob-sidebar {
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.dark .ob-search-input {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark .ob-search-dropdown {
+  background: var(--vp-c-bg);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.dark .ob-stat-card {
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.dark .ob-stat-card:hover {
+  border-color: var(--g-teal);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.dark .ob-hier-l1 {
+  border-left-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark .ob-concept-list {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.dark .ob-chip {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* ================================================================
    RESPONSIVE
    ================================================================ */
 
 @media (max-width: 768px) {
   .ob-sidebar-toggle { display: flex; }
+  .ob-overlay { display: block; }
   .ob-sidebar {
     display: none;
     position: fixed;
@@ -1543,7 +1695,6 @@ onMounted(() => {
   .ob-sidebar-open { display: block; }
   .ob-stat-cards { grid-template-columns: repeat(2, 1fr); }
   .ob-stat-pills { display: none; }
-  .ob { margin: 0 -16px; }
   .ob-main { padding: 1rem; }
   .ob-topbar { padding: 0.5rem 1rem; }
 }
