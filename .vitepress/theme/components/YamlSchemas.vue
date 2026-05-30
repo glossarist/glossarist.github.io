@@ -490,7 +490,7 @@ function toggleEntity(classId: string) {
   font-size: 0.8125rem;
   font-weight: 600;
   color: var(--g-teal);
-  background: rgba(59, 167, 158, 0.08);
+  background: rgba(63, 182, 176, 0.08);
   padding: 0.125rem 0.375rem;
   border-radius: 3px;
   white-space: nowrap;

@@ -1,30 +1,40 @@
 /* ================================================================
-   GLOSSARIST DESIGN SYSTEM
+   GLOSSARIST DESIGN SYSTEM — v2
    New York Professional Technology Style
 
-   Design language derived from the Glossarist logo:
-   - Angular chevron/slash shapes → diagonal accent motifs
-   - Navy → Steel → Teal → Sea → Sage gradient palette
-   - Layered transparency → depth through opacity
-   - Forward-right directionality → progress, momentum
+   Colors from the updated Glossarist logo (2026):
+   Navy:    #1c293e  — primary dark, headers, structure
+   Steel:   #3a5c80  — secondary, depth, links
+   Teal:    #3fb6b0  — brand accent, CTAs, energy
+   Deep:    #34798a  — mid-tone, properties
+   Sea:     #7ee0d4  — bright accent, highlights
+   Mint:    #b8f5ec  — light accent, backgrounds
+   Snow:    #dfebe6  — lightest, soft bg
 
-   Typography: bold, confident, tight tracking
-   Layout: structured grid, generous whitespace
-   Color: neutral base with teal as single accent
+   Logo gradient: #3fb6b0 → #b8f5ec (vivid cyan-to-mint)
+
+   Design principles:
+   - Angular slash motifs from logo geometry
+   - Layered transparency for depth
+   - Forward-right directionality = progress
+   - Bold, confident typography
+   - Single accent color (teal spectrum)
    ================================================================ */
 
 :root {
-  /* Logo-derived brand palette */
+  /* Updated logo-derived brand palette */
   --g-navy: #1c293e;
-  --g-steel: #385c7f;
-  --g-teal: #3ba79e;
-  --g-teal-dark: #237a72;
-  --g-sea: #63baae;
-  --g-sage: #9cd0c8;
+  --g-steel: #3a5c80;
+  --g-teal: #3fb6b0;
+  --g-teal-dark: #3aa69f;
+  --g-sea: #7ee0d4;
+  --g-mint: #b8f5ec;
+  --g-snow: #dfebe6;
+  --g-deep: #34798a;
 
   /* Semantic entity colors */
-  --g-class: #29415b;
-  --g-property: #2d8f85;
+  --g-class: #2a415a;
+  --g-property: #34798a;
   --g-shape: #a16207;
   --g-taxonomy: #7c3aed;
   --g-individual: #be123c;
@@ -33,7 +43,7 @@
   --vp-c-brand-1: var(--g-steel);
   --vp-c-brand-2: var(--g-teal);
   --vp-c-brand-3: var(--g-navy);
-  --vp-c-brand-soft: rgba(56, 92, 127, 0.14);
+  --vp-c-brand-soft: rgba(58, 92, 128, 0.14);
 
   --vp-button-brand-border: transparent;
   --vp-button-brand-text: #fff;
@@ -52,7 +62,7 @@
   --vp-c-brand-1: var(--g-teal);
   --vp-c-brand-2: var(--g-sea);
   --vp-c-brand-3: var(--g-steel);
-  --vp-c-brand-soft: rgba(59, 167, 158, 0.14);
+  --vp-c-brand-soft: rgba(63, 182, 176, 0.14);
 
   --vp-button-brand-bg: var(--g-teal);
   --vp-button-brand-hover-bg: var(--g-sea);
@@ -66,8 +76,6 @@
 
 /* ================================================================
    HOMEPAGE
-   VitePress wraps home layout content in .vp-doc.container.
-   We use !important on critical properties to guarantee overrides.
    ================================================================ */
 
 .home h1, .home h2, .home h3, .home h4,
@@ -77,9 +85,7 @@
   padding: 0 !important;
 }
 
-.home p {
-  margin: 0 !important;
-}
+.home p { margin: 0 !important; }
 
 .home a {
   color: inherit !important;
@@ -88,9 +94,7 @@
   text-underline-offset: unset !important;
 }
 
-.home strong {
-  font-weight: 600 !important;
-}
+.home strong { font-weight: 600 !important; }
 
 .home :not(pre) > code {
   background: none !important;
@@ -123,14 +127,19 @@
   to { opacity: 1; transform: translateX(0); }
 }
 
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
 .hero {
   position: relative;
-  padding: 8rem 1.5rem 6rem;
+  padding: 7rem 1.5rem 5rem;
   text-align: center !important;
   overflow: hidden;
 }
 
-/* Geometric slash motifs — derived from logo's angular chevron shapes */
+/* Geometric slash motifs from logo */
 .hero-slashes {
   position: absolute;
   inset: 0;
@@ -172,7 +181,7 @@
 
 .slash-4 {
   right: 6%;
-  background: linear-gradient(180deg, var(--g-sage) 0%, transparent 70%);
+  background: linear-gradient(180deg, var(--g-mint) 0%, transparent 70%);
   opacity: 0.03;
   width: 60px;
   animation-delay: 0.25s;
@@ -195,25 +204,23 @@
   pointer-events: none;
 }
 
-.dark .hero::before {
-  opacity: 0.12;
-}
+.dark .hero::before { opacity: 0.12; }
 
-/* Interactive glow — follows cursor, echoes logo's layered transparency */
+/* Interactive cursor glow */
 .hero::after {
   content: '';
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 60% 50% at calc(var(--mx, 0.5) * 100%) calc(var(--my, 0.5) * 100%), rgba(59, 167, 158, 0.10) 0%, transparent 50%),
-    radial-gradient(ellipse 40% 30% at 50% 40%, rgba(56, 92, 127, 0.06) 0%, transparent 50%);
+    radial-gradient(ellipse 60% 50% at calc(var(--mx, 0.5) * 100%) calc(var(--my, 0.5) * 100%), rgba(63, 182, 176, 0.10) 0%, transparent 50%),
+    radial-gradient(ellipse 40% 30% at 50% 40%, rgba(58, 92, 128, 0.06) 0%, transparent 50%);
   pointer-events: none;
   transition: background 0.4s ease;
 }
 
 .dark .hero::after {
   background:
-    radial-gradient(ellipse 60% 50% at calc(var(--mx, 0.5) * 100%) calc(var(--my, 0.5) * 100%), rgba(59, 167, 158, 0.05) 0%, transparent 50%);
+    radial-gradient(ellipse 60% 50% at calc(var(--mx, 0.5) * 100%) calc(var(--my, 0.5) * 100%), rgba(63, 182, 176, 0.05) 0%, transparent 50%);
 }
 
 .hero-content {
@@ -237,9 +244,7 @@
   animation: hero-fade-up 0.5s ease 0.05s both;
 }
 
-.dark .hero-eyebrow {
-  color: var(--g-sea);
-}
+.dark .hero-eyebrow { color: var(--g-sea); }
 
 .eyebrow-bar {
   display: inline-block;
@@ -249,9 +254,7 @@
   border-radius: 1px;
 }
 
-.dark .eyebrow-bar {
-  background: var(--g-sea);
-}
+.dark .eyebrow-bar { background: var(--g-sea); }
 
 .home .hero-title {
   font-size: 4.25rem !important;
@@ -264,10 +267,10 @@
   animation: hero-fade-up 0.6s ease 0.1s both;
 }
 
-/* Gradient accent — mirrors logo's navy→steel→teal→sage gradient */
+/* Logo gradient: #3fb6b0 → #5cc5be → #78d3cc → #8fe0d8 → #a1e9e1 → #b5f3ea → #b8f5ec */
 .home .hero-title-accent {
   display: inline;
-  background: linear-gradient(135deg, var(--g-steel) 0%, var(--g-teal) 45%, var(--g-sea) 100%);
+  background: linear-gradient(135deg, var(--g-steel) 0%, var(--g-teal) 35%, var(--g-sea) 65%, var(--g-mint) 100%);
   background-size: 200% 200%;
   animation: shimmer 8s ease infinite;
   -webkit-background-clip: text;
@@ -276,7 +279,7 @@
 }
 
 .dark .home .hero-title-accent {
-  background: linear-gradient(135deg, var(--g-teal) 0%, var(--g-sea) 55%, var(--g-sage) 100%);
+  background: linear-gradient(135deg, var(--g-teal) 0%, var(--g-sea) 55%, var(--g-mint) 100%);
   background-size: 200% 200%;
   animation: shimmer 8s ease infinite;
   -webkit-background-clip: text;
@@ -284,7 +287,7 @@
 }
 
 .hero-tagline {
-  max-width: 480px;
+  max-width: 500px;
   margin: 0 auto 2.25rem !important;
   font-size: 1.125rem !important;
   line-height: 1.75 !important;
@@ -349,27 +352,26 @@
   border: 1px solid transparent;
 }
 
-/* Primary — logo's teal with forward-right arrow energy */
 .home .btn-primary {
   background: var(--g-teal) !important;
   color: #fff !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 4px 16px rgba(59, 167, 158, 0.25);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1), 0 4px 16px rgba(63, 182, 176, 0.25);
 }
 
 .home .btn-primary:hover {
   background: var(--g-teal-dark) !important;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12), 0 6px 24px rgba(59, 167, 158, 0.35);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12), 0 6px 24px rgba(63, 182, 176, 0.35);
   transform: translateY(-1px);
 }
 
 .dark .home .btn-primary {
   background: var(--g-teal) !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 4px 16px rgba(59, 167, 158, 0.2);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3), 0 4px 16px rgba(63, 182, 176, 0.2);
 }
 
 .dark .home .btn-primary:hover {
   background: var(--g-sea) !important;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35), 0 6px 24px rgba(59, 167, 158, 0.3);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.35), 0 6px 24px rgba(63, 182, 176, 0.3);
 }
 
 .home .btn-secondary {
@@ -383,9 +385,7 @@
   color: var(--vp-c-brand-1) !important;
 }
 
-.dark .home .btn-secondary {
-  border-color: rgba(255, 255, 255, 0.1);
-}
+.dark .home .btn-secondary { border-color: rgba(255,255,255,0.1); }
 
 .home .btn-outline {
   color: var(--vp-c-text-1) !important;
@@ -398,13 +398,8 @@
   background: var(--vp-c-default-soft);
 }
 
-.dark .home .btn-outline {
-  border-color: rgba(255, 255, 255, 0.15) !important;
-}
-
-.dark .home .btn-outline:hover {
-  border-color: rgba(255, 255, 255, 0.3) !important;
-}
+.dark .home .btn-outline { border-color: rgba(255,255,255,0.15) !important; }
+.dark .home .btn-outline:hover { border-color: rgba(255,255,255,0.3) !important; }
 
 .home .btn-sm {
   font-size: 0.8125rem;
@@ -419,9 +414,7 @@
   position: relative;
 }
 
-.section + .section {
-  border-top: 1px solid var(--vp-c-divider);
-}
+.section + .section { border-top: 1px solid var(--vp-c-divider); }
 
 .section-header {
   text-align: center;
@@ -470,7 +463,6 @@
   padding: 0 0.5rem;
 }
 
-/* Icon containers — sharp-edged, echoing logo's angular geometry */
 .pipeline-icon {
   width: 52px;
   height: 52px;
@@ -482,21 +474,17 @@
   position: relative;
 }
 
-/* Diagonal accent on pipeline icons — logo's slash motif */
 .pipeline-icon::after {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   border-radius: inherit;
   background: linear-gradient(135deg, transparent 40%, currentColor 100%);
   opacity: 0.06;
 }
 
-.pi-model { background: rgba(41, 65, 91, 0.08); color: var(--g-class); }
-.pi-schema { background: rgba(59, 167, 158, 0.08); color: var(--g-teal); }
+.pi-model { background: rgba(42, 65, 90, 0.08); color: var(--g-class); }
+.pi-schema { background: rgba(63, 182, 176, 0.08); color: var(--g-teal); }
 .pi-code { background: rgba(124, 58, 237, 0.06); color: var(--g-taxonomy); }
 .pi-publish { background: rgba(190, 18, 60, 0.05); color: var(--g-individual); }
 
@@ -547,7 +535,6 @@
   gap: 1.25rem;
 }
 
-/* Model cards — left border accent mimics logo's diagonal slash */
 .model-card {
   background: var(--vp-c-bg-soft);
   border: 1px solid var(--vp-c-divider);
@@ -560,7 +547,6 @@
   overflow: hidden;
 }
 
-/* Top-left diagonal accent — logo's angular identity */
 .model-card::before {
   content: '';
   position: absolute;
@@ -575,12 +561,12 @@
 .model-card:hover {
   border-color: var(--vp-c-brand-1);
   transform: translateY(-2px);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
 }
 
 .model-card:hover::before { opacity: 1; }
 
-.dark .model-card:hover { box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25); }
+.dark .model-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.25); }
 
 .mc-concepts::before { background: linear-gradient(90deg, var(--g-class), transparent); }
 .mc-local::before { background: linear-gradient(90deg, var(--g-property), transparent); }
@@ -736,9 +722,7 @@
   overflow: hidden;
 }
 
-.dark .code-showcase {
-  border-color: rgba(255, 255, 255, 0.06);
-}
+.dark .code-showcase { border-color: rgba(255,255,255,0.06); }
 
 .code-tabs {
   display: flex;
@@ -873,13 +857,8 @@
   transform: translateY(-1px);
 }
 
-.dark .standard-card {
-  border-color: rgba(255, 255, 255, 0.06);
-}
-
-.dark .standard-card:hover {
-  border-color: var(--g-teal);
-}
+.dark .standard-card { border-color: rgba(255,255,255,0.06); }
+.dark .standard-card:hover { border-color: var(--g-teal); }
 
 .standard-card code {
   display: block;
@@ -924,12 +903,10 @@
 .eco-card:hover {
   border-color: var(--vp-c-brand-1);
   transform: translateY(-2px);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
 }
 
-.dark .eco-card:hover {
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-}
+.dark .eco-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.25); }
 
 .eco-card-header {
   display: flex;
@@ -952,7 +929,7 @@
 }
 
 .eco-card-icon.core {
-  background: rgba(59, 167, 158, 0.08);
+  background: rgba(63, 182, 176, 0.08);
   color: var(--g-teal);
 }
 
@@ -961,7 +938,7 @@
   color: var(--g-taxonomy);
 }
 
-.dark .eco-card-icon.core { background: rgba(59, 167, 158, 0.15); color: var(--g-sea); }
+.dark .eco-card-icon.core { background: rgba(63, 182, 176, 0.15); color: var(--g-sea); }
 .dark .eco-card-icon.tool { background: rgba(167, 139, 250, 0.1); color: #a78bfa; }
 
 .eco-card h3 {
@@ -1025,17 +1002,11 @@
 .user-card:hover {
   border-color: var(--g-teal);
   transform: translateY(-1px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.05);
 }
 
-.dark .user-card {
-  border-color: rgba(255, 255, 255, 0.06);
-}
-
-.dark .user-card:hover {
-  border-color: var(--g-teal);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-}
+.dark .user-card { border-color: rgba(255,255,255,0.06); }
+.dark .user-card:hover { border-color: var(--g-teal); box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
 
 .user-card-logo {
   width: 52px;
@@ -1156,12 +1127,12 @@
   transition: all 0.2s ease;
   border: none;
   cursor: pointer;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1), 0 4px 12px rgba(59, 167, 158, 0.2);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1), 0 4px 12px rgba(63, 182, 176, 0.2);
 }
 
 .release-downloader .download-btn:hover {
   background: var(--g-steel);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.12), 0 6px 20px rgba(59, 167, 158, 0.3);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12), 0 6px 20px rgba(63, 182, 176, 0.3);
   transform: translateY(-1px);
 }
 

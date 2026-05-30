@@ -32,10 +32,10 @@ Together, these two script traditions merge into a single mark. This mirrors Glo
 The logo is composed of overlapping colored shapes in blues, teals, and greens — not a single flat color. Each color region represents a distinct **property** of a concept:
 
 - **Dark navy** (#1c293e) — The concept identity itself, the stable core
-- **Steel blue** (#385c7f) — Designations: the names and terms that identify a concept across languages
-- **Teal** (#3ba79e) — Relationships: how one concept connects to and is defined by others
-- **Sea green** (#63baae) — Sources and provenance: the authoritative references that ground each concept
-- **Sage** (#9cd0c8) — Notes, examples, and editorial metadata
+- **Steel blue** (#3a5c80) — Designations: the names and terms that identify a concept across languages
+- **Teal** (#3fb6b0) — Relationships: how one concept connects to and is defined by others
+- **Sea green** (#7ee0d4) — Sources and provenance: the authoritative references that ground each concept
+- **Mint** (#b8f5ec) — Notes, examples, and editorial metadata
 
 The shapes overlap and blend into one another because **a concept is colored by other concepts through its relationships**. No concept exists in isolation — its meaning is shaped by the network of broader, narrower, related, and equivalent concepts that surround it. The overlapping color regions in the logo visualize this interconnected nature: the boundaries between properties are not sharp lines but gradients, just as the boundary between "definition" and "context" in terminology work is often fluid.
 
