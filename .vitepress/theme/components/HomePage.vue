@@ -24,10 +24,8 @@ onMounted(() => {
   if (hero) {
     hero.addEventListener('mousemove', (e: Event) => {
       const rect = (e.currentTarget as HTMLElement).getBoundingClientRect()
-      const x = ((e as MouseEvent).clientX - rect.left) / rect.width
-      const y = ((e as MouseEvent).clientY - rect.top) / rect.height
-      mouseX.value = x
-      mouseY.value = y
+      mouseX.value = ((e as MouseEvent).clientX - rect.left) / rect.width
+      mouseY.value = ((e as MouseEvent).clientY - rect.top) / rect.height
     })
   }
 })
@@ -37,9 +35,17 @@ onMounted(() => {
   <div class="home">
     <!-- Hero -->
     <section class="hero" :style="{ '--mx': mouseX, '--my': mouseY }">
-      <div class="hero-glow"></div>
+      <div class="hero-slashes">
+        <div class="slash slash-1"></div>
+        <div class="slash slash-2"></div>
+        <div class="slash slash-3"></div>
+        <div class="slash slash-4"></div>
+      </div>
       <div class="hero-content">
-        <div class="hero-eyebrow">Open-Source Terminology Infrastructure</div>
+        <div class="hero-eyebrow">
+          <span class="eyebrow-bar"></span>
+          Open-Source Terminology Infrastructure
+        </div>
         <div class="hero-title">
           One Concept,<br />
           <span class="hero-title-accent">Many Languages</span>
@@ -131,7 +137,6 @@ onMounted(() => {
       </div>
 
       <div class="model-grid">
-        <!-- Concept hierarchy -->
         <div class="model-card mc-concepts">
           <div class="model-card-header">
             <span class="model-dot md-concept"></span>
@@ -147,7 +152,6 @@ onMounted(() => {
           <a href="/docs/model/concepts" class="model-card-link">Concept docs &rarr;</a>
         </div>
 
-        <!-- Localized Concept -->
         <div class="model-card mc-local">
           <div class="model-card-header">
             <span class="model-dot md-local"></span>
@@ -163,7 +167,6 @@ onMounted(() => {
           <a href="/docs/model/concepts" class="model-card-link">Localization &rarr;</a>
         </div>
 
-        <!-- Designations -->
         <div class="model-card mc-desig">
           <div class="model-card-header">
             <span class="model-dot md-desig"></span>
@@ -179,7 +182,6 @@ onMounted(() => {
           <a href="/docs/model/designations" class="model-card-link">Designation types &rarr;</a>
         </div>
 
-        <!-- Relationships -->
         <div class="model-card mc-rel">
           <div class="model-card-header">
             <span class="model-dot md-rel"></span>
@@ -197,7 +199,6 @@ onMounted(() => {
           <a href="/docs/model/relationships" class="model-card-link">All 32 types &rarr;</a>
         </div>
 
-        <!-- Sources -->
         <div class="model-card mc-source">
           <div class="model-card-header">
             <span class="model-dot md-source"></span>
@@ -212,7 +213,6 @@ onMounted(() => {
           <a href="/docs/model/sources" class="model-card-link">Source model &rarr;</a>
         </div>
 
-        <!-- Ontology -->
         <div class="model-card mc-onto">
           <div class="model-card-header">
             <span class="model-dot md-onto"></span>
@@ -384,7 +384,7 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
       </div>
     </section>
 
-    <!-- Ecosystem (now supporting role) -->
+    <!-- Ecosystem -->
     <section class="section section-eco">
       <div class="section-header">
         <span class="section-eyebrow">Ecosystem</span>
