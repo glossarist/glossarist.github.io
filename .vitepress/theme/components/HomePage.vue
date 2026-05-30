@@ -1,6 +1,10 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { premierProjects } from '../../data/projects'
+import { standards } from '../../data/standards'
+
+const mouseX = ref(0)
+const mouseY = ref(0)
 
 onMounted(() => {
   const tabs = document.querySelectorAll('.code-tab')
@@ -15,36 +19,51 @@ onMounted(() => {
       if (panel) panel.classList.add('active')
     })
   })
+
+  const hero = document.querySelector('.hero')
+  if (hero) {
+    hero.addEventListener('mousemove', (e: Event) => {
+      const rect = (e.currentTarget as HTMLElement).getBoundingClientRect()
+      const x = ((e as MouseEvent).clientX - rect.left) / rect.width
+      const y = ((e as MouseEvent).clientY - rect.top) / rect.height
+      mouseX.value = x
+      mouseY.value = y
+    })
+  }
 })
 </script>
 
 <template>
   <div class="home">
     <!-- Hero -->
-    <section class="hero">
+    <section class="hero" :style="{ '--mx': mouseX, '--my': mouseY }">
       <div class="hero-glow"></div>
       <div class="hero-content">
-        <div class="hero-badge">Open Source · ISO-Aligned · Multilingual</div>
-        <h1 class="hero-title">
-          The Concept System
-          <span class="hero-title-accent">Framework</span>
-        </h1>
-        <p class="hero-tagline">
-          Model, manage, and publish terminology registries with a rich domain model
-          aligned with ISO&nbsp;10241, 704, 30042, 12620, and 25964
-        </p>
+        <div class="hero-eyebrow">Open-Source Terminology Infrastructure</div>
+        <div class="hero-title">
+          One Concept,<br />
+          <span class="hero-title-accent">Many Languages</span>
+        </div>
+        <div class="hero-tagline">
+          Manage multilingual concept systems with structured terminology.
+          Built on ISO standards and Semantic Web technology.
+        </div>
         <div class="hero-actions">
           <a href="/docs/model/" class="btn btn-primary">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
             Explore the Model
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
-          <a href="/docs/model/ontology" class="btn btn-secondary">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10A15.3 15.3 0 0 1 12 2z"/><path d="M2 12h20"/></svg>
-            Ontology Browser
+          <a href="https://github.com/glossarist" class="btn btn-outline" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            GitHub
           </a>
-          <a href="https://github.com/glossarist" class="btn btn-ghost" target="_blank" rel="noopener">
-            GitHub &rarr;
-          </a>
+        </div>
+        <div class="hero-formats">
+          <span class="hf-tag">SKOS</span>
+          <span class="hf-tag">TBX</span>
+          <span class="hf-tag">JSON-LD</span>
+          <span class="hf-tag">Turtle</span>
+          <span class="hf-tag">YAML</span>
         </div>
       </div>
     </section>
@@ -62,7 +81,7 @@ onMounted(() => {
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
           </div>
           <h4>1. Model</h4>
-          <p>Define your concept system using the rich Glossarist domain model — 24 OWL classes, 32 relationship types, 7 designation types, SHACL validation shapes.</p>
+          <p>Define your concept system using the rich Glossarist domain model — 24 ontology classes, 32 relationship types, 7 designation types, SHACL validation shapes.</p>
           <a href="/docs/model/" class="pipeline-link">Concept Model &rarr;</a>
         </div>
         <div class="pipeline-connector">
@@ -197,16 +216,16 @@ onMounted(() => {
         <div class="model-card mc-onto">
           <div class="model-card-header">
             <span class="model-dot md-onto"></span>
-            <h3>OWL Ontology</h3>
+            <h3>Semantic Web & Linked Data</h3>
           </div>
-          <p class="model-card-desc">Formal RDF/OWL vocabulary with SHACL shapes for validation. Aligned with SKOS, SKOS-XL, ISO 25964, PROV-O, Dublin Core.</p>
+          <p class="model-card-desc">Formal ontology with SHACL shapes for validation. Aligned with SKOS, SKOS-XL, ISO 25964, PROV-O, and Dublin Core — ready for the linked data ecosystem.</p>
           <div class="model-card-stats">
             <div class="onto-stat"><strong>24</strong><span>Classes</span></div>
             <div class="onto-stat"><strong>48</strong><span>Properties</span></div>
             <div class="onto-stat"><strong>24</strong><span>SHACL Shapes</span></div>
             <div class="onto-stat"><strong>7</strong><span>Concept Schemes</span></div>
           </div>
-          <a href="/docs/model/ontology" class="model-card-link">Browse ontology &rarr;</a>
+          <a href="/ontology" class="model-card-link">Browse ontology &rarr;</a>
         </div>
       </div>
     </section>
@@ -357,46 +376,11 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
         <p>Every entity in the Glossarist model maps to established terminology and knowledge organization standards</p>
       </div>
       <div class="standards-grid">
-        <div class="standard-card">
-          <code>ISO 10241-1</code>
-          <strong>Terminology Entries</strong>
-          <p>Structured terminology entries in standardized vocabularies</p>
-        </div>
-        <div class="standard-card">
-          <code>ISO 704</code>
-          <strong>Principles &amp; Methods</strong>
-          <p>Concept systems, definitions, and term formation rules</p>
-        </div>
-        <div class="standard-card">
-          <code>ISO 30042</code>
-          <strong>TBX Format</strong>
-          <p>Terminology markup framework for data exchange</p>
-        </div>
-        <div class="standard-card">
-          <code>ISO 12620</code>
-          <strong>Data Categories</strong>
-          <p>34 term type classifications and data category registry</p>
-        </div>
-        <div class="standard-card">
-          <code>ISO 25964</code>
-          <strong>Thesauri</strong>
-          <p>Hierarchical and mapping relationships for thesaurus interoperability</p>
-        </div>
-        <div class="standard-card">
-          <code>OWL 2</code>
-          <strong>Ontology</strong>
-          <p>Formal RDF/OWL vocabulary with class hierarchies</p>
-        </div>
-        <div class="standard-card">
-          <code>SHACL</code>
-          <strong>Validation</strong>
-          <p>Shape Constraints for data validation and integrity</p>
-        </div>
-        <div class="standard-card">
-          <code>SKOS/XL</code>
-          <strong>Knowledge Org</strong>
-          <p>Reified labels and concept schemes for the semantic web</p>
-        </div>
+        <a v-for="std in standards" :key="std.id" :href="std.url" target="_blank" rel="noopener" class="standard-card">
+          <code>{{ std.code }}</code>
+          <strong>{{ std.shortTitle }}</strong>
+          <p>{{ std.description }}</p>
+        </a>
       </div>
     </section>
 
@@ -435,28 +419,41 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
       <div class="section-header">
         <span class="section-eyebrow">In Production</span>
         <h2>Trusted by Standards Bodies</h2>
+        <p>Glossarist powers multilingual terminology registries for international standards organizations</p>
       </div>
       <div class="users-grid">
         <a href="https://isotc211.geolexica.org/" target="_blank" rel="noopener" class="user-card">
-          <img src="/images/iso-symbol.svg" alt="ISO" />
-          <div>
-            <strong>ISO/TC 211 Geolexica</strong>
-            <span>1,507 concepts · 15 languages · Geographic information terminology</span>
+          <div class="user-card-logo">
+            <img src="/images/iso-symbol.svg" alt="ISO" />
           </div>
+          <div class="user-card-body">
+            <strong>ISO/TC 211 Geolexica</strong>
+            <span>1,507 concepts · 15 languages</span>
+            <span class="user-card-detail">Geographic information terminology</span>
+          </div>
+          <span class="user-card-arrow">&rarr;</span>
         </a>
         <a href="https://isotc204.geolexica.org/" target="_blank" rel="noopener" class="user-card">
-          <img src="/images/iso-symbol.svg" alt="ISO" />
-          <div>
-            <strong>ISO/TC 204 Geolexica</strong>
-            <span>Intelligent transport systems terminology</span>
+          <div class="user-card-logo">
+            <img src="/images/iso-symbol.svg" alt="ISO" />
           </div>
+          <div class="user-card-body">
+            <strong>ISO/TC 204 Geolexica</strong>
+            <span>Intelligent transport systems</span>
+            <span class="user-card-detail">ITS terminology registry</span>
+          </div>
+          <span class="user-card-arrow">&rarr;</span>
         </a>
         <a href="https://osgeo.geolexica.org/" target="_blank" rel="noopener" class="user-card">
-          <img src="/images/iso-symbol.svg" alt="OSGeo" />
-          <div>
-            <strong>OSGeo Geolexica</strong>
-            <span>Open Source Geospatial Foundation terminology</span>
+          <div class="user-card-logo">
+            <img src="/images/osgeo-logo.svg" alt="OSGeo" />
           </div>
+          <div class="user-card-body">
+            <strong>OSGeo Geolexica</strong>
+            <span>444 concepts · Open Source Geospatial</span>
+            <span class="user-card-detail">Foundation terminology</span>
+          </div>
+          <span class="user-card-arrow">&rarr;</span>
         </a>
       </div>
     </section>

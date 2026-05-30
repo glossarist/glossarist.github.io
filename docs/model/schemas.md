@@ -1,6 +1,6 @@
 ---
 title: YAML Schema Reference
-description: V2 and V3 YAML schema differences and enum reference
+description: V2 and V3 YAML schema definitions and enumeration values, rendered from the Glossarist ontology
 ---
 
 # YAML Schema Reference
@@ -18,34 +18,15 @@ The concept model has two major schema versions:
 
 Both formats are supported by `glossarist-ruby` for reading and writing.
 
-## Enum reference
+## Entity Schemas and Enumerations
 
-### Concept status
+The schemas below are rendered from the [Glossarist OWL ontology](/ontology) — the canonical source of truth. Every SHACL shape and SKOS ConceptScheme in the ontology is shown here.
 
-`notValid`, `valid`, `superseded`, `retired`
-
-### Classification
-
-`preferred`, `admitted`, `deprecated`
-
-### Normative status
-
-`preferred`, `admitted`, `deprecated`, `superseded`
-
-### Designation types
-
-`expression`, `abbreviation`, `symbol`, `letter_symbol`, `graphical_symbol`, `prefix`, `suffix`
-
-### Source types
-
-`authoritative`, `lineage`
-
-### Source status
-
-`identical`, `modified`, `restyled`, `context-added`, `generalisation`, `specialisation`, `unspecified`
+<YamlSchemas />
 
 ## Links
 
 - [Concept model repository](https://github.com/glossarist/concept-model)
 - [YAML schemas](https://github.com/glossarist/concept-model/tree/main/yaml_schemas)
 - [OWL ontology](https://github.com/glossarist/concept-model/tree/main/ontologies)
+- [Ontology Browser](/ontology) — Interactive browser for the full ontology

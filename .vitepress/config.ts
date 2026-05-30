@@ -33,7 +33,7 @@ export default defineConfig({
           { text: 'Relationships', link: '/docs/model/relationships' },
           { text: 'Sources', link: '/docs/model/sources' },
           { text: 'Schemas', link: '/docs/model/schemas' },
-          { text: 'Ontology Browser', link: '/docs/model/ontology' },
+          { text: 'Ontology Browser', link: '/ontology' },
         ]
       },
       { text: 'Software', items: softwareNavItems },
@@ -105,7 +105,6 @@ export default defineConfig({
             { text: 'Sources', link: '/docs/model/sources' },
             { text: 'Term Types', link: '/docs/model/term-types' },
             { text: 'Schemas', link: '/docs/model/schemas' },
-            { text: 'Ontology Browser', link: '/docs/model/ontology' },
           ]
         },
       ],
