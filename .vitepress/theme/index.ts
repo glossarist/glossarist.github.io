@@ -7,6 +7,7 @@ import ReleaseDownloader from './components/ReleaseDownloader.vue'
 import OntologyBrowser from './components/OntologyBrowser.vue'
 import RelationshipTypes from './components/RelationshipTypes.vue'
 import YamlSchemas from './components/YamlSchemas.vue'
+import SchemaReference from './components/SchemaReference.vue'
 import ModelLanding from './components/ModelLanding.vue'
 import LogoMerge from './components/LogoMerge.vue'
 
@@ -20,6 +21,7 @@ export default {
     app.component('OntologyBrowser', OntologyBrowser)
     app.component('RelationshipTypes', RelationshipTypes)
     app.component('YamlSchemas', YamlSchemas)
+    app.component('SchemaReference', SchemaReference)
     app.component('ModelLanding', ModelLanding)
     app.component('LogoMerge', LogoMerge)
   }
