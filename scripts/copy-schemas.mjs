@@ -2,12 +2,14 @@ import { cpSync, mkdirSync, existsSync, readdirSync, readFileSync, writeFileSync
 import { resolve, join } from 'node:path'
 
 const root = resolve(import.meta.dirname, '..')
-const src = resolve(root, '..', 'concept-model', 'schemas')
+// CI checks out concept-model at <repo>/concept-model/; locally it's at ../concept-model/
+const src = [resolve(root, 'concept-model', 'schemas'), resolve(root, '..', 'concept-model', 'schemas')]
+  .find(p => existsSync(p))
 const dest = resolve(root, 'public', 'data', 'schemas')
 
-if (!existsSync(src)) {
-  console.error('concept-model schemas not found at', src)
-  console.error('Clone https://github.com/glossarist/concept-model to ../concept-model/')
+if (!src) {
+  console.error('concept-model schemas not found')
+  console.error('Clone https://github.com/glossarist/concept-model to concept-model/ or ../concept-model/')
   process.exit(1)
 }
 
