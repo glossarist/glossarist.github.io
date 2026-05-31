@@ -7,7 +7,7 @@ export default defineConfig({
   lang: 'en-US',
   lastUpdated: true,
 
-  srcExclude: ['TODO.website/**', 'TODO.refactor/**', 'TODO.cleanup/**', 'TODO.infoarch/**', 'concept-model/**', 'CLAUDE.md', 'README.md', 'LICENSE', 'scripts/**'],
+  srcExclude: ['TODO.website/**', 'TODO.refactor/**', 'TODO.cleanup/**', 'TODO.infoarch/**', 'concept-model/**', 'CLAUDE.md', 'README.md', 'LICENSE', 'scripts/**', 'public/data/schemas/**'],
 
   sitemap: {
     hostname: 'https://www.glossarist.org'

@@ -42,7 +42,7 @@ export const projects: Project[] = [
     slug: 'concept-browser',
     version: '',
     description: 'Interactive browser for terminology datasets. Multi-dataset, multilingual concept browsing with history timeline, cross-reference graph, and math rendering.',
-    github: 'https://github.com/glossarist/glossarist-vocabulary-browser',
+    github: 'https://github.com/glossarist/concept-browser',
     featured: true,
     category: 'Core'
   },
