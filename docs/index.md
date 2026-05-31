@@ -12,8 +12,8 @@ Glossarist provides open-source tools for maintaining multi-language concept sys
 | I want to... | Go to |
 |-------------|-------|
 | Understand the concept model | [Concept Model Overview &rarr;](/docs/model/) |
-| Look up a field or entity type | [Entity Field Reference &rarr;](/docs/model/schemas/entity-fields) |
-| See the YAML schema definitions | [YAML Schema Reference &rarr;](/docs/model/schemas/yaml-reference) |
+| Look up a field or entity type | [Entity Field Reference &rarr;](/reference/entity-fields) |
+| See the YAML schema definitions | [YAML Schema Reference &rarr;](/reference/schema-browser) |
 | Install the desktop app | [Installation Guide &rarr;](/docs/desktop/getting-started/installation) |
 | Adopt Glossarist in my organization | [Adoption Guide &rarr;](/docs/adopt/) |
 | Browse the code | [Software Ecosystem &rarr;](/docs/software/) |

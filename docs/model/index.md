@@ -54,7 +54,7 @@ fra:
       status: identical
 ```
 
-See the [YAML Schema Reference](/docs/model/schemas/yaml-reference) for complete field documentation and enum values, or the [Entity Field Reference](/docs/model/schemas/entity-fields) for per-entity field lists with types and cardinality.
+See the [YAML Schema Reference](/reference/schema-browser) for complete field documentation and enum values, or the [Entity Field Reference](/reference/entity-fields) for per-entity field lists with types and cardinality.
 
 ## Standards alignment
 
@@ -103,6 +103,6 @@ puts concept.localizations['eng'].definition
 - [Sources](/docs/model/sources) — Authoritative source hierarchy and provenance
 - [Term Types](/docs/model/term-types) — ISO 12620 term type classifications
 - [YAML Schemas](/docs/model/schemas/) — V2 and V3 schema overview and examples
-- [YAML Schema Browser](/docs/model/schemas/yaml-reference) — Interactive JSON Schema definitions
-- [Entity Field Reference](/docs/model/schemas/entity-fields) — Per-entity field reference with types and cardinality
-- [Ontology Browser](/docs/model/ontology) — Interactive OWL ontology and SHACL shape browser
+- [YAML Schema Browser](/reference/schema-browser) — Interactive JSON Schema definitions
+- [Entity Field Reference](/reference/entity-fields) — Per-entity field reference with types and cardinality
+- [Ontology Browser](/reference/ontology) — Interactive OWL ontology and SHACL shape browser

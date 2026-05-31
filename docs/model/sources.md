@@ -13,8 +13,8 @@ An **authoritative source** is the "source of truth" for a terminological entry 
 
 | Field | Type | Card. | Description |
 |-------|------|-------|-------------|
-| `type` | [sourceType](/docs/model/schemas/entity-fields) | 0..1 | `authoritative` or `lineage` |
-| `status` | [sourceStatus](/docs/model/schemas/entity-fields) | 0..1 | Relationship between entry content and source |
+| `type` | [sourceType](/reference/entity-fields) | 0..1 | `authoritative` or `lineage` |
+| `status` | [sourceStatus](/reference/entity-fields) | 0..1 | Relationship between entry content and source |
 | `origin` | [Citation](#citation) | 0..1 | The bibliographic citation |
 | `modification` | string | 0..1 | Description of changes made relative to the source |
 
@@ -102,4 +102,4 @@ This hierarchy means that a concept may have multiple authoritative sources. A c
 
 In some cases, the glossary itself is the authoritative source — when a term and its definition originate within the glossary rather than being adopted from an external standard.
 
-See the [YAML Schema Reference](/docs/model/schemas/yaml-reference) for the complete JSON Schema definitions, or the [Entity Field Reference](/docs/model/schemas/entity-fields) for all entity types.
+See the [YAML Schema Reference](/reference/schema-browser) for the complete JSON Schema definitions, or the [Entity Field Reference](/reference/entity-fields) for all entity types.

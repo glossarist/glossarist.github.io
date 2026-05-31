@@ -318,7 +318,7 @@ onUnmounted(() => {
             <div class="field-row"><code>{{ st.properties }}</code><span>Object &amp; datatype properties</span></div>
             <div class="field-row"><code>{{ st.shapes }}</code><span>Validation shapes</span></div>
           </div>
-          <a href="/ontology" class="model-card-link">Browse ontology &rarr;</a>
+          <a href="/reference/ontology" class="model-card-link">Browse ontology &rarr;</a>
         </div>
       </div>
     </section>

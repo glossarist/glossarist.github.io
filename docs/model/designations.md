@@ -28,9 +28,9 @@ Every designation type inherits these fields from the `Designation` base:
 | Field | Type | Card. | Standard | Description |
 |-------|------|-------|----------|-------------|
 | `designation` | string | 1..1 | — | The term text or symbol |
-| `normative_status` | [normativeStatus](/docs/model/schemas/entity-fields) | 0..1 | — | `preferred`, `admitted`, `deprecated`, or `superseded` |
+| `normative_status` | [normativeStatus](/reference/entity-fields) | 0..1 | — | `preferred`, `admitted`, `deprecated`, or `superseded` |
 | `term_type` | [termType](/docs/model/term-types) | 0..1 | ISO 12620 | Classification of the designation's term type |
-| `related` | [RelatedConcept](/docs/model/schemas/entity-fields)[] | 0..* | — | Designation-level concept relationships |
+| `related` | [RelatedConcept](/reference/entity-fields)[] | 0..* | — | Designation-level concept relationships |
 | `sources` | [ConceptSource](/docs/model/sources)[] | 0..* | ISO 10241-1 §6.8 | Bibliographic sources |
 | `pronunciation` | [Pronunciation](#pronunciation)[] | 0..* | — | Pronunciation entries |
 | `language` | string | 0..1 | ISO 639 | Language of this designation |
@@ -90,8 +90,8 @@ Each GrammarInfo entry has:
 
 | Field | Type | Card. | Description |
 |-------|------|-------|-------------|
-| `gender` | [gender](/docs/model/schemas/entity-fields) | 0..* | Grammatical gender |
-| `number` | [number](/docs/model/schemas/entity-fields) | 0..* | Grammatical number |
+| `gender` | [gender](/reference/entity-fields) | 0..* | Grammatical gender |
+| `number` | [number](/reference/entity-fields) | 0..* | Grammatical number |
 | `part_of_speech` | string | 0..1 | Part of speech |
 
-See the [YAML Schema Reference](/docs/model/schemas/yaml-reference) for the complete JSON Schema definitions, or the [Entity Field Reference](/docs/model/schemas/entity-fields) for all entity types.
+See the [YAML Schema Reference](/reference/schema-browser) for the complete JSON Schema definitions, or the [Entity Field Reference](/reference/entity-fields) for all entity types.

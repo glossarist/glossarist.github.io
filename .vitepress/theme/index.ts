@@ -1,3 +1,5 @@
+import { defineComponent, h, watch } from 'vue'
+import { useData } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
 import './custom.css'
 import HomePage from './components/HomePage.vue'
@@ -11,8 +13,27 @@ import SchemaReference from './components/SchemaReference.vue'
 import ModelLanding from './components/ModelLanding.vue'
 import LogoMerge from './components/LogoMerge.vue'
 
+const CustomLayout = defineComponent({
+  setup() {
+    const { frontmatter } = useData()
+
+    if (typeof document !== 'undefined') {
+      watch(
+        () => frontmatter.value.fullscreen,
+        (val) => {
+          document.documentElement.classList.toggle('fullscreen-page', !!val)
+        },
+        { immediate: true }
+      )
+    }
+
+    return () => h(DefaultTheme.Layout)
+  }
+})
+
 export default {
   extends: DefaultTheme,
+  Layout: CustomLayout,
   enhanceApp({ app }) {
     app.component('HomePage', HomePage)
     app.component('BlogIndex', BlogIndex)

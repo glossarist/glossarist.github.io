@@ -186,6 +186,19 @@
 .VPFooter { border-top: 1px solid var(--vp-c-divider) !important; }
 
 /* ================================================================
+   FULLSCREEN INTERACTIVE PAGES
+   Schema browser, entity fields, ontology browser
+   Controlled by `fullscreen: true` in page frontmatter
+   ================================================================ */
+
+html.fullscreen-page .VPSidebar { display: none !important; }
+html.fullscreen-page .VPLocalNav { display: none !important; }
+html.fullscreen-page .VPContent { padding-left: 0 !important; padding-right: 0 !important; }
+html.fullscreen-page .VPContent .container { max-width: none !important; padding: 0 !important; margin: 0 !important; }
+html.fullscreen-page .VPContent .content { max-width: none !important; padding: 0 !important; }
+html.fullscreen-page .VPContent .content-container { max-width: none !important; }
+
+/* ================================================================
    RESPONSIVE (about page only)
    ================================================================ */
 

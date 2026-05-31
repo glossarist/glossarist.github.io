@@ -18,8 +18,8 @@ Both formats are supported by [glossarist-ruby](/docs/software/glossarist-ruby) 
 
 | Section | Description |
 |---------|-------------|
-| [YAML Schema Reference](/docs/model/schemas/yaml-reference) | Interactive browser for JSON Schema definitions — properties, types, enums, and definitions for V2 and V3 |
-| [Entity Field Reference](/docs/model/schemas/entity-fields) | Field-level reference for every entity type, with types, cardinality, and allowed values |
+| [YAML Schema Reference](/reference/schema-browser) | Interactive browser for JSON Schema definitions — properties, types, enums, and definitions for V2 and V3 |
+| [Entity Field Reference](/reference/entity-fields) | Field-level reference for every entity type, with types, cardinality, and allowed values |
 
 ## Examples
 

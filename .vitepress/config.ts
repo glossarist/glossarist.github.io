@@ -21,6 +21,15 @@ export default defineConfig({
     ['link', { rel: 'manifest', href: '/site.webmanifest' }],
   ],
 
+  transformHead({ pageData }) {
+    if (pageData.frontmatter?.fullscreen) {
+      return [
+        ['script', { id: 'check-fullscreen' }, 'document.documentElement.classList.add("fullscreen-page")'],
+        ['style', {}, '.VPSidebar,.VPLocalNav{display:none!important}.VPContent{padding-left:0!important;padding-right:0!important}.VPContent .container,.VPContent .content,.VPContent .content-container{max-width:none!important;padding:0!important;margin:0!important}.VPFooter.has-sidebar{padding-left:0!important}']
+      ]
+    }
+  },
+
   themeConfig: {
     logo: '/logo-glossarist.svg',
     siteTitle: 'Glossarist',
@@ -35,9 +44,16 @@ export default defineConfig({
           { text: 'Relationships', link: '/docs/model/relationships' },
           { text: 'Sources', link: '/docs/model/sources' },
           { text: 'Term Types', link: '/docs/model/term-types' },
-          { text: 'YAML Schema Reference', link: '/docs/model/schemas/yaml-reference' },
-          { text: 'Entity Field Reference', link: '/docs/model/schemas/entity-fields' },
-          { text: 'Ontology Browser', link: '/docs/model/ontology' },
+          { text: 'Standards', link: '/docs/standards' },
+        ]
+      },
+      {
+        text: 'Reference',
+        items: [
+          { text: 'Overview', link: '/reference/' },
+          { text: 'Schema Browser', link: '/reference/schema-browser' },
+          { text: 'Entity Fields', link: '/reference/entity-fields' },
+          { text: 'Ontology Browser', link: '/reference/ontology' },
         ]
       },
       { text: 'Software', items: softwareNavItems },
@@ -47,7 +63,6 @@ export default defineConfig({
           { text: 'Desktop App', link: '/docs/desktop/' },
           { text: 'Core Concepts', link: '/docs/core-concepts/' },
           { text: 'Adopt Glossarist', link: '/docs/adopt/' },
-          { text: 'Standards', link: '/docs/standards' },
         ]
       },
       { text: 'Blog', link: '/blog/' },
@@ -111,12 +126,10 @@ export default defineConfig({
           ]
         },
         {
-          text: 'Schema Reference',
+          text: 'Schemas & Standards',
           items: [
             { text: 'YAML Schemas', link: '/docs/model/schemas/' },
-            { text: 'YAML Schema Browser', link: '/docs/model/schemas/yaml-reference' },
-            { text: 'Entity Field Reference', link: '/docs/model/schemas/entity-fields' },
-            { text: 'Ontology Browser', link: '/docs/model/ontology' },
+            { text: 'Standards', link: '/docs/standards' },
           ]
         },
       ],
