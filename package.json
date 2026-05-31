@@ -6,12 +6,15 @@
   "scripts": {
     "dev": "vitepress dev",
     "build": "npm run build:data && vitepress build",
-    "build:data": "node scripts/generate-ontology-data.mjs && node scripts/generate-ontology-schema.mjs",
+    "build:data": "node scripts/generate-ontology-data.mjs && node scripts/generate-ontology-schema.mjs && node scripts/copy-schemas.mjs",
     "preview": "vitepress preview"
   },
   "devDependencies": {
     "typescript": "^5.7.3",
     "vitepress": "^1.6.4",
     "vue": "^3.5.13"
+  },
+  "dependencies": {
+    "yaml": "^2.9.0"
   }
 }
