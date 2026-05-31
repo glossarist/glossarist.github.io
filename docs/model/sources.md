@@ -7,7 +7,7 @@ description: Multi-level source hierarchy for bibliographic references in termin
 
 ![ConceptSource UML](/images/model/ConceptSource.png)
 
-An **authoritative source** is the "source of truth" for a terminological entry or any of its parts. It is the bibliographic reference from which the content originates, represented in the model by the `ConceptSource` class.
+An **authoritative source** is the "source of truth" for a terminological entry or any of its parts. It is the bibliographic reference from which the content originates, represented in the model by the `ConceptSource` class. See the [ConceptSource entity definition](/reference/entity-fields#entity-ConceptSource) for the authoritative field list.
 
 ## ConceptSource fields
 

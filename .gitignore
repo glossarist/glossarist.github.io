@@ -9,6 +9,7 @@ dist/
 # Build-time data (generated from concept-model repo)
 concept-model/
 public/data/
+.vitepress/data/schemas-bundled.json
 
 # Logs
 *.log

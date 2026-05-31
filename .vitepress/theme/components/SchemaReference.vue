@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, watch } from 'vue'
+import { ref, computed } from 'vue'
+import bundledData from '../../data/schemas-bundled.json'
 
 type JsonSchema = {
   type?: string
@@ -23,67 +24,49 @@ type JsonSchema = {
   [key: string]: unknown
 }
 
-type SchemaEntry = { file: string; title: string; description: string | null }
-type VersionIndex = { version: string; schemas: SchemaEntry[]; examples: string[] }
+type BundledSchema = { file: string; title: string; description: string | null; data: JsonSchema }
+type BundledExample = { file: string; content: string }
+type BundledVersion = { version: string; schemas: BundledSchema[]; examples: BundledExample[] }
 
-const index = ref<VersionIndex[]>([])
-const activeVersion = ref('')
-const activeSchema = ref('')
-const schemaData = ref<JsonSchema | null>(null)
-const schemaRaw = ref('')
-const exampleRaw = ref('')
-const activeExample = ref('')
-const loading = ref(true)
+const versions = ref<BundledVersion[]>(bundledData as BundledVersion[])
+const activeVersion = ref(versions.value[0]?.version ?? '')
+const activeSchemaFile = ref(versions.value[0]?.schemas[0]?.file ?? '')
+const activeExampleFile = ref('')
 const viewMode = ref<'ref' | 'raw'>('ref')
 const expandedDefs = ref<Set<string>>(new Set())
 const sidebarOpen = ref(false)
 
-const versions = computed(() => index.value.map(v => v.version))
-const currentVersion = computed(() => index.value.find(v => v.version === activeVersion.value))
+const currentVersion = computed(() => versions.value.find(v => v.version === activeVersion.value))
 const schemaEntries = computed(() => currentVersion.value?.schemas ?? [])
-
-onMounted(async () => {
-  const res = await fetch('/data/schemas/index.json')
-  index.value = await res.json()
-  if (index.value.length) {
-    activeVersion.value = index.value[0].version
-    if (index.value[0].schemas.length) {
-      await loadSchema(index.value[0].schemas[0].file)
-    }
-  }
-  loading.value = false
+const activeSchema = computed(() => schemaEntries.value.find(s => s.file === activeSchemaFile.value) ?? null)
+const schemaData = computed(() => activeSchema.value?.data ?? null)
+const activeExample = computed(() => {
+  if (!activeExampleFile.value) return null
+  return currentVersion.value?.examples.find(e => e.file === activeExampleFile.value) ?? null
 })
 
-async function loadSchema(file: string) {
-  activeSchema.value = file
-  activeExample.value = ''
-  exampleRaw.value = ''
-  sidebarOpen.value = false
-  const res = await fetch(`/data/schemas/${activeVersion.value}/${file}`)
-  const raw = await res.text()
-  schemaRaw.value = raw
-  const YAML = await import('yaml')
-  schemaData.value = YAML.parse(raw) as JsonSchema
+function loadSchema(file: string) {
+  activeSchemaFile.value = file
+  activeExampleFile.value = ''
   viewMode.value = 'ref'
   expandedDefs.value = new Set()
+  sidebarOpen.value = false
 }
 
-async function loadExample(file: string) {
-  const res = await fetch(`/data/schemas/${activeVersion.value}/examples/${file}`)
-  exampleRaw.value = await res.text()
-  activeExample.value = file
+function loadExample(file: string) {
+  activeExampleFile.value = file
   sidebarOpen.value = false
 }
 
 function switchVersion(ver: string) {
   activeVersion.value = ver
-  const vi = index.value.find(v => v.version === ver)
+  activeExampleFile.value = ''
+  const vi = versions.value.find(v => v.version === ver)
   if (vi?.schemas.length) loadSchema(vi.schemas[0].file)
 }
 
 function backToSchema() {
-  activeExample.value = ''
-  exampleRaw.value = ''
+  activeExampleFile.value = ''
 }
 
 function resolveRef(ref: string, root: JsonSchema): JsonSchema | null {
@@ -137,15 +120,15 @@ function exampleGroups() {
   const files = currentVersion.value?.examples ?? []
   const groups: Record<string, string[]> = {}
   for (const f of files) {
-    const prefix = f.split('-')[0]
-    ;(groups[prefix] ??= []).push(f)
+    const prefix = f.file.split('-')[0]
+    ;(groups[prefix] ??= []).push(f.file)
   }
   return Object.entries(groups).map(([prefix, files]) => ({ prefix, files }))
 }
 </script>
 
 <template>
-  <div class="sb" v-if="!loading">
+  <div class="sb">
     <!-- Top bar: version switcher + view toggle -->
     <div class="sb-bar">
       <div class="sb-bar-left">
@@ -153,12 +136,12 @@ function exampleGroups() {
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
         </button>
         <div class="sb-version-pills">
-          <button v-for="ver in versions" :key="ver" class="sb-pill" :class="{ active: activeVersion === ver }" @click="switchVersion(ver)">
-            {{ ver.toUpperCase() }}
+          <button v-for="ver in versions" :key="ver.version" class="sb-pill" :class="{ active: activeVersion === ver.version }" @click="switchVersion(ver.version)">
+            {{ ver.version.toUpperCase() }}
           </button>
         </div>
       </div>
-      <div v-if="!activeExample" class="sb-view-toggle">
+      <div v-if="!activeExampleFile" class="sb-view-toggle">
         <button class="sb-toggle-btn" :class="{ active: viewMode === 'ref' }" @click="viewMode = 'ref'">Reference</button>
         <button class="sb-toggle-btn" :class="{ active: viewMode === 'raw' }" @click="viewMode = 'raw'">YAML</button>
       </div>
@@ -172,7 +155,7 @@ function exampleGroups() {
       <aside class="sb-nav" :class="{ open: sidebarOpen }">
         <div class="sb-nav-group">
           <h4 class="sb-nav-heading">Schemas</h4>
-          <button v-for="s in schemaEntries" :key="s.file" class="sb-nav-link" :class="{ active: activeSchema === s.file && !activeExample }" @click="loadSchema(s.file)">
+          <button v-for="s in schemaEntries" :key="s.file" class="sb-nav-link" :class="{ active: activeSchemaFile === s.file && !activeExampleFile }" @click="loadSchema(s.file)">
             <span class="sb-nav-dot"></span>
             {{ s.file.replace(/\.(yaml|yml)$/, '') }}
           </button>
@@ -181,7 +164,7 @@ function exampleGroups() {
           <h4 class="sb-nav-heading">Examples</h4>
           <div v-for="group in exampleGroups()" :key="group.prefix" class="sb-ex-group">
             <span class="sb-ex-label">{{ group.prefix }}</span>
-            <button v-for="f in group.files" :key="f" class="sb-nav-link sb-nav-sub" :class="{ active: activeExample === f }" @click="loadExample(f)">
+            <button v-for="f in group.files" :key="f" class="sb-nav-link sb-nav-sub" :class="{ active: activeExampleFile === f }" @click="loadExample(f)">
               {{ f.replace(/^.+?-(.+)\.yaml$/, '$1') }}
             </button>
           </div>
@@ -197,10 +180,10 @@ function exampleGroups() {
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
               Schema
             </button>
-            <span class="sb-panel-title">{{ activeExample }}</span>
+            <span class="sb-panel-title">{{ activeExample.file }}</span>
           </div>
           <div class="sb-code-wrap">
-            <pre class="sb-code"><code>{{ exampleRaw }}</code></pre>
+            <pre class="sb-code"><code>{{ activeExample.content }}</code></pre>
           </div>
         </div>
 
@@ -209,11 +192,11 @@ function exampleGroups() {
           <!-- Raw YAML view -->
           <div v-if="viewMode === 'raw'" class="sb-panel">
             <div class="sb-panel-bar">
-              <span class="sb-panel-title">{{ schemaData.title || activeSchema }}</span>
+              <span class="sb-panel-title">{{ schemaData.title || activeSchemaFile }}</span>
               <span class="sb-panel-badge">YAML</span>
             </div>
             <div class="sb-code-wrap">
-              <pre class="sb-code"><code>{{ schemaRaw }}</code></pre>
+              <pre class="sb-code"><code>{{ JSON.stringify(schemaData, null, 2) }}</code></pre>
             </div>
           </div>
 
@@ -221,7 +204,7 @@ function exampleGroups() {
           <div v-else class="sb-panel">
             <div class="sb-panel-header">
               <div>
-                <h2 class="sb-title">{{ schemaData.title || activeSchema }}</h2>
+                <h2 class="sb-title">{{ schemaData.title || activeSchemaFile }}</h2>
                 <p v-if="schemaData.description" class="sb-subtitle">{{ schemaData.description }}</p>
               </div>
               <span class="sb-panel-badge">{{ activeVersion.toUpperCase() }}</span>
@@ -293,34 +276,11 @@ function exampleGroups() {
       </main>
     </div>
   </div>
-  <div v-else class="sb-loading">
-    <div class="sb-spinner"></div>
-    <span>Loading schemas&hellip;</span>
-  </div>
 </template>
 
 <style scoped>
 /* ─── Layout shell ─── */
 .sb { margin: 1.5rem 0; }
-
-.sb-loading {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 3rem 0;
-  color: var(--vp-c-text-3);
-  font-style: italic;
-}
-
-.sb-spinner {
-  width: 18px; height: 18px;
-  border: 2px solid var(--vp-c-divider);
-  border-top-color: var(--g-teal);
-  border-radius: 50%;
-  animation: sb-spin 0.6s linear infinite;
-}
-
-@keyframes sb-spin { to { transform: rotate(360deg); } }
 
 /* ─── Top bar ─── */
 .sb-bar {

@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vitepress dev",
     "build": "npm run build:data && vitepress build",
-    "build:data": "node scripts/generate-ontology-data.mjs && node scripts/generate-ontology-schema.mjs && node scripts/copy-schemas.mjs",
+    "build:data": "node scripts/generate-ontology-data.mjs && node scripts/generate-ontology-schema.mjs && node scripts/copy-schemas.mjs && node scripts/bundle-schemas.mjs",
     "preview": "vitepress preview"
   },
   "devDependencies": {

@@ -9,7 +9,7 @@ description: ManagedConcept, LocalizedConcept, concept lifecycle, and multi-lang
 
 ## ManagedConcept
 
-A `ManagedConcept` is the top-level concept entity in Glossarist. It represents a single concept in the terminology registry.
+A `ManagedConcept` is the top-level concept entity in Glossarist. It represents a single concept in the terminology registry. See the [ManagedConcept entity definition](/reference/entity-fields#entity-ManagedConcept) for the authoritative field list.
 
 | Field | Type | Card. | Description |
 |-------|------|-------|-------------|
@@ -24,7 +24,7 @@ A `ManagedConcept` is the top-level concept entity in Glossarist. It represents 
 
 ## LocalizedConcept
 
-Localizations of the concept to different languages. Each language has its own definition, notes, examples, terms, and revision history.
+Localizations of the concept to different languages. Each language has its own definition, notes, examples, terms, and revision history. See the [LocalizedConcept entity definition](/reference/entity-fields#entity-LocalizedConcept) for the authoritative field list.
 
 | Field | Type | Card. | Description |
 |-------|------|-------|-------------|

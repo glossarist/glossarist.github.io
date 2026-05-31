@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch, onMounted, nextTick } from 'vue'
 import type { OwlShape, OwlClass, TaxonomyConcept } from '../../data/types'
 import { useOntologyData } from '../../data/useOntologyData'
 
@@ -45,6 +45,23 @@ const enumSchemas = computed(() => {
 function toggleEntity(classId: string) {
   expandedEntity.value = expandedEntity.value === classId ? null : classId
 }
+
+function handleHash() {
+  const hash = location.hash.replace('#', '')
+  if (!hash.startsWith('entity-')) return
+  const label = hash.replace('entity-', '')
+  const match = entitySchemas.value.find(e => e.label === label)
+  if (match) {
+    activeTab.value = 'entities'
+    expandedEntity.value = match.classId
+    nextTick(() => {
+      document.getElementById(hash)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    })
+  }
+}
+
+watch(loaded, (done) => { if (done) handleHash() })
+onMounted(() => { if (loaded.value) handleHash() })
 </script>
 
 <template>
@@ -65,7 +82,7 @@ function toggleEntity(classId: string) {
         The YAML schema for each Glossarist entity type. The concept model is formally expressed as SHACL shapes for validation — these shapes define the fields, types, and cardinality of every entity in a concept YAML file.
       </p>
 
-      <div v-for="entity in entitySchemas" :key="entity.classId" class="ys-entity">
+      <div v-for="entity in entitySchemas" :key="entity.classId" class="ys-entity" :id="'entity-' + entity.label">
         <button class="ys-entity-header" @click="toggleEntity(entity.classId)">
           <span class="ys-entity-dot"></span>
           <span class="ys-entity-name">{{ entity.label }}</span>

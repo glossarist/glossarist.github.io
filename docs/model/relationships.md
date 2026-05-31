@@ -5,7 +5,7 @@ description: Typed semantic relationship types between concepts, defined by the 
 
 # Relationships
 
-Concepts in Glossarist are connected by **typed semantic relationships** — directional links that express how one concept relates to another. Every relationship has a type, a source concept, and a target concept.
+Concepts in Glossarist are connected by **typed semantic relationships** — directional links that express how one concept relates to another. Every relationship has a type, a source concept, and a target concept. See the [RelatedConcept entity definition](/reference/entity-fields#entity-RelatedConcept) for the authoritative field list.
 
 This page documents all relationship types organized by category, their ISO/SKOS alignment, and how to author them in YAML. The relationship definitions are derived from the Glossarist concept model.
 

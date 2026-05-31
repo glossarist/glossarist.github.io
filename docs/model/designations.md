@@ -7,7 +7,7 @@ description: Designation types forming a MECE hierarchy — expression, abbrevia
 
 ![Designations UML](/images/model/Designations.png)
 
-A **designation** is a name under which a managed term is known. Designations follow an inheritance hierarchy based on ISO 10241-1 and the Glossarist concept model.
+A **designation** is a name under which a managed term is known. Designations follow an inheritance hierarchy based on ISO 10241-1 and the Glossarist concept model. See the [Designation entity definition](/reference/entity-fields#entity-Designation) for the authoritative field list.
 
 Designations form a **MECE** (Mutually Exclusive, Collectively Exhaustive) hierarchy:
 
