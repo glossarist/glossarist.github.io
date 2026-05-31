@@ -23,7 +23,7 @@ const entities = [
   { href: '/docs/model/designations', dotColor: 'var(--g-teal)', title: 'Designations', desc: 'Designation types in a MECE hierarchy — expressions, abbreviations, symbols (letter and graphical), prefixes, and suffixes.', fields: ['expression', 'abbreviation', 'symbol', 'letter_symbol', 'graphical_symbol', 'prefix', 'suffix'] },
   { href: '/docs/model/relationships', dotColor: 'var(--g-shape)', title: 'Relationships', desc: 'Typed semantic links spanning 4 ISO standards — hierarchical, partitive, associative, equivalence, mapping, and spatiotemporal.', fields: ['broader/narrower', 'generic/partitive', 'exact_match', 'deprecates', 'and more'] },
   { href: '/docs/model/sources', dotColor: 'var(--g-taxonomy)', title: 'Sources', desc: 'Multi-level provenance tracking — authoritative and lineage sources with status tracking (identical, modified, restyled, generalisation).', fields: ['authoritative', 'lineage', 'status', 'origin', 'modification'] },
-  { href: '/ontology', dotColor: 'linear-gradient(135deg, var(--g-steel), var(--g-teal))', title: 'Semantic Web & Linked Data', desc: 'Formal ontology with SHACL shapes for validation. Aligned with SKOS, SKOS-XL, ISO 25964, PROV-O, and Dublin Core — ready for the linked data ecosystem.', fields: ['owl:Class', 'sh:Shape', 'skos:Concept', 'skosxl:Label'] },
+  { href: '/ontology', dotColor: 'linear-gradient(135deg, var(--g-steel), var(--g-teal))', title: 'Formal Ontology', desc: 'The concept model is formally expressed as an OWL ontology with SHACL validation shapes. Interoperates with SKOS, SKOS-XL, ISO 25964, PROV-O, and Dublin Core for linked data integration.', fields: ['owl:Class', 'sh:Shape', 'skos:Concept', 'skosxl:Label'] },
 ]
 </script>
 
@@ -33,7 +33,7 @@ const entities = [
     <div class="ml-stats">
       <div class="ml-stat">
         <span class="ml-stat-num">{{ st.classes }}</span>
-        <span class="ml-stat-label">Ontology Classes</span>
+        <span class="ml-stat-label">Entity Types</span>
       </div>
       <div class="ml-stat">
         <span class="ml-stat-num">{{ st.properties }}</span>
@@ -41,7 +41,7 @@ const entities = [
       </div>
       <div class="ml-stat">
         <span class="ml-stat-num">{{ st.shapes }}</span>
-        <span class="ml-stat-label">SHACL Shapes</span>
+        <span class="ml-stat-label">Validation Shapes</span>
       </div>
       <div class="ml-stat">
         <span class="ml-stat-num">{{ st.relationships }}</span>

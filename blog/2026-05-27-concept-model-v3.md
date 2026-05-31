@@ -1,6 +1,6 @@
 ---
 title: "Concept Model v3 — OWL ontology, SHACL shapes, and 14 SKOS concept schemes"
-description: "The Glossarist concept model v3 introduces an OWL ontology, SHACL shapes for validation, and 14 SKOS taxonomy concept schemes."
+description: "The Glossarist concept model v3 adds a formally defined OWL ontology, SHACL shapes for validation, and 14 SKOS taxonomy concept schemes — enabling interoperability with the semantic web ecosystem."
 authors:
   - Ribose
 date: 2026-05-27
@@ -8,11 +8,11 @@ date: 2026-05-27
 
 <BlogByline />
 
-The Glossarist concept model v3 brings formal semantic web integration to terminology management.
+The Glossarist concept model v3 adds a formally defined OWL ontology, SHACL validation shapes, and 14 SKOS taxonomy concept schemes — enabling interoperability with the semantic web and linked data ecosystem.
 
 ## OWL ontology
 
-The concept model now includes an [OWL ontology](https://github.com/glossarist/concept-model/tree/main/ontologies) that defines the complete class hierarchy:
+The concept model is now formally expressed as an [OWL ontology](https://github.com/glossarist/concept-model/tree/main/ontologies) that defines the complete class hierarchy:
 
 - `ManagedConcept` and `LocalizedConcept` as core classes
 - `Designation` hierarchy with subtypes (expression, abbreviation, symbol, letter_symbol, graphical_symbol, prefix, suffix)

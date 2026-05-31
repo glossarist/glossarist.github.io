@@ -58,7 +58,7 @@ const alphabeticalList = computed(() =>
 <template>
   <div class="rt" v-if="loaded">
     <div class="rt-summary">
-      <span class="rt-count">{{ totalTypes }}</span> typed semantic relationship types in the Glossarist ontology.
+      <span class="rt-count">{{ totalTypes }}</span> typed semantic relationship types in the Glossarist concept model.
     </div>
 
     <!-- Category sections -->

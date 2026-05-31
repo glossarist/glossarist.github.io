@@ -16,7 +16,7 @@ The V3 concept model introduces extended designation types, grouped concept file
 
 ## OWL ontology alignment
 
-The concept model now includes an OWL ontology that defines the class hierarchy, property definitions, and SHACL shapes for validation. This enables seamless integration with semantic web tooling and SPARQL endpoints.
+The concept model is now formally expressed as an OWL ontology with class hierarchy, property definitions, and SHACL shapes for validation. This enables seamless interoperability with semantic web tooling and SPARQL endpoints.
 
 ## SKOS taxonomy integration
 
