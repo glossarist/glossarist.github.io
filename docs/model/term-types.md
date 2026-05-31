@@ -5,7 +5,7 @@ description: ISO 12620 / TBX term type classifications for designations
 
 # Term Types
 
-ISO 12620 / TBX `term_type` classification for designations. These types are organized into three categories:
+ISO 12620 / TBX `term_type` classification for [designations](/docs/model/designations). These types are organized into three categories:
 
 ## Orthographic / structural
 

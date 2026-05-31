@@ -7,7 +7,7 @@ export default defineConfig({
   lang: 'en-US',
   lastUpdated: true,
 
-  srcExclude: ['TODO.website/**', 'concept-model/**', 'CLAUDE.md', 'README.md', 'LICENSE', 'scripts/**'],
+  srcExclude: ['TODO.website/**', 'TODO.refactor/**', 'TODO.cleanup/**', 'TODO.infoarch/**', 'concept-model/**', 'CLAUDE.md', 'README.md', 'LICENSE', 'scripts/**'],
 
   sitemap: {
     hostname: 'https://www.glossarist.org'
@@ -32,8 +32,10 @@ export default defineConfig({
           { text: 'Designations', link: '/docs/model/designations' },
           { text: 'Relationships', link: '/docs/model/relationships' },
           { text: 'Sources', link: '/docs/model/sources' },
-          { text: 'Schemas', link: '/docs/model/schemas' },
-          { text: 'Ontology Browser', link: '/ontology' },
+          { text: 'Term Types', link: '/docs/model/term-types' },
+          { text: 'YAML Schema Reference', link: '/docs/model/schemas/yaml-reference' },
+          { text: 'Entity Field Reference', link: '/docs/model/schemas/entity-fields' },
+          { text: 'Ontology Browser', link: '/docs/model/ontology' },
         ]
       },
       { text: 'Software', items: softwareNavItems },
@@ -104,7 +106,15 @@ export default defineConfig({
             { text: 'Relationships', link: '/docs/model/relationships' },
             { text: 'Sources', link: '/docs/model/sources' },
             { text: 'Term Types', link: '/docs/model/term-types' },
-            { text: 'Schemas', link: '/docs/model/schemas' },
+          ]
+        },
+        {
+          text: 'Schema Reference',
+          items: [
+            { text: 'YAML Schemas', link: '/docs/model/schemas/' },
+            { text: 'YAML Schema Browser', link: '/docs/model/schemas/yaml-reference' },
+            { text: 'Entity Field Reference', link: '/docs/model/schemas/entity-fields' },
+            { text: 'Ontology Browser', link: '/docs/model/ontology' },
           ]
         },
       ],
