@@ -18,6 +18,8 @@ const CONCEPT_MODEL = resolve(ROOT, 'concept-model', 'ontologies');
 const ONTOLOGY_TTL = resolve(CONCEPT_MODEL, 'glossarist.ttl');
 const SHACL_TTL = resolve(CONCEPT_MODEL, 'shapes', 'glossarist.shacl.ttl');
 const OUTPUT = resolve(ROOT, 'public', 'data', 'ontology-schema.json');
+const STATS_OUTPUT = resolve(ROOT, 'public', 'data', 'stats.json');
+const TAXONOMIES_OUTPUT = resolve(ROOT, 'public', 'data', 'taxonomies.json');
 
 const KNOWN_PREFIXES = {
   gloss: 'https://www.glossarist.org/ontologies/',
@@ -569,6 +571,27 @@ function main() {
     console.log(`  imports: ${ontologyDecl.imports.map(i => i.label).join(', ')}`);
   }
   console.log(`Wrote ${OUTPUT}`);
+
+  // Output lightweight stats.json for components that only need counts
+  let relationships = 0;
+  let designations = 0;
+  if (existsSync(TAXONOMIES_OUTPUT)) {
+    try {
+      const taxData = JSON.parse(readFileSync(TAXONOMIES_OUTPUT, 'utf-8'));
+      relationships = Object.keys(taxData.relationshipType?.concepts || {}).length;
+      designations = Object.keys(taxData.designationType?.concepts || {}).length;
+    } catch { /* taxonomies may be empty placeholder */ }
+  }
+
+  const stats = {
+    classes: output.stats.classCount,
+    properties: output.stats.objectPropertyCount + output.stats.datatypePropertyCount,
+    shapes: output.stats.shapeCount,
+    relationships,
+    designations,
+  };
+  writeFileSync(STATS_OUTPUT, JSON.stringify(stats, null, 2) + '\n');
+  console.log(`Wrote ${STATS_OUTPUT}`);
 }
 
 main();

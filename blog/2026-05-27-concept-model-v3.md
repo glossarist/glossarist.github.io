@@ -15,9 +15,9 @@ The Glossarist concept model v3 brings formal semantic web integration to termin
 The concept model now includes an [OWL ontology](https://github.com/glossarist/concept-model/tree/main/ontologies) that defines the complete class hierarchy:
 
 - `ManagedConcept` and `LocalizedConcept` as core classes
-- `Designation` hierarchy with 7 subtypes (expression, abbreviation, symbol, letter_symbol, graphical_symbol, prefix, suffix)
+- `Designation` hierarchy with subtypes (expression, abbreviation, symbol, letter_symbol, graphical_symbol, prefix, suffix)
 - `ConceptSource` with type and status enumerations
-- `RelatedConcept` with 32 relationship types
+- `RelatedConcept` with typed relationship kinds
 
 ## SHACL shapes
 

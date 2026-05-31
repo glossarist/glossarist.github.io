@@ -1,21 +1,16 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-
-interface Release {
-  name: string
-  assets: { name: string; browser_download_url: string }[]
-  published_at: string
-  body: string
-}
+import type { GitHubRelease } from '../../data/types'
+import { formatMonthYear } from '../../data/format'
 
 type OS = 'macOS' | 'Windows' | 'Ubuntu Linux'
 
-const release = ref<Release | null>(null)
+const release = ref<GitHubRelease | null>(null)
 const userOS = ref<OS | undefined>(undefined)
 const loading = ref(true)
 const error = ref(false)
 
-function getSpecificDLLink(assets: Release['assets'], releaseName: string, os: OS): string | undefined {
+function getSpecificDLLink(assets: GitHubRelease['assets'], releaseName: string, os: OS): string | undefined {
   let expected: string
   if (os === 'Windows') expected = `glossarist-desktop-${releaseName}-portable.exe`
   else if (os === 'macOS') expected = `glossarist-desktop-${releaseName}.dmg`
@@ -23,11 +18,6 @@ function getSpecificDLLink(assets: Release['assets'], releaseName: string, os: O
 
   const asset = assets.find(a => a.name === expected)
   return asset?.browser_download_url
-}
-
-function formatDate(dateStr: string): string {
-  const date = new Date(dateStr)
-  return date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
 }
 
 const specificDLLink = ref<string | undefined>(undefined)
@@ -59,7 +49,7 @@ onMounted(async () => {
       const data = await res.json()
       release.value = {
         name: data.name,
-        assets: data.assets.map((a: any) => ({ name: a.name, browser_download_url: a.browser_download_url })),
+        assets: data.assets.map((a: GitHubRelease['assets'][0]) => ({ name: a.name, browser_download_url: a.browser_download_url })),
         published_at: data.published_at,
         body: data.body,
       }
@@ -93,7 +83,7 @@ onMounted(async () => {
 
       <div class="release-info" v-if="release">
         <strong v-if="release.name">Version {{ release.name }}</strong>
-        <span v-if="release.published_at"> &middot; {{ formatDate(release.published_at) }}</span>
+        <span v-if="release.published_at"> &middot; {{ formatMonthYear(release.published_at) }}</span>
         <br />
         <a :href="releasesURL" style="font-size: 0.85rem;">View all releases</a>
       </div>

@@ -21,18 +21,22 @@ The Glossarist logo is a synthesis of two writing traditions, reflecting the mul
   </div>
 </div>
 
-**文 — the Han character for "text" or "writing"** appears in the blue forms at the center. Chinese is one of the six official languages of ISO, and the character 文 carries the meaning of structured written knowledge — exactly what a concept system embodies. Its flowing, angular strokes represent the authoritative structure that underpins formal terminology.
+**文 — the Han character *wén*** appears in the blue forms at the center. In the classical tradition, 文 is one of the most foundational concepts. Its earliest form denotes *pattern* — the mark that differentiates form from emptiness (紋, the difference between 無 and 有, between nothing and something). From this root, 文 also means *writing itself* — Han characters being extensions of pictorial drawings, the very act of rendering thought into visible form. As the medium that carries cultural tradition and knowledge across generations, 文 is the representation of the scholar and the civilizing principle. In the Glossarist logo, 文 stands for structured written knowledge — the pattern that gives concepts precise, communicable form.
 
 **ΓΛ — the Greek capital letters Gamma and Lambda** appear in the green and teal forms, referencing *γλωσσάριον*. Greek is the language of classical scholarship and the root of much modern scientific terminology. The angular geometric forms of ΓΛ represent precision and classification.
 
 Together, these two script traditions merge into a single mark. This mirrors Glossarist's core principle: **a single concept can be expressed in many languages, yet remains one concept**. The Glossarist model serves as the single source of truth that encompasses multiple languages, each of which can be viewed separately but all of which refer back to the same underlying concept.
+
+<LogoMerge />
 
 ### The Color Blobs
 
 The logo is composed of overlapping colored shapes in blues, teals, and greens — not a single flat color. Each color region represents a distinct **property** of a concept:
 
 - **Dark navy** (#2d4164) — The concept identity itself, the stable core
+- **Bridge blue** (#456399) — The depth of the model: structured hierarchy and cross-language bridges
 - **Steel blue** (#3a5c80) — Designations: the names and terms that identify a concept across languages
+- **Grey-blue** (#97a4b7) — The translational layer: the soft transitions between one language's expression and another's
 - **Teal** (#3fb6b0) — Relationships: how one concept connects to and is defined by others
 - **Sea green** (#7ee0d4) — Sources and provenance: the authoritative references that ground each concept
 - **Mint** (#b8f5ec) — Notes, examples, and editorial metadata
@@ -43,9 +47,10 @@ The shapes overlap and blend into one another because **a concept is colored by 
 
 The color palette is drawn from the natural world of water and stone:
 
-- **Deep navy to steel blue** — The authoritative layer, evoking ink on paper and the gravitas of standards documents
+- **Deep navy to bridge blue to steel blue** — The authoritative layer, evoking ink on paper and the gravitas of standards documents
+- **Grey-blue** — The translational layer, the subtle blending between linguistic forms
 - **Teal to sea green** — The relational layer, evoking the flow of information between languages and domains
-- **Sage green** — The metadata layer, the supporting information that gives context
+- **Mint** — The metadata layer, the supporting information that gives context
 
 This palette was chosen to feel both authoritative (dark blues) and approachable (teals and greens), reflecting Glossarist's balance of standards rigor with practical usability.
 
@@ -132,6 +137,44 @@ Glossarist is used in production by standards bodies including [ISO/TC 211 Geole
   height: auto;
 }
 
+/* --- Logo merge diagram --- */
+.logo-merge {
+  max-width: 720px;
+  margin: 2.5rem auto 3rem;
+  position: relative;
+}
+
+.logo-merge svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.merge-arrow {
+  stroke-dasharray: 7 5;
+  animation: merge-flow 1.4s linear infinite;
+}
+
+@keyframes merge-flow {
+  from { stroke-dashoffset: 12; }
+  to { stroke-dashoffset: 0; }
+}
+
+.dark .merge-img-han { filter: brightness(1.5) saturate(0.9); }
+.dark .merge-img-greek { filter: brightness(1.1); }
+.dark .merge-lbl-wen { fill: #7b9cc4 !important; }
+.dark .merge-sub-wen { fill: #8badc4 !important; }
+.dark .merge-lbl-logo { fill: #7b9cc4 !important; }
+.dark .merge-lbl-gl { fill: #5cc5be !important; }
+.dark .merge-sub-gl { fill: #78d3cc !important; }
+.dark #ah-l path { fill: #3fb6b0; }
+.dark #ah-r path { fill: #588ac1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .merge-arrow { animation: none; }
+}
+
+/* --- Use cases --- */
 .use-cases-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -160,6 +203,9 @@ Glossarist is used in production by standards bodies including [ISO/TC 211 Geole
 @media (max-width: 640px) {
   .logo-display {
     max-width: 180px;
+  }
+  .logo-merge {
+    max-width: 100%;
   }
   .use-cases-grid {
     grid-template-columns: 1fr;

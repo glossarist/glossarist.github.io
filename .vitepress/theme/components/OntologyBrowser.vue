@@ -1,84 +1,10 @@
 <script setup lang="ts">
 import { ref, computed, nextTick, onMounted, onUnmounted, watch } from 'vue'
+import type { OwlClass, OwlProperty, OwlShape, OwlOntology, AnnotationProperty, TaxonomyData, TaxonomyConcept, OntologyStats } from '../../data/types'
+import { useOntologyData } from '../../data/useOntologyData'
 
 type View = 'overview' | 'class' | 'shape' | 'property' | 'taxonomy'
 type SidebarTab = 'types' | 'properties' | 'taxonomies'
-
-interface OwlClass {
-  iri: string
-  compact: string
-  label: string
-  comment: string | null
-  subClassOf: string | null
-  disjointWith: string | null
-  children: string[]
-  ancestors: string[]
-}
-
-interface OwlProperty {
-  iri: string
-  compact: string
-  label: string
-  comment: string | null
-  type: 'object' | 'datatype'
-  domain: string | null
-  domainUnion: string[] | null
-  range: string | null
-  rangeUnion: string[] | null
-  inverseOf: string | null
-}
-
-interface ShaclConstraint {
-  path: string | null
-  datatype: string | null
-  class: string | null
-  valuesFrom: string | null
-  nodeKind: string | null
-  minCount: number | null
-  maxCount: number | null
-  in: string[] | null
-}
-
-interface OwlShape {
-  iri: string
-  compact: string
-  label: string
-  comment: string | null
-  targetClass: string | null
-  shapeClass: string | null
-  constraints: ShaclConstraint[]
-}
-
-interface OwlOntology {
-  iri: string
-  label: string
-  comment: string | null
-  prefix: string | null
-  namespaceUri: string | null
-  imports: { iri: string; label: string }[]
-  license: string | null
-  created: string | null
-}
-
-interface AnnotationProperty {
-  iri: string
-  compact: string
-  label: string
-}
-
-interface TaxonomyData {
-  scheme: string
-  schemeLabel: string
-  schemeDefinition: string | null
-  concepts: Record<string, {
-    id: string
-    iri: string
-    prefLabel: string
-    altLabel?: string
-    definition?: string
-    broader?: string
-  }>
-}
 
 interface FlatTreeNode {
   id: string
@@ -97,19 +23,20 @@ interface SearchResult {
   type: string
 }
 
-// --- State ---
-const loaded = ref(false)
-const ontologyMeta = ref<OwlOntology | null>(null)
-const classes = ref<Record<string, OwlClass>>({})
-const roots = ref<string[]>([])
-const properties = ref<Record<string, OwlProperty>>({})
-const propsByDomain = ref<Record<string, { object: string[]; datatype: string[] }>>({})
-const shapes = ref<Record<string, OwlShape>>({})
-const shapesByTargetClass = ref<Record<string, string[]>>({})
-const annotationProps = ref<AnnotationProperty[]>([])
-const stats = ref({ classCount: 0, objectPropertyCount: 0, datatypePropertyCount: 0, shapeCount: 0, annotationPropertyCount: 0 })
-const taxonomies = ref<Record<string, TaxonomyData>>({})
+// --- Data ---
+const { schema, taxonomies, loaded } = useOntologyData()
 
+const ontologyMeta = computed(() => schema.value?.ontology ?? null)
+const classes = computed(() => schema.value?.classes ?? {})
+const roots = computed(() => schema.value?.classHierarchyRoots ?? [])
+const properties = computed(() => schema.value?.properties ?? {})
+const propsByDomain = computed(() => schema.value?.propertiesByDomain ?? {})
+const shapes = computed(() => schema.value?.shapes ?? {})
+const shapesByTargetClass = computed(() => schema.value?.shapesByTargetClass ?? [])
+const annotationProps = computed(() => schema.value?.annotationProperties ?? [])
+const stats = computed(() => schema.value?.stats ?? { classCount: 0, objectPropertyCount: 0, datatypePropertyCount: 0, shapeCount: 0, annotationPropertyCount: 0 })
+
+// --- UI State ---
 const currentView = ref<View>('overview')
 const activeId = ref('')
 const expandedSections = ref<Set<SidebarTab>>(new Set(['classes']))
@@ -118,31 +45,14 @@ const searchQuery = ref('')
 const searchFocused = ref(false)
 const expandedNodes = ref<Set<string>>(new Set([]))
 
-// --- Data loading ---
-onMounted(async () => {
-  const [schemaResp, taxResp] = await Promise.all([
-    fetch('/data/ontology-schema.json'),
-    fetch('/data/taxonomies.json'),
-  ])
-  const schema = await schemaResp.json()
-  const tax = await taxResp.json()
-
-  ontologyMeta.value = schema.ontology
-  classes.value = schema.classes || {}
-  roots.value = schema.classHierarchyRoots || []
-  properties.value = schema.properties || {}
-  propsByDomain.value = schema.propertiesByDomain || {}
-  shapes.value = schema.shapes || {}
-  shapesByTargetClass.value = schema.shapesByTargetClass || {}
-  annotationProps.value = schema.annotationProperties || []
-  stats.value = schema.stats || stats.value
-  taxonomies.value = tax || {}
-
-  // Expand all tree nodes by default
-  expandedNodes.value = new Set(Object.keys(classes.value))
-  loaded.value = true
+// --- Lifecycle ---
+onMounted(() => {
   parseHash()
   window.addEventListener('popstate', onPopState)
+})
+
+watch(loaded, (isLoaded) => {
+  if (isLoaded) expandedNodes.value = new Set(Object.keys(classes.value))
 })
 
 onUnmounted(() => {
