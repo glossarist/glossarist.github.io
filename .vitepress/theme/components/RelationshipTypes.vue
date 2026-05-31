@@ -1,21 +1,7 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
-
-interface TaxonomyConcept {
-  id: string
-  iri: string
-  prefLabel: string
-  altLabel?: string
-  definition?: string
-  broader?: string
-}
-
-interface TaxonomyData {
-  scheme: string
-  schemeLabel: string
-  schemeDefinition: string | null
-  concepts: Record<string, TaxonomyConcept>
-}
+import { ref, computed } from 'vue'
+import type { TaxonomyConcept } from '../../data/types'
+import { useOntologyData } from '../../data/useOntologyData'
 
 const categories: { key: string; label: string; types: string[] }[] = [
   { key: 'generic', label: 'Hierarchical — Generic (BTG/NTG)', types: ['broader', 'narrower', 'broader_generic', 'narrower_generic'] },
@@ -47,16 +33,9 @@ const inverses: Record<string, string> = {
   equivalent: 'equivalent',
 }
 
-const concepts = ref<Record<string, TaxonomyConcept>>({})
-const loaded = ref(false)
+const { taxonomies, loaded } = useOntologyData()
 
-onMounted(async () => {
-  const resp = await fetch('/data/taxonomies.json')
-  const tax: Record<string, TaxonomyData> = await resp.json()
-  const relTax = tax['relationshipType']
-  if (relTax) concepts.value = relTax.concepts
-  loaded.value = true
-})
+const concepts = computed(() => taxonomies.value?.relationshipType?.concepts ?? {} as Record<string, TaxonomyConcept>)
 
 const totalTypes = computed(() => Object.keys(concepts.value).length)
 

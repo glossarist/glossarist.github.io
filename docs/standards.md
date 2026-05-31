@@ -29,14 +29,14 @@ TBX-XML export via glossarist-ruby (tbx gem). Glossarist supports:
 
 - Term types, abbreviation types, grammatical information
 - GCR package format as TBX exchange medium
-- [34 TBX term types](/docs/model/term-types)
+- [TBX term types](/docs/model/term-types)
 
 ## [ISO 12620](https://www.iso.org/standard/69550.html) — Data category registry
 
 Term types and data category classifications. Glossarist implements:
 
-- [34 term type values](/docs/model/term-types)
-- Register values (7)
+- [Term type values](/docs/model/term-types)
+- Register values
 - Part of speech
 - Source status/type
 

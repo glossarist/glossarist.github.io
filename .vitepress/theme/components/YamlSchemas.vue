@@ -1,68 +1,17 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
-
-interface ShaclConstraint {
-  path: string | null
-  datatype: string | null
-  class: string | null
-  valuesFrom: string | null
-  nodeKind: string | null
-  minCount: number | null
-  maxCount: number | null
-  in: string[] | null
-}
-
-interface OwlShape {
-  compact: string
-  label: string
-  targetClass: string | null
-  constraints: ShaclConstraint[]
-}
-
-interface OwlClass {
-  compact: string
-  label: string
-  comment: string | null
-  subClassOf: string | null
-  children: string[]
-}
-
-interface TaxonomyConcept {
-  id: string
-  prefLabel: string
-  definition?: string
-}
-
-interface TaxonomyData {
-  scheme: string
-  schemeLabel: string
-  schemeDefinition: string | null
-  concepts: Record<string, TaxonomyConcept>
-}
+import { ref, computed } from 'vue'
+import type { OwlShape, OwlClass, TaxonomyConcept } from '../../data/types'
+import { useOntologyData } from '../../data/useOntologyData'
 
 type SchemaTab = 'entities' | 'enums'
 
-const loaded = ref(false)
-const classes = ref<Record<string, OwlClass>>({})
-const shapes = ref<Record<string, OwlShape>>({})
-const shapesByTarget = ref<Record<string, string[]>>({})
-const taxonomies = ref<Record<string, TaxonomyData>>({})
+const { schema, taxonomies, loaded } = useOntologyData()
+const classes = computed(() => schema.value?.classes ?? {})
+const shapes = computed(() => schema.value?.shapes ?? {})
+const shapesByTarget = computed(() => schema.value?.shapesByTargetClass ?? {})
+
 const activeTab = ref<SchemaTab>('entities')
 const expandedEntity = ref<string | null>(null)
-
-onMounted(async () => {
-  const [schemaResp, taxResp] = await Promise.all([
-    fetch('/data/ontology-schema.json'),
-    fetch('/data/taxonomies.json'),
-  ])
-  const schema = await schemaResp.json()
-  const tax = await taxResp.json()
-  classes.value = schema.classes || {}
-  shapes.value = schema.shapes || {}
-  shapesByTarget.value = schema.shapesByTargetClass || {}
-  taxonomies.value = tax || {}
-  loaded.value = true
-})
 
 const entitySchemas = computed(() => {
   const result: { classId: string; label: string; comment: string | null; parent: string | null; children: string[]; shape: OwlShape | null }[] = []

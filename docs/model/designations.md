@@ -1,6 +1,6 @@
 ---
 title: Designations
-description: 7 designation types forming a MECE hierarchy — expression, abbreviation, symbol, letter_symbol, graphical_symbol, prefix, suffix
+description: Designation types forming a MECE hierarchy — expression, abbreviation, symbol, letter_symbol, graphical_symbol, prefix, suffix
 ---
 
 # Designations
