@@ -3,9 +3,9 @@ title: Concept Browser
 description: Interactive browser for terminology datasets with multi-dataset, multilingual concept browsing
 ---
 
-# Concept Browser (concept-browser)
+# Concept Browser
 
-A statically deployable single-page application for browsing ISO/IEC terminology datasets. Add new datasets with zero code changes — just edit `datasets.yml`.
+A statically deployable single-page application for browsing ISO/IEC terminology datasets. Add new datasets with zero code changes — just edit `datasets.yml`. See the [concept model docs](/docs/model/) for the data model it renders.
 
 **Live site:** [geolexica.org](https://www.geolexica.org)
 
@@ -83,4 +83,4 @@ datasets:
 
 ## Links
 
-- [GitHub](https://github.com/glossarist/glossarist-vocabulary-browser)
+- [GitHub](https://github.com/glossarist/concept-browser)

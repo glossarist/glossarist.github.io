@@ -83,4 +83,4 @@ A single ManagedConcept can have localizations in any number of languages. Diffe
 
 A collection for managed concepts. Includes the Ruby `Enumerable` module. Supports loading from and saving to YAML file datasets.
 
-See the [YAML Schema Reference](/reference/schema-browser) for the complete JSON Schema definitions, or the [Entity Field Reference](/reference/entity-fields) for all entity types with types, cardinality, and allowed values.
+See the [YAML Schema Reference](/reference/schema-browser) for the complete JSON Schema definitions, the [Entity Field Reference](/reference/entity-fields) for all entity types with types, cardinality, and allowed values, and the [Standards compliance reference](/docs/standards) for how each ISO standard maps to Glossarist entities.

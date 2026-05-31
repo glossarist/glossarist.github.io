@@ -5,7 +5,7 @@ description: JavaScript SDK for Glossarist GCR packages — read, write, validat
 
 # glossarist-js
 
-JavaScript SDK for reading and writing [Glossarist](https://github.com/glossarist) GCR packages — manages terminology concepts with rich domain models, bidirectional YAML serialization, validation, and cross-reference resolution.
+JavaScript SDK for reading and writing [Glossarist](https://github.com/glossarist) GCR packages — manages terminology concepts with rich domain models, bidirectional YAML serialization, validation, and cross-reference resolution. See the [concept model docs](/docs/model/) for the entity model this SDK implements.
 
 ## Install
 
@@ -110,3 +110,8 @@ isKnownFormat('csv');                 // false
 
 - [GitHub](https://github.com/glossarist/glossarist-js)
 - [npm](https://www.npmjs.com/package/glossarist)
+
+## See Also
+
+- [Concept Model docs](/docs/model/) — the entity model this SDK implements
+- [Standards compliance](/docs/standards) — ISO standard mappings

@@ -236,7 +236,7 @@ function exampleGroups() {
               <h3 class="sb-section-heading">Definitions <span class="sb-section-count">{{ allDefs().length }}</span></h3>
               <div class="sb-def-list">
                 <div v-for="d in allDefs()" :key="d.name" class="sb-def">
-                  <button class="sb-def-head" @click="toggleDef(d.name)">
+                  <button class="sb-def-head" :aria-expanded="expandedDefs.has(d.name)" @click="toggleDef(d.name)">
                     <code class="sb-def-name">{{ d.name }}</code>
                     <div class="sb-def-meta">
                       <span v-if="d.schema.type" class="sb-def-type-tag">{{ d.schema.type }}</span>

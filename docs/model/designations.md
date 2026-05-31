@@ -94,4 +94,4 @@ Each GrammarInfo entry has:
 | `number` | [number](/reference/entity-fields) | 0..* | Grammatical number |
 | `part_of_speech` | string | 0..1 | Part of speech |
 
-See the [YAML Schema Reference](/reference/schema-browser) for the complete JSON Schema definitions, or the [Entity Field Reference](/reference/entity-fields) for all entity types.
+See the [YAML Schema Reference](/reference/schema-browser) for the complete JSON Schema definitions, the [Entity Field Reference](/reference/entity-fields) for all entity types, and the [Standards compliance reference](/docs/standards) for ISO standard mappings.

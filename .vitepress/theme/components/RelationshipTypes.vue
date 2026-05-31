@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { computed } from 'vue'
 import type { TaxonomyConcept } from '../../data/types'
 import { useOntologyData } from '../../data/useOntologyData'
 
@@ -64,6 +64,7 @@ const alphabeticalList = computed(() =>
     <!-- Category sections -->
     <div v-for="group in categorizedGroups" :key="group.key" class="rt-category">
       <h3>{{ group.label }}</h3>
+      <div class="rt-table-scroll">
       <table>
         <thead>
           <tr><th>Type</th><th>Description</th><th>Inverse</th></tr>
@@ -76,11 +77,13 @@ const alphabeticalList = computed(() =>
           </tr>
         </tbody>
       </table>
+      </div>
     </div>
 
     <!-- Full alphabetical reference -->
     <details class="rt-details">
       <summary>Full alphabetical reference ({{ totalTypes }} types)</summary>
+      <div class="rt-table-scroll">
       <table class="rt-ref-table">
         <thead>
           <tr><th>#</th><th>Type</th><th>Category</th></tr>
@@ -93,9 +96,13 @@ const alphabeticalList = computed(() =>
           </tr>
         </tbody>
       </table>
+      </div>
     </details>
   </div>
-  <div v-else class="rt-loading">Loading relationship types&hellip;</div>
+  <div v-else class="rt-loading">
+    <div class="rt-spinner"></div>
+    <span>Loading relationship types&hellip;</span>
+  </div>
 </template>
 
 <style scoped>
@@ -192,10 +199,25 @@ const alphabeticalList = computed(() =>
 .rt-details[open] summary { margin-bottom: 1rem; }
 
 .rt-loading {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
   padding: 2rem 0;
   color: var(--vp-c-text-3);
   font-style: italic;
 }
+
+.rt-spinner {
+  width: 18px; height: 18px;
+  border: 2px solid var(--vp-c-divider);
+  border-top-color: var(--g-teal);
+  border-radius: 50%;
+  animation: rt-spin 0.6s linear infinite;
+}
+
+@keyframes rt-spin { to { transform: rotate(360deg); } }
+
+.rt-table-scroll { overflow-x: auto; }
 
 @media (max-width: 640px) {
   .rt-category table { font-size: 0.8125rem; }

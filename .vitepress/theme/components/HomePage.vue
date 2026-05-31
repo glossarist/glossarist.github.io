@@ -15,6 +15,7 @@ const st = {
 const mouseX = ref(0)
 const mouseY = ref(0)
 const cycleIndex = ref(0)
+const activeCodeTab = ref('yaml')
 let cycleTimer: ReturnType<typeof setInterval> | null = null
 
 const langCycle = [
@@ -69,19 +70,6 @@ function blobParallax(index: number) {
 }
 
 onMounted(() => {
-  const tabs = document.querySelectorAll('.code-tab')
-  const panels = document.querySelectorAll('.code-panel')
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      tabs.forEach(t => t.classList.remove('active'))
-      panels.forEach(p => p.classList.remove('active'))
-      tab.classList.add('active')
-      const target = (tab as HTMLElement).dataset.tab
-      const panel = document.getElementById('panel-' + target)
-      if (panel) panel.classList.add('active')
-    })
-  })
-
   const hero = document.querySelector('.hero')
   if (hero) {
     hero.addEventListener('mousemove', (e: Event) => {
@@ -333,13 +321,13 @@ onUnmounted(() => {
 
       <div class="code-showcase">
         <div class="code-tabs">
-          <button class="code-tab active" data-tab="yaml">YAML Authoring</button>
-          <button class="code-tab" data-tab="js">JavaScript SDK</button>
-          <button class="code-tab" data-tab="ruby">Ruby Gem</button>
-          <button class="code-tab" data-tab="export">Export Formats</button>
+          <button class="code-tab" :class="{ active: activeCodeTab === 'yaml' }" @click="activeCodeTab = 'yaml'">YAML Authoring</button>
+          <button class="code-tab" :class="{ active: activeCodeTab === 'js' }" @click="activeCodeTab = 'js'">JavaScript SDK</button>
+          <button class="code-tab" :class="{ active: activeCodeTab === 'ruby' }" @click="activeCodeTab = 'ruby'">Ruby Gem</button>
+          <button class="code-tab" :class="{ active: activeCodeTab === 'export' }" @click="activeCodeTab = 'export'">Export Formats</button>
         </div>
 
-        <div class="code-panel active" id="panel-yaml">
+        <div class="code-panel" :class="{ active: activeCodeTab === 'yaml' }">
           <div class="code-desc">
             <h4>V3 YAML — Human-Readable Concept Data</h4>
             <p>Write terminology concepts in structured YAML. Each file contains a ManagedConcept with all its localizations, designations, and relationships.</p>
@@ -374,7 +362,7 @@ onUnmounted(() => {
           </div>
         </div>
 
-        <div class="code-panel" id="panel-js">
+        <div class="code-panel" :class="{ active: activeCodeTab === 'js' }">
           <div class="code-desc">
             <h4>glossarist-js — Node.js SDK</h4>
             <p>Read, write, validate, and manage GCR packages with bidirectional YAML serialization. Stream concepts for memory-efficient processing of large datasets.</p>
@@ -401,7 +389,7 @@ onUnmounted(() => {
           </div>
         </div>
 
-        <div class="code-panel" id="panel-ruby">
+        <div class="code-panel" :class="{ active: activeCodeTab === 'ruby' }">
           <div class="code-desc">
             <h4>glossarist-ruby — Ruby Gem</h4>
             <p>The original Glossarist library. Full CRUD for concept management, multi-format serialization, TBX/SKOS/Turtle export, and GCR package support.</p>
@@ -426,7 +414,7 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
           </div>
         </div>
 
-        <div class="code-panel" id="panel-export">
+        <div class="code-panel" :class="{ active: activeCodeTab === 'export' }">
           <div class="code-desc">
             <h4>Universal Interchange</h4>
             <p>Export your concept system to any standard format. Import from existing terminology datasets. Full round-trip support.</p>
@@ -1229,35 +1217,6 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
 
 .dark .rel-chip { background: rgba(251, 191, 36, 0.08); color: var(--g-shape); }
 
-.model-card-stats {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.onto-stat {
-  text-align: center;
-  padding: 0.5rem;
-  background: var(--vp-c-bg);
-  border-radius: 6px;
-  border: 1px solid var(--vp-c-divider);
-}
-
-.onto-stat strong {
-  display: block;
-  font-size: 1.125rem;
-  font-weight: 700;
-  color: var(--g-teal);
-}
-
-.onto-stat span {
-  font-size: 0.625rem;
-  color: var(--vp-c-text-3);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
 .model-card-link {
   font-size: 0.8125rem;
   font-weight: 600;
@@ -1662,7 +1621,6 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
   .eco-grid, .model-grid, .standards-grid, .format-grid { grid-template-columns: 1fr; }
   .section { padding: 3.5rem 0; }
   .home .section-header h2 { font-size: 1.5rem; }
-  .model-card-stats { grid-template-columns: repeat(2, 1fr); }
   .code-showcase { border-radius: 6px; }
   .code-panel.active { padding: 1.25rem; }
   .code-block { padding: 1rem; }

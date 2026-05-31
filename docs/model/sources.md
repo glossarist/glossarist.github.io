@@ -102,4 +102,4 @@ This hierarchy means that a concept may have multiple authoritative sources. A c
 
 In some cases, the glossary itself is the authoritative source — when a term and its definition originate within the glossary rather than being adopted from an external standard.
 
-See the [YAML Schema Reference](/reference/schema-browser) for the complete JSON Schema definitions, or the [Entity Field Reference](/reference/entity-fields) for all entity types.
+See the [YAML Schema Reference](/reference/schema-browser) for the complete JSON Schema definitions, the [Entity Field Reference](/reference/entity-fields) for all entity types, and the [Standards compliance reference](/docs/standards) for ISO standard mappings.

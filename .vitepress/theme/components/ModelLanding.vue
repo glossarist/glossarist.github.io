@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 import { useOntologyData } from '../../data/useOntologyData'
 
-const { schema, taxonomies } = useOntologyData()
+const { schema, taxonomies, loaded } = useOntologyData()
 
 const st = computed(() => {
   const s = schema.value?.stats
@@ -30,26 +30,16 @@ const entities = [
 <template>
   <div class="ml">
     <!-- Stats row -->
-    <div class="ml-stats">
-      <div class="ml-stat">
-        <span class="ml-stat-num">{{ st.classes }}</span>
-        <span class="ml-stat-label">Entity Types</span>
-      </div>
-      <div class="ml-stat">
-        <span class="ml-stat-num">{{ st.properties }}</span>
-        <span class="ml-stat-label">Properties</span>
-      </div>
-      <div class="ml-stat">
-        <span class="ml-stat-num">{{ st.shapes }}</span>
-        <span class="ml-stat-label">Validation Shapes</span>
-      </div>
-      <div class="ml-stat">
-        <span class="ml-stat-num">{{ st.relationships }}</span>
-        <span class="ml-stat-label">Relationship Types</span>
-      </div>
-      <div class="ml-stat">
-        <span class="ml-stat-num">{{ st.designations }}</span>
-        <span class="ml-stat-label">Designation Types</span>
+    <div class="ml-stats" :class="{ 'ml-stats-loading': !loaded }">
+      <div class="ml-stat" v-for="stat in [
+        { value: st.classes, label: 'Entity Types' },
+        { value: st.properties, label: 'Properties' },
+        { value: st.shapes, label: 'Validation Shapes' },
+        { value: st.relationships, label: 'Relationship Types' },
+        { value: st.designations, label: 'Designation Types' },
+      ]" :key="stat.label">
+        <span class="ml-stat-num">{{ stat.value || '—' }}</span>
+        <span class="ml-stat-label">{{ stat.label }}</span>
       </div>
     </div>
 

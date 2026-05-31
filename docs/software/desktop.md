@@ -3,9 +3,9 @@ title: Desktop App
 description: Desktop viewer and editor for concept registries on Windows, macOS, and Linux
 ---
 
-# Glossarist Desktop
+# Desktop App
 
-Desktop viewer and editor for concept registries. Manage concepts, propose changes, and review change requests from a native app on Windows, macOS, and Linux.
+Desktop viewer and editor for concept registries. Manage concepts, propose changes, and review change requests from a native app on Windows, macOS, and Linux. See the [concept model docs](/docs/model/) for the data model, or the [desktop docs](/docs/desktop/) for detailed usage.
 
 <ReleaseDownloader />
 

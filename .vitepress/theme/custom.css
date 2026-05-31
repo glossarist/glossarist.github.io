@@ -178,6 +178,7 @@
   background-size: 200% 200%;
   animation: shimmer 8s ease infinite;
   -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 

@@ -5,7 +5,27 @@ description: ISO 12620 / TBX term type classifications for designations
 
 # Term Types
 
-ISO 12620 / TBX `term_type` classification for [designations](/docs/model/designations). These types are organized into three categories:
+ISO 12620 / TBX `term_type` classification for [designations](/docs/model/designations). Each designation can carry a `term_type` that classifies what kind of term it is — orthographic variants, symbolic notations, or usage/provenance categories.
+
+## Usage
+
+The `term_type` field is set on individual designations within a localization:
+
+```yaml
+termid: "3.1.1.1"
+eng:
+  terms:
+    - type: expression
+      designation: "entity"
+      normative_status: preferred
+      term_type: full_form
+    - type: abbreviation
+      designation: "ENT"
+      normative_status: admitted
+      term_type: initialism
+```
+
+Multiple designations for the same concept can have different term types, allowing the concept to be known under different forms.
 
 ## Orthographic / structural
 
@@ -55,3 +75,5 @@ ISO 12620 / TBX `term_type` classification for [designations](/docs/model/design
 | `standard_text` | Standard text |
 | `synonym` | A synonymous term |
 | `synonymous_phrase` | A synonymous phrase |
+
+See the [Entity Field Reference](/reference/entity-fields) for the complete enumeration with definitions, or the [Standards compliance reference](/docs/standards) for ISO standard mappings.

@@ -131,4 +131,4 @@ Types without a direct SKOS equivalent (`compare`, `contrast`, `see`, `deprecate
 3. **Directional** — Every relationship has a source and target; inverse pairs are separate types (`broader`/`narrower`, `supersedes`/`superseded_by`)
 4. **Typed hierarchy** — The three ISO 25964 hierarchy types (generic, partitive, instantial) are distinct because they carry different semantic meaning and affect how concept trees are rendered
 
-See the [YAML Schema Reference](/reference/schema-browser) for the JSON Schema definition of the RelatedConcept entity, or the [Entity Field Reference](/reference/entity-fields) for field-level details.
+See the [YAML Schema Reference](/reference/schema-browser) for the JSON Schema definition of the RelatedConcept entity, the [Entity Field Reference](/reference/entity-fields) for field-level details, and the [Standards compliance reference](/docs/standards) for ISO standard mappings.

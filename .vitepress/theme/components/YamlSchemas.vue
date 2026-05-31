@@ -67,11 +67,11 @@ onMounted(() => { if (loaded.value) handleHash() })
 <template>
   <div class="ys" v-if="loaded">
     <!-- Tab switcher -->
-    <div class="ys-tabs">
-      <button class="ys-tab" :class="{ active: activeTab === 'entities' }" @click="activeTab = 'entities'">
+    <div class="ys-tabs" role="tablist">
+      <button class="ys-tab" role="tab" :aria-selected="activeTab === 'entities'" :class="{ active: activeTab === 'entities' }" @click="activeTab = 'entities'">
         Entity Schemas ({{ entitySchemas.length }})
       </button>
-      <button class="ys-tab" :class="{ active: activeTab === 'enums' }" @click="activeTab = 'enums'">
+      <button class="ys-tab" role="tab" :aria-selected="activeTab === 'enums'" :class="{ active: activeTab === 'enums' }" @click="activeTab = 'enums'">
         Enumerations ({{ enumSchemas.length }})
       </button>
     </div>
@@ -83,7 +83,7 @@ onMounted(() => { if (loaded.value) handleHash() })
       </p>
 
       <div v-for="entity in entitySchemas" :key="entity.classId" class="ys-entity" :id="'entity-' + entity.label">
-        <button class="ys-entity-header" @click="toggleEntity(entity.classId)">
+        <button class="ys-entity-header" :aria-expanded="expandedEntity === entity.classId" @click="toggleEntity(entity.classId)">
           <span class="ys-entity-dot"></span>
           <span class="ys-entity-name">{{ entity.label }}</span>
           <span class="ys-entity-fields">{{ entity.shape?.constraints.length }} fields</span>
@@ -171,17 +171,33 @@ onMounted(() => { if (loaded.value) handleHash() })
       </div>
     </div>
   </div>
-  <div v-else class="ys-loading">Loading schema data&hellip;</div>
+  <div v-else class="ys-loading">
+    <div class="ys-spinner"></div>
+    <span>Loading schema data&hellip;</span>
+  </div>
 </template>
 
 <style scoped>
 .ys { margin: 1.5rem 0; }
 
 .ys-loading {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
   padding: 2rem 0;
   color: var(--vp-c-text-3);
   font-style: italic;
 }
+
+.ys-spinner {
+  width: 18px; height: 18px;
+  border: 2px solid var(--vp-c-divider);
+  border-top-color: var(--g-teal);
+  border-radius: 50%;
+  animation: ys-spin 0.6s linear infinite;
+}
+
+@keyframes ys-spin { to { transform: rotate(360deg); } }
 
 .ys-intro {
   font-size: 0.9375rem;

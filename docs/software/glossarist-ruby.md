@@ -5,7 +5,7 @@ description: Ruby gem implementing the Glossarist concept model with multi-langu
 
 # glossarist-ruby
 
-Ruby gem implementing the [Glossarist concept model](https://github.com/glossarist/concept-model/tree/main) in Ruby. All the entities in the model are available as classes and all the attributes are available as methods of those classes. This gem also allows you to read/write data to concept datasets or create your own collection and save that to Glossarist model V2 dataset.
+Ruby gem implementing the [Glossarist concept model](https://github.com/glossarist/concept-model/tree/main) in Ruby. All the entities in the [concept model](/docs/model/) are available as classes and all the attributes are available as methods of those classes. This gem also allows you to read/write data to concept datasets or create your own collection and save that to Glossarist model V2 dataset.
 
 ## Install
 
@@ -75,10 +75,11 @@ Following fields are available for ManagedConcept:
 | `id` | String identifier for the concept |
 | `uuid` | UUID for the concept |
 | `related` | Array of RelatedConcept |
-| `status` | Enum for the normative status of the term |
+| `status` | Lifecycle status (`valid`, `draft`, `submitted`, `superseded`, `retired`) |
 | `dates` | Array of ConceptDate |
 | `localized_concepts` | Hash of localizations (language code → UUID) |
-| `domains` | Array of ConceptReference — upper concepts |
+| `domains` | Subject area references |
+| `sources` | Concept-level bibliographical sources |
 | `localizations` | Hash of localizations (language code → LocalizedConcept) |
 
 ```ruby
@@ -114,12 +115,23 @@ Localizations of the term to different languages.
 | `notes` | Zero or more notes |
 | `examples` | Zero or more examples |
 | `language_code` | ISO-639 3-letter language code |
-| `script` | ISO 15924 4-letter script code (optional) |
+| `script` | ISO 15924 4-letter script code |
+| `system` | ISO 24229 conversion system code |
 | `entry_status` | `notValid`, `valid`, `superseded`, or `retired` |
 | `classification` | `preferred`, `admitted`, or `deprecated` |
+| `references` | Typed references |
+| `dates` | Per-language governance events |
+| `release` | Release version |
+| `review_type` | `editorial` or `substantive` |
+| `lineage_similarity` | Lineage similarity score |
 
 ## Links
 
 - [GitHub](https://github.com/glossarist/glossarist-ruby)
 - [RubyGems](https://rubygems.org/gems/glossarist)
-- [Concept model YAML schemas](https://github.com/glossarist/concept-model/tree/main/yaml_schemas)
+- [Concept model schemas](https://github.com/glossarist/concept-model/tree/main/schemas)
+
+## See Also
+
+- [Concept Model docs](/docs/model/) — the entity model this gem implements
+- [Standards compliance](/docs/standards) — ISO standard mappings for TBX, SKOS, and Turtle export

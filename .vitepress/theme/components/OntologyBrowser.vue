@@ -3,6 +3,8 @@ import { ref, computed, nextTick, onMounted, onUnmounted, watch } from 'vue'
 import type { OwlClass, OwlProperty, OwlShape, OwlOntology, AnnotationProperty, TaxonomyData, TaxonomyConcept, OntologyStats } from '../../data/types'
 import { useOntologyData } from '../../data/useOntologyData'
 
+const isMac = typeof navigator !== 'undefined' && /Mac|iPod|iPhone|iPad/.test(navigator.userAgent)
+
 type View = 'overview' | 'class' | 'shape' | 'property' | 'taxonomy'
 type SidebarTab = 'types' | 'properties' | 'taxonomies'
 
@@ -249,14 +251,20 @@ const activeTaxonomyData = computed(() => {
 const taxonomyAlphaFilter = ref('')
 
 // Keyboard shortcut for search
+function onSearchShortcut(e: KeyboardEvent) {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+    e.preventDefault()
+    const input = document.querySelector('.ob-search-input') as HTMLInputElement
+    if (input) input.focus()
+  }
+}
+
 onMounted(() => {
-  document.addEventListener('keydown', (e: KeyboardEvent) => {
-    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-      e.preventDefault()
-      const input = document.querySelector('.ob-search-input') as HTMLInputElement
-      if (input) input.focus()
-    }
-  })
+  document.addEventListener('keydown', onSearchShortcut)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('keydown', onSearchShortcut)
 })
 </script>
 
@@ -280,7 +288,7 @@ onMounted(() => {
             placeholder="Search classes, properties, shapes…"
             class="ob-search-input"
           />
-          <kbd class="ob-search-kbd">⌘K</kbd>
+          <kbd class="ob-search-kbd">{{ isMac ? '⌘' : 'Ctrl' }}K</kbd>
           <div v-if="searchQuery.length >= 2 && searchFocused && searchResults.length" class="ob-search-dropdown">
             <button v-for="r in searchResults" :key="r.compact" class="ob-search-item" @mousedown="searchSelect(r)">
               <span class="ob-dot" :class="'ob-dot-' + r.type"></span>
@@ -300,13 +308,13 @@ onMounted(() => {
       <!-- Body: sidebar + main -->
       <div class="ob-body">
         <!-- Mobile sidebar toggle -->
-        <button class="ob-sidebar-toggle" @click="sidebarOpen = !sidebarOpen">
+        <button class="ob-sidebar-toggle" :aria-label="sidebarOpen ? 'Close navigation' : 'Open navigation'" :aria-expanded="sidebarOpen" @click="sidebarOpen = !sidebarOpen">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
           Browse
         </button>
 
         <!-- Mobile overlay -->
-        <div v-if="sidebarOpen" class="ob-overlay" @click="sidebarOpen = false"></div>
+        <div v-if="sidebarOpen" class="ob-overlay" role="presentation" @click="sidebarOpen = false"></div>
 
         <!-- Sidebar -->
         <aside class="ob-sidebar" :class="{ 'ob-sidebar-open': sidebarOpen }">
@@ -1226,17 +1234,6 @@ onMounted(() => {
 .dark .ob-link-tax { color: var(--g-taxonomy); background: rgba(167, 139, 250, 0.12); }
 .dark .ob-link-tax:hover { background: rgba(167, 139, 250, 0.2); }
 
-.ob-text-link {
-  font-size: 0.6875rem;
-  color: var(--vp-c-brand-1);
-  background: none;
-  border: none;
-  cursor: pointer;
-  text-decoration: none;
-}
-
-.ob-text-link:hover { text-decoration: underline; }
-
 .ob-arrow { color: var(--vp-c-text-3); font-size: 0.75rem; }
 
 /* Code */
@@ -1367,26 +1364,6 @@ onMounted(() => {
   color: var(--vp-c-text-3);
 }
 
-/* Shape block */
-.ob-shape-block {
-  border: 1px solid rgba(161, 98, 7, 0.2);
-  background: rgba(161, 98, 7, 0.03);
-  border-radius: 8px;
-  padding: 0.75rem 1rem;
-  margin-bottom: 0.75rem;
-  overflow-x: auto;
-}
-
-.dark .ob-shape-block { border-color: rgba(251, 191, 36, 0.15); background: rgba(251, 191, 36, 0.04); }
-
-.ob-shape-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  margin-bottom: 0.75rem;
-}
-
 /* Concept items */
 .ob-concept-item {
   padding: 0.75rem 0;
@@ -1417,13 +1394,6 @@ onMounted(() => {
 }
 
 /* Empty states */
-.ob-empty {
-  font-size: 0.875rem;
-  color: var(--vp-c-text-3);
-  font-style: italic;
-  padding: 1rem 0;
-}
-
 .ob-empty-state {
   display: flex;
   align-items: center;
