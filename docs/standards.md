@@ -64,5 +64,8 @@ Glossarist maintains compatibility with IEC Electropedia data format, including 
 ## Cross-references
 
 - [Concept Model documentation](/docs/model/)
+- [YAML Schema Reference](/docs/model/schemas/yaml-reference)
+- [Entity Field Reference](/docs/model/schemas/entity-fields)
+- [Ontology Browser](/docs/model/ontology)
 - [Software implementations](/docs/software/)
 - [Concept model repository](https://github.com/glossarist/concept-model)

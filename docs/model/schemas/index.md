@@ -1,9 +1,9 @@
 ---
-title: YAML Schema Reference
-description: JSON Schema definitions for Glossarist concept data — V2 and V3 YAML format, field reference, enum values, and examples
+title: YAML Schemas
+description: JSON Schema definitions for Glossarist concept data — V2 and V3 format, examples, and field reference
 ---
 
-# YAML Schema Reference
+# YAML Schemas
 
 Glossarist concept data is stored as YAML files validated against [JSON Schema](https://json-schema.org/) definitions. The canonical schemas live in the [concept-model repository](https://github.com/glossarist/concept-model/tree/main/schemas).
 
@@ -14,9 +14,12 @@ The concept model has two major schema versions:
 
 Both formats are supported by [glossarist-ruby](/docs/software/glossarist-ruby) and [glossarist-js](/docs/software/glossarist-js) for reading and writing.
 
-## JSON Schema
+## Reference
 
-<SchemaReference />
+| Section | Description |
+|---------|-------------|
+| [YAML Schema Reference](/docs/model/schemas/yaml-reference) | Interactive browser for JSON Schema definitions — properties, types, enums, and definitions for V2 and V3 |
+| [Entity Field Reference](/docs/model/schemas/entity-fields) | Field-level reference for every entity type, with types, cardinality, and allowed values |
 
 ## Examples
 
@@ -42,9 +45,3 @@ Each schema feature is demonstrated with standalone YAML examples in the concept
 
 - [V3 examples (GitHub)](https://github.com/glossarist/concept-model/tree/main/schemas/v3/examples)
 - [V2 examples (GitHub)](https://github.com/glossarist/concept-model/tree/main/schemas/v2/examples)
-
-## Ontology Entity View
-
-The tables below show each entity type's fields and all controlled vocabularies, derived from the concept model's OWL ontology.
-
-<YamlSchemas />

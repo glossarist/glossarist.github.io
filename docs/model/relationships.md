@@ -130,3 +130,5 @@ Types without a direct SKOS equivalent (`compare`, `contrast`, `see`, `deprecate
 2. **No overlap with SKOS** — Where SKOS defines a property, Glossarist reuses the exact same semantics (e.g., `broader` = `skos:broader`)
 3. **Directional** — Every relationship has a source and target; inverse pairs are separate types (`broader`/`narrower`, `supersedes`/`superseded_by`)
 4. **Typed hierarchy** — The three ISO 25964 hierarchy types (generic, partitive, instantial) are distinct because they carry different semantic meaning and affect how concept trees are rendered
+
+See the [YAML Schema Reference](/docs/model/schemas/yaml-reference) for the JSON Schema definition of the RelatedConcept entity, or the [Entity Field Reference](/docs/model/schemas/entity-fields) for field-level details.

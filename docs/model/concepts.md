@@ -11,38 +11,59 @@ description: ManagedConcept, LocalizedConcept, concept lifecycle, and multi-lang
 
 A `ManagedConcept` is the top-level concept entity in Glossarist. It represents a single concept in the terminology registry.
 
-| Field | Description |
-|-------|-------------|
-| `id` | String identifier for the concept |
-| `uuid` | UUID for the concept |
-| `status` | Normative status of the term |
-| `related` | Array of RelatedConcept |
-| `dates` | Array of ConceptDate |
-| `localized_concepts` | Hash mapping language codes to localized concept UUIDs |
-| `domains` | Array of ConceptReference — upper concepts (subject areas, concept schemes) |
-| `localizations` | Hash mapping language codes to LocalizedConcept instances |
+| Field | Type | Card. | Description |
+|-------|------|-------|-------------|
+| `identifier` | string | 1..1 | String identifier for the concept |
+| `uri` | anyURI | 0..1 | URI for the concept |
+| `status` | [conceptStatus](/docs/model/schemas/entity-fields) | 0..1 | Lifecycle status |
+| `related` | [RelatedConcept](/docs/model/schemas/entity-fields)[] | 0..* | Related concepts |
+| `dates` | [ConceptDate](/docs/model/schemas/entity-fields)[] | 0..* | Governance events |
+| `sources` | [ConceptSource](/docs/model/sources)[] | 0..* | Concept-level sources |
+| `domains` | [Reference](/docs/model/schemas/entity-fields)[] | 0..* | Subject area references |
+| `localizations` | [LocalizedConcept](#localizedconcept){} | 0..* | Per-language data (keyed by language code) |
 
 ## LocalizedConcept
 
 Localizations of the concept to different languages. Each language has its own definition, notes, examples, terms, and revision history.
 
-| Field | Description |
-|-------|-------------|
-| `id` | Optional identifier for cross-references |
-| `uuid` | UUID |
-| `designations` | Array of Designations under which the concept is known |
-| `domain` | URI reference to the subject area |
-| `related` | Per-language concept relationships |
-| `subject` | Subject of the term |
-| `definition` | Array of DetailedDefinition |
-| `non_verb_rep` | Array of non-verbal representations |
-| `notes` | Zero or more notes |
-| `examples` | Zero or more examples |
-| `language_code` | ISO-639 3-letter language code |
-| `script` | ISO 15924 4-letter script code (optional) |
-| `system` | ISO 24229 conversion system code (optional) |
-| `entry_status` | `notValid`, `valid`, `superseded`, or `retired` |
-| `classification` | `preferred`, `admitted`, or `deprecated` |
+| Field | Type | Card. | Description |
+|-------|------|-------|-------------|
+| `language` | string | 0..1 | ISO 639 3-letter language code |
+| `script` | string | 0..1 | ISO 15924 4-letter script code |
+| `system` | string | 0..1 | ISO 24229 conversion system code |
+| `designations` | [Designation](/docs/model/designations)[] | 0..* | Terms under which the concept is known |
+| `definition` | [DetailedDefinition](#detaileddefinition)[] | 0..* | Definitions |
+| `notes` | [DetailedDefinition](#detaileddefinition)[] | 0..* | Notes |
+| `examples` | [DetailedDefinition](#detaileddefinition)[] | 0..* | Examples |
+| `entry_status` | [entryStatus](/docs/model/schemas/entity-fields) | 0..1 | `notValid`, `valid`, `superseded`, or `retired` |
+| `classification` | string | 0..1 | `preferred`, `admitted`, or `deprecated` |
+| `domain` | anyURI | 0..1 | URI reference to the subject area |
+| `related` | [RelatedConcept](/docs/model/schemas/entity-fields)[] | 0..* | Per-language concept relationships |
+| `sources` | [ConceptSource](/docs/model/sources)[] | 0..* | Per-language sources |
+| `references` | [Reference](/docs/model/schemas/entity-fields)[] | 0..* | Typed references |
+| `dates` | [ConceptDate](#conceptdate)[] | 0..* | Per-language governance events |
+| `release` | string | 0..1 | Release version |
+| `review_type` | string | 0..1 | `editorial` or `substantive` |
+| `lineage_similarity` | integer | 0..1 | Lineage similarity score |
+
+## DetailedDefinition
+
+A definition, note, or example with optional per-item sources.
+
+| Field | Type | Card. | Description |
+|-------|------|-------|-------------|
+| `content` | string | 1..1 | The text content |
+| `sources` | [ConceptSource](/docs/model/sources)[] | 0..* | Per-item sources |
+
+## ConceptDate
+
+A governance event in the concept lifecycle.
+
+| Field | Type | Card. | Description |
+|-------|------|-------|-------------|
+| `date` | dateTime | 1..1 | Date and time of the event |
+| `type` | [dateType](/docs/model/schemas/entity-fields) | 1..1 | Event type (`accepted`, `amended`, `retired`, `review`, `reviewDecision`) |
+| `description` | string | 0..1 | Event description |
 
 ## Concept lifecycle
 
@@ -61,3 +82,5 @@ A single ManagedConcept can have localizations in any number of languages. Diffe
 ## ManagedConceptCollection
 
 A collection for managed concepts. Includes the Ruby `Enumerable` module. Supports loading from and saving to YAML file datasets.
+
+See the [YAML Schema Reference](/docs/model/schemas/yaml-reference) for the complete JSON Schema definitions, or the [Entity Field Reference](/docs/model/schemas/entity-fields) for all entity types with types, cardinality, and allowed values.
