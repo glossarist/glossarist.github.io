@@ -1,13 +1,13 @@
 ---
 title: Relationships
-description: Typed semantic relationship types between concepts, rendered from the Glossarist ontology
+description: Typed semantic relationship types between concepts, defined by the Glossarist concept model
 ---
 
 # Relationships
 
 Concepts in Glossarist are connected by **typed semantic relationships** — directional links that express how one concept relates to another. Every relationship has a type, a source concept, and a target concept.
 
-This page documents all relationship types organized by category, their ISO/SKOS alignment, and how to author them in YAML. The relationship definitions are rendered from the Glossarist ontology — the canonical source of truth.
+This page documents all relationship types organized by category, their ISO/SKOS alignment, and how to author them in YAML. The relationship definitions are derived from the Glossarist concept model.
 
 ## Overview
 

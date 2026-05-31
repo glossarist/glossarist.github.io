@@ -1,11 +1,11 @@
 ---
 title: Concept Model
-description: The Glossarist concept system model — a rich, standards-aligned domain model for structured terminology management
+description: The Glossarist concept model — a self-contained, technology-neutral information model for structured terminology management
 ---
 
 # The Glossarist Concept Model
 
-A rich domain model for terminology management, aligned with ISO 10241-1, 704, 30042, 12620, and 25964 — designed to handle everything from simple glossaries to complex multilingual concept systems with formal ontological grounding.
+A self-contained information model for terminology management, aligned with ISO 10241-1, 704, 30042, 12620, and 25964 — designed to handle everything from simple glossaries to complex multilingual concept systems, with interoperability across multiple technology ecosystems.
 
 <ModelLanding />
 
@@ -67,8 +67,8 @@ Every entity in the Glossarist model maps to established international standards
 | **ISO 30042 / TBX** | Terminology markup framework — data exchange format |
 | **ISO 12620** | Data category registry — term type classifications |
 | **ISO 25964** | Thesauri — hierarchical and mapping relationships (BTG/NTG, BTP/NTP, BTI/NTI) |
-| **Semantic Web (OWL 2 / SHACL)** | Formal ontology vocabulary with shape constraints for data validation |
-| **SKOS / SKOS-XL** | Knowledge organization for the semantic web — concept schemes and reified labels |
+| **OWL 2 / SHACL** | Formal model definition — the concept model is expressed as an OWL ontology with SHACL shapes for validation and Semantic Web interoperability |
+| **SKOS / SKOS-XL** | Knowledge organization — concept schemes and reified labels for linked data mapping |
 
 ## Processing with code
 

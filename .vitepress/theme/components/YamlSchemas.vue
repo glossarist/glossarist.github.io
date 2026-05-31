@@ -62,8 +62,7 @@ function toggleEntity(classId: string) {
     <!-- Entity schemas -->
     <div v-if="activeTab === 'entities'">
       <p class="ys-intro">
-        The YAML schema for each Glossarist entity type, rendered from its SHACL shape definition.
-        These shapes define the fields, types, and cardinality of every entity in a concept YAML file.
+        The YAML schema for each Glossarist entity type. The concept model is formally expressed as SHACL shapes for validation — these shapes define the fields, types, and cardinality of every entity in a concept YAML file.
       </p>
 
       <div v-for="entity in entitySchemas" :key="entity.classId" class="ys-entity">
@@ -138,7 +137,7 @@ function toggleEntity(classId: string) {
     <!-- Enumerations -->
     <div v-if="activeTab === 'enums'">
       <p class="ys-intro">
-        All enumerated value sets in the Glossarist model, rendered from the SKOS ConceptSchemes in the ontology.
+        All enumerated value sets in the Glossarist concept model. These are also available as SKOS ConceptSchemes in the ontology.
         These define the valid values for fields like <code>status</code>, <code>type</code>, and <code>normative_status</code>.
       </p>
 

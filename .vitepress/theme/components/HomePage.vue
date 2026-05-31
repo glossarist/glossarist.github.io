@@ -139,7 +139,7 @@ onUnmounted(() => {
         </div>
         <div class="hero-tagline">
           Build multilingual concept systems with ISO-standard rigor.
-          One concept, many language designations, typed relationships, and semantic web export.
+          One concept, many language designations, typed relationships, and multi-format export.
         </div>
         <div class="hero-actions">
           <a href="/docs/model/" class="btn btn-primary">
@@ -181,7 +181,7 @@ onUnmounted(() => {
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
           </div>
           <h4>1. Model</h4>
-          <p>Define your concept system using the rich Glossarist domain model — {{ st.classes }} ontology classes, {{ st.relationships }} relationship types, {{ st.designations }} designation types, SHACL validation shapes.</p>
+          <p>Define your concept system using the rich Glossarist domain model — {{ st.classes }} entity types, {{ st.relationships }} relationship types, {{ st.designations }} designation types, validation shapes.</p>
           <a href="/docs/model/" class="pipeline-link">Concept Model &rarr;</a>
         </div>
         <div class="pipeline-connector">
@@ -310,13 +310,13 @@ onUnmounted(() => {
         <div class="model-card mc-onto">
           <div class="model-card-header">
             <span class="model-dot md-onto"></span>
-            <h3>Semantic Web & Linked Data</h3>
+            <h3>Formal Ontology</h3>
           </div>
-          <p class="model-card-desc">Formal ontology with SHACL shapes for validation. Aligned with SKOS, SKOS-XL, ISO 25964, PROV-O, and Dublin Core — ready for the linked data ecosystem.</p>
+          <p class="model-card-desc">The concept model is formally expressed as an OWL ontology with SHACL validation shapes. Interoperates with SKOS, SKOS-XL, ISO 25964, PROV-O, and Dublin Core for linked data integration.</p>
           <div class="model-card-fields">
-            <div class="field-row"><code>{{ st.classes }}</code><span>Ontology classes</span></div>
+            <div class="field-row"><code>{{ st.classes }}</code><span>Entity types</span></div>
             <div class="field-row"><code>{{ st.properties }}</code><span>Object &amp; datatype properties</span></div>
-            <div class="field-row"><code>{{ st.shapes }}</code><span>SHACL validation shapes</span></div>
+            <div class="field-row"><code>{{ st.shapes }}</code><span>Validation shapes</span></div>
           </div>
           <a href="/ontology" class="model-card-link">Browse ontology &rarr;</a>
         </div>

@@ -110,8 +110,9 @@ Glossarist is used in production by standards bodies including [ISO/TC 211 Geole
 1. **Adopt Glossarist** — Read the [Adoption Guide](/docs/adopt/)
 2. **Try the Desktop App** — [Download](/docs/software/desktop) and get started
 3. **Explore the Model** — Read the [Concept Model docs](/docs/model/)
-4. **Browse the Ontology** — Explore the [interactive ontology browser](/ontology)
-5. **View on GitHub** — Browse the [source code](https://github.com/glossarist)
+4. **Explore the Model** — Read the [Concept Model docs](/docs/model/)
+5. **Browse the Ontology** — Explore the [interactive OWL ontology browser](/ontology)
+6. **View on GitHub** — Browse the [source code](https://github.com/glossarist)
 
 ---
 
