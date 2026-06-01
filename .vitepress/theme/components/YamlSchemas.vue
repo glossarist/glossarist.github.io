@@ -65,6 +65,18 @@ onMounted(() => { if (loaded.value) handleHash() })
 </script>
 
 <template>
+  <FullscreenToolLayout
+    title="Entity Field Reference"
+    description="Per-entity field reference with types, cardinality, allowed values, and YAML examples — derived from SHACL validation shapes and SKOS taxonomies."
+  >
+    <template #nav>
+      <a href="/reference/">&larr; Reference</a>
+      <span>·</span>
+      <a href="/reference/schema-browser">Schema Browser</a>
+      <span>·</span>
+      <a href="/reference/ontology">Ontology Browser</a>
+    </template>
+
   <div class="ys" v-if="loaded">
     <!-- Tab switcher -->
     <div class="ys-tabs" role="tablist">
@@ -175,10 +187,11 @@ onMounted(() => { if (loaded.value) handleHash() })
     <div class="ys-spinner"></div>
     <span>Loading schema data&hellip;</span>
   </div>
+  </FullscreenToolLayout>
 </template>
 
 <style scoped>
-.ys { margin: 1.5rem 0; }
+.ys { padding: 1.5rem 1.5rem 0; }
 
 .ys-loading {
   display: flex;

@@ -12,6 +12,7 @@ import YamlSchemas from './components/YamlSchemas.vue'
 import SchemaReference from './components/SchemaReference.vue'
 import ModelLanding from './components/ModelLanding.vue'
 import LogoMerge from './components/LogoMerge.vue'
+import FullscreenToolLayout from './components/FullscreenToolLayout.vue'
 
 const CustomLayout = defineComponent({
   setup() {
@@ -45,5 +46,6 @@ export default {
     app.component('SchemaReference', SchemaReference)
     app.component('ModelLanding', ModelLanding)
     app.component('LogoMerge', LogoMerge)
+    app.component('FullscreenToolLayout', FullscreenToolLayout)
   }
 }

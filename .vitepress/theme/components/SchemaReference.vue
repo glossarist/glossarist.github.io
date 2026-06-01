@@ -128,6 +128,18 @@ function exampleGroups() {
 </script>
 
 <template>
+  <FullscreenToolLayout
+    title="YAML Schema Reference"
+    description="Browse the JSON Schema definitions for Glossarist concept data. Select a version and schema to see properties, types, enum values, and expandable definitions."
+  >
+    <template #nav>
+      <a href="/reference/">&larr; Reference</a>
+      <span>·</span>
+      <a href="/reference/entity-fields">Entity Fields</a>
+      <span>·</span>
+      <a href="/reference/ontology">Ontology Browser</a>
+    </template>
+
   <div class="sb">
     <!-- Top bar: version switcher + view toggle -->
     <div class="sb-bar">
@@ -276,11 +288,12 @@ function exampleGroups() {
       </main>
     </div>
   </div>
+  </FullscreenToolLayout>
 </template>
 
 <style scoped>
 /* ─── Layout shell ─── */
-.sb { margin: 1.5rem 0; }
+.sb { }
 
 /* ─── Top bar ─── */
 .sb-bar {

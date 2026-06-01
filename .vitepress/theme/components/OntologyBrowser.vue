@@ -269,7 +269,19 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="ob">
+  <FullscreenToolLayout
+    title="Ontology Browser"
+    description="Explore the OWL ontology, SHACL validation shapes, and SKOS concept schemes with full hierarchical navigation and search."
+  >
+    <template #nav>
+      <a href="/reference/">&larr; Reference</a>
+      <span>·</span>
+      <a href="/reference/schema-browser">Schema Browser</a>
+      <span>·</span>
+      <a href="/reference/entity-fields">Entity Fields</a>
+    </template>
+
+    <div class="ob">
     <div v-if="!loaded" class="ob-loading">
       <div class="ob-spinner"></div>
       <span>Loading ontology data&hellip;</span>
@@ -761,6 +773,7 @@ onUnmounted(() => {
       </div>
     </template>
   </div>
+  </FullscreenToolLayout>
 </template>
 
 <style scoped>
@@ -768,7 +781,7 @@ onUnmounted(() => {
    ONTOLOGY BROWSER — LAYOUT
    ================================================================ */
 
-.ob { font-size: 0.875rem; max-width: 90rem; margin: 0 auto; }
+.ob { font-size: 0.875rem; }
 
 .ob-loading {
   display: flex;
