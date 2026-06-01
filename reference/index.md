@@ -1,7 +1,6 @@
 ---
 title: Reference
 description: Interactive reference tools for exploring the Glossarist concept model
-layout: page
 ---
 
 # Reference

@@ -269,19 +269,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <FullscreenToolLayout
-    title="Ontology Browser"
-    description="Explore the OWL ontology, SHACL validation shapes, and SKOS concept schemes with full hierarchical navigation and search."
-  >
-    <template #nav>
-      <a href="/reference/">&larr; Reference</a>
-      <span>·</span>
-      <a href="/reference/schema-browser">Schema Browser</a>
-      <span>·</span>
-      <a href="/reference/entity-fields">Entity Fields</a>
-    </template>
-
-    <div class="ob">
+  <div class="ob">
     <div v-if="!loaded" class="ob-loading">
       <div class="ob-spinner"></div>
       <span>Loading ontology data&hellip;</span>
@@ -773,7 +761,6 @@ onUnmounted(() => {
       </div>
     </template>
   </div>
-  </FullscreenToolLayout>
 </template>
 
 <style scoped>
@@ -781,7 +768,7 @@ onUnmounted(() => {
    ONTOLOGY BROWSER — LAYOUT
    ================================================================ */
 
-.ob { font-size: 0.875rem; }
+.ob { font-size: 0.875rem; max-width: 90rem; margin: 0 auto; padding: 0 1.5rem; }
 
 .ob-loading {
   display: flex;
@@ -808,7 +795,7 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   gap: 1rem;
-  padding: 0.75rem 1.5rem;
+  padding: 0.75rem 0;
   border-bottom: 1px solid var(--vp-c-divider);
   background: var(--vp-c-bg);
   position: sticky;
@@ -1589,6 +1576,7 @@ onUnmounted(() => {
   .ob-stat-cards { grid-template-columns: repeat(2, 1fr); }
   .ob-stat-pills { display: none; }
   .ob-main { padding: 1rem; }
-  .ob-topbar { padding: 0.5rem 1rem; }
+  .ob { padding: 0 1rem; }
+  .ob-topbar { padding: 0.5rem 0; }
 }
 </style>
