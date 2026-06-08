@@ -32,7 +32,7 @@ Each schema feature is demonstrated with standalone YAML examples in the concept
 | 03 | Pronunciation | IPA, Hepburn romanization, script cascade |
 | 04 | Definition, notes, examples | DetailedDefinition with per-item sources |
 | 05 | Domains | Classification and subject area references |
-| 06 | Relationships | All 32 typed semantic relationship types |
+| 06 | Relationships | All 52 typed semantic relationship types |
 | 07 | Sources & citations | All 10 source statuses, locality, custom locality |
 | 08 | Multi-language | Four scripts (Latn, Arab, Hani, Cyrl) in one concept |
 | 09 | Non-verbal representations | Images, tables, formulas |
@@ -42,6 +42,8 @@ Each schema feature is demonstrated with standalone YAML examples in the concept
 | 13 | Superseded & deprecated | Full deprecation lifecycle |
 | 14 | Term types | All 34 ISO 12620 term type values |
 | 15 | Citation features | Locality ranges, custom locality, links |
+| 16 | Tags | Organizational metadata vs terminological domains |
+| 17 | Dataset register | URN resolution, cross-dataset supersession |
 
 - [V3 examples (GitHub)](https://github.com/glossarist/concept-model/tree/main/schemas/v3/examples)
 - [V2 examples (GitHub)](https://github.com/glossarist/concept-model/tree/main/schemas/v2/examples)

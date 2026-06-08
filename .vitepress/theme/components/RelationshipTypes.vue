@@ -4,33 +4,70 @@ import type { TaxonomyConcept } from '../../data/types'
 import { useOntologyData } from '../../data/useOntologyData'
 
 const categories: { key: string; label: string; types: string[] }[] = [
-  { key: 'generic', label: 'Hierarchical — Generic (BTG/NTG)', types: ['broader', 'narrower', 'broader_generic', 'narrower_generic'] },
-  { key: 'partitive', label: 'Hierarchical — Partitive (BTP/NTP)', types: ['broader_partitive', 'narrower_partitive'] },
-  { key: 'instantial', label: 'Hierarchical — Instantial (BTI/NTI)', types: ['broader_instantial', 'narrower_instantial'] },
-  { key: 'associative', label: 'Associative', types: ['see', 'related_concept', 'related_concept_broader', 'related_concept_narrower', 'compare', 'contrast'] },
-  { key: 'equivalence', label: 'Equivalence and Mapping', types: ['equivalent', 'exact_match', 'close_match', 'broad_match', 'narrow_match', 'related_match'] },
-  { key: 'spatiotemporal', label: 'Spatiotemporal', types: ['sequentially_related_concept', 'spatially_related_concept', 'temporally_related_concept'] },
-  { key: 'lifecycle', label: 'Lifecycle', types: ['deprecates', 'supersedes', 'superseded_by'] },
-  { key: 'lexical', label: 'Lexical and Designation-level', types: ['homograph', 'false_friend', 'abbreviated_form_for', 'short_form_for'] },
+  { key: 'hierarchical', label: 'Hierarchical — Generic (SKOS)', types: ['broader', 'narrower', 'broader_generic', 'narrower_generic'] },
+  { key: 'partitive', label: 'Hierarchical — Partitive (ISO 25964 / ISO 19135)', types: ['broader_partitive', 'narrower_partitive', 'has_part', 'is_part_of'] },
+  { key: 'instantial', label: 'Hierarchical — Instantial (ISO 25964 / ISO 19135)', types: ['broader_instantial', 'narrower_instantial', 'instance_of', 'has_instance'] },
+  { key: 'register', label: 'Register Management (ISO 19135)', types: ['has_concept', 'is_concept_of', 'inherits', 'inherited_by'] },
+  { key: 'mapping', label: 'Equivalence and Mapping (SKOS)', types: ['equivalent', 'exact_match', 'close_match', 'broad_match', 'narrow_match', 'related_match'] },
+  { key: 'associative', label: 'Associative (ISO 10241-1 / ISO 25964)', types: ['see', 'related_concept', 'related_concept_broader', 'related_concept_narrower', 'references'] },
+  { key: 'lifecycle', label: 'Lifecycle (ISO 10241-1 / ISO 19135)', types: ['supersedes', 'superseded_by', 'deprecates', 'deprecated_by', 'replaces', 'replaced_by', 'invalidates', 'invalidated_by', 'retires', 'retired_by'] },
+  { key: 'comparative', label: 'Comparative (ISO 10241-1)', types: ['compare', 'contrast'] },
+  { key: 'versioning', label: 'Versioning and Definitional (ISO 19135)', types: ['has_definition', 'definition_of', 'has_version', 'version_of', 'current_version', 'current_version_of'] },
+  { key: 'spatiotemporal', label: 'Spatiotemporal (ISO 25964 / TBX)', types: ['sequentially_related', 'spatially_related', 'temporally_related'] },
+  { key: 'lexical', label: 'Lexical (ISO 12620 / TBX)', types: ['homograph', 'false_friend'] },
+  { key: 'designation', label: 'Designation-level (ISO 10241-1)', types: ['abbreviated_form_for', 'short_form_for'] },
 ]
 
 const inverses: Record<string, string> = {
+  // Generic hierarchical
   broader: 'narrower',
   narrower: 'broader',
   broader_generic: 'narrower_generic',
   narrower_generic: 'broader_generic',
+  // Partitive
   broader_partitive: 'narrower_partitive',
   narrower_partitive: 'broader_partitive',
+  has_part: 'is_part_of',
+  is_part_of: 'has_part',
+  // Instantial
   broader_instantial: 'narrower_instantial',
   narrower_instantial: 'broader_instantial',
+  instance_of: 'has_instance',
+  has_instance: 'instance_of',
+  // Register management
+  has_concept: 'is_concept_of',
+  is_concept_of: 'has_concept',
+  inherits: 'inherited_by',
+  inherited_by: 'inherits',
+  has_definition: 'definition_of',
+  definition_of: 'has_definition',
+  // Versioning
+  has_version: 'version_of',
+  version_of: 'has_version',
+  current_version: 'current_version_of',
+  current_version_of: 'current_version',
+  // Lifecycle
   supersedes: 'superseded_by',
   superseded_by: 'supersedes',
+  deprecates: 'deprecated_by',
+  deprecated_by: 'deprecates',
+  replaces: 'replaced_by',
+  replaced_by: 'replaces',
+  invalidates: 'invalidated_by',
+  invalidated_by: 'invalidates',
+  retires: 'retired_by',
+  retired_by: 'retires',
+  // Mapping
   broad_match: 'narrow_match',
   narrow_match: 'broad_match',
+  // Symmetric (self-inverse)
   exact_match: 'exact_match',
   close_match: 'close_match',
   related_match: 'related_match',
   equivalent: 'equivalent',
+  compare: 'compare',
+  contrast: 'contrast',
+  related_concept: 'related_concept',
 }
 
 const { taxonomies, loaded } = useOntologyData()

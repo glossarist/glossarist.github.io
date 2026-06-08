@@ -34,6 +34,7 @@ Localizations of the concept to different languages. Each language has its own d
 | `designations` | [Designation](/docs/model/designations)[] | 0..* | Terms under which the concept is known |
 | `definition` | [DetailedDefinition](#detaileddefinition)[] | 0..* | Definitions |
 | `notes` | [DetailedDefinition](#detaileddefinition)[] | 0..* | Notes |
+| `annotations` | [DetailedDefinition](#detaileddefinition)[] | 0..* | Editorial annotations (distinct from notes) |
 | `examples` | [DetailedDefinition](#detaileddefinition)[] | 0..* | Examples |
 | `entry_status` | [entryStatus](/reference/entity-fields) | 0..1 | `notValid`, `valid`, `superseded`, or `retired` |
 | `classification` | string | 0..1 | `preferred`, `admitted`, or `deprecated` |
