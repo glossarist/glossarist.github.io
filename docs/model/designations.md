@@ -30,7 +30,7 @@ Every designation type inherits these fields from the `Designation` base:
 | `designation` | string | 1..1 | — | The term text or symbol |
 | `normative_status` | [normativeStatus](/reference/entity-fields) | 0..1 | — | `preferred`, `admitted`, `deprecated`, or `superseded` |
 | `term_type` | [termType](/docs/model/term-types) | 0..1 | ISO 12620 | Classification of the designation's term type |
-| `related` | [RelatedConcept](/reference/entity-fields)[] | 0..* | — | Designation-level concept relationships |
+| `related` | [DesignationRelationship](#designation-relationships)[] | 0..* | ISO 10241-1 | Designation-level relationships (e.g. abbreviated_form_for) |
 | `sources` | [ConceptSource](/docs/model/sources)[] | 0..* | ISO 10241-1 §6.8 | Bibliographic sources |
 | `pronunciation` | [Pronunciation](#pronunciation)[] | 0..* | — | Pronunciation entries |
 | `language` | string | 0..1 | ISO 639 | Language of this designation |
@@ -93,5 +93,31 @@ Each GrammarInfo entry has:
 | `gender` | [gender](/reference/entity-fields) | 0..* | Grammatical gender |
 | `number` | [number](/reference/entity-fields) | 0..* | Grammatical number |
 | `part_of_speech` | string | 0..1 | Part of speech |
+
+## Designation Relationships
+
+Designation-level relationships link designations of the **same concept** to each other (e.g. an abbreviation to its full form). They are distinct from concept-level [RelatedConcept](/reference/entity-fields#entity-RelatedConcept) links, which connect entire concepts by identifier.
+
+| Field | Type | Card. | Description |
+|-------|------|-------|-------------|
+| `type` | string (enum) | 1..1 | `abbreviated_form_for` or `short_form_for` |
+| `content` | string | 0..1 | Text describing the relationship |
+| `target` | string | 0..1 | The target designation text |
+
+### Example
+
+```yaml
+terms:
+  - type: expression
+    designation: Light Emitting Diode
+    normative_status: preferred
+  - type: abbreviation
+    designation: LED
+    normative_status: admitted
+    acronym: true
+    related:
+      - type: abbreviated_form_for
+        target: Light Emitting Diode
+```
 
 See the [YAML Schema Reference](/reference/schema-browser) for the complete JSON Schema definitions, the [Entity Field Reference](/reference/entity-fields) for all entity types, and the [Standards compliance reference](/docs/standards) for ISO standard mappings.

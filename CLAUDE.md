@@ -29,8 +29,11 @@ Uses **npm** with `"type": "module"`.
 │       ├── BlogIndex.vue      # Blog listing with cards
 │       ├── BlogByline.vue     # Author/date display for blog posts
 │       └── ReleaseDownloader.vue  # GitHub release fetcher with OS detection
+│       └── RelationshipTypes.vue  # 52 relationship types browser (categories, inverses, taxonomy data)
 ├── data/
-│   └── projects.ts        # Software project data (name, version, description, links)
+│   ├── projects.ts        # Software project data (name, version, description, links)
+│   ├── types.ts            # TypeScript types for taxonomy concepts
+│   └── useOntologyData.ts  # Composable loading taxonomies.json into Vue reactive state
 └── posts.data.ts          # Blog content loader (createContentLoader)
 ```
 
@@ -55,6 +58,7 @@ Configured per-section in `config.ts`. Each docs section has its own sidebar. Th
 - `ReleaseDownloader` — Client-side fetch of latest GitHub release via REST API, with localStorage caching (1h TTL) and OS detection from `navigator.userAgent`
 - `HomePage` — Hero section, software cards grid (driven by `projects.ts`), "used by" section, features grid
 - `BlogIndex` / `BlogByline` — Blog listing and post bylines, driven by `posts.data.ts`
+- `RelationshipTypes` — 52 relationship types browser with categories, inverse pairs, and alphabetical reference. Reads from `public/data/taxonomies.json` via `useOntologyData` composable.
 
 ### Styling
 
