@@ -13,8 +13,8 @@ export const projects: Project[] = [
   {
     name: 'glossarist-ruby',
     slug: 'glossarist-ruby',
-    version: 'v2.8.1',
-    description: 'Ruby gem implementing the Glossarist concept model. Read, write, validate, and manage terminology concepts with multi-language YAML serialization, GCR packages, and TBX/SKOS/Turtle export.',
+    version: 'v2.9.1',
+    description: 'Ruby gem implementing the Glossarist concept model. Read, write, validate, and manage terminology concepts with multi-language YAML serialization, GCR packages, dataset-aware sections, non-verbal entities, and TBX/SKOS/Turtle export with SHACL validation.',
     github: 'https://github.com/glossarist/glossarist-ruby',
     featured: true,
     category: 'Core'
@@ -22,8 +22,8 @@ export const projects: Project[] = [
   {
     name: 'glossarist-js',
     slug: 'glossarist-js',
-    version: 'v0.2.1',
-    description: 'JavaScript SDK for Glossarist GCR packages. Read, write, validate, and manage terminology concepts with bidirectional YAML serialization and cross-reference resolution.',
+    version: 'v0.4.5',
+    description: 'JavaScript SDK for Glossarist GCR packages. Read, write, validate, and manage terminology concepts with bidirectional YAML serialization, cross-reference resolution, RDF serializers (Turtle/N-Triples/JSON-LD), and SHACL validation.',
     github: 'https://github.com/glossarist/glossarist-js',
     featured: true,
     category: 'Core'
@@ -40,8 +40,8 @@ export const projects: Project[] = [
   {
     name: 'concept-browser',
     slug: 'concept-browser',
-    version: '',
-    description: 'Interactive browser for terminology datasets. Multi-dataset, multilingual concept browsing with history timeline, cross-reference graph, and math rendering.',
+    version: 'v0.7.58',
+    description: 'Interactive browser for terminology datasets. Multi-dataset, multilingual concept browsing with 3D relation sphere, edition series, dataset groups, sections tree, math rendering, and per-concept RDF/SHACL outputs.',
     github: 'https://github.com/glossarist/concept-browser',
     featured: true,
     category: 'Core'

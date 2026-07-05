@@ -98,6 +98,8 @@ Each GrammarInfo entry has:
 
 Designation-level relationships link designations of the **same concept** to each other (e.g. an abbreviation to its full form). They are distinct from concept-level [RelatedConcept](/reference/entity-fields#entity-RelatedConcept) links, which connect entire concepts by identifier.
 
+In the v3.1 ontology, designation relationships are modeled as a first-class `gloss:DesignationRelationship` class (linked from `gloss:Designation` via `gloss:hasDesignationRelationship`). This MECE separation from concept-level `gloss:hasRelatedConcept` keeps designation-level semantics — abbreviated_form_for, short_form_for, etc. — cleanly distinct from concept-level relationships like broader/narrower/equivalent.
+
 | Field | Type | Card. | Description |
 |-------|------|-------|-------------|
 | `type` | string (enum) | 1..1 | `abbreviated_form_for` or `short_form_for` |

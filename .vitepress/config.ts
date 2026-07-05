@@ -43,6 +43,8 @@ export default defineConfig({
           { text: 'Designations', link: '/docs/model/designations' },
           { text: 'Relationships', link: '/docs/model/relationships' },
           { text: 'Sources', link: '/docs/model/sources' },
+          { text: 'Datasets & Sections', link: '/docs/model/datasets' },
+          { text: 'Non-verbal Entities', link: '/docs/model/non-verbal' },
           { text: 'Term Types', link: '/docs/model/term-types' },
           { text: 'Standards', link: '/docs/standards' },
         ]
@@ -122,6 +124,8 @@ export default defineConfig({
             { text: 'Designations', link: '/docs/model/designations' },
             { text: 'Relationships', link: '/docs/model/relationships' },
             { text: 'Sources', link: '/docs/model/sources' },
+            { text: 'Datasets & Sections', link: '/docs/model/datasets' },
+            { text: 'Non-verbal Entities', link: '/docs/model/non-verbal' },
             { text: 'Term Types', link: '/docs/model/term-types' },
           ]
         },
