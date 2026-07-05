@@ -1,27 +1,55 @@
 ---
 title: Concept Browser
-description: Interactive browser for terminology datasets with multi-dataset, multilingual concept browsing
+description: Statically deployable SPA for browsing terminology datasets with multi-dataset, multilingual concept browsing, 3D relation sphere, edition series, and per-concept RDF outputs
 ---
 
 # Concept Browser
 
-A statically deployable single-page application for browsing ISO/IEC terminology datasets. Add new datasets with zero code changes — just edit `datasets.yml`. See the [concept model docs](/docs/model/) for the data model it renders.
+A statically deployable single-page application for browsing terminology datasets. Built with Vue 3, TypeScript, and Tailwind CSS. Add new datasets with **zero code changes** — just configure `site-config.yml`.
 
-**Live site:** [geolexica.org](https://www.geolexica.org)
+**Current version:** v0.7.58. See the [v3.1 release announcement](/blog/2026-07-05-concept-model-v3.1) for what's new across the ecosystem.
+
+**Live sites:**
+
+- [GeoLexica](https://www.geolexica.org) — IEC Electropedia + ISO/TC 211 + more
+- [VIML](https://www.oimlsmart.org/vocab/) — OIML International Vocabulary of Legal Metrology
+- [OIML Terms](https://metanorma.github.io/oiml-terms/) — OIML G 18 terminology
 
 ## Features
 
 - **Multi-dataset browsing** — Concepts from multiple terminology registers in one place
-- **Full multilingual support** — Definitions, notes, and examples in all available languages
+- **Full multilingual support** — Definitions, notes, and examples in all available languages with i18n UI
 - **Concept history timeline** — Review dates, decisions, and change notes per language
+- **3D relation sphere** — Interactive sphere visualization of a concept's neighborhood using d3 force simulation, with per-relationship-type colors and degree filtering
+- **Edition series** — Sidebar timeline for vocabulary edition groups (e.g. VIML 1968/2000/2013/2022) with current-edition markers and supersession chain navigation
 - **Cross-reference graph** — D3 force-directed graph showing concept relationships with dataset filtering
-- **Math rendering** — KaTeX rendering for AsciiMath notation in definitions
-- **Responsive design** — Mobile-first layout with integrated navigation
+- **Dataset groups** — Organize datasets into lineage series, topic bundles, publication families, or curated collections; each group kind has distinct sidebar rendering
+- **Per-dataset color theming** — `{ light, dark }` color pairs per dataset, plus per-relationship-type colors configurable via `site-config.yml`
+- **RDF / SHACL outputs** — Every concept emits SHACL-conformant Turtle + JSON-LD; dataset-level `dcat:Dataset`, group-level `dcat:DatasetSeries`/`dcat:Catalog`, vocabulary SKOS ConceptSchemes, bibliography `dcterms:BibliographicResource`, build provenance `prov:Activity`
+- **Rich sidebar provenance** — Publication reference, owner, status, concept/language counts, and a sections tree derived from the manifest
+- **Sections tree** — Hierarchical navigation mirroring the dataset's `register.yaml` sections, with transitive membership
+- **Math rendering** — KaTeX rendering for AsciiMath notation in definitions (`stem:[...]`)
+- **Responsive design** — Mobile-first layout with light/dark mode
 - **Static deployment** — No server required. Deploy to any static host
 
-## Quick Start
+## Quick Start (deployment repo)
+
+A deployment repo provides a `site-config.yml`, dataset source files, and content pages. The concept-browser is installed as an npm package.
 
 ```bash
+# In your deployment repo:
+npm install --ignore-scripts @glossarist/concept-browser
+npm install --prefix node_modules/@glossarist/concept-browser sharp 2>/dev/null || true
+npx concept-browser build
+```
+
+The CLI reads `site-config.yml` from the working directory, fetches/generates data, and builds the SPA into `dist/`.
+
+## Quick Start (development)
+
+```bash
+git clone https://github.com/glossarist/concept-browser.git
+cd concept-browser
 npm install
 npm run dev
 # Open http://localhost:5173
@@ -29,58 +57,149 @@ npm run dev
 
 The dev server serves pre-built data from `public/data/`. If no data is present yet, run the data pipeline first.
 
+## CLI Reference
+
+```
+concept-browser <command> [options]
+
+Commands:
+  fetch      Fetch/update datasets (from GCR packages, local paths, or source repos)
+  generate   Convert harmonized YAML concepts to JSON-LD static files + RDF artifacts
+  edges      Build cross-reference edges from generated concept data
+  build      Full pipeline: fetch + generate + edges + vite build
+  site       Same as build (alias)
+  doctor     Run diagnostic checks (node version, deps, shapes, data integrity)
+  normalize  NFC-normalize YAML concept files in-place
+
+Options:
+  --site <id>  Site config ID (looks for site-config.yml in CWD)
+
+Environment:
+  SITE_CONFIG    Site config file path (highest priority)
+  SITE_ID        Site config ID (same as --site)
+  GITHUB_TOKEN   GitHub token for private repos
+```
+
 ## Data Pipeline
 
 ```
-datasets.yml
-  └─> scripts/fetch-datasets.mjs   (clone + harmonize)
+site-config.yml
+  └─> scripts/fetch-datasets.mjs       (fetch from GCR, localPath, or sourceRepo)
       └─> .datasets/{id}/concepts/*.yaml
-          └─> scripts/generate-data.mjs  (YAML → JSON-LD)
+          └─> scripts/generate-data.mjs (YAML → JSON-LD + RDF artifacts)
               └─> public/data/{id}/
-                  ├── manifest.json
-                  ├── index.json
-                  ├── edges.json
-                  └── concepts/*.json
+                  ├── manifest.json      Dataset metadata (ref, owner, stats)
+                  ├── index.json         Concept listing (chunked for large sets)
+                  ├── edges.json         Pre-computed cross-reference + domain edges
+                  ├── domain-nodes.json  Domain classification nodes
+                  ├── {register}.ttl     Dataset-level RDF (dcat:Dataset + skos:ConceptScheme + sections)
+                  ├── bib.ttl            Bibliography graph (dcterms:BibliographicResource)
+                  └── concepts/*.json    Individual concept documents
+              └─> public/data/_vocab.ttl    Vocabulary graph (SKOS ConceptSchemes)
+              └─> public/data/activity/    Build provenance (prov:Activity per build)
+              └─> public/data/agents.ttl   Contributor records (foaf:Person)
+              └─> public/data/versions.ttl Version chain (prov:Entity)
+          └─> scripts/build-edges.js    (extract graph + domain edges)
 ```
 
-### Full pipeline
+## Configuration: `site-config.yml`
 
-```bash
-# 1. Fetch source repos and harmonize concepts
-npm run fetch-datasets
-
-# 2. Generate static JSON-LD data files
-npm run generate-data
-
-# 3. Pre-compute cross-reference edges
-node scripts/build-edges.js
-
-# 4. Build the SPA
-npm run build
-```
-
-Or use the single-command pipeline:
-
-```bash
-npm run build:full
-```
-
-## Configuration: `datasets.yml`
-
-All dataset configuration lives in a single file. Adding a new dataset requires **zero code changes** — just add an entry:
+All configuration lives in a single file. The CLI reads it from the current working directory.
 
 ```yaml
+id: viml                                # Site identifier
+domain: viml.oiml.info                  # Primary domain
+basePath: /oiml-viml/                   # URL subpath for GitHub Pages deployment
+title: VIML                             # Site title
+subtitle: International Vocabulary...   # Short description
+description: Terminology from...        # Longer description
+
+uiLanguages:                            # Available UI languages
+  - eng
+  - fra
+
 datasets:
-  - id: my-dataset
-    sourceRepo: https://github.com/org/repo
-    title: "My Glossary"
-    description: "Description of dataset"
-    owner: My Organization
-    color: "#6366f1"
-    tags: [tag1, tag2]
-    languageOrder: [eng, fra, deu, spa]
+  - id: vim-2022
+    sourceRepo: https://github.com/...
+    ref: "OIML V 1:2022"
+    owner: OIML
+    color: { light: "#6366f1", dark: "#818cf8" }
+    languageOrder: [eng, fra, rus]
+    tags: [metrology]
+
+groups:
+  - id: vim-editions
+    kind: lineage                       # lineage | topic | publisher | curated
+    members: [vim-1993, vim-2007, vim-2012, vim-2022]
+    title: "VIM Edition Series"
+
+relationTypeColors:
+  broader:        { light: "#3b82f6", dark: "#60a5fa" }
+  narrower:       { light: "#ef4444", dark: "#f87171" }
+  exact_match:    { light: "#10b981", dark: "#34d399" }
 ```
+
+Adding a new dataset requires **zero code changes** — just add an entry and rebuild.
+
+## Dataset groups
+
+Four group kinds cover the common organizational patterns:
+
+| Kind | Description | Example |
+|------|-------------|---------|
+| `lineage` | Edition series — same vocabulary across publication years | VIM 1968/2000/2013/2022 |
+| `topic` | Topical bundles — different vocabularies covering one domain | All metrology datasets |
+| `publisher` | Publication families — everything by one owner | All OIML publications |
+| `curated` | Curated collections — hand-picked concepts from many sources | "Foundational concepts" |
+
+Each kind has distinct sidebar rendering: lineage shows a timeline with current-edition markers; topic bundles render as colored cards; publisher families show counts and badges; curated collections show curator attribution.
+
+## Relation sphere
+
+The 3D **relation sphere** visualizes a concept's neighborhood as an interactive force-directed sphere. Each surrounding node is a directly related concept, color-coded by relationship type. A degree filter lets users collapse the sphere to specific relationship categories (e.g. show only broader/narrower, or only cross-vocabulary matches).
+
+This is built on d3-force-3d and is fully static — no WebGL backend or server required.
+
+## Edition series & cross-dataset navigation
+
+For vocabularies with multiple editions (VIM, VIML, ISO/IEC directories), concepts declare `supersedes` relationships to their predecessors using `ref.source` URNs. The concept-browser resolves these at build time into a supersession chain, surfacing both forward ("supersedes") and derived inverse ("superseded by") links in the UI.
+
+See [Relationships → Cross-dataset navigation](/docs/model/relationships#cross-dataset-navigation) for the data side.
+
+## RDF & SHACL outputs
+
+Every concept emits SHACL-conformant Turtle + JSON-LD. Dataset-level artifacts include:
+
+| Artifact | RDF type | Content |
+|---|---|---|
+| `{register}.ttl` | `dcat:Dataset` + `skos:ConceptScheme` | Dataset metadata + sections tree |
+| `bib.ttl` | `dcterms:BibliographicResource` | Bibliography graph |
+| `_vocab.ttl` | `skos:ConceptScheme` collection | Cross-dataset vocabulary graph |
+| `activity/*.ttl` | `prov:Activity` | Build provenance per build |
+| `agents.ttl` | `foaf:Person` / `prov:SoftwareAgent` | Contributor records |
+| `versions.ttl` | `prov:Entity` | Version chain |
+
+The build pipeline runs the canonical SHACL shapes from the [concept-model](https://github.com/glossarist/concept-model) against every concept before serialization.
+
+## Architecture
+
+The codebase is organized around an Open-Closed Principle (OCP) **group registry** and **renderer registry**:
+
+- Adding a new dataset group kind = registering a renderer, not editing a switch statement
+- Adding a new RDF emitter = registering a serializer, not modifying the build pipeline
+- Adding a new relationship-type color = editing `site-config.yml`, not touching code
+
+This keeps the build pipeline stable as new dataset shapes and group kinds are added. See [`CLAUDE.md`](https://github.com/glossarist/concept-browser/blob/main/CLAUDE.md) for the full architectural overview.
 
 ## Links
 
 - [GitHub](https://github.com/glossarist/concept-browser)
+- [Live: GeoLexica](https://www.geolexica.org)
+- [Live: VIML](https://www.oimlsmart.org/vocab/)
+
+## See Also
+
+- [Concept Model docs](/docs/model/) — the data model the browser renders
+- [Datasets & sections](/docs/model/datasets) — `register.yaml` and section trees
+- [Non-verbal entities](/docs/model/non-verbal) — figures, tables, formulas in the browser
+- [Relationships](/docs/model/relationships) — cross-dataset navigation
