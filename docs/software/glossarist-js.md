@@ -7,7 +7,7 @@ description: JavaScript SDK for Glossarist GCR packages — read, write, validat
 
 JavaScript SDK for reading and writing [Glossarist](https://github.com/glossarist) GCR packages — manages terminology concepts with rich domain models, bidirectional YAML serialization, validation, cross-reference resolution, RDF serializers, and SHACL validation.
 
-**Current version:** v0.4.5 — full model parity with [glossarist-ruby](/docs/software/glossarist-ruby), synced to [concept-model v3.1.0](/blog/2026-07-05-concept-model-v3.1).
+**Current version:** v0.4.12 — full model parity with [glossarist-ruby](/docs/software/glossarist-ruby), synced to [concept-model v3.1.0](/blog/2026-07-05-concept-model-v3.1).
 
 ## Install
 
@@ -64,6 +64,13 @@ fs.writeFileSync('out.gcr', buf);
 
 | Version | Highlights |
 |---------|------------|
+| **0.4.12** | Remove hardcoded `glossarist.org` base URI defaults — base URI is now always caller-supplied |
+| **0.4.11** | `writeTurtleSync` — synchronous Turtle writer for CLI/build scripts |
+| **0.4.10** | Fix dataset distribution blank-node serialization (`_:bXXX` not `<_:bXXX>`) |
+| **0.4.9** | Domain RDF emitters — vocabulary (SKOS ConceptSchemes), dataset (`dcat:Dataset`), group (`dcat:DatasetSeries` / `dcat:Catalog`), bibliography (`dcterms:BibliographicResource`), provenance (`prov:Activity`, `foaf:Person`); section descendant closure; relation categories reconciled with concept-browser |
+| **0.4.8** | `glossarist/rdf/prefixes` subpath export for browser-safe prefix lookup |
+| **0.4.7** | Type exports for `dataset-color` and `relation-categories` from `models/index.d.ts` |
+| **0.4.6** | Sync concept-model v3.1.0; NonVerbal RDF emitters (`Figure` / `Table` / `Formula`) |
 | **0.4.5** | NonVerbal entity emitters + concept-model drift test |
 | **0.4.4** | Concept-model synced to v3.1.0; RDF + transforms kept out of the main entry (browser-safe) |
 | **0.4.3** | **RDF serializers** (Turtle, N-Triples, JSON-LD) + **SHACL validator** (WS C) |
@@ -93,6 +100,20 @@ if (!report.conforms) {
 ```
 
 RDF and transforms live in dedicated subpath exports so the main entry stays browser-safe — no Node-only dependencies leaked into the bundle.
+
+### Domain RDF emitters (v0.4.9)
+
+Beyond per-concept serialization, v0.4.9 adds emitters for the surrounding linked-data graph: datasets, groups, vocabularies, bibliographies, and build provenance. These are what the [concept-browser](/docs/software/concept-browser) uses to produce its RDF artifacts.
+
+| Emitter | RDF type | Output |
+|---|---|---|
+| `vocabulary-emitter` | `skos:ConceptScheme` | Cross-dataset vocabulary graph |
+| `dataset-emitter` | `dcat:Dataset` + `skos:ConceptScheme` | Per-register dataset metadata + sections tree |
+| `group-emitter` | `dcat:DatasetSeries` / `dcat:Catalog` | Lineage series or topic/family/collection groupings |
+| `bibliography-emitter` | `dcterms:BibliographicResource` | Bibliography graph from `bibliography.yaml` |
+| `provenance-emitters` | `prov:Activity`, `prov:SoftwareAgent`, `foaf:Person`, `prov:Entity` | Build run, contributors, version chain |
+
+Section membership is closed downward — `section.descendants()` returns the transitive set of child sections, so a concept tagged with `1.2` is also a member of `1` and the dataset root. Relation categories are reconciled with concept-browser so both libraries agree on `broader`/`narrower`/`exact_match`/etc. coloring.
 
 ### Mention syntax
 
@@ -201,7 +222,8 @@ isKnownFormat('csv');                // false
 
 - `glossarist` — main entry (browser-safe: readers, writers, models, validators)
 - `glossarist/models` — domain model classes
-- `glossarist/rdf` — RDF serializers (Turtle, N-Triples, JSON-LD) + SHACL validator
+- `glossarist/rdf` — RDF serializers (Turtle, N-Triples, JSON-LD) + SHACL validator + domain emitters
+- `glossarist/rdf/prefixes` — browser-safe prefix lookup (canonical prefix SSOT)
 - `glossarist/validators` — `ValidationRule` framework and built-in rules
 - `glossarist/gcr` — `loadGcr`, `createGcr`, `GcrReader`, `GcrWriter`
 
