@@ -7,7 +7,7 @@ description: Ruby gem implementing the Glossarist concept model with multi-langu
 
 Ruby gem implementing the [Glossarist concept model](https://github.com/glossarist/concept-model/tree/main) in Ruby. All the entities in the [concept model](/docs/model/) are available as classes and all the attributes are available as methods of those classes. The gem reads and writes Glossarist V2 and V3 datasets, packages them as portable GCR archives, and exports to TBX, SKOS, and Turtle with SHACL validation.
 
-**Current version:** v2.9.1 — synced to [concept-model v3.1.0](/blog/2026-07-05-concept-model-v3.1).
+**Current version:** v2.10.0 — synced to [concept-model v3.1.0](/blog/2026-07-05-concept-model-v3.1).
 
 ## Install
 
@@ -131,12 +131,14 @@ concept = Glossarist::ManagedConcept.new({
 | `review_type` | `editorial` or `substantive` |
 | `lineage_similarity` | Lineage similarity score |
 
-## What's new in 2.8–2.9
+## What's new in 2.8–2.10
 
 Recent releases sync `glossarist-ruby` to [concept-model v3.1.0](/blog/2026-07-05-concept-model-v3.1):
 
 | Version | Highlights |
 |---------|------------|
+| **2.10.0** | **Refactor:** eliminate hand-rolled serialization, type dispatch, and redundant mapping — all (de)serialization now flows through declared `lutaml-model` mappings |
+| **2.9.2** | Concept-model vendor pin flipped from SHA to v3.1.0 tag; `prefixes.ttl` documented; explicit `require "time"` |
 | **2.9.1** | Concept-model vendor pin bumped to v3.1.0 tag; `prefixes.ttl` documented |
 | **2.9.0** | **WS-B:** per-concept SKOS export, deterministic UUIDs, SHACL gate, shared `Reference` protocol |
 | **2.8.18** | V3 `ConceptDate` accepts any date string per v3 schema; wired through `date_accepted` and `to_yaml` callbacks |
@@ -146,6 +148,10 @@ Recent releases sync `glossarist-ruby` to [concept-model v3.1.0](/blog/2026-07-0
 | **2.8.13** | Section cascading membership — transitive ancestor traversal |
 | **2.8.12** | ConceptReference `id` alias, 52 relationship types |
 | **2.8.11** | `Register` and `Section` models with hierarchical section support |
+
+### Serialization refactor (v2.10.0)
+
+v2.10.0 removes the last hand-rolled `to_h` / `from_h` pairs from the model layer. Attribute mappings now live entirely on the model classes via `lutaml-model` — wire names, renames, and shape changes are declaration-only. Adding a new wire-name mapping is a one-line `map :foo, to: :bar` instead of a new branch in a `to_h` body.
 
 ### Dataset model (v3)
 

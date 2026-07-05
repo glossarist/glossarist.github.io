@@ -7,7 +7,7 @@ description: Statically deployable SPA for browsing terminology datasets with mu
 
 A statically deployable single-page application for browsing terminology datasets. Built with Vue 3, TypeScript, and Tailwind CSS. Add new datasets with **zero code changes** — just configure `site-config.yml`.
 
-**Current version:** v0.7.58. See the [v3.1 release announcement](/blog/2026-07-05-concept-model-v3.1) for what's new across the ecosystem.
+**Current version:** v0.7.66 — see the [v3.1 release announcement](/blog/2026-07-05-concept-model-v3.1) for what's new across the ecosystem.
 
 **Live sites:**
 
