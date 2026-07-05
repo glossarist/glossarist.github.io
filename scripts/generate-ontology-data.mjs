@@ -151,6 +151,8 @@ const TAXONOMY_MAP = {
   'date-type.ttl': 'dateType',
   'part-of-speech.ttl': 'partOfSpeech',
   'register.ttl': 'register',
+  'ordering-method.ttl': 'orderingMethod',
+  'concept-reference-type.ttl': 'conceptReferenceType',
 };
 
 function main() {
