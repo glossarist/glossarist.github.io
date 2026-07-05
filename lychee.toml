@@ -21,5 +21,7 @@ exclude = [
   "vendor",
   ".bundle",
   ".sass-cache",
-  ".jekyll-cache"
+  ".jekyll-cache",
+  # iso.org blocks bot user agents with 403; links are valid in browsers
+  "^https?://www\\.iso\\.org/"
 ]
