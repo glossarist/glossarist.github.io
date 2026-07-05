@@ -19,8 +19,24 @@ A `ManagedConcept` is the top-level concept entity in Glossarist. It represents 
 | `related` | [RelatedConcept](/reference/entity-fields)[] | 0..* | Related concepts |
 | `dates` | [ConceptDate](/reference/entity-fields)[] | 0..* | Governance events |
 | `sources` | [ConceptSource](/docs/model/sources)[] | 0..* | Concept-level sources |
-| `domains` | [Reference](/reference/entity-fields)[] | 0..* | Subject area references |
+| `domains` | [Reference](/reference/entity-fields)[] | 0..* | Subject area references (rendered as `<domain>`) |
+| `tags` | string[] | 0..* | Organizational tags for grouping and filtering (not rendered as terminological domains) |
 | `localizations` | [LocalizedConcept](#localizedconcept){} | 0..* | Per-language data (keyed by language code) |
+
+### Tags vs domains
+
+`tags` and `domains` look similar but serve different purposes:
+
+- **`domains`** — Terminological subject-area references. Rendered as `<domain>` elements in TBX output and surfaced as subject-area classifications in the concept-browser.
+- **`tags`** — Free-form organizational labels used for filtering, document structuring, and retrieval. Not rendered in terminological output.
+
+```yaml
+termid: "3.1.1.1"
+status: valid
+domains:
+  - { concept_id: "103", ref_type: "domain" }
+tags: [time-scale-units, foundational]
+```
 
 ## LocalizedConcept
 
@@ -35,7 +51,7 @@ Localizations of the concept to different languages. Each language has its own d
 | `definition` | [DetailedDefinition](#detaileddefinition)[] | 0..* | Definitions |
 | `notes` | [DetailedDefinition](#detaileddefinition)[] | 0..* | Notes |
 | `annotations` | [DetailedDefinition](#detaileddefinition)[] | 0..* | Editorial annotations (distinct from notes) |
-| `examples` | [DetailedDefinition](#detaileddefinition)[] | 0..* | Examples |
+| `examples` | [DetailedDefinition](#detaileddefinition)[] | 0..* | Concept-level examples |
 | `entry_status` | [entryStatus](/reference/entity-fields) | 0..1 | `notValid`, `valid`, `superseded`, or `retired` |
 | `classification` | string | 0..1 | `preferred`, `admitted`, or `deprecated` |
 | `domain` | anyURI | 0..1 | URI reference to the subject area |
@@ -49,12 +65,34 @@ Localizations of the concept to different languages. Each language has its own d
 
 ## DetailedDefinition
 
-A definition, note, or example with optional per-item sources.
+A definition, note, example, or annotation with optional per-item sources and scoped sub-examples.
 
 | Field | Type | Card. | Description |
 |-------|------|-------|-------------|
 | `content` | string | 1..1 | The text content |
 | `sources` | [ConceptSource](/docs/model/sources)[] | 0..* | Per-item sources |
+| `examples` | [DetailedDefinition](#detaileddefinition)[] | 0..* | Examples scoped to this entry (VIM 1993 style nesting) |
+
+### Scoped examples (VIM 1993 style)
+
+Some vocabularies — notably the ISO/IEC VIM (International Vocabulary of Metrology) — nest examples inside the note or definition they elaborate on, rather than at the concept top level. Glossarist models this with `examples` on `DetailedDefinition`.
+
+The two `examples` fields are **MECE** (mutually exclusive, collectively exhaustive):
+
+- `LocalizedConcept.examples` — concept-level examples, rendered as a flat list
+- `DetailedDefinition.examples` — scoped to the surrounding note/definition
+
+```yaml
+eng:
+  definition:
+    - content: "A property of a phenomenon, body, or substance"
+      notes:
+        - content: "Notes can themselves have examples"
+          examples:
+            - content: "Mass, weight, and volume are quantities"
+      examples:
+        - content: "Concept-level example, rendered as a flat list"
+```
 
 ## ConceptDate
 

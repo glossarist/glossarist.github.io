@@ -17,6 +17,31 @@ An **authoritative source** is the "source of truth" for a terminological entry 
 | `status` | [sourceStatus](/reference/entity-fields) | 0..1 | Relationship between entry content and source |
 | `origin` | [Citation](#citation) | 0..1 | The bibliographic citation |
 | `modification` | string | 0..1 | Description of changes made relative to the source |
+| `id` | string | 0..1 | Stable identifier for inline cite mentions (see below) |
+
+## Inline citations
+
+Concept sources may declare an `id` so they can be referenced from running text via the cite mention syntax. The concept-browser resolves these mentions to the source's full citation at render time.
+
+::: v-pre
+```yaml
+# In bibliography or per-concept sources
+sources:
+  - id: iso-704
+    type: authoritative
+    origin:
+      ref: { source: ISO, id: "704", version: "2009" }
+    status: identical
+
+# Elsewhere in a definition or note — use {{cite:id}} inline
+definition:
+  - content: >-
+      Concepts are identified by their characteristics
+      (see {{cite:iso-704}} §3.2).
+```
+:::
+
+The same mechanism powers figure mentions via the fig mention syntax (see [Non-verbal entities](/docs/model/non-verbal#inline-figure-mentions)).
 
 ## Source type
 
