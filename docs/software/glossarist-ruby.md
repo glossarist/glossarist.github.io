@@ -7,7 +7,7 @@ description: Ruby gem implementing the Glossarist concept model with multi-langu
 
 Ruby gem implementing the [Glossarist concept model](https://github.com/glossarist/concept-model/tree/main) in Ruby. All the entities in the [concept model](/docs/model/) are available as classes and all the attributes are available as methods of those classes. The gem reads and writes Glossarist V2 and V3 datasets, packages them as portable GCR archives, and exports to TBX, SKOS, and Turtle with SHACL validation.
 
-**Current version:** v2.10.0 — synced to [concept-model v3.1.0](/blog/2026-07-05-concept-model-v3.1).
+**Current version:** v2.10.4 — synced to [concept-model v3.1.0](/blog/2026-07-05-concept-model-v3.1).
 
 ## Install
 
@@ -137,6 +137,10 @@ Recent releases sync `glossarist-ruby` to [concept-model v3.1.0](/blog/2026-07-0
 
 | Version | Highlights |
 |---------|------------|
+| **2.10.4** | **Dataset-level non-verbal RDF:** emit `gloss:Figure` / `gloss:Table` / `gloss:Formula` per K1 shapes; final spec doubles replaced with real instances |
+| **2.10.3** | Test suite migrated off `double()` — validation rule specs use real model instances exclusively |
+| **2.10.2** | Coverage gap closed: focused specs for 14+10+4 validation rules that previously lacked them |
+| **2.10.1** | V3 fields preserved when loading legacy `concept/` directory layout (forwards-compatible reads) |
 | **2.10.0** | **Refactor:** eliminate hand-rolled serialization, type dispatch, and redundant mapping — all (de)serialization now flows through declared `lutaml-model` mappings |
 | **2.9.2** | Concept-model vendor pin flipped from SHA to v3.1.0 tag; `prefixes.ttl` documented; explicit `require "time"` |
 | **2.9.1** | Concept-model vendor pin bumped to v3.1.0 tag; `prefixes.ttl` documented |
@@ -152,6 +156,10 @@ Recent releases sync `glossarist-ruby` to [concept-model v3.1.0](/blog/2026-07-0
 ### Serialization refactor (v2.10.0)
 
 v2.10.0 removes the last hand-rolled `to_h` / `from_h` pairs from the model layer. Attribute mappings now live entirely on the model classes via `lutaml-model` — wire names, renames, and shape changes are declaration-only. Adding a new wire-name mapping is a one-line `map :foo, to: :bar` instead of a new branch in a `to_h` body.
+
+### Dataset-level non-verbal RDF (v2.10.4)
+
+The RDF exporter now emits dataset-level `gloss:Figure`, `gloss:Table`, and `gloss:Formula` individuals per the K1 shapes added in concept-model v3.1.0. Previously these were only emitted as concept-level `NonVerbRep` attachments; the dataset-level identity is now first-class, matching the way the model treats figures/tables/formulas as dataset-owned resources.
 
 ### Dataset model (v3)
 

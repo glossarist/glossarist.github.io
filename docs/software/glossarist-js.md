@@ -7,7 +7,7 @@ description: JavaScript SDK for Glossarist GCR packages — read, write, validat
 
 JavaScript SDK for reading and writing [Glossarist](https://github.com/glossarist) GCR packages — manages terminology concepts with rich domain models, bidirectional YAML serialization, validation, cross-reference resolution, RDF serializers, and SHACL validation.
 
-**Current version:** v0.4.12 — full model parity with [glossarist-ruby](/docs/software/glossarist-ruby), synced to [concept-model v3.1.0](/blog/2026-07-05-concept-model-v3.1).
+**Current version:** v0.4.15 — full model parity with [glossarist-ruby](/docs/software/glossarist-ruby), synced to [concept-model v3.1.0](/blog/2026-07-05-concept-model-v3.1).
 
 ## Install
 
@@ -64,6 +64,9 @@ fs.writeFileSync('out.gcr', buf);
 
 | Version | Highlights |
 |---------|------------|
+| **0.4.15** | Browser-safety split: `glossarist/rdf/shacl` extracted as its own subpath so the validator's Node-only deps can't leak into bundles that only need serialization |
+| **0.4.14** | RDF sections-builder compacts `classId` and predicates to CURIE form |
+| **0.4.13** | `Register.name` added; `BibliographyData` accepts bare-array shape; unified CURIE / blank-node ID / sections-builder / provenance-emitter refactor; `rdf-validate-shacl` 0.6 compat |
 | **0.4.12** | Remove hardcoded `glossarist.org` base URI defaults — base URI is now always caller-supplied |
 | **0.4.11** | `writeTurtleSync` — synchronous Turtle writer for CLI/build scripts |
 | **0.4.10** | Fix dataset distribution blank-node serialization (`_:bXXX` not `<_:bXXX>`) |
@@ -84,10 +87,11 @@ fs.writeFileSync('out.gcr', buf);
 
 ### RDF serialization & SHACL validation
 
-v0.4.3 adds a complete RDF pipeline. Every concept can be serialized to Turtle, N-Triples, or JSON-LD, and a SHACL validator runs the canonical `glossarist.shacl.ttl` shapes against the resulting graph.
+v0.4.3 adds a complete RDF pipeline. Every concept can be serialized to Turtle, N-Triples, or JSON-LD, and a SHACL validator runs the canonical `glossarist.shacl.ttl` shapes against the resulting graph. Since v0.4.15 the SHACL validator lives in its own `glossarist/rdf/shacl` subpath so its Node-only dependencies can't leak into browser bundles that only need serialization.
 
 ```js
-import { ConceptCollection, RdfSerializer, ShaclValidator } from 'glossarist/rdf';
+import { ConceptCollection, RdfSerializer } from 'glossarist/rdf';
+import { ShaclValidator } from 'glossarist/rdf/shacl';
 
 const ttl = await RdfSerializer.serialize(collection, { format: 'turtle' });
 const report = await ShaclValidator.validate(ttl, { format: 'turtle' });
@@ -222,8 +226,9 @@ isKnownFormat('csv');                // false
 
 - `glossarist` — main entry (browser-safe: readers, writers, models, validators)
 - `glossarist/models` — domain model classes
-- `glossarist/rdf` — RDF serializers (Turtle, N-Triples, JSON-LD) + SHACL validator + domain emitters
+- `glossarist/rdf` — RDF serializers (Turtle, N-Triples, JSON-LD) + domain emitters
 - `glossarist/rdf/prefixes` — browser-safe prefix lookup (canonical prefix SSOT)
+- `glossarist/rdf/shacl` — SHACL validator (Node-only deps; isolated since v0.4.15 so it can't leak into browser bundles)
 - `glossarist/validators` — `ValidationRule` framework and built-in rules
 - `glossarist/gcr` — `loadGcr`, `createGcr`, `GcrReader`, `GcrWriter`
 

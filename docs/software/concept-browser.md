@@ -7,7 +7,7 @@ description: Statically deployable SPA for browsing terminology datasets with mu
 
 A statically deployable single-page application for browsing terminology datasets. Built with Vue 3, TypeScript, and Tailwind CSS. Add new datasets with **zero code changes** — just configure `site-config.yml`.
 
-**Current version:** v0.7.66 — see the [v3.1 release announcement](/blog/2026-07-05-concept-model-v3.1) for what's new across the ecosystem.
+**Current version:** v0.7.67 — see the [v3.1 release announcement](/blog/2026-07-05-concept-model-v3.1) for what's new across the ecosystem.
 
 **Live sites:**
 
@@ -66,7 +66,8 @@ Commands:
   fetch      Fetch/update datasets (from GCR packages, local paths, or source repos)
   generate   Convert harmonized YAML concepts to JSON-LD static files + RDF artifacts
   edges      Build cross-reference edges from generated concept data
-  build      Full pipeline: fetch + generate + edges + vite build
+  about      Compile per-dataset and per-group about pages
+  build      Full pipeline: fetch + generate + edges + about + vite build
   site       Same as build (alias)
   doctor     Run diagnostic checks (node version, deps, shapes, data integrity)
   normalize  NFC-normalize YAML concept files in-place
@@ -190,6 +191,10 @@ The codebase is organized around an Open-Closed Principle (OCP) **group registry
 - Adding a new relationship-type color = editing `site-config.yml`, not touching code
 
 This keeps the build pipeline stable as new dataset shapes and group kinds are added. See [`CLAUDE.md`](https://github.com/glossarist/concept-browser/blob/main/CLAUDE.md) for the full architectural overview.
+
+### RDF layer lives in glossarist-js (v0.7.67)
+
+As of v0.7.67 the in-repo `src/components/concept-rdf/` layer is gone — ~2,300 LOC of duplicate emitters, writers, and graph abstractions deleted. The Vue UI now consumes [glossarist-js](/docs/software/glossarist-js) directly: `conceptToQuads` and `provenanceToQuads` for the graph, `writeTurtleSync` + canonical prefixes for CURIE-form Turtle, and `formatJsonLd` for JSON-LD. This makes glossarist-js the single source of truth for RDF emission across the ecosystem — fixes land once and propagate to every consumer.
 
 ## Links
 
