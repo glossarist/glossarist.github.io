@@ -12,7 +12,7 @@ vi.mock('vitepress', () => ({
   withBase: (path: string) => path,
 }))
 
-vi.mock('../../.vitepress/data/useOntologyData', () => ({
+vi.mock('../../src/data/useOntologyData', () => ({
   useOntologyData: () => ({
     schema: ref({
       ontology: { iri: 'g', label: 'Glossarist' },
@@ -26,7 +26,7 @@ vi.mock('../../.vitepress/data/useOntologyData', () => ({
   }),
 }))
 
-import YamlSchemas from '../../.vitepress/theme/components/YamlSchemas.vue'
+import YamlSchemas from '../../src/components/YamlSchemas.vue'
 
 describe('YamlSchemas (smoke)', () => {
   it('mounts without errors', async () => {

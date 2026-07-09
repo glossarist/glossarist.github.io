@@ -12,7 +12,7 @@ vi.mock('vitepress', () => ({
   withBase: (path: string) => path,
 }))
 
-vi.mock('../../.vitepress/data/useOntologyData', () => ({
+vi.mock('../../src/data/useOntologyData', () => ({
   useOntologyData: () => ({
     schema: ref({
       ontology: {
@@ -37,7 +37,7 @@ vi.mock('../../.vitepress/data/useOntologyData', () => ({
   }),
 }))
 
-import OntologyBrowser from '../../.vitepress/theme/components/OntologyBrowser.vue'
+import OntologyBrowser from '../../src/components/OntologyBrowser.vue'
 
 describe('OntologyBrowser (smoke)', () => {
   it('mounts without errors', async () => {

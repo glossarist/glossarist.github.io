@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { formatDate, formatMonthYear, formatLastUpdated, formatAuthors } from '../.vitepress/data/format'
+import { formatDate, formatMonthYear, formatLastUpdated, formatAuthors } from '../src/data/format'
 
 describe('formatDate', () => {
   it('formats an ISO date string as "Month D, YYYY"', () => {

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { projects, premierProjects, softwareNavItems } from '../.vitepress/data/projects'
+import { projects, premierProjects, softwareNavItems } from '../src/data/projects'
 
 describe('projects', () => {
   it('contains all four canonical Glossarist projects', () => {

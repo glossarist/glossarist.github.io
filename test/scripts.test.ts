@@ -134,8 +134,8 @@ describe('scripts/copy-schemas.mjs + scripts/bundle-schemas.mjs outputs', () => 
     expect(files).toContain('register.yaml')
   })
 
-  it('.vitepress/data/schemas-bundled.json matches index shape', () => {
-    const bundled = readJson('.vitepress/data/schemas-bundled.json') as Array<{
+  it('src/data/schemas-bundled.json matches index shape', () => {
+    const bundled = readJson('src/data/schemas-bundled.json') as Array<{
       version: string
       schemas: Array<{ file: string; data: unknown }>
       examples: Array<{ file: string; content: string }>

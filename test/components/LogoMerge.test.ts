@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import LogoMerge from '../../.vitepress/theme/components/LogoMerge.vue'
+import LogoMerge from '../../src/components/LogoMerge.vue'
 
 describe('LogoMerge', () => {
   it('mounts without errors', () => {

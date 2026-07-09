@@ -11,7 +11,7 @@ vi.mock('vitepress', () => ({
   }),
 }))
 
-import HomePage from '../../.vitepress/theme/components/HomePage.vue'
+import HomePage from '../../src/components/HomePage.vue'
 
 describe('HomePage (smoke)', () => {
   it('mounts without errors', () => {

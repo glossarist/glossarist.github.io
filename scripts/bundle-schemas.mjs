@@ -27,11 +27,11 @@ const bundled = index.map(ver => {
   return { version: ver.version, schemas, examples }
 })
 
-const outPath = join(root, '.vitepress', 'data', 'schemas-bundled.json')
+const outPath = join(root, 'src', 'data', 'schemas-bundled.json')
 writeFileSync(outPath, JSON.stringify(bundled))
 
 const counts = bundled.reduce((acc, v) => ({
   schemas: acc.schemas + v.schemas.length,
   examples: acc.examples + v.examples.length,
 }), { schemas: 0, examples: 0 })
-console.log(`Bundled ${counts.schemas} schemas and ${counts.examples} examples → .vitepress/data/schemas-bundled.json`)
+console.log(`Bundled ${counts.schemas} schemas and ${counts.examples} examples → src/data/schemas-bundled.json`)
