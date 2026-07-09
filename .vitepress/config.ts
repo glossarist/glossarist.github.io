@@ -7,7 +7,7 @@ export default defineConfig({
   lang: 'en-US',
   lastUpdated: true,
 
-  srcExclude: ['TODO.website/**', 'TODO.refactor/**', 'TODO.cleanup/**', 'TODO.infoarch/**', 'concept-model/**', 'CLAUDE.md', 'README.md', 'LICENSE', 'scripts/**', 'public/data/schemas/**'],
+  srcExclude: ['TODO.website/**', 'TODO.refactor/**', 'TODO.cleanup/**', 'TODO.infoarch/**', 'TODO.astro/**', 'concept-model/**', 'CLAUDE.md', 'README.md', 'LICENSE', 'scripts/**', 'public/data/schemas/**', 'astro/**', 'test/**', 'vitest.config.ts'],
 
   sitemap: {
     hostname: 'https://www.glossarist.org'
