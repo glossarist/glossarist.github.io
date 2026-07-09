@@ -10,7 +10,7 @@ include_verbatim = true
 
 # File types to check
 include = [
-  ".vitepress/dist/**/*.html"
+  "dist/**/*.html"
 ]
 
 # Exclude patterns for URLs

@@ -1,0 +1,38 @@
+---
+import '../styles/custom.css'
+import Nav from '../components/Nav.astro'
+import Footer from '../components/Footer.astro'
+
+interface Props {
+  title: string
+  description?: string
+  fullscreen?: boolean
+}
+
+const { title, description = 'Open-source software for maintaining multi-language concept systems', fullscreen = false } = Astro.props
+const pageTitle = title === 'Glossarist' ? title : `${title} | Glossarist`
+---
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <script is:inline>
+      const stored = localStorage.getItem('glossarist-theme') ?? localStorage.getItem('vitepress-theme-appearance')
+      const prefersDark = matchMedia('(prefers-color-scheme: dark)').matches
+      const dark = stored === 'dark' || ((!stored || stored === 'auto') && prefersDark)
+      if (dark) document.documentElement.classList.add('dark')
+    </script>
+  </head>
+  <body class={fullscreen ? 'fullscreen-page' : ''}>
+    {!fullscreen && <Nav />}
+    <main><slot /></main>
+    {!fullscreen && <Footer />}
+  </body>
+</html>

@@ -12,7 +12,7 @@ vi.mock('vitepress', () => ({
   withBase: (path: string) => path,
 }))
 
-vi.mock('../../.vitepress/data/useOntologyData', () => ({
+vi.mock('../../src/data/useOntologyData', () => ({
   useOntologyData: () => ({
     schema: ref({
       ontology: { iri: 'g', label: 'Glossarist' },
@@ -26,7 +26,7 @@ vi.mock('../../.vitepress/data/useOntologyData', () => ({
   }),
 }))
 
-import SchemaReference from '../../.vitepress/theme/components/SchemaReference.vue'
+import SchemaReference from '../../src/components/SchemaReference.vue'
 
 describe('SchemaReference (smoke)', () => {
   it('mounts without errors', async () => {

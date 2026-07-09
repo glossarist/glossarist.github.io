@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { mount, flushPromises } from '@vue/test-utils'
-import ReleaseDownloader from '../../.vitepress/theme/components/ReleaseDownloader.vue'
+import ReleaseDownloader from '../../src/components/ReleaseDownloader.vue'
 
 type ReleasePayload = {
   name: string

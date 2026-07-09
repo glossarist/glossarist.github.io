@@ -31,11 +31,11 @@ const { useOntologyDataMock } = {
   })),
 }
 
-vi.mock('../../.vitepress/data/useOntologyData', () => ({
+vi.mock('../../src/data/useOntologyData', () => ({
   useOntologyData: () => useOntologyDataMock(),
 }))
 
-import RelationshipTypes from '../../.vitepress/theme/components/RelationshipTypes.vue'
+import RelationshipTypes from '../../src/components/RelationshipTypes.vue'
 
 describe('RelationshipTypes', () => {
   beforeEach(() => {

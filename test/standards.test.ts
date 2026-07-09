@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { standards } from '../.vitepress/data/standards'
+import { standards } from '../src/data/standards'
 
 describe('standards', () => {
   it('returns an array of Standard objects', () => {

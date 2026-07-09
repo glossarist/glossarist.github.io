@@ -68,7 +68,7 @@ describe('useOntologyData', () => {
 
   it('exposes schema, taxonomies, and loaded ref', async () => {
     const runner = withFetch(async () => {
-      const { useOntologyData } = await import('../.vitepress/data/useOntologyData')
+      const { useOntologyData } = await import('../src/data/useOntologyData')
       const Consumer = defineComponent({
         setup() {
           const state = useOntologyData()
@@ -84,7 +84,7 @@ describe('useOntologyData', () => {
 
   it('fetches /data/ontology-schema.json and /data/taxonomies.json', async () => {
     const runner = withFetch(async () => {
-      const { useOntologyData } = await import('../.vitepress/data/useOntologyData')
+      const { useOntologyData } = await import('../src/data/useOntologyData')
       const Consumer = defineComponent({
         setup() {
           const state = useOntologyData()
@@ -106,7 +106,7 @@ describe('useOntologyData', () => {
 
   it('populates schema after fetch resolves', async () => {
     const runner = withFetch(async () => {
-      const { useOntologyData } = await import('../.vitepress/data/useOntologyData')
+      const { useOntologyData } = await import('../src/data/useOntologyData')
       const Consumer = defineComponent({
         setup() {
           const state = useOntologyData()
@@ -131,7 +131,7 @@ describe('useOntologyData', () => {
     })
     globalThis.fetch = fetchMock as unknown as typeof fetch
     const errSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
-    const { useOntologyData } = await import('../.vitepress/data/useOntologyData')
+    const { useOntologyData } = await import('../src/data/useOntologyData')
     const Consumer = defineComponent({
       setup() {
         const state = useOntologyData()

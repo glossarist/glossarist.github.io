@@ -1,0 +1,89 @@
+---
+import BaseLayout from './BaseLayout.astro'
+import Sidebar from '../components/Sidebar.astro'
+import Outline from '../components/Outline.astro'
+
+interface Heading {
+  depth: number
+  slug: string
+  text: string
+}
+
+interface Props {
+  title: string
+  description?: string
+  pathname: string
+  headings?: Heading[]
+  fullscreen?: boolean
+  lastUpdated?: number
+}
+
+const {
+  title,
+  description,
+  pathname,
+  headings = [],
+  fullscreen = false,
+  lastUpdated,
+} = Astro.props
+
+const showChrome = !fullscreen
+---
+
+<BaseLayout title={title} description={description} fullscreen={fullscreen}>
+  <div class="doc-container">
+    {showChrome && <Sidebar pathname={pathname} />}
+    <main class="doc-main">
+      <article class="prose">
+        <slot />
+      </article>
+      {showChrome && (
+        <div class="doc-meta">
+          {lastUpdated && (
+            <span class="last-updated">
+              Updated: {new Date(lastUpdated).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+            </span>
+          )}
+        </div>
+      )}
+    </main>
+    {showChrome && <Outline headings={headings} />}
+  </div>
+</BaseLayout>
+
+<style>
+.doc-container {
+  display: grid;
+  grid-template-columns: 16rem minmax(0, 1fr) 12rem;
+  gap: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  align-items: start;
+}
+.doc-main {
+  padding: 2rem 0;
+  min-width: 0;
+}
+.doc-main :global(.prose) {
+  max-width: none;
+}
+.doc-meta {
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--vp-c-divider, #e5e7eb);
+  font-size: 0.8125rem;
+  color: var(--vp-c-text-2, #4b5563);
+}
+
+@media (max-width: 1024px) {
+  .doc-container {
+    grid-template-columns: 16rem minmax(0, 1fr);
+  }
+}
+@media (max-width: 768px) {
+  .doc-container {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+</style>

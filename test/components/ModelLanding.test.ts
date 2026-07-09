@@ -11,7 +11,7 @@ vi.mock('vitepress', () => ({
   }),
 }))
 
-import ModelLanding from '../../.vitepress/theme/components/ModelLanding.vue'
+import ModelLanding from '../../src/components/ModelLanding.vue'
 
 describe('ModelLanding', () => {
   it('mounts without errors', () => {

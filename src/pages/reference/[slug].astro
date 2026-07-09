@@ -1,0 +1,39 @@
+---
+import { getCollection, render } from 'astro:content'
+import DocLayout from '../../layouts/DocLayout.astro'
+import OntologyBrowser from '../../components/OntologyBrowser.vue'
+import SchemaReference from '../../components/SchemaReference.vue'
+
+export async function getStaticPaths() {
+  const refs = await getCollection('reference')
+  return refs
+    .filter(entry => entry.id !== 'index')
+    .map(entry => ({
+      params: { slug: entry.id },
+      props: { entry },
+    }))
+}
+
+const { entry } = Astro.props
+const { Content, headings } = await render(entry)
+const pathname = `/reference/${entry.id}`
+const isInteractive = entry.data.fullscreen === true
+const showOntology = entry.id === 'ontology'
+const showSchemaBrowser = entry.id === 'schema-browser'
+---
+
+<DocLayout
+  title={entry.data.title}
+  description={entry.data.description}
+  pathname={pathname}
+  headings={isInteractive ? [] : headings}
+  fullscreen={isInteractive}
+>
+  {showOntology ? (
+    <OntologyBrowser client:visible />
+  ) : showSchemaBrowser ? (
+    <SchemaReference client:visible />
+  ) : (
+    <Content />
+  )}
+</DocLayout>

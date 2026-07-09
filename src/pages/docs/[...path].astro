@@ -1,0 +1,42 @@
+---
+import { getCollection, render } from 'astro:content'
+import DocLayout from '../../layouts/DocLayout.astro'
+import ModelLanding from '../../components/ModelLanding.vue'
+import RelationshipTypes from '../../components/RelationshipTypes.vue'
+import ReleaseDownloader from '../../components/ReleaseDownloader.vue'
+
+export async function getStaticPaths() {
+  const docs = await getCollection('docs')
+  return docs.map(entry => ({
+    params: { path: entry.id === 'index' ? undefined : entry.id },
+    props: { entry },
+  }))
+}
+
+const { entry } = Astro.props
+const { Content, headings } = await render(entry)
+const pathname = `/docs/${entry.id === 'index' ? '' : entry.id + '/'}`
+const showModelLanding = entry.id === 'model'
+const showRelationshipTypes = entry.id === 'model/relationships'
+const showReleaseDownloader = entry.id === 'software/desktop'
+const fullscreen = entry.data.fullscreen === true
+---
+
+<DocLayout
+  title={entry.data.title}
+  description={entry.data.description}
+  pathname={pathname}
+  headings={headings}
+  fullscreen={fullscreen}
+>
+  <Content />
+  {showModelLanding && <div class="doc-component-mount"><ModelLanding client:visible /></div>}
+  {showRelationshipTypes && <div class="doc-component-mount"><RelationshipTypes client:visible /></div>}
+  {showReleaseDownloader && <div class="doc-component-mount"><ReleaseDownloader client:idle /></div>}
+</DocLayout>
+
+<style>
+.doc-component-mount {
+  margin-top: 2rem;
+}
+</style>
