@@ -1,0 +1,32 @@
+---
+const year = new Date().getFullYear()
+---
+<footer class="footer">
+  <div class="footer-message">
+    An open source project of <a href="https://www.ribose.com">Ribose</a>
+  </div>
+  <div class="footer-copyright">
+    Copyright © {year} Ribose
+  </div>
+</footer>
+
+<style>
+.footer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 2rem 1.5rem;
+  border-top: 1px solid var(--vp-c-divider, #e5e7eb);
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--vp-c-text-2, #4b5563);
+  margin-top: 4rem;
+}
+.footer a {
+  color: var(--vp-c-brand-1, #3b82f6);
+  text-decoration: none;
+}
+.footer a:hover {
+  text-decoration: underline;
+}
+</style>
