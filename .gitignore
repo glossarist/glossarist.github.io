@@ -6,6 +6,12 @@ dist/
 .vitepress/dist/
 .vitepress/cache/
 
+# Astro build cache
+.astro/
+astro/.astro/
+astro/dist/
+astro/node_modules/
+
 # Build-time data (generated from concept-model repo)
 concept-model/
 public/data/

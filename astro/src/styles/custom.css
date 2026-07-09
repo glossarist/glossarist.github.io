@@ -1,0 +1,209 @@
+/* ================================================================
+   GLOSSARIST DESIGN SYSTEM — v3
+   New York Professional Technology Style
+
+   Colors from the Glossarist logo mark (2026):
+   Navy:        #2d4164  — primary dark, structure
+   Blue:        #456399  — bridge blue, depth
+   Steel:       #3a5c80  — secondary, links
+   Steel-mid:   #4977a4  — medium blue
+   Blue-bright: #588ac1  — accent blue
+   Deep:        #34798a  — mid-tone teal-blue
+   Teal-blue:   #60abbc  — bridge teal
+   Cyan:        #62c4dd  — bright cyan
+   Grey-blue:   #97a4b7  — muted neutral
+   Teal:        #3fb6b0  — brand accent, CTAs
+   Sea:         #7ee0d4  — bright accent
+   Mint:        #b8f5ec  — light accent
+
+   Logo gradient: #3fb6b0 → #b8f5ec (teal-to-mint spectrum)
+   ================================================================ */
+
+:root {
+  /* Logo-derived brand palette */
+  --g-navy: #2d4164;
+  --g-blue: #456399;
+  --g-steel: #3a5c80;
+  --g-steel-mid: #4977a4;
+  --g-blue-bright: #588ac1;
+  --g-deep: #34798a;
+  --g-teal-blue: #60abbc;
+  --g-cyan: #62c4dd;
+  --g-grey-blue: #97a4b7;
+  --g-teal: #3fb6b0;
+  --g-sea: #7ee0d4;
+  --g-mint: #b8f5ec;
+
+  /* Semantic entity colors */
+  --g-class: #2d4164;
+  --g-property: #34798a;
+  --g-shape: #a16207;
+  --g-taxonomy: #7c3aed;
+  --g-individual: #be123c;
+
+  /* VitePress brand overrides */
+  --vp-c-brand-1: var(--g-steel);
+  --vp-c-brand-2: var(--g-teal);
+  --vp-c-brand-3: var(--g-navy);
+  --vp-c-brand-soft: rgba(58, 92, 128, 0.14);
+
+  --vp-button-brand-border: transparent;
+  --vp-button-brand-text: #fff;
+  --vp-button-brand-bg: var(--g-navy);
+  --vp-button-brand-hover-border: transparent;
+  --vp-button-brand-hover-text: #fff;
+  --vp-button-brand-hover-bg: var(--g-steel);
+  --vp-button-brand-active-border: transparent;
+  --vp-button-brand-active-text: #fff;
+  --vp-button-brand-active-bg: var(--g-navy);
+
+  --vp-nav-logo-height: 36px;
+}
+
+.dark {
+  --vp-c-brand-1: var(--g-teal);
+  --vp-c-brand-2: var(--g-sea);
+  --vp-c-brand-3: var(--g-steel);
+  --vp-c-brand-soft: rgba(63, 182, 176, 0.14);
+
+  --vp-button-brand-bg: var(--g-teal);
+  --vp-button-brand-hover-bg: var(--g-sea);
+
+  --g-class: #5b93c4;
+  --g-property: #4dd4c6;
+  --g-shape: #fbbf24;
+  --g-taxonomy: #a78bfa;
+  --g-individual: #fb7185;
+}
+
+/* ================================================================
+   ABOUT PAGE
+   ================================================================ */
+
+.logo-showcase {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+}
+
+.logo-card {
+  padding: 2.5rem;
+  border-radius: 8px;
+  text-align: center;
+  background: var(--vp-c-bg-soft);
+  border: 1px solid var(--vp-c-divider);
+}
+
+.logo-display { max-width: 240px; height: auto; }
+
+.use-cases-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.use-case-card {
+  padding: 1.5rem;
+  background: var(--vp-c-bg-soft);
+  border-radius: 8px;
+  border: 1px solid var(--vp-c-divider);
+  text-align: center;
+}
+
+.use-case-card h4 { color: var(--vp-c-brand-1); margin-bottom: 0.5rem; }
+.use-case-card p { color: var(--vp-c-text-2); font-size: 0.9rem; }
+
+/* ================================================================
+   RELEASE DOWNLOADER
+   ================================================================ */
+
+.release-downloader {
+  background: var(--vp-c-bg-soft);
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 8px;
+  padding: 2rem;
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.release-downloader .download-btn {
+  display: inline-flex;
+  align-items: center;
+  background: var(--g-navy);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1), 0 4px 12px rgba(63, 182, 176, 0.2);
+}
+
+.release-downloader .download-btn:hover {
+  background: var(--g-steel);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12), 0 6px 20px rgba(63, 182, 176, 0.3);
+  transform: translateY(-1px);
+}
+
+.release-downloader .release-info {
+  margin-top: 1rem;
+  color: var(--vp-c-text-2);
+  font-size: 0.9rem;
+}
+
+.release-downloader .release-info strong { color: var(--vp-c-text-1); }
+
+/* ================================================================
+   VITEPRESS OVERRIDES
+   ================================================================ */
+
+/* --- Nav title gradient --- */
+.VPNavBarTitle .title {
+  background: linear-gradient(135deg, var(--g-navy) 0%, var(--g-blue) 25%, var(--g-teal) 55%, var(--g-sea) 80%, var(--g-mint) 100%);
+  background-size: 200% 200%;
+  animation: shimmer 8s ease infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 800 !important;
+  letter-spacing: -0.02em;
+}
+
+.dark .VPNavBarTitle .title {
+  background: linear-gradient(135deg, var(--g-steel) 0%, var(--g-teal) 30%, var(--g-sea) 60%, var(--g-mint) 100%);
+  background-size: 200% 200%;
+  animation: shimmer 8s ease infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.vp-doc .custom-block { margin: 1rem 0; }
+.vp-doc .custom-block.tip { border-color: var(--g-teal); }
+.VPFooter { border-top: 1px solid var(--vp-c-divider) !important; }
+
+/* ================================================================
+   FULLSCREEN INTERACTIVE PAGES
+   Schema browser, entity fields, ontology browser
+   Controlled by `fullscreen: true` in page frontmatter
+   ================================================================ */
+
+html.fullscreen-page .VPSidebar { display: none !important; }
+html.fullscreen-page .VPLocalNav { display: none !important; }
+html.fullscreen-page .VPContent { padding-left: 0 !important; padding-right: 0 !important; }
+html.fullscreen-page .VPContent .container { max-width: none !important; padding: 0 !important; margin: 0 !important; }
+html.fullscreen-page .VPContent .content { max-width: none !important; padding: 0 !important; }
+html.fullscreen-page .VPContent .content-container { max-width: none !important; }
+
+/* ================================================================
+   RESPONSIVE (about page only)
+   ================================================================ */
+
+@media (max-width: 640px) {
+  .logo-display { max-width: 180px; }
+  .use-cases-grid { grid-template-columns: 1fr; }
+}
