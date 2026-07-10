@@ -129,8 +129,8 @@ Glossarist is used in production by standards bodies including [ISO/TC 211 Geole
   padding: 2.5rem;
   border-radius: 16px;
   text-align: center;
-  background: var(--vp-c-bg-soft);
-  border: 1px solid var(--vp-c-divider);
+  background: var(--g-bg-soft);
+  border: 1px solid var(--g-divider);
 }
 
 .logo-display {
@@ -185,19 +185,19 @@ Glossarist is used in production by standards bodies including [ISO/TC 211 Geole
 
 .use-case-card {
   padding: 1.5rem;
-  background: var(--vp-c-bg-soft);
+  background: var(--g-bg-soft);
   border-radius: 12px;
-  border: 1px solid var(--vp-c-divider);
+  border: 1px solid var(--g-divider);
   text-align: center;
 }
 
 .use-case-card h4 {
-  color: var(--vp-c-brand-1);
+  color: var(--g-brand);
   margin-bottom: 0.5rem;
 }
 
 .use-case-card p {
-  color: var(--vp-c-text-2);
+  color: var(--g-text-2);
   font-size: 0.9rem;
 }
 

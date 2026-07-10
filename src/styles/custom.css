@@ -47,17 +47,17 @@
   --g-individual: #be123c;
 
   /* Brand aliases (consumed by Tailwind utilities + plain CSS) */
-  --vp-c-brand-1: var(--g-steel);
-  --vp-c-brand-2: var(--g-teal);
-  --vp-c-brand-3: var(--g-navy);
-  --vp-c-brand-soft: rgba(58, 92, 128, 0.14);
+  --g-brand: var(--g-steel);
+  --g-brand-2: var(--g-teal);
+  --g-brand-3: var(--g-navy);
+  --g-brand-soft: rgba(58, 92, 128, 0.14);
 }
 
 .dark {
-  --vp-c-brand-1: var(--g-teal);
-  --vp-c-brand-2: var(--g-sea);
-  --vp-c-brand-3: var(--g-steel);
-  --vp-c-brand-soft: rgba(63, 182, 176, 0.14);
+  --g-brand: var(--g-teal);
+  --g-brand-2: var(--g-sea);
+  --g-brand-3: var(--g-steel);
+  --g-brand-soft: rgba(63, 182, 176, 0.14);
 
   --g-class: #5b93c4;
   --g-property: #4dd4c6;
@@ -80,8 +80,8 @@
   padding: 2.5rem;
   border-radius: 8px;
   text-align: center;
-  background: var(--vp-c-bg-soft);
-  border: 1px solid var(--vp-c-divider);
+  background: var(--g-bg-soft);
+  border: 1px solid var(--g-divider);
 }
 
 .logo-display { max-width: 240px; height: auto; }
@@ -95,22 +95,22 @@
 
 .use-case-card {
   padding: 1.5rem;
-  background: var(--vp-c-bg-soft);
+  background: var(--g-bg-soft);
   border-radius: 8px;
-  border: 1px solid var(--vp-c-divider);
+  border: 1px solid var(--g-divider);
   text-align: center;
 }
 
-.use-case-card h4 { color: var(--vp-c-brand-1); margin-bottom: 0.5rem; }
-.use-case-card p { color: var(--vp-c-text-2); font-size: 0.9rem; }
+.use-case-card h4 { color: var(--g-brand); margin-bottom: 0.5rem; }
+.use-case-card p { color: var(--g-text-2); font-size: 0.9rem; }
 
 /* ================================================================
    RELEASE DOWNLOADER (rendered by ReleaseDownloader.astro)
    ================================================================ */
 
 .release-downloader {
-  background: var(--vp-c-bg-soft);
-  border: 1px solid var(--vp-c-divider);
+  background: var(--g-bg-soft);
+  border: 1px solid var(--g-divider);
   border-radius: 8px;
   padding: 2rem;
   text-align: center;
@@ -141,11 +141,11 @@
 
 .release-downloader .release-info {
   margin-top: 1rem;
-  color: var(--vp-c-text-2);
+  color: var(--g-text-2);
   font-size: 0.9rem;
 }
 
-.release-downloader .release-info strong { color: var(--vp-c-text-1); }
+.release-downloader .release-info strong { color: var(--g-text-1); }
 
 /* ================================================================
    FULLSCREEN INTERACTIVE PAGES

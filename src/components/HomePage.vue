@@ -705,7 +705,7 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
   content: '';
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(circle, var(--vp-c-divider) 0.5px, transparent 0.5px);
+  background-image: radial-gradient(circle, var(--g-divider) 0.5px, transparent 0.5px);
   background-size: 24px 24px;
   opacity: 0.3;
   mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 20%, transparent 70%);
@@ -772,7 +772,7 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
   line-height: 1.15;
   margin: 0 auto 1.25rem;
   text-align: center;
-  color: var(--vp-c-text-1);
+  color: var(--g-text-1);
   animation: hero-fade-up 0.6s ease 0.1s both;
 }
 
@@ -799,7 +799,7 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
   margin: 0 auto 2.25rem;
   font-size: 1.125rem;
   line-height: 1.75;
-  color: var(--vp-c-text-2);
+  color: var(--g-text-2);
   text-align: center;
   animation: hero-fade-up 0.6s ease 0.2s both;
 }
@@ -823,14 +823,14 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
 }
 
 .hf-tag {
-  font-family: var(--vp-font-family-mono);
+  font-family: var(--g-font-mono);
   font-size: 0.6875rem;
   font-weight: 600;
   padding: 0.25rem 0.625rem;
   border-radius: 4px;
-  background: var(--vp-c-default-soft);
-  color: var(--vp-c-text-2);
-  border: 1px solid var(--vp-c-divider);
+  background: var(--g-muted-soft);
+  color: var(--g-text-2);
+  border: 1px solid var(--g-divider);
   transition: all 0.2s;
 }
 
@@ -846,14 +846,14 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
   gap: 0.625rem;
   margin-top: 2rem;
   padding: 0.5rem 1.25rem;
-  background: var(--vp-c-bg-soft);
-  border: 1px solid var(--vp-c-divider);
+  background: var(--g-bg-soft);
+  border: 1px solid var(--g-divider);
   border-radius: 8px;
   animation: hero-fade-up 0.6s ease 0.5s both;
 }
 
 .lang-code {
-  font-family: var(--vp-font-family-mono);
+  font-family: var(--g-font-mono);
   font-size: 0.6875rem;
   font-weight: 600;
   color: var(--g-teal);
@@ -872,14 +872,14 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
 .lang-term {
   font-size: 1.25rem;
   font-weight: 700;
-  color: var(--vp-c-text-1);
+  color: var(--g-text-1);
   white-space: nowrap;
   animation: lang-enter 0.4s ease both;
 }
 
 .lang-arrow {
   font-size: 0.75rem;
-  color: var(--vp-c-text-3);
+  color: var(--g-text-3);
   margin-left: 0.25rem;
 }
 
@@ -932,27 +932,27 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
 }
 
 .home .btn-secondary {
-  background: var(--vp-c-bg-soft);
-  color: var(--vp-c-text-1);
-  border-color: var(--vp-c-divider);
+  background: var(--g-bg-soft);
+  color: var(--g-text-1);
+  border-color: var(--g-divider);
 }
 
 .home .btn-secondary:hover {
-  border-color: var(--vp-c-brand-1);
-  color: var(--vp-c-brand-1);
+  border-color: var(--g-brand);
+  color: var(--g-brand);
 }
 
 .dark .home .btn-secondary { border-color: rgba(255,255,255,0.1); }
 
 .home .btn-outline {
-  color: var(--vp-c-text-1);
+  color: var(--g-text-1);
   background: none;
-  border: 1px solid var(--vp-c-divider);
+  border: 1px solid var(--g-divider);
 }
 
 .home .btn-outline:hover {
-  border-color: var(--vp-c-text-2);
-  background: var(--vp-c-default-soft);
+  border-color: var(--g-text-2);
+  background: var(--g-muted-soft);
 }
 
 .dark .home .btn-outline { border-color: rgba(255,255,255,0.15); }
@@ -971,7 +971,7 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
   position: relative;
 }
 
-.section + .section { border-top: 1px solid var(--vp-c-divider); }
+.section + .section { border-top: 1px solid var(--g-divider); }
 
 .section-header {
   text-align: center;
@@ -995,12 +995,12 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
   font-weight: 800;
   letter-spacing: -0.03em;
   margin: 0 auto 0.5rem;
-  color: var(--vp-c-text-1);
+  color: var(--g-text-1);
 }
 
 .home .section-header p {
   font-size: 1.0625rem;
-  color: var(--vp-c-text-2);
+  color: var(--g-text-2);
   max-width: 520px;
   margin: 0 auto;
   line-height: 1.65;
@@ -1058,7 +1058,7 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
 
 .pipeline-step p {
   font-size: 0.8125rem;
-  color: var(--vp-c-text-2);
+  color: var(--g-text-2);
   line-height: 1.6;
   margin-bottom: 0.625rem;
 }
@@ -1066,7 +1066,7 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
 .pipeline-link {
   font-size: 0.8125rem;
   font-weight: 600;
-  color: var(--vp-c-brand-1);
+  color: var(--g-brand);
   text-decoration: none;
 }
 
@@ -1074,14 +1074,14 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
 
 .pipeline-or {
   font-size: 0.6875rem;
-  color: var(--vp-c-text-3);
+  color: var(--g-text-3);
   margin: 0 0.25rem;
 }
 
 .pipeline-connector {
   flex: 0 0 auto;
   padding-top: 1.5rem;
-  color: var(--vp-c-divider);
+  color: var(--g-divider);
   margin: 0 0.25rem;
 }
 
@@ -1093,8 +1093,8 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
 }
 
 .model-card {
-  background: var(--vp-c-bg-soft);
-  border: 1px solid var(--vp-c-divider);
+  background: var(--g-bg-soft);
+  border: 1px solid var(--g-divider);
   border-radius: 8px;
   padding: 1.5rem;
   display: flex;
@@ -1116,7 +1116,7 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
 }
 
 .model-card:hover {
-  border-color: var(--vp-c-brand-1);
+  border-color: var(--g-brand);
   transform: translateY(-2px);
   box-shadow: 0 4px 20px rgba(0,0,0,0.05);
 }
@@ -1148,7 +1148,7 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
 
 .model-card-desc {
   font-size: 0.8125rem;
-  color: var(--vp-c-text-2);
+  color: var(--g-text-2);
   line-height: 1.6;
   margin-bottom: 1rem;
 }
@@ -1168,17 +1168,17 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
 }
 
 .field-row code {
-  font-family: var(--vp-font-family-mono);
+  font-family: var(--g-font-mono);
   font-size: 0.6875rem;
-  background: var(--vp-c-default-soft);
+  background: var(--g-muted-soft);
   padding: 0.125rem 0.375rem;
   border-radius: 3px;
-  color: var(--vp-c-text-1);
+  color: var(--g-text-1);
   white-space: nowrap;
 }
 
 .field-row span {
-  color: var(--vp-c-text-3);
+  color: var(--g-text-3);
   font-size: 0.6875rem;
 }
 
@@ -1194,7 +1194,7 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
   align-items: center;
   gap: 0.375rem;
   font-size: 0.75rem;
-  color: var(--vp-c-text-2);
+  color: var(--g-text-2);
 }
 
 .tree-branch.indent-1 { padding-left: 1.25rem; }
@@ -1220,7 +1220,7 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
 .model-card-link {
   font-size: 0.8125rem;
   font-weight: 600;
-  color: var(--vp-c-brand-1);
+  color: var(--g-brand);
   text-decoration: none;
   margin-top: auto;
 }
@@ -1244,8 +1244,8 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
 
 /* --- Code Showcase --- */
 .code-showcase {
-  background: var(--vp-c-bg-soft);
-  border: 1px solid var(--vp-c-divider);
+  background: var(--g-bg-soft);
+  border: 1px solid var(--g-divider);
   border-radius: 8px;
   overflow: hidden;
 }
@@ -1254,7 +1254,7 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
 
 .code-tabs {
   display: flex;
-  border-bottom: 1px solid var(--vp-c-divider);
+  border-bottom: 1px solid var(--g-divider);
   padding: 0 0.5rem;
   overflow-x: auto;
 }
@@ -1263,7 +1263,7 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
   padding: 0.75rem 1.25rem;
   font-size: 0.8125rem;
   font-weight: 600;
-  color: var(--vp-c-text-3);
+  color: var(--g-text-3);
   background: none;
   border: none;
   border-bottom: 2px solid transparent;
@@ -1272,11 +1272,11 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
   transition: all 0.15s;
 }
 
-.code-tab:hover { color: var(--vp-c-text-2); }
+.code-tab:hover { color: var(--g-text-2); }
 
 .code-tab.active {
-  color: var(--vp-c-brand-1);
-  border-bottom-color: var(--vp-c-brand-1);
+  color: var(--g-brand);
+  border-bottom-color: var(--g-brand);
 }
 
 .code-panel {
@@ -1299,7 +1299,7 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
 
 .code-desc p {
   font-size: 0.8125rem;
-  color: var(--vp-c-text-2);
+  color: var(--g-text-2);
   line-height: 1.6;
   margin-bottom: 1rem;
 }
@@ -1307,12 +1307,12 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
 .code-block {
   flex: 1;
   min-width: 0;
-  background: var(--vp-c-bg);
-  border: 1px solid var(--vp-c-divider);
+  background: var(--g-bg);
+  border: 1px solid var(--g-divider);
   border-radius: 6px;
   padding: 1.25rem;
   overflow-x: auto;
-  font-family: var(--vp-font-family-mono);
+  font-family: var(--g-font-mono);
   font-size: 0.8125rem;
   line-height: 1.7;
 }
@@ -1324,8 +1324,8 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
   line-height: inherit;
 }
 
-.code-comment { color: var(--vp-c-text-3); }
-.code-key { color: var(--vp-c-brand-1); }
+.code-comment { color: var(--g-text-3); }
+.code-key { color: var(--g-brand); }
 .code-str { color: #16a34a; }
 .code-val { color: var(--g-shape); }
 
@@ -1341,24 +1341,24 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
 
 .format-card {
   padding: 1rem;
-  background: var(--vp-c-bg);
-  border: 1px solid var(--vp-c-divider);
+  background: var(--g-bg);
+  border: 1px solid var(--g-divider);
   border-radius: 6px;
   text-align: center;
 }
 
 .format-card code {
   display: block;
-  font-family: var(--vp-font-family-mono);
+  font-family: var(--g-font-mono);
   font-size: 0.875rem;
   font-weight: 700;
-  color: var(--vp-c-brand-1);
+  color: var(--g-brand);
   margin-bottom: 0.25rem;
 }
 
 .format-card span {
   font-size: 0.75rem;
-  color: var(--vp-c-text-3);
+  color: var(--g-text-3);
 }
 
 /* --- Standards --- */
@@ -1372,16 +1372,16 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
   display: block;
   padding: 1.25rem;
   border-radius: 8px;
-  border: 1px solid var(--vp-c-divider);
-  background: var(--vp-c-bg-soft);
+  border: 1px solid var(--g-divider);
+  background: var(--g-bg-soft);
   text-align: center;
   transition: all 0.2s;
   text-decoration: none;
-  color: var(--vp-c-text-1);
+  color: var(--g-text-1);
 }
 
 .standard-card:hover {
-  border-color: var(--vp-c-brand-1);
+  border-color: var(--g-brand);
   transform: translateY(-1px);
 }
 
@@ -1390,13 +1390,13 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
 
 .standard-card code {
   display: block;
-  font-family: var(--vp-font-family-mono);
+  font-family: var(--g-font-mono);
   font-size: 0.75rem;
-  background: var(--vp-c-default-soft);
+  background: var(--g-muted-soft);
   padding: 0.25rem 0.5rem;
   border-radius: 3px;
   margin-bottom: 0.5rem;
-  color: var(--vp-c-brand-1);
+  color: var(--g-brand);
 }
 
 .standard-card strong {
@@ -1407,7 +1407,7 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
 
 .standard-card p {
   font-size: 0.75rem;
-  color: var(--vp-c-text-2);
+  color: var(--g-text-2);
   line-height: 1.5;
 }
 
@@ -1419,8 +1419,8 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
 }
 
 .eco-card {
-  background: var(--vp-c-bg-soft);
-  border: 1px solid var(--vp-c-divider);
+  background: var(--g-bg-soft);
+  border: 1px solid var(--g-divider);
   border-radius: 8px;
   padding: 1.5rem;
   transition: all 0.2s ease;
@@ -1429,7 +1429,7 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
 }
 
 .eco-card:hover {
-  border-color: var(--vp-c-brand-1);
+  border-color: var(--g-brand);
   transform: translateY(-2px);
   box-shadow: 0 4px 20px rgba(0,0,0,0.06);
 }
@@ -1452,7 +1452,7 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
   justify-content: center;
   font-size: 1.25rem;
   font-weight: 700;
-  font-family: var(--vp-font-family-mono);
+  font-family: var(--g-font-mono);
   flex-shrink: 0;
 }
 
@@ -1480,11 +1480,11 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
 .eco-card .version {
   font-size: 0.6875rem;
   font-weight: 500;
-  color: var(--vp-c-text-3);
-  background: var(--vp-c-default-soft);
+  color: var(--g-text-3);
+  background: var(--g-muted-soft);
   padding: 0.0625rem 0.375rem;
   border-radius: 3px;
-  font-family: var(--vp-font-family-mono);
+  font-family: var(--g-font-mono);
 }
 
 .eco-card .category {
@@ -1492,12 +1492,12 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--vp-c-text-3);
+  color: var(--g-text-3);
 }
 
 .eco-card p {
   font-size: 0.8125rem;
-  color: var(--vp-c-text-2);
+  color: var(--g-text-2);
   line-height: 1.6;
   flex: 1;
   margin-bottom: 1rem;
@@ -1520,9 +1520,9 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
   align-items: center;
   gap: 1.25rem;
   padding: 1.5rem 1.75rem;
-  border: 1px solid var(--vp-c-divider);
+  border: 1px solid var(--g-divider);
   border-radius: 8px;
-  background: var(--vp-c-bg-soft);
+  background: var(--g-bg-soft);
   text-decoration: none;
   transition: all 0.2s ease;
 }
@@ -1543,8 +1543,8 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--vp-c-bg);
-  border: 1px solid var(--vp-c-divider);
+  background: var(--g-bg);
+  border: 1px solid var(--g-divider);
   flex-shrink: 0;
   padding: 0.5rem;
 }
@@ -1563,25 +1563,25 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
 .user-card-body strong {
   display: block;
   font-size: 0.9375rem;
-  color: var(--vp-c-text-1);
+  color: var(--g-text-1);
   margin-bottom: 0.125rem;
 }
 
 .user-card-body span {
   display: block;
   font-size: 0.8125rem;
-  color: var(--vp-c-text-2);
+  color: var(--g-text-2);
 }
 
 .user-card-detail {
   font-size: 0.75rem;
-  color: var(--vp-c-text-3);
+  color: var(--g-text-3);
   margin-top: 0.125rem;
 }
 
 .user-card-arrow {
   font-size: 1.125rem;
-  color: var(--vp-c-text-3);
+  color: var(--g-text-3);
   flex-shrink: 0;
   transition: color 0.2s, transform 0.2s;
 }

@@ -14,10 +14,10 @@ function isActive(link: string, current: string): boolean {
   return false
 }
 ---
-<aside class="sidebar hidden md:block sticky top-16 max-h-[calc(100vh-4rem)] overflow-y-auto py-4 pr-2 pl-6 text-sm w-64 border-r border-[var(--vp-c-divider)]" aria-label="Section navigation">
+<aside class="sidebar hidden md:block sticky top-16 max-h-[calc(100vh-4rem)] overflow-y-auto py-4 pr-2 pl-6 text-sm w-64 border-r border-[var(--g-divider)]" aria-label="Section navigation">
   {sidebar.map(group => (
     <section class="mb-6">
-      <h2 class="text-xs font-semibold uppercase tracking-wider text-[var(--vp-c-text-2)] mt-0 mb-2 px-2">{group.text}</h2>
+      <h2 class="text-xs font-semibold uppercase tracking-wider text-[var(--g-text-2)] mt-0 mb-2 px-2">{group.text}</h2>
       <ul class="list-none m-0 p-0">
         {group.items.map(item => (
           <li class="m-0">
@@ -27,7 +27,7 @@ function isActive(link: string, current: string): boolean {
                 'block px-2 py-1.5 rounded leading-snug no-underline',
                 isActive(item.link, pathname)
                   ? 'text-brand font-semibold'
-                  : 'text-[var(--vp-c-text-1)] hover:bg-[var(--vp-c-bg-soft)] hover:text-brand'
+                  : 'text-[var(--g-text-1)] hover:bg-[var(--g-bg-soft)] hover:text-brand'
               ]}
             >
               {item.text}

@@ -6,8 +6,7 @@ authors:
 date: 2026-05-27
 ---
 
-<BlogByline />
-
+<!-- byline rendered by BlogLayout -->
 Concept Browser 0.4 introduces powerful new ways to explore terminology data.
 
 ## Ontology browser
