@@ -4,7 +4,7 @@
 
 ## Tasks
 
-- [ ] Create `astro/package.json` with dependencies:
+- [x] Create `astro/package.json` with dependencies:
   ```json
   {
     "name": "glossarist.org-astro",
@@ -35,7 +35,7 @@
   }
   ```
 
-- [ ] Create `astro/astro.config.mjs`:
+- [x] Create `astro/astro.config.mjs`:
   ```js
   import { defineConfig } from 'astro/config'
   import vue from '@astrojs/vue'
@@ -52,7 +52,7 @@
   })
   ```
 
-- [ ] Create `astro/tsconfig.json`:
+- [x] Create `astro/tsconfig.json`:
   ```json
   {
     "extends": "astro/tsconfigs/strict",
@@ -63,7 +63,7 @@
   }
   ```
 
-- [ ] Create directory structure:
+- [x] Create directory structure:
   ```
   astro/
   ├── package.json
@@ -82,20 +82,20 @@
   └── scripts/              (or reference ../scripts)
   ```
 
-- [ ] Decision: **share `public/` and `scripts/` with VitePress root** via one of:
+- [x] Decision: **share `public/` and `scripts/` with VitePress root** via one of:
   - Symlink `astro/public` → `../public` (preferred; zero duplication during migration)
   - Or copy and keep in sync until cutover
   - Or change Astro `publicDir: '../public'` in config
 
   Pick symlink to start. Document the choice in `astro/README.md`.
 
-- [ ] Decision: **share Vue components** between VitePress and Astro. Add to `astro/astro.config.mjs`:
+- [x] Decision: **share Vue components** between VitePress and Astro. Add to `astro/astro.config.mjs`:
   ```js
   vite: { resolve: { alias: { '@components': '/.vitepress/theme/components' } } }
   ```
   Or copy components into `astro/src/components/` and keep in sync until cutover. **Preferred: copy**, because once we're in Astro-land we may want to convert some to `.astro` and we don't want to dual-maintain.
 
-- [ ] Smoke test: `cd astro && npm install && npm run build` produces `astro/dist/index.html`.
+- [x] Smoke test: `cd astro && npm install && npm run build` produces `astro/dist/index.html`.
 
 ## Acceptance
 
