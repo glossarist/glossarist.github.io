@@ -22,10 +22,12 @@ Selected concept entry will be shown in the main module view. You can switch bet
 If you are satisfied with the proposal, you can click the Accept Revision button. If an entirely new concept is being proposed, you must specify a unique numeric ID.
 
 ::: info Troubleshooting
+
 If the "Accept revision" button is disabled, this may be caused by the following:
 
 - You are not listed in [register roles](/docs/adopt/2-infrastructure/) as register manager.
 - The change request in question has not been submitted yet.
+
 :::
 
 ## Updating Change Request stage
@@ -33,7 +35,9 @@ If the "Accept revision" button is disabled, this may be caused by the following
 When you are finished reviewing a CR and accepting revisions, you can change CR stage to Resolved or Rejected.
 
 ::: info
+
 Glossarist Desktop does not automatically advance CR stage when you accept revisions, and it does not strictly enforce the stage based on whether revisions were accepted. In other words, it is up to you to mark the CR as Resolved or Rejected.
 
 If you accepted only _some_ of the proposed changes, you can use either status Resolved or Rejected in accordance with your or your organization's policies.
+
 :::

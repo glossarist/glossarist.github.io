@@ -10,7 +10,9 @@ Shows all relationships to or from selected concept. Allows to add or remove out
 ![Relationships panel screenshot](/images/desktop/relationships.png)
 
 ::: info
+
 For users who are not register managers, it is not currently possible to specify relationships.
+
 :::
 
 - Read how to [link concepts](/docs/desktop/tutorials/linking-concepts).

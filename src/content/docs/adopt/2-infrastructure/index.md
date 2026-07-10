@@ -22,9 +22,11 @@ After filling in the basic settings, click "Create repository from template".
 You will be redirected to your new repository page.
 
 ::: info
+
 Take note of your **repository URL** in the form of `https://github.com/<username or organization>/<repository name>`. It will be needed to set up Glossarist Desktop app.
 
 In our example, a glossary repository called `test-glossary` is being created under organization `riboseinc`.
+
 :::
 
 ## 2. Filling in register metadata & roles
@@ -49,7 +51,9 @@ Edit `roles.yaml` and see comments inside the file. This file specifies which Gi
 (Skip this if you are the only contributor for now. You can revisit this part later when collaborators join you.)
 
 ::: info
+
 Every collaborator would be required to have a GitHub account of their own.
+
 :::
 
 - Invite GitHub collaborators to the repository you've created. Navigate to your repository's access settings page on GitHub and use the button that will be labeled either "Invite collaborator" or "Invite teams or people". Each collaborator you add must have at least "Write" role specified on GitHub.

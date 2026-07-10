@@ -13,6 +13,7 @@ This is the address of the Git repository that is used to version Glossarist dat
 
 ::: important
 Repository URL must be in the following format: `https://<domain name>/<user>/<repository>`. There must be no trailing slash.
+
 :::
 
 ## Username

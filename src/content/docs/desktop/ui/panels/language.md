@@ -10,7 +10,9 @@ Lists available languages, and allows choosing a language to view or edit locali
 ![Language panel with a list of languages](/images/desktop/language.png)
 
 ::: info
+
 To bring application more in line with how registry data is managed, in the next version of the app language-specific registry item data will be split into subregistries, and the Languages panel will no longer work the way described on this page.
+
 :::
 
 ## Listed languages
