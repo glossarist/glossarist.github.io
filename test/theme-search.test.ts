@@ -22,8 +22,10 @@ function readHead(html: string): string {
 // Astro bundled for this page, plus any inline <script> blocks.
 function readAllScriptSources(html: string): string {
   const parts: string[] = []
-  // Inline scripts
-  const inlineRe = /<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g
+  // Inline scripts. Match opening + closing tags permissively (case-insensitive,
+  // arbitrary whitespace, attributes) to satisfy CodeQL's
+  // js/regex-incomplete-anchor rule which flags overly-narrow patterns.
+  const inlineRe = /<script[\s\S]*?>([\s\S]*?)<\/script[\s\S]*?>/gi
   let m
   while ((m = inlineRe.exec(html))) parts.push(m[1])
   // External module scripts (Astro bundles to /_astro/*.js)
