@@ -6,8 +6,7 @@ authors:
 date: 2026-05-27
 ---
 
-<BlogByline />
-
+<!-- byline rendered by BlogLayout -->
 Glossarist-js 0.2 introduces comprehensive GCR package support to the JavaScript SDK.
 
 ## GCR package read/write

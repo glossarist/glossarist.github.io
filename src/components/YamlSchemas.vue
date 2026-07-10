@@ -185,13 +185,13 @@ onMounted(() => { if (loaded.value) handleHash() })
   align-items: center;
   gap: 0.75rem;
   padding: 2rem 0;
-  color: var(--vp-c-text-3);
+  color: var(--g-text-3);
   font-style: italic;
 }
 
 .ys-spinner {
   width: 18px; height: 18px;
-  border: 2px solid var(--vp-c-divider);
+  border: 2px solid var(--g-divider);
   border-top-color: var(--g-teal);
   border-radius: 50%;
   animation: ys-spin 0.6s linear infinite;
@@ -201,16 +201,16 @@ onMounted(() => { if (loaded.value) handleHash() })
 
 .ys-intro {
   font-size: 0.9375rem;
-  color: var(--vp-c-text-2);
+  color: var(--g-text-2);
   line-height: 1.7;
   margin-bottom: 2rem;
   max-width: 48rem;
 }
 
 .ys-intro code {
-  font-family: var(--vp-font-family-mono);
+  font-family: var(--g-font-mono);
   font-size: 0.8125rem;
-  background: var(--vp-c-default-soft);
+  background: var(--g-muted-soft);
   padding: 0.125rem 0.375rem;
   border-radius: 3px;
 }
@@ -219,7 +219,7 @@ onMounted(() => { if (loaded.value) handleHash() })
 .ys-tabs {
   display: flex;
   gap: 0;
-  border-bottom: 2px solid var(--vp-c-divider);
+  border-bottom: 2px solid var(--g-divider);
   margin-bottom: 2rem;
 }
 
@@ -227,7 +227,7 @@ onMounted(() => { if (loaded.value) handleHash() })
   padding: 0.75rem 1.5rem;
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--vp-c-text-3);
+  color: var(--g-text-3);
   background: none;
   border: none;
   border-bottom: 2px solid transparent;
@@ -236,16 +236,16 @@ onMounted(() => { if (loaded.value) handleHash() })
   transition: all 0.15s;
 }
 
-.ys-tab:hover { color: var(--vp-c-text-2); }
+.ys-tab:hover { color: var(--g-text-2); }
 
 .ys-tab.active {
-  color: var(--vp-c-brand-1);
-  border-bottom-color: var(--vp-c-brand-1);
+  color: var(--g-brand);
+  border-bottom-color: var(--g-brand);
 }
 
 /* Entity accordion */
 .ys-entity {
-  border: 1px solid var(--vp-c-divider);
+  border: 1px solid var(--g-divider);
   border-radius: 8px;
   margin-bottom: 0.5rem;
   overflow: hidden;
@@ -257,14 +257,14 @@ onMounted(() => { if (loaded.value) handleHash() })
   gap: 0.625rem;
   width: 100%;
   padding: 0.875rem 1rem;
-  background: var(--vp-c-bg-soft);
+  background: var(--g-bg-soft);
   border: none;
   cursor: pointer;
   text-align: left;
   transition: background 0.15s;
 }
 
-.ys-entity-header:hover { background: var(--vp-c-default-soft); }
+.ys-entity-header:hover { background: var(--g-muted-soft); }
 
 .ys-entity-dot {
   width: 10px;
@@ -278,30 +278,30 @@ onMounted(() => { if (loaded.value) handleHash() })
   flex: 1;
   font-weight: 600;
   font-size: 0.9375rem;
-  color: var(--vp-c-text-1);
+  color: var(--g-text-1);
 }
 
 .ys-entity-fields {
   font-size: 0.75rem;
-  color: var(--vp-c-text-3);
-  background: var(--vp-c-default-soft);
+  color: var(--g-text-3);
+  background: var(--g-muted-soft);
   padding: 0.125rem 0.5rem;
   border-radius: 9999px;
 }
 
 .ys-entity-chevron {
   font-size: 0.75rem;
-  color: var(--vp-c-text-3);
+  color: var(--g-text-3);
 }
 
 .ys-entity-body {
   padding: 1rem 1.25rem 1.25rem;
-  border-top: 1px solid var(--vp-c-divider);
+  border-top: 1px solid var(--g-divider);
 }
 
 .ys-entity-desc {
   font-size: 0.875rem;
-  color: var(--vp-c-text-2);
+  color: var(--g-text-2);
   line-height: 1.6;
   margin-bottom: 0.75rem;
 }
@@ -318,13 +318,13 @@ onMounted(() => { if (loaded.value) handleHash() })
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: var(--vp-c-text-3);
+  color: var(--g-text-3);
 }
 
 .ys-entity-meta code {
-  font-family: var(--vp-font-family-mono);
+  font-family: var(--g-font-mono);
   font-size: 0.8125rem;
-  background: var(--vp-c-default-soft);
+  background: var(--g-muted-soft);
   padding: 0.125rem 0.375rem;
   border-radius: 3px;
 }
@@ -343,42 +343,42 @@ onMounted(() => { if (loaded.value) handleHash() })
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: var(--vp-c-text-3);
+  color: var(--g-text-3);
   padding: 0.5rem 0.625rem;
-  border-bottom: 1px solid var(--vp-c-divider);
+  border-bottom: 1px solid var(--g-divider);
 }
 
 .ys-table td {
   padding: 0.5rem 0.625rem;
-  border-bottom: 1px solid var(--vp-c-divider);
+  border-bottom: 1px solid var(--g-divider);
   vertical-align: top;
 }
 
 .ys-table tr:last-child td { border-bottom: none; }
 
 .ys-field {
-  font-family: var(--vp-font-family-mono);
+  font-family: var(--g-font-mono);
   font-size: 0.8125rem;
   font-weight: 600;
   color: var(--g-teal);
 }
 
 .ys-key {
-  font-family: var(--vp-font-family-mono);
+  font-family: var(--g-font-mono);
   font-size: 0.75rem;
-  color: var(--vp-c-text-3);
+  color: var(--g-text-3);
 }
 
 .ys-type {
-  font-family: var(--vp-font-family-mono);
+  font-family: var(--g-font-mono);
   font-size: 0.75rem;
-  background: var(--vp-c-default-soft);
+  background: var(--g-muted-soft);
   padding: 0.125rem 0.25rem;
   border-radius: 3px;
 }
 
 .ys-ref {
-  font-family: var(--vp-font-family-mono);
+  font-family: var(--g-font-mono);
   font-size: 0.75rem;
   color: var(--g-class);
   background: rgba(41, 65, 91, 0.08);
@@ -389,18 +389,18 @@ onMounted(() => { if (loaded.value) handleHash() })
 .dark .ys-ref { color: var(--g-class); background: rgba(91, 147, 196, 0.12); }
 
 .ys-card {
-  font-family: var(--vp-font-family-mono);
+  font-family: var(--g-font-mono);
   font-size: 0.6875rem;
-  color: var(--vp-c-text-3);
+  color: var(--g-text-3);
   white-space: nowrap;
 }
 
 .ys-vals {
   font-size: 0.75rem;
-  color: var(--vp-c-text-2);
+  color: var(--g-text-2);
 }
 
-.ys-dash { color: var(--vp-c-text-3); }
+.ys-dash { color: var(--g-text-3); }
 
 /* YAML example */
 .ys-yaml-section { margin-top: 1rem; }
@@ -410,20 +410,20 @@ onMounted(() => { if (loaded.value) handleHash() })
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: var(--vp-c-text-3);
+  color: var(--g-text-3);
   margin-bottom: 0.5rem;
 }
 
 .ys-yaml {
-  background: var(--vp-c-bg-soft);
-  border: 1px solid var(--vp-c-divider);
+  background: var(--g-bg-soft);
+  border: 1px solid var(--g-divider);
   border-radius: 6px;
   padding: 1rem;
-  font-family: var(--vp-font-family-mono);
+  font-family: var(--g-font-mono);
   font-size: 0.8125rem;
   line-height: 1.6;
   overflow-x: auto;
-  color: var(--vp-c-text-2);
+  color: var(--g-text-2);
 }
 
 .ys-yaml code {
@@ -445,12 +445,12 @@ onMounted(() => { if (loaded.value) handleHash() })
 
 .ys-enum-def {
   font-size: 0.875rem;
-  color: var(--vp-c-text-2);
+  color: var(--g-text-2);
   margin-bottom: 0.75rem;
 }
 
 .ys-enum-list {
-  border: 1px solid var(--vp-c-divider);
+  border: 1px solid var(--g-divider);
   border-radius: 8px;
   overflow: hidden;
 }
@@ -460,14 +460,14 @@ onMounted(() => { if (loaded.value) handleHash() })
   align-items: baseline;
   gap: 0.75rem;
   padding: 0.625rem 1rem;
-  border-bottom: 1px solid var(--vp-c-divider);
+  border-bottom: 1px solid var(--g-divider);
   flex-wrap: wrap;
 }
 
 .ys-enum-item:last-child { border-bottom: none; }
 
 .ys-enum-id {
-  font-family: var(--vp-font-family-mono);
+  font-family: var(--g-font-mono);
   font-size: 0.8125rem;
   font-weight: 600;
   color: var(--g-teal);
@@ -484,7 +484,7 @@ onMounted(() => { if (loaded.value) handleHash() })
 
 .ys-enum-desc {
   font-size: 0.8125rem;
-  color: var(--vp-c-text-2);
+  color: var(--g-text-2);
   flex-basis: 100%;
   padding-left: 0;
   margin-top: 0.25rem;

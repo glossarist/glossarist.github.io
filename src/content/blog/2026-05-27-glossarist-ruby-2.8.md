@@ -6,8 +6,7 @@ authors:
 date: 2026-05-27
 ---
 
-<BlogByline />
-
+<!-- byline rendered by BlogLayout -->
 Glossarist-ruby 2.8 brings significant enhancements to the Ruby gem for managing terminology concepts.
 
 ## V3 schema support

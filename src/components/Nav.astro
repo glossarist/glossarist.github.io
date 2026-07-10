@@ -66,8 +66,8 @@ function parentActive(item: { items?: { link: string }[], link?: string }): bool
 }
 ---
 
-<header class="flex items-center gap-6 px-6 py-3 border-b border-[var(--vp-c-divider)] bg-[var(--vp-c-bg)] sticky top-0 z-50">
-  <a href="/" class="flex items-center gap-2 font-bold text-[var(--vp-c-text-1)] no-underline">
+<header class="flex items-center gap-6 px-6 py-3 border-b border-[var(--g-divider)] bg-[var(--g-bg)] sticky top-0 z-50">
+  <a href="/" class="flex items-center gap-2 font-bold text-[var(--g-text-1)] no-underline">
     <img src="/logo-glossarist.svg" alt="Glossarist" width="32" height="32" />
     <span>Glossarist</span>
   </a>
@@ -82,12 +82,12 @@ function parentActive(item: { items?: { link: string }[], link?: string }): bool
             <button
               class:list={[
                 'bg-transparent border-none px-3 py-2 cursor-pointer font-inherit hover:text-brand',
-                parentOn ? 'text-brand font-semibold' : 'text-[var(--vp-c-text-1)]',
+                parentOn ? 'text-brand font-semibold' : 'text-[var(--g-text-1)]',
               ]}
             >
               {item.text}
             </button>
-            <ul class="absolute top-full left-0 bg-[var(--vp-c-bg)] border border-[var(--vp-c-divider)] rounded-lg p-2 list-none m-0 min-w-[200px] hidden group-hover:block shadow-lg">
+            <ul class="absolute top-full left-0 bg-[var(--g-bg)] border border-[var(--g-divider)] rounded-lg p-2 list-none m-0 min-w-[200px] hidden group-hover:block shadow-lg">
               {item.items.map((sub) => {
                 const on = linkActive(sub.link)
                 return (
@@ -95,10 +95,10 @@ function parentActive(item: { items?: { link: string }[], link?: string }): bool
                     <a
                       href={sub.link}
                       class:list={[
-                        'block px-2 py-1.5 rounded no-underline hover:bg-[var(--vp-c-bg-soft)]',
+                        'block px-2 py-1.5 rounded no-underline hover:bg-[var(--g-bg-soft)]',
                         on
                           ? 'text-brand font-semibold'
-                          : 'text-[var(--vp-c-text-1)] hover:text-brand',
+                          : 'text-[var(--g-text-1)] hover:text-brand',
                       ]}
                     >{sub.text}</a>
                   </li>
@@ -111,7 +111,7 @@ function parentActive(item: { items?: { link: string }[], link?: string }): bool
             href={item.link}
             class:list={[
               'px-3 py-2 no-underline hover:text-brand',
-              parentOn ? 'text-brand font-semibold' : 'text-[var(--vp-c-text-1)]',
+              parentOn ? 'text-brand font-semibold' : 'text-[var(--g-text-1)]',
             ]}
           >{item.text}</a>
         )}
@@ -123,7 +123,7 @@ function parentActive(item: { items?: { link: string }[], link?: string }): bool
   <div class="flex items-center gap-2 ml-1">
     <button
       type="button"
-      class="search-trigger flex items-center gap-2 bg-[var(--vp-c-bg-soft)] border border-[var(--vp-c-divider)] px-2.5 py-1.5 rounded-md text-[var(--vp-c-text-2)] cursor-pointer font-inherit text-xs hover:bg-[var(--vp-c-bg-alt)] hover:text-[var(--vp-c-text-1)]"
+      class="search-trigger flex items-center gap-2 bg-[var(--g-bg-soft)] border border-[var(--g-divider)] px-2.5 py-1.5 rounded-md text-[var(--g-text-2)] cursor-pointer font-inherit text-xs hover:bg-[var(--g-bg-alt)] hover:text-[var(--g-text-1)]"
       id="search-trigger"
       aria-label="Search"
     >
@@ -132,12 +132,12 @@ function parentActive(item: { items?: { link: string }[], link?: string }): bool
         <line x1="21" y1="21" x2="16.65" y2="16.65"/>
       </svg>
       <span class="hidden sm:inline">Search</span>
-      <kbd class="font-mono text-[11px] px-1 py-0.5 border border-[var(--vp-c-divider)] rounded bg-[var(--vp-c-bg)] text-[var(--vp-c-text-3)]">⌘K</kbd>
+      <kbd class="font-mono text-[11px] px-1 py-0.5 border border-[var(--g-divider)] rounded bg-[var(--g-bg)] text-[var(--g-text-3)]">⌘K</kbd>
     </button>
 
     <button
       type="button"
-      class="theme-toggle flex items-center justify-center bg-transparent border border-transparent px-1.5 py-1.5 rounded-md text-[var(--vp-c-text-2)] cursor-pointer hover:bg-[var(--vp-c-bg-soft)] hover:text-[var(--vp-c-text-1)]"
+      class="theme-toggle flex items-center justify-center bg-transparent border border-transparent px-1.5 py-1.5 rounded-md text-[var(--g-text-2)] cursor-pointer hover:bg-[var(--g-bg-soft)] hover:text-[var(--g-text-1)]"
       id="theme-toggle"
       aria-label="Toggle dark mode"
       title="Toggle theme"
@@ -162,7 +162,7 @@ function parentActive(item: { items?: { link: string }[], link?: string }): bool
 
 <dialog
   id="search-dialog"
-  class="search-dialog w-[min(640px,90vw)] max-h-[80vh] p-0 border border-[var(--vp-c-divider)] rounded-xl bg-[var(--vp-c-bg)] shadow-2xl mt-[10vh]"
+  class="search-dialog w-[min(640px,90vw)] max-h-[80vh] p-0 border border-[var(--g-divider)] rounded-xl bg-[var(--g-bg)] shadow-2xl mt-[10vh]"
 >
   <div class="flex flex-col max-h-[80vh] relative">
     <input
@@ -170,11 +170,11 @@ function parentActive(item: { items?: { link: string }[], link?: string }): bool
       id="search-input"
       placeholder="Search the docs…"
       autocomplete="off"
-      class="w-full p-4 px-5 border-none border-b border-[var(--vp-c-divider)] text-base bg-transparent text-[var(--vp-c-text-1)] outline-none"
+      class="w-full p-4 px-5 border-none border-b border-[var(--g-divider)] text-base bg-transparent text-[var(--g-text-1)] outline-none"
     />
     <div id="search-results" class="search-results overflow-y-auto p-2 flex-1"></div>
     <button
-      class="absolute top-2.5 right-2.5 bg-transparent border border-[var(--vp-c-divider)] rounded px-2 py-1 text-xs text-[var(--vp-c-text-3)] cursor-pointer"
+      class="absolute top-2.5 right-2.5 bg-transparent border border-[var(--g-divider)] rounded px-2 py-1 text-xs text-[var(--g-text-3)] cursor-pointer"
       id="search-close"
       aria-label="Close"
     >Esc</button>
@@ -193,11 +193,11 @@ function parentActive(item: { items?: { link: string }[], link?: string }): bool
   padding: 0.625rem 0.75rem;
   border-radius: 6px;
   text-decoration: none;
-  color: var(--vp-c-text-1);
+  color: var(--g-text-1);
 }
 :global(.search-result:hover),
 :global(.search-result.active) {
-  background: var(--vp-c-bg-soft);
+  background: var(--g-bg-soft);
 }
 :global(.search-result-title) {
   font-weight: 600;
@@ -206,25 +206,25 @@ function parentActive(item: { items?: { link: string }[], link?: string }): bool
 }
 :global(.search-result-excerpt) {
   font-size: 0.8125rem;
-  color: var(--vp-c-text-2);
+  color: var(--g-text-2);
   line-height: 1.4;
 }
 :global(.search-result-excerpt mark) {
-  background: var(--vp-c-brand-soft);
-  color: var(--vp-c-brand-1);
+  background: var(--g-brand-soft);
+  color: var(--g-brand);
   padding: 0.0625rem 0.125rem;
   border-radius: 2px;
 }
 :global(.search-empty) {
   padding: 1.5rem;
   text-align: center;
-  color: var(--vp-c-text-3);
+  color: var(--g-text-3);
   font-size: 0.875rem;
 }
 :global(.search-loader) {
   padding: 1rem;
   text-align: center;
-  color: var(--vp-c-text-3);
+  color: var(--g-text-3);
   font-size: 0.875rem;
 }
 </style>

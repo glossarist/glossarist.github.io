@@ -147,7 +147,7 @@ const alphabeticalList = computed(() =>
 
 .rt-summary {
   font-size: 0.9375rem;
-  color: var(--vp-c-text-2);
+  color: var(--g-text-2);
   margin-bottom: 2rem;
 }
 
@@ -165,7 +165,7 @@ const alphabeticalList = computed(() =>
   font-weight: 600;
   margin-bottom: 0.75rem;
   padding-bottom: 0.375rem;
-  border-bottom: 1px solid var(--vp-c-divider);
+  border-bottom: 1px solid var(--g-divider);
 }
 
 .rt-category table,
@@ -182,15 +182,15 @@ const alphabeticalList = computed(() =>
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: var(--vp-c-text-3);
+  color: var(--g-text-3);
   padding: 0.5rem 0.75rem;
-  border-bottom: 2px solid var(--vp-c-divider);
+  border-bottom: 2px solid var(--g-divider);
 }
 
 .rt-category td,
 .rt-ref-table td {
   padding: 0.5rem 0.75rem;
-  border-bottom: 1px solid var(--vp-c-divider);
+  border-bottom: 1px solid var(--g-divider);
   vertical-align: top;
   line-height: 1.5;
 }
@@ -202,25 +202,25 @@ const alphabeticalList = computed(() =>
 
 .rt-category td code,
 .rt-ref-table td code {
-  font-family: var(--vp-font-family-mono);
+  font-family: var(--g-font-mono);
   font-size: 0.8125rem;
-  background: var(--vp-c-default-soft);
+  background: var(--g-muted-soft);
   padding: 0.125rem 0.375rem;
   border-radius: 3px;
   white-space: nowrap;
 }
 
-.rt-dash { color: var(--vp-c-text-3); }
+.rt-dash { color: var(--g-text-3); }
 
 .rt-num {
-  color: var(--vp-c-text-3);
+  color: var(--g-text-3);
   font-size: 0.8125rem;
   width: 2rem;
 }
 
 .rt-details {
   margin-top: 2rem;
-  border: 1px solid var(--vp-c-divider);
+  border: 1px solid var(--g-divider);
   border-radius: 8px;
   padding: 1rem 1.25rem;
 }
@@ -228,10 +228,10 @@ const alphabeticalList = computed(() =>
 .rt-details summary {
   font-weight: 600;
   cursor: pointer;
-  color: var(--vp-c-text-2);
+  color: var(--g-text-2);
 }
 
-.rt-details summary:hover { color: var(--vp-c-text-1); }
+.rt-details summary:hover { color: var(--g-text-1); }
 
 .rt-details[open] summary { margin-bottom: 1rem; }
 
@@ -240,13 +240,13 @@ const alphabeticalList = computed(() =>
   align-items: center;
   gap: 0.75rem;
   padding: 2rem 0;
-  color: var(--vp-c-text-3);
+  color: var(--g-text-3);
   font-style: italic;
 }
 
 .rt-spinner {
   width: 18px; height: 18px;
-  border: 2px solid var(--vp-c-divider);
+  border: 2px solid var(--g-divider);
   border-top-color: var(--g-teal);
   border-radius: 50%;
   animation: rt-spin 0.6s linear infinite;

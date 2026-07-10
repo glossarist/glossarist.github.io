@@ -15,13 +15,13 @@ const outline = headings.filter(h => h.depth >= 2 && h.depth <= 3)
 
 {outline.length > 0 && (
   <aside class="outline hidden lg:block sticky top-16 max-h-[calc(100vh-4rem)] overflow-y-auto py-4 pl-4 text-[13px] w-48" aria-label="On this page">
-    <div class="text-xs font-semibold uppercase tracking-wider text-[var(--vp-c-text-2)] mb-2">On this page</div>
+    <div class="text-xs font-semibold uppercase tracking-wider text-[var(--g-text-2)] mb-2">On this page</div>
     <ul class="list-none p-0 m-0">
       {outline.map(h => (
         <li class:list={[h.depth === 3 && 'pl-3']}>
           <a
             href={`#${h.slug}`}
-            class="block py-1 px-2 text-[var(--vp-c-text-2)] no-underline hover:text-brand leading-snug"
+            class="block py-1 px-2 text-[var(--g-text-2)] no-underline hover:text-brand leading-snug"
           >{h.text}</a>
         </li>
       ))}
