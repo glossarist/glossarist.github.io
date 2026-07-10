@@ -33,7 +33,7 @@ const pageTitle = title === 'Glossarist' ? title : `${title} | Glossarist`
     </script>
   </head>
   <body class={fullscreen ? 'fullscreen-page' : ''}>
-    {!fullscreen && <Nav />}
+    <Nav />
     <main><slot /></main>
     {!fullscreen && <Footer />}
   </body>
