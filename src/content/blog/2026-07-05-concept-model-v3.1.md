@@ -55,6 +55,7 @@ A `Figure` carries localized caption, alt text, long description, multiple image
 
 ::: v-pre
 Concepts reference them via the `{{fig:id}}` mention syntax — analogous to `{{cite:id}}` for sources.
+
 :::
 
 The concept-level `NonVerbRep` is preserved as a *reference* layer, so existing V2 datasets keep working unchanged.
@@ -92,6 +93,7 @@ Three smaller additions round out the model:
 
 ::: v-pre
 - **`ConceptSource#id`** — enables `{{cite:id}}` inline mentions in running text; concept-browser resolves these to full citations at render time
+
 :::
 
 ### 52 relationship types

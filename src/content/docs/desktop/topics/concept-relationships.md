@@ -17,7 +17,9 @@ Outgoing relationships can be of two types:
 Changing **outgoing concept relationships** is possible via the Relationships panel.
 
 ::: info
+
 Concept relationships are not currently part of Change Request flow. Currently, only register manager can edit concept relationships.
+
 :::
 
 ## Incoming relationships

@@ -1,0 +1,318 @@
+/* ================================================================
+   GLOSSARIST BASE STYLES
+   Ports the VitePress default theme's base CSS (vars, fonts, base,
+   typography, code, tables, blockquotes) so the Astro build has the
+   same look-and-feel as the original VitePress site.
+   ================================================================ */
+
+/* ---------- CSS Custom Properties (light defaults) ---------- */
+:root {
+  /* Backgrounds */
+  --vp-c-bg: #ffffff;
+  --vp-c-bg-soft: #f6f6f7;
+  --vp-c-bg-soft-up: #f9f9f9;
+  --vp-c-bg-mute: #f1f1f2;
+  --vp-c-bg-alt: #f6f6f7;
+  --vp-c-bg-safe: #ffffff;
+
+  /* Text */
+  --vp-c-text-1: rgba(60, 60, 67, 1);
+  --vp-c-text-2: rgba(60, 60, 67, 0.78);
+  --vp-c-text-3: rgba(60, 60, 67, 0.56);
+
+  /* Dividers */
+  --vp-c-divider: #e2e2e3;
+  --vp-c-divider-light: rgba(82, 82, 91, 0.16);
+  --vp-c-divider-lighter: rgba(82, 82, 91, 0.08);
+
+  /* Brand defaults (overridden in custom.css) */
+  --vp-c-brand-1: #3b82f6;
+  --vp-c-brand-2: #2563eb;
+  --vp-c-brand-3: #1d4ed8;
+  --vp-c-brand-soft: rgba(59, 130, 246, 0.14);
+  --vp-c-default-soft: rgba(82, 82, 91, 0.16);
+
+  /* Code blocks */
+  --vp-code-line-height: 1.7;
+  --vp-code-font-size: 0.875em;
+  --vp-code-block-bg: rgba(0, 0, 0, 0.03);
+  --vp-code-line-highlight-color: rgba(0, 0, 0, 0.05);
+
+  /* Typography */
+  --vp-font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  --vp-font-family-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+
+  /* Layout */
+  --vp-layout-max-width: 1440px;
+  --vp-content-font-size: 16px;
+  --vp-content-line-height: 1.7;
+}
+
+/* ---------- Dark mode ---------- */
+.dark {
+  --vp-c-bg: #1d1e20;
+  --vp-c-bg-soft: #232425;
+  --vp-c-bg-soft-up: #292a2b;
+  --vp-c-bg-mute: #2c2d2f;
+  --vp-c-bg-alt: #1a1a1a;
+  --vp-c-bg-safe: #232425;
+
+  --vp-c-text-1: rgba(255, 255, 245, 0.86);
+  --vp-c-text-2: rgba(235, 235, 245, 0.6);
+  --vp-c-text-3: rgba(235, 235, 245, 0.38);
+
+  --vp-c-divider: rgba(82, 82, 91, 0.32);
+  --vp-c-divider-light: rgba(82, 82, 91, 0.32);
+  --vp-c-divider-lighter: rgba(82, 82, 91, 0.16);
+
+  --vp-code-block-bg: rgba(0, 0, 0, 0.3);
+  --vp-code-line-highlight-color: rgba(0, 0, 0, 0.5);
+}
+
+/* ---------- Reset & base ---------- */
+* {
+  box-sizing: border-box;
+}
+html {
+  font-family: var(--vp-font-family-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: var(--vp-content-font-size);
+  scroll-behavior: smooth;
+}
+body {
+  margin: 0;
+  background: var(--vp-c-bg);
+  color: var(--vp-c-text-1);
+  font-size: 16px;
+  line-height: var(--vp-content-line-height);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+/* ---------- Typography ---------- */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--vp-c-text-1);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: 0 0 1rem;
+  line-height: 1.25;
+}
+h1 { font-size: 2rem; }
+h2 { font-size: 1.5rem; margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--vp-c-divider); }
+h3 { font-size: 1.25rem; margin-top: 2rem; }
+h4 { font-size: 1.0625rem; margin-top: 1.75rem; }
+h5 { font-size: 0.9375rem; margin-top: 1.5rem; }
+h6 { font-size: 0.875rem; margin-top: 1.25rem; }
+
+p {
+  margin: 0 0 1rem;
+  line-height: var(--vp-content-line-height);
+}
+
+a {
+  color: var(--vp-c-brand-1);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+a:hover {
+  color: var(--vp-c-brand-2);
+  text-decoration: underline;
+}
+
+ul, ol {
+  padding-left: 1.25rem;
+  margin: 0 0 1rem;
+}
+li {
+  margin: 0.25rem 0;
+  line-height: var(--vp-content-line-height);
+}
+li > ul, li > ol { margin: 0.25rem 0; }
+
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--vp-c-divider);
+  margin: 2rem 0;
+}
+
+blockquote {
+  margin: 1rem 0;
+  padding: 0.5rem 1rem;
+  border-left: 4px solid var(--vp-c-brand-1);
+  background: var(--vp-c-bg-soft);
+  color: var(--vp-c-text-2);
+  border-radius: 0 6px 6px 0;
+}
+blockquote p:last-child { margin-bottom: 0; }
+
+/* ---------- Tables ---------- */
+table {
+  display: block;
+  border-collapse: collapse;
+  margin: 1.25rem 0;
+  overflow-x: auto;
+  width: 100%;
+  font-size: 0.9375rem;
+}
+thead {
+  background: var(--vp-c-bg-soft);
+}
+th, td {
+  border: 1px solid var(--vp-c-divider);
+  padding: 0.625rem 1rem;
+  text-align: left;
+  vertical-align: top;
+}
+th {
+  font-weight: 600;
+  color: var(--vp-c-text-1);
+}
+tbody tr:nth-child(even) {
+  background: var(--vp-c-bg-soft);
+}
+
+/* ---------- Inline code ---------- */
+:not(pre) > code {
+  font-family: var(--vp-font-family-mono);
+  font-size: var(--vp-code-font-size);
+  background: var(--vp-code-block-bg);
+  padding: 0.125rem 0.375rem;
+  border-radius: 4px;
+  color: var(--vp-c-text-1);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ---------- Code blocks ---------- */
+pre {
+  background: var(--vp-code-block-bg);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin: 1rem 0;
+  overflow-x: auto;
+  font-family: var(--vp-font-family-mono);
+  font-size: var(--vp-code-font-size);
+  line-height: var(--vp-code-line-height);
+}
+pre code {
+  background: transparent;
+  padding: 0;
+  font-weight: 400;
+  font-size: inherit;
+  white-space: pre;
+  color: var(--vp-c-text-1);
+}
+
+/* ---------- Prose content ---------- */
+.prose {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  color: var(--vp-c-text-1);
+  font-size: 16px;
+  line-height: var(--vp-content-line-height);
+}
+.prose :is(h1, h2, h3, h4, h5, h6) {
+  scroll-margin-top: 6rem;
+}
+.prose :is(h1, h2, h3, h4, h5, h6) a {
+  color: inherit;
+  text-decoration: none;
+}
+.prose :is(p, ul, ol, blockquote, table, pre) {
+  scroll-margin-top: 6rem;
+}
+
+/* ---------- VitePress-style custom blocks (admonitions) ---------- */
+.custom-block {
+  margin: 1rem 0;
+  padding: 1rem 1.25rem;
+  border-left: 4px solid var(--vp-c-divider);
+  border-radius: 8px;
+  background: var(--vp-c-bg-soft);
+  overflow-x: auto;
+}
+.custom-block .custom-block-title {
+  font-weight: 600;
+  font-size: 0.9375rem;
+  letter-spacing: 0.02em;
+  margin: 0 0 0.5rem;
+  text-transform: uppercase;
+}
+.custom-block p:last-child,
+.custom-block ul:last-child,
+.custom-block ol:last-child {
+  margin-bottom: 0;
+}
+.custom-block.tip {
+  border-left-color: var(--vp-c-brand-1, #3b82f6);
+  background: var(--vp-c-brand-soft, rgba(59, 130, 246, 0.1));
+}
+.custom-block.tip .custom-block-title { color: var(--vp-c-brand-1, #2563eb); }
+.custom-block.info {
+  border-left-color: #6b7280;
+  background: rgba(107, 114, 128, 0.1);
+}
+.custom-block.info .custom-block-title { color: #4b5563; }
+.custom-block.warning {
+  border-left-color: #f59e0b;
+  background: rgba(245, 158, 11, 0.1);
+}
+.custom-block.warning .custom-block-title { color: #b45309; }
+.custom-block.danger {
+  border-left-color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+.custom-block.danger .custom-block-title { color: #b91c1c; }
+.custom-block.details {
+  border-left-color: var(--vp-c-divider);
+  background: var(--vp-c-bg-soft);
+}
+.dark .custom-block.info {
+  border-left-color: #9ca3af;
+  background: rgba(156, 163, 175, 0.1);
+}
+.dark .custom-block.info .custom-block-title { color: #d1d5db; }
+
+/* ---------- Containers ---------- */
+main {
+  display: block;
+  min-height: calc(100vh - 8rem);
+}
+
+/* ---------- Selection ---------- */
+::selection {
+  background: var(--vp-c-brand-soft);
+  color: var(--vp-c-brand-1);
+}
+
+/* ---------- Scrollbar (webkit) ---------- */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--vp-c-divider);
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--vp-c-text-3);
+}
+
+/* ---------- Mobile tweaks ---------- */
+@media (max-width: 768px) {
+  html { font-size: 15px; }
+  h1 { font-size: 1.625rem; }
+  h2 { font-size: 1.25rem; }
+  h3 { font-size: 1.0625rem; }
+}

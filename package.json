@@ -13,21 +13,21 @@
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
-    "astro": "^7.0.0",
-    "@astrojs/vue": "^7.0.0",
-    "@astrojs/sitemap": "^3.7.0",
     "@astrojs/mdx": "^7.0.0",
     "@astrojs/rss": "^4.0.0",
+    "@astrojs/sitemap": "^3.7.0",
+    "@astrojs/vue": "^7.0.0",
+    "astro": "^7.0.0",
     "astro-pagefind": "^2.0.0",
     "vue": "^3.5.13",
     "yaml": "^2.9.0"
   },
   "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.7",
     "@vitest/coverage-v8": "^4.1.10",
     "@vue/test-utils": "^2.4.11",
     "jsdom": "^29.1.1",
     "typescript": "^5.7.3",
-    "vitest": "^4.1.10",
-    "@vitejs/plugin-vue": "^6.0.7"
+    "vitest": "^4.1.10"
   }
 }

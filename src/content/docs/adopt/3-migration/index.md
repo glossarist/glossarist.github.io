@@ -28,7 +28,9 @@ Viable source formats for conversion include, for example, Excel spreadsheets an
 You can take a look at [ISO/TC 211 termbase migration utility](https://github.com/geolexica/tc211-termbase), written in Ruby.
 
 ::: info
+
 Since the latest update of that script, Glossarist data format has somewhat evolved, but it can give you a general idea.
+
 :::
 
 ### Getting help with your import adapter

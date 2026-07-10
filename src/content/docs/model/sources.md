@@ -39,6 +39,7 @@ definition:
       Concepts are identified by their characteristics
       (see {{cite:iso-704}} §3.2).
 ```
+
 :::
 
 The same mechanism powers figure mentions via the fig mention syntax (see [Non-verbal entities](/docs/model/non-verbal#inline-figure-mentions)).

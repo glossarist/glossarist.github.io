@@ -8,7 +8,9 @@ description: What you see in the app and how it works
 What you see in the app and how it works.
 
 ::: info
+
 The main window of Glossarist app shows a brief description of the element under your mouse cursor: find Help panel in bottom left corner.
+
 :::
 
 ## Modules

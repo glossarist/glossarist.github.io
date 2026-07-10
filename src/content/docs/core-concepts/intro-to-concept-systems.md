@@ -12,7 +12,9 @@ Let's call any unit of our understanding a **concept**.
 To share knowledge with others, we come up with verbal **definitions** of our concepts. To make referring to a concept easier, we map it to a succinct representation. In ISO 704, it is called a **designation**.
 
 ::: info
+
 Words, phrases, abbreviations, math notation or other graphic symbols—both verbal and non-verbal designations can be used to refer to concepts.
+
 :::
 
 As we share knowledge, it may turn out that:

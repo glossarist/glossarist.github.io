@@ -18,7 +18,9 @@ Fetching changes happens automatically on each application launch. Full synchron
 ## Merge conflicts
 
 ::: info
+
 To reduce the probability of merge conflicts, make sure to run synchronization often. Do not "hoard changes"—it is often easier to revert undesired changes than resolve a merge conflict. Generally, the only reason you'd want to postpone synchronization is if you are offline.
+
 :::
 
 If another collaborator has modified the same data as you, and they synchronized first, it is possible that your changes cannot be automatically incorporated (merged). You will know this happened if after sync you see a message on top of the window saying that remote changes cannot be incorporated and merge conflict has occurred.

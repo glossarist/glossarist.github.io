@@ -152,6 +152,7 @@ eng:
         Quantities are classified hierarchically
         (see {{fig:quantity-classification}}).
 ```
+
 :::
 
 The concept-browser resolves these mentions to the figure's full caption, alt text, and image variant at render time.
