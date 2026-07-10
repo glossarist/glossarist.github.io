@@ -210,6 +210,26 @@ pre code {
   color: var(--g-text-1);
 }
 
+/*
+  Astro's dual-theme Shiki output (markdown.shikiConfig.themes.light+dark)
+  emits both color palettes on each <pre>/<span> via CSS custom properties:
+    light values are the defaults (background-color:#fff, color:#24292e...)
+    dark values are stored as --shiki-dark-bg, --shiki-dark, etc.
+
+  The browser's prefers-color-scheme media query handles the OS preference,
+  but our theme toggle uses a `.dark` class on <html> instead. Swap the
+  variables when that class is present so the toggle actually flips code
+  block colors.
+*/
+.dark .astro-code,
+.dark .astro-code span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+  text-decoration: var(--shiki-dark-text-decoration) !important;
+}
+
 /* ---------- Prose content ---------- */
 .prose {
   max-width: 720px;
