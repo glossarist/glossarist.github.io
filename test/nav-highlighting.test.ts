@@ -1,16 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { readFileSync, existsSync } from 'node:fs'
-import { resolve, join } from 'node:path'
-
-const root = resolve(import.meta.dirname, '..')
-
-function readBuilt(rel: string): string {
-  const path = join(root, rel)
-  if (!existsSync(path)) {
-    throw new Error(`Build output missing: ${rel}. Run \`npm run build\` first.`)
-  }
-  return readFileSync(path, 'utf-8')
-}
+import { readBuilt } from './_helpers'
 
 // Extract the <header>...</header> block from a built page
 function readHeader(rel: string): string {
@@ -157,14 +146,14 @@ describe('Nav active highlighting', () => {
 
   describe('header always renders', () => {
     it('renders header on fullscreen /reference/schema-browser', () => {
-      const html = readBuilt('dist/reference/schema-browser.html')
+      const html = readBuilt('dist/reference/schema-browser/index.html')
       expect(html).toMatch(/<header[^>]*>/)
       expect(html).toContain('id="search-trigger"')
       expect(html).toContain('id="theme-toggle"')
     })
 
     it('renders header on fullscreen /reference/ontology', () => {
-      const html = readBuilt('dist/reference/ontology.html')
+      const html = readBuilt('dist/reference/ontology/index.html')
       expect(html).toMatch(/<header[^>]*>/)
     })
   })
@@ -176,7 +165,7 @@ describe('Nav active highlighting', () => {
     })
 
     it('does NOT render footer on fullscreen pages', () => {
-      const html = readBuilt('dist/reference/schema-browser.html')
+      const html = readBuilt('dist/reference/schema-browser/index.html')
       expect(html).not.toMatch(/<footer[^>]*>/)
     })
   })

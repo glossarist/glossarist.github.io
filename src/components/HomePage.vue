@@ -488,7 +488,7 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
           </div>
           <p>{{ project.description }}</p>
           <div class="links">
-            <a :href="project.docs || `/docs/software/${project.name}`" class="btn btn-sm btn-secondary">Docs</a>
+            <a :href="project.docs || `/docs/software/${project.slug}`" class="btn btn-sm btn-secondary">Docs</a>
             <a :href="project.github" class="btn btn-sm btn-secondary" target="_blank" rel="noopener">GitHub</a>
           </div>
         </div>

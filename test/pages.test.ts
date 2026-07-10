@@ -1,20 +1,6 @@
 import { describe, it, expect } from 'vitest'
-import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs'
-import { resolve, join } from 'node:path'
+import { readBuilt, exists, existsSync, readdirSync, readFileSync, join, root } from "./_helpers"
 
-const root = resolve(import.meta.dirname, '..')
-
-function readBuilt(rel: string): string {
-  const path = join(root, rel)
-  if (!existsSync(path)) {
-    throw new Error(`Build output missing: ${rel}. Run \`npm run build\` first.`)
-  }
-  return readFileSync(path, 'utf-8')
-}
-
-function exists(rel: string): boolean {
-  return existsSync(join(root, rel))
-}
 
 describe('Home page /', () => {
   it('renders index.html', () => {
@@ -22,13 +8,13 @@ describe('Home page /', () => {
   })
 
   it('loads the HomePage Vue island', () => {
-    const html = readBuilt('dist/index.html')
+    const html = readBuilt('dist/index/index.html')
     // Astro hydrates client:load islands with this attribute
     expect(html).toMatch(/astro-island[^>]*HomePage/)
   })
 
   it('contains hero content', () => {
-    const html = readBuilt('dist/index.html')
+    const html = readBuilt('dist/index/index.html')
     expect(html).toMatch(/Glossarist/i)
   })
 })
@@ -39,7 +25,7 @@ describe('About page /about', () => {
   })
 
   it('renders the LogoMerge SVG with cultural labels', () => {
-    const html = readBuilt('dist/about.html')
+    const html = readBuilt('dist/about/index.html')
     expect(html).toContain('文')
     expect(html).toContain('ΓΛ')
     expect(html).toContain('ONE MARK')
@@ -52,7 +38,7 @@ describe('Blog index /blog', () => {
   })
 
   it('lists all 6 blog posts', () => {
-    const html = readBuilt('dist/blog.html')
+    const html = readBuilt('dist/blog/index.html')
     for (const slug of [
       '2026-05-27-concept-browser-0.4',
       '2026-05-27-concept-model-v3',
@@ -125,12 +111,12 @@ describe('Reference pages', () => {
   })
 
   it('loads SchemaReference Vue island on /reference/schema-browser', () => {
-    const html = readBuilt('dist/reference/schema-browser.html')
+    const html = readBuilt('dist/reference/schema-browser/index.html')
     expect(html).toMatch(/astro-island[^>]*SchemaReference/)
   })
 
   it('loads OntologyBrowser Vue island on /reference/ontology', () => {
-    const html = readBuilt('dist/reference/ontology.html')
+    const html = readBuilt('dist/reference/ontology/index.html')
     expect(html).toMatch(/astro-island[^>]*OntologyBrowser/)
   })
 })
@@ -141,21 +127,21 @@ describe('404 page', () => {
   })
 
   it('contains a return-home link', () => {
-    const html = readBuilt('dist/404.html')
+    const html = readBuilt('dist/404/index.html')
     expect(html).toMatch(/href="\/"/)
   })
 })
 
 describe('admonition rendering (rehype plugin)', () => {
   it('renders ::: info as <div class="custom-block info"> with title', () => {
-    const html = readBuilt('dist/docs/desktop/ui/panels/language.html')
+    const html = readBuilt('dist/docs/desktop/ui/panels/language/index.html')
     expect(html).toContain('class="custom-block info"')
     expect(html).toContain('class="custom-block-title"')
     expect(html).toContain('INFO')
   })
 
   it('does not leave literal ::: markers visible', () => {
-    const html = readBuilt('dist/docs/desktop/ui/panels/language.html')
+    const html = readBuilt('dist/docs/desktop/ui/panels/language/index.html')
     // After the plugin runs, no paragraph should contain ":::" as text
     expect(html).not.toMatch(/<p>[^<]*:::[^<]*<\/p>/)
   })
@@ -191,6 +177,40 @@ describe('Pagefind search index', () => {
 
   it('generates pagefind-entry.json manifest', () => {
     expect(exists('dist/pagefind/pagefind-entry.json')).toBe(true)
+  })
+})
+
+describe('URL routing parity (no broken internal links)', () => {
+  // Both /path and /path/ forms work in production because Astro's
+  // build.format: 'directory' emits /path/index.html for every route.
+  it('every internal link resolves to a built file', () => {
+    const distDir = join(root, 'dist')
+    const broken: string[] = []
+    let checked = 0
+    const htmlFiles = readdirSync(distDir, { recursive: true })
+      .filter(p => String(p).endsWith('.html'))
+    for (const file of htmlFiles) {
+      const html = readFileSync(join(distDir, file as string), 'utf-8')
+      const matches = html.matchAll(new RegExp('(?:href|src)="(/[^"]*)"', 'g'))
+      for (const m of matches) {
+        const url = m[1]
+        if (url.startsWith('/_astro/') || url.startsWith('/pagefind/') ||
+            url.startsWith('/data/') || url.startsWith('/images/')) continue
+        const clean = url.split('#')[0]
+        if (!clean) continue
+        checked++
+        const candidates = [
+          join(distDir, clean === '/' ? 'index.html' : clean + '.html'),
+          join(distDir, clean === '/' ? '.' : clean.replace(/^\//, '')),
+          join(distDir, (clean === '/' ? '' : clean.replace(/^\//, '')), 'index.html'),
+        ]
+        if (!candidates.some(c => existsSync(c))) {
+          broken.push(`${file} → ${url}`)
+        }
+      }
+    }
+    expect(checked, 'should have checked internal links').toBeGreaterThan(1000)
+    expect(broken, `Broken links:\n  ${broken.slice(0, 10).join('\n  ')}`).toEqual([])
   })
 })
 
