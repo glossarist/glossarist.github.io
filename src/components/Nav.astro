@@ -38,7 +38,32 @@ const nav = [
   { text: 'About', link: '/about' },
 ]
 
-const current = Astro.url.pathname
+// Normalize a path for comparison: strip trailing slash unless it's the root,
+// and strip a trailing `.html` (Astro.url.pathname returns the OUTPUT filename
+// during static build, but the served URL omits the .html extension).
+function norm(p: string): string {
+  let n = p
+  if (n.endsWith('.html')) n = n.slice(0, -5)
+  if (n === '') return '/'
+  if (n !== '/' && n.endsWith('/')) n = n.slice(0, -1)
+  return n
+}
+
+const current = norm(Astro.url.pathname)
+
+// A sub-link is active if current === link OR current starts with `${link}/`.
+// For directory links like `/docs/model/`, this matches `/docs/model/concepts`
+// but not `/docs/model-foo` (false-positive guard for sibling prefixes).
+function linkActive(link: string): boolean {
+  const n = norm(link)
+  return current === n || current.startsWith(n + '/')
+}
+
+// A dropdown parent is active if any of its children is active.
+function parentActive(item: { items?: { link: string }[], link?: string }): boolean {
+  if (item.items) return item.items.some(sub => linkActive(sub.link))
+  return item.link ? linkActive(item.link) : false
+}
 ---
 
 <header class="flex items-center gap-6 px-6 py-3 border-b border-[var(--vp-c-divider)] bg-[var(--vp-c-bg)] sticky top-0 z-50">
@@ -48,38 +73,51 @@ const current = Astro.url.pathname
   </a>
 
   <nav class="flex items-center gap-4 ml-auto">
-    {nav.map((item) => (
+    {nav.map((item) => {
+      const parentOn = parentActive(item)
+      return (
       <div class="group relative">
         {item.items ? (
           <>
-            <button class="bg-transparent border-none px-3 py-2 cursor-pointer font-inherit text-[var(--vp-c-text-1)] hover:text-brand">
+            <button
+              class:list={[
+                'bg-transparent border-none px-3 py-2 cursor-pointer font-inherit hover:text-brand',
+                parentOn ? 'text-brand font-semibold' : 'text-[var(--vp-c-text-1)]',
+              ]}
+            >
               {item.text}
             </button>
             <ul class="absolute top-full left-0 bg-[var(--vp-c-bg)] border border-[var(--vp-c-divider)] rounded-lg p-2 list-none m-0 min-w-[200px] hidden group-hover:block shadow-lg">
-              {item.items.map((sub) => (
-                <li>
-                  <a
-                    href={sub.link}
-                    class:list={[
-                      'block px-2 py-1.5 rounded text-[var(--vp-c-text-1)] no-underline hover:bg-[var(--vp-c-bg-soft)]',
-                      current === sub.link && 'text-brand font-semibold',
-                    ]}
-                  >{sub.text}</a>
-                </li>
-              ))}
+              {item.items.map((sub) => {
+                const on = linkActive(sub.link)
+                return (
+                  <li>
+                    <a
+                      href={sub.link}
+                      class:list={[
+                        'block px-2 py-1.5 rounded no-underline hover:bg-[var(--vp-c-bg-soft)]',
+                        on
+                          ? 'text-brand font-semibold'
+                          : 'text-[var(--vp-c-text-1)] hover:text-brand',
+                      ]}
+                    >{sub.text}</a>
+                  </li>
+                )
+              })}
             </ul>
           </>
         ) : (
           <a
             href={item.link}
             class:list={[
-              'px-3 py-2 no-underline text-[var(--vp-c-text-1)] hover:text-brand',
-              current === item.link && 'text-brand font-semibold',
+              'px-3 py-2 no-underline hover:text-brand',
+              parentOn ? 'text-brand font-semibold' : 'text-[var(--vp-c-text-1)]',
             ]}
           >{item.text}</a>
         )}
       </div>
-    ))}
+      )
+    })}
   </nav>
 
   <div class="flex items-center gap-2 ml-1">
