@@ -542,7 +542,7 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
 </template>
 
 <style scoped>
-/* Reset VitePress .vp-doc defaults — scoped attribute provides sufficient specificity */
+/* Reset prose defaults for this island — scoped attribute provides sufficient specificity */
 .home h1, .home h2, .home h3, .home h4,
 .home h5, .home h6 {
   margin: 0;

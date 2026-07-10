@@ -31,16 +31,19 @@ const showChrome = !fullscreen
 ---
 
 <BaseLayout title={title} description={description} fullscreen={fullscreen}>
-  <div class="doc-container">
+  <div class:list={[
+    'doc-container grid gap-8 max-w-[1440px] mx-auto px-6 items-start',
+    showChrome ? 'doc-with-chrome' : 'grid-cols-1',
+  ]}>
     {showChrome && <Sidebar pathname={pathname} />}
-    <main class="doc-main">
+    <main class="py-8 min-w-0">
       <article class="prose">
         <slot />
       </article>
       {showChrome && (
-        <div class="doc-meta">
+        <div class="mt-12 pt-4 border-t border-[var(--vp-c-divider)] text-xs text-[var(--vp-c-text-2)]">
           {lastUpdated && (
-            <span class="last-updated">
+            <span>
               Updated: {new Date(lastUpdated).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
             </span>
           )}
@@ -52,37 +55,19 @@ const showChrome = !fullscreen
 </BaseLayout>
 
 <style>
-.doc-container {
-  display: grid;
+.doc-container.doc-with-chrome {
   grid-template-columns: 16rem minmax(0, 1fr) 12rem;
-  gap: 2rem;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
-  align-items: start;
 }
-.doc-main {
-  padding: 2rem 0;
-  min-width: 0;
-}
-.doc-main :global(.prose) {
+.doc-container :global(.prose) {
   max-width: none;
 }
-.doc-meta {
-  margin-top: 3rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--vp-c-divider, #e5e7eb);
-  font-size: 0.8125rem;
-  color: var(--vp-c-text-2, #4b5563);
-}
-
 @media (max-width: 1024px) {
-  .doc-container {
+  .doc-container.doc-with-chrome {
     grid-template-columns: 16rem minmax(0, 1fr);
   }
 }
 @media (max-width: 768px) {
-  .doc-container {
+  .doc-container.doc-with-chrome {
     grid-template-columns: minmax(0, 1fr);
   }
 }
