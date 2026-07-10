@@ -1,9 +1,9 @@
 ---
 import { getCollection, render } from 'astro:content'
 import DocLayout from '../../layouts/DocLayout.astro'
-import ModelLanding from '../../components/ModelLanding.vue'
+import ModelLanding from '../../components/ModelLanding.astro'
 import RelationshipTypes from '../../components/RelationshipTypes.vue'
-import ReleaseDownloader from '../../components/ReleaseDownloader.vue'
+import ReleaseDownloader from '../../components/ReleaseDownloader.astro'
 
 export async function getStaticPaths() {
   const docs = await getCollection('docs')
@@ -30,9 +30,9 @@ const fullscreen = entry.data.fullscreen === true
   fullscreen={fullscreen}
 >
   <Content />
-  {showModelLanding && <div class="doc-component-mount"><ModelLanding client:visible /></div>}
+  {showModelLanding && <div class="doc-component-mount"><ModelLanding /></div>}
   {showRelationshipTypes && <div class="doc-component-mount"><RelationshipTypes client:visible /></div>}
-  {showReleaseDownloader && <div class="doc-component-mount"><ReleaseDownloader client:idle /></div>}
+  {showReleaseDownloader && <div class="doc-component-mount"><ReleaseDownloader /></div>}
 </DocLayout>
 
 <style>

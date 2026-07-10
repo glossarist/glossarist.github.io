@@ -1,0 +1,138 @@
+---
+const releasesURL = 'https://github.com/glossarist/glossarist-desktop/releases'
+---
+
+<div class="release-downloader" data-release-downloader>
+  <div data-rd-loading>Checking for latest release…</div>
+
+  <div data-rd-error hidden>
+    <a href={releasesURL} class="download-btn">View Releases on GitHub</a>
+  </div>
+
+  <div data-rd-success hidden>
+    <a data-rd-primary-link class="download-btn" href={releasesURL}>Download</a>
+    <div class="release-info" data-rd-info></div>
+  </div>
+</div>
+
+<script>
+  type OS = 'macOS' | 'Windows' | 'Ubuntu Linux'
+  type Asset = { name: string; browser_download_url: string }
+  type Release = {
+    name: string
+    assets: Asset[]
+    published_at: string
+    body: string
+  }
+
+  function detectOS(): OS | undefined {
+    const ua = navigator.userAgent
+    if (ua.indexOf('Mac') >= 0) return 'macOS'
+    if (ua.indexOf('Windows') >= 0) return 'Windows'
+    if (ua.indexOf('Ubuntu') >= 0 || ua.indexOf('Linux') >= 0) return 'Ubuntu Linux'
+    return undefined
+  }
+
+  function assetFor(releaseName: string, os: OS): { expected: string } {
+    if (os === 'Windows') return { expected: `glossarist-desktop-${releaseName}-portable.exe` }
+    if (os === 'macOS') return { expected: `glossarist-desktop-${releaseName}.dmg` }
+    return { expected: `glossarist-desktop-${releaseName}.snap` }
+  }
+
+  function formatMonthYear(dateStr: string): string {
+    return new Date(dateStr).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
+  }
+
+  async function loadRelease(): Promise<Release | null> {
+    const cacheKey = 'glossarist-latest-release'
+    const cacheTTL = 60 * 60 * 1000
+
+    try {
+      const cached = localStorage.getItem(cacheKey)
+      if (cached) {
+        const { data, timestamp } = JSON.parse(cached)
+        if (Date.now() - timestamp < cacheTTL) return data as Release
+      }
+
+      const res = await fetch('https://api.github.com/repos/glossarist/glossarist-desktop/releases/latest')
+      if (!res.ok) throw new Error('GitHub API error')
+      const data = await res.json()
+      const release: Release = {
+        name: data.name,
+        assets: (data.assets as any[]).map(a => ({ name: a.name, browser_download_url: a.browser_download_url })),
+        published_at: data.published_at,
+        body: data.body,
+      }
+      localStorage.setItem(cacheKey, JSON.stringify({ data: release, timestamp: Date.now() }))
+      return release
+    } catch {
+      return null
+    }
+  }
+
+  function showState(el: HTMLElement, state: 'loading' | 'error' | 'success') {
+    el.querySelector('[data-rd-loading]')?.toggleAttribute('hidden', state !== 'loading')
+    el.querySelector('[data-rd-error]')?.toggleAttribute('hidden', state !== 'error')
+    el.querySelector('[data-rd-success]')?.toggleAttribute('hidden', state !== 'success')
+  }
+
+  async function init() {
+    const root = document.querySelector<HTMLElement>('[data-release-downloader]')
+    if (!root) return
+
+    const os = detectOS()
+    const release = await loadRelease()
+
+    if (!release) {
+      showState(root, 'error')
+      return
+    }
+
+    showState(root, 'success')
+
+    const primaryLink = root.querySelector<HTMLAnchorElement>('[data-rd-primary-link]')
+    const info = root.querySelector<HTMLElement>('[data-rd-info]')
+    if (!primaryLink || !info) return
+
+    if (os) {
+      const { expected } = assetFor(release.name, os)
+      const asset = release.assets.find(a => a.name === expected)
+      if (asset) {
+        primaryLink.href = asset.browser_download_url
+        primaryLink.textContent = `Download for ${os}`
+      }
+    }
+
+    const pub = release.published_at ? ` · ${formatMonthYear(release.published_at)}` : ''
+    info.innerHTML = `${release.name ? `<strong>Version ${release.name}</strong>` : ''}<span>${pub}</span><br /><a href="${'https://github.com/glossarist/glossarist-desktop/releases'}" style="font-size: 0.85rem;">View all releases</a>`
+  }
+
+  init()
+</script>
+
+<style>
+.release-downloader {
+  margin: 1.5rem 0;
+}
+.download-btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background: var(--vp-c-brand-1, #3b82f6);
+  color: #fff !important;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.15s;
+}
+.download-btn:hover {
+  background: var(--vp-c-brand-2, #2563eb);
+}
+.release-info {
+  margin-top: 0.5rem;
+  font-size: 0.9375rem;
+  color: var(--vp-c-text-2, #4b5563);
+}
+.release-info :global(strong) {
+  color: var(--vp-c-text-1, #1f2937);
+}
+</style>
