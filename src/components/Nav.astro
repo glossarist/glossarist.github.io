@@ -117,10 +117,14 @@ const current = Astro.url.pathname
   })
 
   let pagefind: any = null
+  // Pagefind's entry module only exists after `astro build` runs (it generates
+  // dist/pagefind/). Hide the dynamic import from Vite's static analyzer via
+  // `new Function` so dev mode and the SSR build don't try to resolve it.
+  const runtimeImport = new Function('url', 'return import(url)') as (url: string) => Promise<any>
   async function ensurePagefind() {
     if (pagefind) return pagefind
     try {
-      pagefind = await import(/* @vite-ignore */ '/pagefind/pagefind-entry.js')
+      pagefind = await runtimeImport('/pagefind/pagefind-entry.js')
       await pagefind.init()
     } catch {
       pagefind = null
