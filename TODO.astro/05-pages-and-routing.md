@@ -85,24 +85,24 @@ Verify with `lychee` link checker after build.
 
 ### 5.1 — Create all top-level pages
 
-- [ ] `src/pages/index.astro`
-- [ ] `src/pages/about.astro`
-- [ ] `src/pages/blog/index.astro`
-- [ ] `src/pages/docs/index.astro`
-- [ ] `src/pages/reference/index.astro`
+- [x] `src/pages/index.astro`
+- [x] `src/pages/about.astro`
+- [x] `src/pages/blog/index.astro`
+- [x] `src/pages/docs/index.astro`
+- [x] `src/pages/reference/index.astro`
 
 ### 5.2 — Create dynamic route handlers
 
-- [ ] `src/pages/blog/[slug].astro`
-- [ ] `src/pages/docs/[...path].astro`
-- [ ] `src/pages/reference/[slug].astro`
+- [x] `src/pages/blog/[slug].astro`
+- [x] `src/pages/docs/[...path].astro`
+- [x] `src/pages/reference/[slug].astro`
 
 ### 5.3 — Move all markdown content
 
-- [ ] `blog/*.md` → `src/content/blog/`
-- [ ] `docs/**/*.md` → `src/content/docs/` (preserve nested dirs)
-- [ ] `reference/*.md` → `src/content/reference/`
-- [ ] `about.md` → render via `src/pages/about.astro` (or move to content collection)
+- [x] `blog/*.md` → `src/content/blog/`
+- [x] `docs/**/*.md` → `src/content/docs/` (preserve nested dirs)
+- [x] `reference/*.md` → `src/content/reference/`
+- [x] `about.md` → render via `src/pages/about.astro` (or move to content collection)
 
 ### 5.4 — Page-specific behaviors
 

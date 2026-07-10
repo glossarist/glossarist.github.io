@@ -4,15 +4,15 @@
 
 ## Pre-cutover checklist
 
-- [ ] All pages exist at the same URLs (verified in TODO 05).
-- [ ] All Vue components work as islands (TODO 04).
-- [ ] Pagefind search works (TODO 06).
-- [ ] Sitemaps match.
-- [ ] `npm run test` passes against Astro source.
-- [ ] Visual diff against VitePress build shows no regressions.
-- [ ] Dark mode toggle works.
-- [ ] OS-detected download works on `/docs/software/desktop`.
-- [ ] Lychee link checker passes.
+- [x] All pages exist at the same URLs (verified in TODO 05).
+- [x] All Vue components work as islands (TODO 04).
+- [x] Pagefind search works (TODO 06).
+- [x] Sitemaps match.
+- [x] `npm run test` passes against Astro source.
+- [x] Visual diff against VitePress build shows no regressions.
+- [x] Dark mode toggle works.
+- [x] OS-detected download works on `/docs/software/desktop`.
+- [x] Lychee link checker passes.
 
 ## Cutover steps
 
