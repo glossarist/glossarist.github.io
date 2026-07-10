@@ -1,21 +1,47 @@
-<script setup lang="ts">
-import { computed } from 'vue'
-import { useOntologyData } from '../data/useOntologyData'
+---
+import { readFileSync } from 'node:fs'
+import { resolve } from 'node:path'
 
-const { schema, taxonomies, loaded } = useOntologyData()
+interface Stats {
+  classes: number
+  properties: number
+  shapes: number
+  relationships: number
+  designations: number
+}
 
-const st = computed(() => {
-  const s = schema.value?.stats
-  const t = taxonomies.value
-  if (!s || !t) return { classes: 0, properties: 0, shapes: 0, relationships: 0, designations: 0 }
-  return {
-    classes: s.classCount,
-    properties: s.objectPropertyCount + s.datatypePropertyCount,
-    shapes: s.shapeCount,
-    relationships: Object.keys(t.relationshipType?.concepts ?? {}).length,
-    designations: Object.keys(t.designationType?.concepts ?? {}).length,
-  }
-})
+interface Taxonomies {
+  relationshipType?: { concepts: Record<string, unknown> }
+  designationType?: { concepts: Record<string, unknown> }
+}
+
+let stats: Stats = { classes: 0, properties: 0, shapes: 0, relationships: 0, designations: 0 }
+let relationships = 0
+let designations = 0
+
+try {
+  const statsRaw = readFileSync(resolve(process.cwd(), 'public/data/stats.json'), 'utf-8')
+  stats = JSON.parse(statsRaw)
+} catch {
+  // build:data has not run yet; stats will be filled at runtime by the island fallback
+}
+
+try {
+  const taxRaw = readFileSync(resolve(process.cwd(), 'public/data/taxonomies.json'), 'utf-8')
+  const tax = JSON.parse(taxRaw) as Taxonomies
+  relationships = Object.keys(tax.relationshipType?.concepts ?? {}).length
+  designations = Object.keys(tax.designationType?.concepts ?? {}).length
+} catch {
+  // same fallback
+}
+
+const statItems = [
+  { value: stats.classes, label: 'Entity Types' },
+  { value: stats.properties, label: 'Properties' },
+  { value: stats.shapes, label: 'Validation Shapes' },
+  { value: relationships, label: 'Relationship Types' },
+  { value: designations, label: 'Designation Types' },
+]
 
 const entities = [
   { href: '/docs/model/concepts', dotColor: 'var(--g-class)', title: 'ManagedConcept', desc: 'The top-level entity. Holds a UUID, lifecycle status, domain references, and maps language codes to LocalizedConcept instances.', fields: ['status', 'localized_concepts', 'related', 'domains', 'dates'] },
@@ -25,42 +51,36 @@ const entities = [
   { href: '/docs/model/sources', dotColor: 'var(--g-taxonomy)', title: 'Sources', desc: 'Multi-level provenance tracking — authoritative and lineage sources with status tracking (identical, modified, restyled, generalisation).', fields: ['authoritative', 'lineage', 'status', 'origin', 'modification'] },
   { href: '/reference/ontology', dotColor: 'linear-gradient(135deg, var(--g-steel), var(--g-teal))', title: 'Formal Ontology', desc: 'The concept model is formally expressed as an OWL ontology with SHACL validation shapes. Interoperates with SKOS, SKOS-XL, ISO 25964, PROV-O, and Dublin Core for linked data integration.', fields: ['owl:Class', 'sh:Shape', 'skos:Concept', 'skosxl:Label'] },
 ]
-</script>
+---
 
-<template>
-  <div class="ml">
-    <!-- Stats row -->
-    <div class="ml-stats" :class="{ 'ml-stats-loading': !loaded }">
-      <div class="ml-stat" v-for="stat in [
-        { value: st.classes, label: 'Entity Types' },
-        { value: st.properties, label: 'Properties' },
-        { value: st.shapes, label: 'Validation Shapes' },
-        { value: st.relationships, label: 'Relationship Types' },
-        { value: st.designations, label: 'Designation Types' },
-      ]" :key="stat.label">
-        <span class="ml-stat-num">{{ stat.value || '—' }}</span>
-        <span class="ml-stat-label">{{ stat.label }}</span>
+<div class="ml">
+  <div class="ml-stats">
+    {statItems.map(stat => (
+      <div class="ml-stat">
+        <span class="ml-stat-num">{stat.value || '—'}</span>
+        <span class="ml-stat-label">{stat.label}</span>
       </div>
-    </div>
+    ))}
+  </div>
 
-    <!-- Entity grid -->
-    <h2>Core entities</h2>
-    <div class="ml-entities">
-      <a v-for="e in entities" :key="e.title" :href="e.href" class="ml-entity">
+  <h2>Core entities</h2>
+  <div class="ml-entities">
+    {entities.map(e => (
+      <a href={e.href} class="ml-entity">
         <div class="ml-entity-head">
-          <span class="ml-dot" :style="{ background: e.dotColor }"></span>
-          <h3>{{ e.title }}</h3>
+          <span class="ml-dot" style={`background: ${e.dotColor}`}></span>
+          <h3>{e.title}</h3>
         </div>
-        <p>{{ e.desc }}</p>
+        <p>{e.desc}</p>
         <div class="ml-fields">
-          <code v-for="f in e.fields" :key="f">{{ f }}</code>
+          {e.fields.map(f => <code>{f}</code>)}
         </div>
       </a>
-    </div>
+    ))}
   </div>
-</template>
+</div>
 
-<style scoped>
+<style>
 .ml-stats {
   display: flex;
   gap: 1.5rem;
@@ -68,7 +88,6 @@ const entities = [
   justify-content: center;
   margin: 2rem 0;
 }
-
 .ml-stat {
   text-align: center;
   padding: 0.75rem 1rem;
@@ -77,21 +96,18 @@ const entities = [
   border-radius: 10px;
   min-width: 90px;
 }
-
 .ml-stat-num {
   display: block;
   font-size: 1.5rem;
   font-weight: 800;
   color: var(--g-teal);
 }
-
 .ml-stat-label {
   font-size: 0.6875rem;
   color: var(--vp-c-text-3);
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
-
 .ml h2 {
   font-size: 1.5rem;
   font-weight: 800;
@@ -100,14 +116,12 @@ const entities = [
   border-top: 1px solid var(--vp-c-divider);
   padding-top: 2rem;
 }
-
 .ml-entities {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
   margin-bottom: 2.5rem;
 }
-
 .ml-entity {
   display: block;
   background: var(--vp-c-bg-soft);
@@ -118,45 +132,38 @@ const entities = [
   text-decoration: none;
   color: inherit;
 }
-
 .ml-entity:hover {
   border-color: var(--vp-c-brand-1);
   transform: translateY(-2px);
 }
-
 .ml-entity-head {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   margin-bottom: 0.5rem;
 }
-
 .ml-entity-head h3 {
   font-size: 0.9375rem;
   font-weight: 700;
   margin: 0;
 }
-
 .ml-entity p {
   font-size: 0.8125rem;
   color: var(--vp-c-text-2);
   line-height: 1.6;
   margin: 0 0 0.75rem;
 }
-
 .ml-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
   flex-shrink: 0;
 }
-
 .ml-fields {
   display: flex;
   flex-wrap: wrap;
   gap: 0.25rem;
 }
-
 .ml-fields code {
   font-size: 0.6875rem;
   background: var(--vp-c-default-soft);
@@ -165,11 +172,9 @@ const entities = [
   color: var(--vp-c-text-2);
   white-space: nowrap;
 }
-
 @media (max-width: 900px) {
   .ml-entities { grid-template-columns: repeat(2, 1fr); }
 }
-
 @media (max-width: 640px) {
   .ml-entities { grid-template-columns: 1fr; }
   .ml-stats { gap: 0.75rem; }
