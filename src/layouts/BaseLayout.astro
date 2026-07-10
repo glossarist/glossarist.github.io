@@ -1,4 +1,5 @@
 ---
+import '../styles/tailwind.css'
 import '../styles/base.css'
 import '../styles/custom.css'
 import Nav from '../components/Nav.astro'
@@ -25,7 +26,7 @@ const pageTitle = title === 'Glossarist' ? title : `${title} | Glossarist`
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <script is:inline>
-      const stored = localStorage.getItem('glossarist-theme') ?? localStorage.getItem('vitepress-theme-appearance')
+      const stored = localStorage.getItem('glossarist-theme')
       const prefersDark = matchMedia('(prefers-color-scheme: dark)').matches
       const dark = stored === 'dark' || ((!stored || stored === 'auto') && prefersDark)
       if (dark) document.documentElement.classList.add('dark')

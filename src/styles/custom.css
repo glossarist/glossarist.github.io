@@ -2,6 +2,11 @@
    GLOSSARIST DESIGN SYSTEM — v3
    New York Professional Technology Style
 
+   Brand-color overrides for the Astro build. All structural styling
+   (typography, code, tables, prose, dark mode base) is in base.css.
+   Tailwind 4 theme tokens (color-navy, color-teal, etc.) are in
+   tailwind.css.
+
    Colors from the Glossarist logo mark (2026):
    Navy:        #2d4164  — primary dark, structure
    Blue:        #456399  — bridge blue, depth
@@ -41,23 +46,11 @@
   --g-taxonomy: #7c3aed;
   --g-individual: #be123c;
 
-  /* VitePress brand overrides */
+  /* Brand aliases (consumed by Tailwind utilities + plain CSS) */
   --vp-c-brand-1: var(--g-steel);
   --vp-c-brand-2: var(--g-teal);
   --vp-c-brand-3: var(--g-navy);
   --vp-c-brand-soft: rgba(58, 92, 128, 0.14);
-
-  --vp-button-brand-border: transparent;
-  --vp-button-brand-text: #fff;
-  --vp-button-brand-bg: var(--g-navy);
-  --vp-button-brand-hover-border: transparent;
-  --vp-button-brand-hover-text: #fff;
-  --vp-button-brand-hover-bg: var(--g-steel);
-  --vp-button-brand-active-border: transparent;
-  --vp-button-brand-active-text: #fff;
-  --vp-button-brand-active-bg: var(--g-navy);
-
-  --vp-nav-logo-height: 36px;
 }
 
 .dark {
@@ -65,9 +58,6 @@
   --vp-c-brand-2: var(--g-sea);
   --vp-c-brand-3: var(--g-steel);
   --vp-c-brand-soft: rgba(63, 182, 176, 0.14);
-
-  --vp-button-brand-bg: var(--g-teal);
-  --vp-button-brand-hover-bg: var(--g-sea);
 
   --g-class: #5b93c4;
   --g-property: #4dd4c6;
@@ -115,7 +105,7 @@
 .use-case-card p { color: var(--vp-c-text-2); font-size: 0.9rem; }
 
 /* ================================================================
-   RELEASE DOWNLOADER
+   RELEASE DOWNLOADER (rendered by ReleaseDownloader.astro)
    ================================================================ */
 
 .release-downloader {
@@ -158,46 +148,18 @@
 .release-downloader .release-info strong { color: var(--vp-c-text-1); }
 
 /* ================================================================
-   VITEPRESS OVERRIDES
-   ================================================================ */
-
-/* --- Nav title gradient --- */
-.VPNavBarTitle .title {
-  background: linear-gradient(135deg, var(--g-navy) 0%, var(--g-blue) 25%, var(--g-teal) 55%, var(--g-sea) 80%, var(--g-mint) 100%);
-  background-size: 200% 200%;
-  animation: shimmer 8s ease infinite;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  font-weight: 800 !important;
-  letter-spacing: -0.02em;
-}
-
-.dark .VPNavBarTitle .title {
-  background: linear-gradient(135deg, var(--g-steel) 0%, var(--g-teal) 30%, var(--g-sea) 60%, var(--g-mint) 100%);
-  background-size: 200% 200%;
-  animation: shimmer 8s ease infinite;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.vp-doc .custom-block { margin: 1rem 0; }
-.vp-doc .custom-block.tip { border-color: var(--g-teal); }
-.VPFooter { border-top: 1px solid var(--vp-c-divider) !important; }
-
-/* ================================================================
    FULLSCREEN INTERACTIVE PAGES
    Schema browser, entity fields, ontology browser
    Controlled by `fullscreen: true` in page frontmatter
    ================================================================ */
 
-html.fullscreen-page .VPSidebar { display: none !important; }
-html.fullscreen-page .VPLocalNav { display: none !important; }
-html.fullscreen-page .VPContent { padding-left: 0 !important; padding-right: 0 !important; }
-html.fullscreen-page .VPContent .container { max-width: none !important; padding: 0 !important; margin: 0 !important; }
-html.fullscreen-page .VPContent .content { max-width: none !important; padding: 0 !important; }
-html.fullscreen-page .VPContent .content-container { max-width: none !important; }
+html.fullscreen-page .doc-container {
+  grid-template-columns: minmax(0, 1fr) !important;
+}
+html.fullscreen-page .sidebar,
+html.fullscreen-page .outline {
+  display: none !important;
+}
 
 /* ================================================================
    RESPONSIVE (about page only)

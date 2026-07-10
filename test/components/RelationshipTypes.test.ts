@@ -2,15 +2,6 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { mount, flushPromises } from '@vue/test-utils'
 import { ref } from 'vue'
 
-vi.mock('vitepress', () => ({
-  useData: () => ({
-    frontmatter: ref({}),
-    page: ref({}),
-    site: ref({ theme: {} }),
-    theme: ref({}),
-  }),
-}))
-
 const { useOntologyDataMock } = {
   useOntologyDataMock: vi.fn(() => ({
     schema: ref(null),

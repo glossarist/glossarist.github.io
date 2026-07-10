@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+/* ================================================================
+   GLOSSARIST DESIGN SYSTEM — Tailwind 4 theme
+   Brand colors derived from the Glossarist logo mark.
+   ================================================================ */
+
+@theme {
+  /* Logo-derived brand palette */
+  --color-navy: #2d4164;
+  --color-blue: #456399;
+  --color-steel: #3a5c80;
+  --color-steel-mid: #4977a4;
+  --color-blue-bright: #588ac1;
+  --color-deep: #34798a;
+  --color-teal-blue: #60abbc;
+  --color-cyan: #62c4dd;
+  --color-grey-blue: #97a4b7;
+  --color-teal: #3fb6b0;
+  --color-sea: #7ee0d4;
+  --color-mint: #b8f5ec;
+
+  /* Semantic entity colors */
+  --color-class: #2d4164;
+  --color-property: #34798a;
+  --color-shape: #a16207;
+  --color-taxonomy: #7c3aed;
+  --color-individual: #be123c;
+
+  /* Brand aliases (mapped to Tailwind's color naming) */
+  --color-brand: var(--color-steel);
+  --color-brand-strong: var(--color-teal);
+  --color-brand-deep: var(--color-navy);
+
+  /* Fonts */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+
+  /* Layout */
+  --container-prose: 720px;
+  --container-doc: 1440px;
+}
+
+/* Dark-mode entity colors */
+.dark {
+  --color-class: #5b93c4;
+  --color-property: #4dd4c6;
+  --color-shape: #fbbf24;
+  --color-taxonomy: #a78bfa;
+  --color-individual: #fb7185;
+}

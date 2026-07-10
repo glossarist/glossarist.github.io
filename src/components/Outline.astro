@@ -14,62 +14,17 @@ const outline = headings.filter(h => h.depth >= 2 && h.depth <= 3)
 ---
 
 {outline.length > 0 && (
-  <aside class="outline" aria-label="On this page">
-    <div class="outline-title">On this page</div>
-    <ul>
+  <aside class="outline hidden lg:block sticky top-16 max-h-[calc(100vh-4rem)] overflow-y-auto py-4 pl-4 text-[13px] w-48" aria-label="On this page">
+    <div class="text-xs font-semibold uppercase tracking-wider text-[var(--vp-c-text-2)] mb-2">On this page</div>
+    <ul class="list-none p-0 m-0">
       {outline.map(h => (
-        <li class:list={[`depth-${h.depth}`]}>
-          <a href={`#${h.slug}`}>{h.text}</a>
+        <li class:list={[h.depth === 3 && 'pl-3']}>
+          <a
+            href={`#${h.slug}`}
+            class="block py-1 px-2 text-[var(--vp-c-text-2)] no-underline hover:text-brand leading-snug"
+          >{h.text}</a>
         </li>
       ))}
     </ul>
   </aside>
 )}
-
-<style>
-.outline {
-  position: sticky;
-  top: 4rem;
-  max-height: calc(100vh - 4rem);
-  overflow-y: auto;
-  padding: 1rem 0 1rem 1rem;
-  font-size: 0.8125rem;
-  width: 12rem;
-}
-.outline-title {
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--vp-c-text-2, #4b5563);
-  margin-bottom: 0.5rem;
-}
-.outline ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-.outline li {
-  padding: 0;
-  border-left: 1px solid var(--vp-c-divider, #e5e7eb);
-}
-.outline li.depth-3 {
-  padding-left: 0.75rem;
-}
-.outline a {
-  display: block;
-  padding: 0.25rem 0.5rem;
-  color: var(--vp-c-text-2, #4b5563);
-  text-decoration: none;
-  line-height: 1.4;
-}
-.outline a:hover {
-  color: var(--vp-c-brand-1, #3b82f6);
-}
-
-@media (max-width: 1024px) {
-  .outline {
-    display: none;
-  }
-}
-</style>
