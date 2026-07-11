@@ -28,7 +28,7 @@ The Glossarist logo is a synthesis of two writing traditions, reflecting the mul
 
 Together, these two script traditions merge into a single mark. This mirrors Glossarist's core principle: **a single concept can be expressed in many languages, yet remains one concept**. The Glossarist model serves as the single source of truth that encompasses multiple languages, each of which can be viewed separately but all of which refer back to the same underlying concept.
 
-<!-- LogoMerge rendered by about page -->
+{/* LogoMerge rendered by about page */}
 
 ### The Color Blobs
 
@@ -118,98 +118,4 @@ Glossarist is used in production by standards bodies including [ISO/TC 211 Geole
 
 *Open source project maintained by [Ribose](https://www.ribose.com)*
 
-<style is:inline>
-.logo-showcase {
-  display: flex;
-  justify-content: center;
-  margin: 2rem 0;
-}
 
-.logo-card {
-  padding: 2.5rem;
-  border-radius: 16px;
-  text-align: center;
-  background: var(--g-bg-soft);
-  border: 1px solid var(--g-divider);
-}
-
-.logo-display {
-  max-width: 240px;
-  height: auto;
-}
-
-/* --- Logo merge diagram --- */
-.logo-merge {
-  max-width: 720px;
-  margin: 2.5rem auto 3rem;
-  position: relative;
-}
-
-.logo-merge svg {
-  width: 100%;
-  height: auto;
-  overflow: visible;
-}
-
-.merge-arrow {
-  stroke-dasharray: 7 5;
-  animation: merge-flow 1.4s linear infinite;
-}
-
-@keyframes merge-flow {
-  from { stroke-dashoffset: 12; }
-  to { stroke-dashoffset: 0; }
-}
-
-.dark .merge-img-han { filter: brightness(1.5) saturate(0.9); }
-.dark .merge-img-greek { filter: brightness(1.1); }
-.dark .merge-lbl-wen { fill: #7b9cc4 !important; }
-.dark .merge-sub-wen { fill: #8badc4 !important; }
-.dark .merge-lbl-logo { fill: #7b9cc4 !important; }
-.dark .merge-lbl-gl { fill: #5cc5be !important; }
-.dark .merge-sub-gl { fill: #78d3cc !important; }
-.dark #ah-l path { fill: #3fb6b0; }
-.dark #ah-r path { fill: #588ac1; }
-
-@media (prefers-reduced-motion: reduce) {
-  .merge-arrow { animation: none; }
-}
-
-/* --- Use cases --- */
-.use-cases-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
-  margin: 2rem 0;
-}
-
-.use-case-card {
-  padding: 1.5rem;
-  background: var(--g-bg-soft);
-  border-radius: 12px;
-  border: 1px solid var(--g-divider);
-  text-align: center;
-}
-
-.use-case-card h4 {
-  color: var(--g-brand);
-  margin-bottom: 0.5rem;
-}
-
-.use-case-card p {
-  color: var(--g-text-2);
-  font-size: 0.9rem;
-}
-
-@media (max-width: 640px) {
-  .logo-display {
-    max-width: 180px;
-  }
-  .logo-merge {
-    max-width: 100%;
-  }
-  .use-cases-grid {
-    grid-template-columns: 1fr;
-  }
-}
-</style>
