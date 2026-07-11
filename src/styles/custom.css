@@ -169,3 +169,44 @@ html.fullscreen-page .outline {
   .logo-display { max-width: 180px; }
   .use-cases-grid { grid-template-columns: 1fr; }
 }
+
+/* ================================================================
+   ABOUT PAGE — inline styles moved from about.mdx to global CSS
+   (MDX cannot contain raw <style> blocks)
+   ================================================================ */
+
+.logo-merge {
+  max-width: 720px;
+  margin: 2.5rem auto 3rem;
+  position: relative;
+}
+
+.logo-merge svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.merge-arrow {
+  stroke-dasharray: 7 5;
+  animation: merge-flow 1.4s linear infinite;
+}
+
+@keyframes merge-flow {
+  from { stroke-dashoffset: 12; }
+  to { stroke-dashoffset: 0; }
+}
+
+.dark .merge-img-han { filter: brightness(1.5) saturate(0.9); }
+.dark .merge-img-greek { filter: brightness(1.1); }
+.dark .merge-lbl-wen { fill: #7b9cc4 !important; }
+.dark .merge-sub-wen { fill: #8badc4 !important; }
+.dark .merge-lbl-logo { fill: #7b9cc4 !important; }
+.dark .merge-lbl-gl { fill: #5cc5be !important; }
+.dark .merge-sub-gl { fill: #78d3cc !important; }
+.dark #ah-l path { fill: #3fb6b0; }
+.dark #ah-r path { fill: #588ac1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .merge-arrow { animation: none; }
+}
