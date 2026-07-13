@@ -84,6 +84,7 @@ body {
   margin: 0;
   background: var(--g-bg);
   color: var(--g-text-1);
+  font-family: var(--g-font-base);
   font-size: 16px;
   line-height: var(--g-content-line-height);
   font-synthesis: none;
