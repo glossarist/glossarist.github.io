@@ -71,7 +71,7 @@ function parentActive(item: { items?: { link: string }[], link?: string }): bool
     <span>Glossarist</span>
   </a>
 
-  <nav class="flex items-center gap-4 ml-auto">
+  <nav class="flex items-center gap-1 ml-auto">
     {nav.map((item) => {
       const parentOn = parentActive(item)
       return (
@@ -80,24 +80,29 @@ function parentActive(item: { items?: { link: string }[], link?: string }): bool
           <>
             <button
               class:list={[
-                'bg-transparent border-none px-3 py-2 cursor-pointer font-inherit hover:text-brand',
-                parentOn ? 'text-brand font-semibold' : 'text-[var(--g-text-1)]',
+                'nav-dropdown-btn flex items-center gap-1 bg-transparent border-none px-3 py-1.5 cursor-pointer rounded-md text-sm font-medium transition-colors',
+                parentOn
+                  ? 'nav-active text-brand bg-[var(--g-brand-soft)]'
+                  : 'text-[var(--g-text-1)] hover:text-brand hover:bg-[var(--g-bg-soft)]',
               ]}
             >
               {item.text}
+              <svg class="nav-chevron transition-transform duration-150 group-hover:rotate-180" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 4.5L6 7.5L9 4.5"/>
+              </svg>
             </button>
-            <ul class="absolute top-full left-0 bg-[var(--g-bg)] border border-[var(--g-divider)] rounded-lg p-2 list-none m-0 min-w-[200px] hidden group-hover:block shadow-lg">
+            <ul class="absolute top-full left-0 mt-1 bg-[var(--g-bg)] border border-[var(--g-divider)] rounded-lg p-1.5 list-none m-0 min-w-[220px] hidden group-hover:block shadow-lg">
               {item.items.map((sub) => {
                 const on = linkActive(sub.link)
                 return (
-                  <li>
+                  <li class="m-0">
                     <a
                       href={sub.link}
                       class:list={[
-                        'block px-2 py-1.5 rounded no-underline hover:bg-[var(--g-bg-soft)]',
+                        'block px-3 py-1.5 rounded-md no-underline text-sm transition-colors',
                         on
-                          ? 'text-brand font-semibold'
-                          : 'text-[var(--g-text-1)] hover:text-brand',
+                          ? 'nav-active text-brand font-semibold bg-[var(--g-brand-soft)]'
+                          : 'text-[var(--g-text-1)] hover:bg-[var(--g-bg-soft)] hover:text-brand',
                       ]}
                     >{sub.text}</a>
                   </li>
@@ -109,8 +114,10 @@ function parentActive(item: { items?: { link: string }[], link?: string }): bool
           <a
             href={item.link}
             class:list={[
-              'px-3 py-2 no-underline hover:text-brand',
-              parentOn ? 'text-brand font-semibold' : 'text-[var(--g-text-1)]',
+              'nav-plain-link px-3 py-1.5 text-sm rounded-md no-underline transition-colors',
+              parentOn
+                ? 'nav-active text-brand font-medium'
+                : 'text-[var(--g-text-2)] hover:text-[var(--g-text-1)] hover:bg-[var(--g-bg-soft)]',
             ]}
           >{item.text}</a>
         )}
