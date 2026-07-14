@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+/* Tell Tailwind's dark: variant to respond to the .dark class on <html>,
+   not the OS prefers-color-scheme media query. Our theme toggle adds/removes
+   .dark on <html> via BaseLayout's init script. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* ================================================================
    GLOSSARIST DESIGN SYSTEM — Tailwind 4 theme
    Brand colors derived from the Glossarist logo mark.
