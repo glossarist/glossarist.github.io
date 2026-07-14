@@ -76,14 +76,14 @@ describe('Docs catch-all /docs/[...path]', () => {
   })
 
   it('renders model index', () => {
-    expect(exists('dist/docs/model.html')).toBe(true)
+    expect(exists('dist/model/index.html')).toBe(true)
   })
 
   it('renders nested desktop pages', () => {
-    expect(exists('dist/docs/desktop.html')).toBe(true)
-    expect(exists('dist/docs/desktop/getting-started/installation.html')).toBe(true)
-    expect(exists('dist/docs/desktop/ui/modules/browse.html')).toBe(true)
-    expect(exists('dist/docs/desktop/ui/panels/language.html')).toBe(true)
+    expect(exists('dist/docs/software/desktop/index.html')).toBe(true)
+    expect(exists('dist/docs/software/desktop/getting-started/installation.html')).toBe(true)
+    expect(exists('dist/docs/software/desktop/ui/modules/browse.html')).toBe(true)
+    expect(exists('dist/docs/software/desktop/ui/panels/language.html')).toBe(true)
   })
 
   it('renders software pages', () => {
@@ -95,7 +95,7 @@ describe('Docs catch-all /docs/[...path]', () => {
   })
 
   it('renders standards page', () => {
-    expect(exists('dist/docs/standards.html')).toBe(true)
+    expect(exists('dist/reference/standards.html')).toBe(true)
   })
 })
 
@@ -134,14 +134,14 @@ describe('404 page', () => {
 
 describe('admonition rendering (rehype plugin)', () => {
   it('renders ::: info as <div class="custom-block info"> with title', () => {
-    const html = readBuilt('dist/docs/desktop/ui/panels/language/index.html')
+    const html = readBuilt('dist/docs/software/desktop/ui/panels/language/index.html')
     expect(html).toContain('class="custom-block info"')
     expect(html).toContain('class="custom-block-title"')
     expect(html).toContain('INFO')
   })
 
   it('does not leave literal ::: markers visible', () => {
-    const html = readBuilt('dist/docs/desktop/ui/panels/language/index.html')
+    const html = readBuilt('dist/docs/software/desktop/ui/panels/language/index.html')
     // After the plugin runs, no paragraph should contain ":::" as text
     expect(html).not.toMatch(/<p>[^<]*:::[^<]*<\/p>/)
   })

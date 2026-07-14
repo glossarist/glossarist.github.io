@@ -1,0 +1,152 @@
+---
+title: Datasets & Sections
+description: Self-describing datasets with hierarchical sections, ordering methods, and bibliography
+---
+
+# Datasets & Sections
+
+A Glossarist **dataset** is a self-contained collection of concepts, sections, and supporting assets (figures, tables, formulas, bibliography). The v3 model introduces a self-describing `register.yaml` that captures identity, structure, ownership, and lifecycle at the dataset level — independent of any specific deployment.
+
+## Dataset register
+
+The `register.yaml` file lives at the root of each dataset directory. It declares who owns the dataset, how it's organized, which URNs identify it, and which languages it covers.
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `schema_type` | `"glossarist"` (const) | Always `glossarist` |
+| `schema_version` | string | Schema major version (e.g. `"3"`) |
+| `id` | string | Dataset identifier, unique within deployment |
+| `ref` | string | Publication reference (e.g. `"OIML V 1:2022"`) |
+| `year` | integer | Publication year |
+| `urn` | string | Primary URN (e.g. `urn:oiml:pub:v:1:2022`) |
+| `urnAliases` | string[] | Additional URN patterns for resolution |
+| `status` | enum | `current` \| `superseded` \| `retired` |
+| `supersedes` | string | ID of the dataset edition this one supersedes |
+| `owner` | string | Owning organization (`OIML`, `IEC`, `ISO`) |
+| `sourceRepo` | string (URI) | URL of the source repository |
+| `languages` | string[] | ISO 639-2 language codes available |
+| `languageOrder` | string[] | Preferred display order for languages |
+| `ordering` | enum | `systematic` \| `mixed` \| `alphabetical` |
+| `sections` | [Section](#sections)[] | Hierarchical section tree |
+| `description` | localized string | Localized dataset descriptions keyed by language code |
+| `about` | localized string | Localized about-page paths keyed by language code |
+| `logo` | string | Relative path to dataset logo |
+
+### Example
+
+```yaml
+# vim-2022/register.yaml
+schema_type: glossarist
+schema_version: "3"
+id: vim-2022
+ref: "ISO/IEC Guide 99:2022"
+year: 2022
+urn: urn:iso:iso-iec:guide:99:2022
+status: current
+supersedes: vim-2012
+owner: ISO/IEC
+sourceRepo: https://github.com/ISOIEC-Guide99/vim
+languages: [eng, fra, rus, deu, ara, zho, jpn]
+languageOrder: [eng, fra, rus]
+ordering: systematic
+sections:
+  - id: "1"
+    names: { eng: "Quantities and units", fra: "Grandeurs et unités" }
+    children:
+      - id: "1.1"
+        names: { eng: "General", fra: "Généralités" }
+      - id: "1.2"
+        names: { eng: "Quantities", fra: "Grandeurs" }
+description:
+  eng: "The International Vocabulary of Metrology"
+logo: vim-logo.svg
+```
+
+## Sections
+
+Sections are hierarchical structural divisions within a dataset. They group related concepts for navigation and rendering, and support **transitive membership** — a concept placed in section `1.2.3` is automatically a member of `1.2` and `1`.
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | string | Section identifier (e.g. `"1.2.3"`) |
+| `names` | localized string | Localized section titles keyed by language code |
+| `ordering` | enum | Per-section ordering override |
+| `children` | [Section](#sections)[] | Child sections |
+
+### Transitive cascading
+
+Section membership cascades transitively. The ontology declares `gloss:hasChildSection` as an `owl:TransitiveProperty` and `gloss:hasParentSection` as its inverse — so a concept in `1.2.3` is implicitly in `1.2` and `1` without needing to author every level.
+
+```
+1
+├── 1.1
+├── 1.2
+│   ├── 1.2.1
+│   ├── 1.2.2
+│   └── 1.2.3   ← concept placed here is also in 1.2 and 1
+└── 1.3
+```
+
+Concepts reference their section via the `domain` URI:
+
+```yaml
+# In a localized concept
+eng:
+  domain: urn:iso:iso-iec:guide:99:2022#section-1.2.3
+```
+
+## Ordering methods
+
+Datasets and individual sections declare how concepts should be ordered when rendered. The `ordering` value comes from the [ordering-method taxonomy](/reference/ontology):
+
+| Value | Description |
+|-------|-------------|
+| `systematic` | Tree hierarchy, top-down left-to-right. Broader concepts before narrower. Uses dot-separated identifiers and explicit broader/narrower edges. |
+| `mixed` | Pedagogical sequence — fundamental concepts first, then specific. No strict tree hierarchy. |
+| `alphabetical` | Sorted by preferred designation. Derived at render time from localized concept data. |
+
+A child section may override its parent's `ordering`. The concept-browser uses these values to determine sidebar ordering and the default concept listing order.
+
+## Bibliography
+
+Each dataset may carry a single `bibliography.yaml` file at its root — a flat list of typed bibliographic entries, each identified by a dataset-unique `id`.
+
+```yaml
+# vim-2022/bibliography.yaml
+bibliography:
+  - id: iso-704
+    reference: "ISO 704"
+    title: "Terminology work — Principles and methods"
+    type: standard
+    link: https://www.iso.org/standard/72287.html
+  - id: iso-1087
+    reference: "ISO 1087-1"
+    title: "Terminology work — Vocabulary"
+    type: standard
+```
+
+These entries are referenced from concept sources via the cite mention syntax (see [Sources → Inline citations](/model/sources#inline-citations)).
+## Dataset assets
+
+A v3 dataset directory typically contains:
+
+```
+vim-2022/
+├── register.yaml          # Dataset register (identity, structure)
+├── bibliography.yaml      # Bibliography entries
+├── concepts/              # Concept YAML files
+│   ├── 1.1.1.yaml
+│   └── ...
+├── figures/               # Dataset-level figures (see Non-verbal entities)
+│   ├── quantity-diagram.yaml
+│   └── ...
+├── tables/                # Dataset-level tables
+├── formulas/              # Dataset-level formulas
+└── images/                # Image binaries referenced by figures
+    ├── quantity-diagram.svg
+    └── ...
+```
+
+The `glossarist-ruby` and `glossarist-js` SDKs and the `concept-browser` all consume this layout directly. A [GCR package](/docs/software/glossarist-ruby#gcr-packages) is a portable ZIP archive of the same structure plus pre-compiled machine formats.
+
+See the [YAML Schema Reference](/reference/schema-browser) for the `register.yaml` and `bibliography.yaml` JSON Schemas, the [Non-verbal entities](/model/non-verbal) page for figure/table/formula models, and the [Standards compliance reference](/reference/standards) for ISO standard mappings.

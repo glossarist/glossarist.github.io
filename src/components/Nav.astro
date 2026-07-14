@@ -5,15 +5,14 @@ const nav = [
   {
     text: 'Model',
     items: [
-      { text: 'Overview', link: '/docs/model/' },
-      { text: 'Concepts', link: '/docs/model/concepts' },
-      { text: 'Designations', link: '/docs/model/designations' },
-      { text: 'Relationships', link: '/docs/model/relationships' },
-      { text: 'Sources', link: '/docs/model/sources' },
-      { text: 'Datasets & Sections', link: '/docs/model/datasets' },
-      { text: 'Non-verbal Entities', link: '/docs/model/non-verbal' },
-      { text: 'Term Types', link: '/docs/model/term-types' },
-      { text: 'Standards', link: '/docs/standards' },
+      { text: 'Overview', link: '/model/' },
+      { text: 'Concepts', link: '/model/concepts' },
+      { text: 'Designations', link: '/model/designations' },
+      { text: 'Relationships', link: '/model/relationships' },
+      { text: 'Sources', link: '/model/sources' },
+      { text: 'Datasets & Sections', link: '/model/datasets' },
+      { text: 'Non-verbal Entities', link: '/model/non-verbal' },
+      { text: 'Term Types', link: '/model/term-types' },
     ],
   },
   {
@@ -23,13 +22,13 @@ const nav = [
       { text: 'Schema Browser', link: '/reference/schema-browser' },
       { text: 'Entity Fields', link: '/reference/entity-fields' },
       { text: 'Ontology Browser', link: '/reference/ontology' },
+      { text: 'Standards', link: '/reference/standards' },
     ],
   },
   { text: 'Software', items: softwareNavItems },
   {
     text: 'Docs',
     items: [
-      { text: 'Desktop App', link: '/docs/desktop/' },
       { text: 'Core Concepts', link: '/docs/core-concepts/' },
       { text: 'Adopt Glossarist', link: '/docs/adopt/' },
     ],
@@ -52,7 +51,7 @@ function norm(p: string): string {
 const current = norm(Astro.url.pathname)
 
 // A sub-link is active if current === link OR current starts with `${link}/`.
-// For directory links like `/docs/model/`, this matches `/docs/model/concepts`
+// For directory links like `/model/`, this matches `/model/concepts`
 // but not `/docs/model-foo` (false-positive guard for sibling prefixes).
 function linkActive(link: string): boolean {
   const n = norm(link)

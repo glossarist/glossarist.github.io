@@ -27,23 +27,22 @@ function isActiveSidebarLink(html: string, link: string): boolean {
 
 describe('Sidebar', () => {
   describe('section detection', () => {
-    it('renders Desktop Application sidebar on /docs/desktop/', () => {
-      const sidebar = readSidebar(readBuilt('dist/docs/desktop/index.html'))
-      expect(sidebar).toContain('Desktop Application')
+    it('renders Software sidebar on /docs/software/desktop/', () => {
+      const sidebar = readSidebar(readBuilt('dist/docs/software/desktop/index.html'))
+      expect(sidebar).toContain('Software')
       expect(sidebar).toContain('Getting Started')
       expect(sidebar).toContain('Tutorials')
-      expect(sidebar).toContain('Interface Reference')
+      expect(sidebar).toContain('Interface')
       expect(sidebar).toContain('Topics')
     })
 
-    it('renders Concept Model sidebar on /docs/model/concepts', () => {
-      const sidebar = readSidebar(readBuilt('dist/docs/model/concepts/index.html'))
+    it('renders Concept Model sidebar on /model/concepts', () => {
+      const sidebar = readSidebar(readBuilt('dist/model/concepts/index.html'))
       expect(sidebar).toContain('Concept Model')
       expect(sidebar).toContain('Concepts')
       expect(sidebar).toContain('Designations')
       expect(sidebar).toContain('Relationships')
-      // & is HTML-encoded as &amp; in the rendered output
-      expect(sidebar).toContain('Schemas &amp; Standards')
+      expect(sidebar).toContain('Schemas')
     })
 
     it('renders Core Concepts sidebar on /docs/core-concepts/', () => {
@@ -66,14 +65,14 @@ describe('Sidebar', () => {
   })
 
   describe('active link', () => {
-    it('highlights Concepts on /docs/model/concepts', () => {
-      const html = readBuilt('dist/docs/model/concepts/index.html')
-      expect(isActiveSidebarLink(html, '/docs/model/concepts')).toBe(true)
+    it('highlights Concepts on /model/concepts', () => {
+      const html = readBuilt('dist/model/concepts/index.html')
+      expect(isActiveSidebarLink(html, '/model/concepts')).toBe(true)
     })
 
-    it('highlights Overview (directory index) on /docs/model/', () => {
-      const html = readBuilt('dist/docs/model/index.html')
-      expect(isActiveSidebarLink(html, '/docs/model/')).toBe(true)
+    it('highlights Overview (directory index) on /model/', () => {
+      const html = readBuilt('dist/model/index.html')
+      expect(isActiveSidebarLink(html, '/model/')).toBe(true)
     })
 
     it('highlights glossarist-ruby on its own page', () => {

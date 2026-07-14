@@ -1,0 +1,71 @@
+---
+title: Standards Compliance
+description: Which ISO standards Glossarist implements and how
+---
+
+# Standards Compliance
+
+Glossarist implements and aligns with multiple ISO standards for terminology management.
+
+## [ISO 10241-1](https://www.iso.org/standard/40362.html) — Terminology entries
+
+Terminology entries in standardized terminology. Glossarist implements:
+
+- Concept structure, designations, definitions, sources
+- [ManagedConcept](/model/concepts), [LocalizedConcept](/model/concepts), [ConceptSource](/model/sources)
+- Relationship types: `deprecates`, `supersedes`, `compare`, `contrast`, `see`
+
+## [ISO 704](https://www.iso.org/standard/79077.html) — Terminology work: principles and methods
+
+Concept systems and the concept-term interaction cycle. Glossarist implements:
+
+- Domain classification
+- Hierarchical relationships (broader/narrower)
+- [Concept-term interaction cycle](/model/)
+
+## [ISO 30042](https://www.iso.org/standard/62510.html) / TBX — Terminology markup framework
+
+TBX-XML export via glossarist-ruby (tbx gem). Glossarist supports:
+
+- Term types, abbreviation types, grammatical information
+- GCR package format as TBX exchange medium
+- [TBX term types](/model/term-types)
+
+## [ISO 12620](https://www.iso.org/standard/69550.html) — Data category registry
+
+Term types and data category classifications. Glossarist implements:
+
+- [Term type values](/model/term-types)
+- Register values
+- Part of speech
+- Source status/type
+
+## [ISO 25964](https://www.iso.org/standard/53657.html) / SKOS — Thesaurus interoperability
+
+SKOS concept schemes and mapping relationships. Glossarist implements:
+
+- 14 SKOS concept schemes (taxonomy TTLs in concept-model)
+- Hierarchical relationships: broader/narrower (generic, partitive, instantial)
+- Mapping relationships: `exact_match`, `close_match`, `broad_match`, `narrow_match`, `related_match`
+- SKOS/RDF export via glossarist-ruby
+
+## Code systems
+
+| Standard | Purpose | Examples |
+|----------|---------|----------|
+| ISO 639 | Language codes | `eng`, `fra`, `deu`, `jpn` |
+| ISO 15924 | Script codes | `Latn`, `Arab`, `Cyrl`, `Hani` |
+| ISO 24229 | Conversion system codes | `Var:jpn-Hrkt:Latn:Hepburn-1886` |
+
+## IEC Electropedia compatibility
+
+Glossarist maintains compatibility with IEC Electropedia data format, including URN resolution for IEC and ISO identifiers.
+
+## Cross-references
+
+- [Concept Model documentation](/model/)
+- [YAML Schema Reference](/reference/schema-browser)
+- [Entity Field Reference](/reference/entity-fields)
+- [Ontology Browser](/reference/ontology)
+- [Software implementations](/docs/software/)
+- [Concept model repository](https://github.com/glossarist/concept-model)

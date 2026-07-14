@@ -71,7 +71,7 @@ describe('BaseLayout', () => {
         'dist/blog.html',
         'dist/reference/schema-browser.html',
         'dist/reference/ontology.html',
-        'dist/docs/model/concepts.html',
+        'dist/model/concepts.html',
       ]) {
         const html = readBuilt(page)
         expect(html, page).toMatch(/<header[^>]*>/)
@@ -82,7 +82,7 @@ describe('BaseLayout', () => {
   describe('Footer gating', () => {
     it('renders <footer> on regular pages', () => {
       expect(readBuilt('dist/index/index.html')).toMatch(/<footer[^>]*>/)
-      expect(readBuilt('dist/docs/model/concepts/index.html')).toMatch(/<footer[^>]*>/)
+      expect(readBuilt('dist/model/concepts/index.html')).toMatch(/<footer[^>]*>/)
     })
 
     it('omits <footer> on fullscreen pages', () => {
@@ -103,8 +103,8 @@ describe('BaseLayout', () => {
 
 describe('DocLayout', () => {
   describe('chrome (sidebar + outline)', () => {
-    it('renders sidebar on /docs/model/concepts', () => {
-      const html = readBuilt('dist/docs/model/concepts/index.html')
+    it('renders sidebar on /model/concepts', () => {
+      const html = readBuilt('dist/model/concepts/index.html')
       expect(html).toMatch(/<aside[^>]*aria-label="Section navigation"/)
     })
 
@@ -122,7 +122,7 @@ describe('DocLayout', () => {
 
   describe('grid layout', () => {
     it('uses 3-column grid (sidebar | content | outline) when chrome is shown', () => {
-      const html = readBuilt('dist/docs/model/concepts/index.html')
+      const html = readBuilt('dist/model/concepts/index.html')
       // The class on the doc-container div (not the CSS rule in <style>)
       const m = html.match(/<div class="doc-container[^"]*"/)
       expect(m?.[0]).toContain('doc-with-chrome')
@@ -163,7 +163,7 @@ describe('fullscreen-page body class', () => {
   })
 
   it('does NOT add fullscreen-page class on regular docs', () => {
-    const html = readBuilt('dist/docs/model/concepts/index.html')
+    const html = readBuilt('dist/model/concepts/index.html')
     expect(html).not.toMatch(/class="[^"]*fullscreen-page/)
   })
 })
