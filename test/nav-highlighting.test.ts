@@ -10,17 +10,14 @@ function readHeader(rel: string): string {
 }
 
 // Return array of class strings applied to elements containing the given text.
-// Only matches <button> and <a> elements (not <div> wrappers) to avoid
-// capturing the outer nav group div instead of the actual interactive element.
-// Handles buttons that contain child elements (e.g. SVG chevrons) by stripping
-// inner HTML tags before comparing text content.
+// Captures the text between the opening tag and the first child element —
+// sufficient for nav buttons (text precedes the chevron SVG) and plain links.
 function classesOnElementContaining(html: string, text: string): string[] {
   const out: string[] = []
-  const re = /<(?:button|a)[^>]*\bclass="([^"]*)"[^>]*>([\s\S]*?)<\/(?:button|a)>/g
+  const re = /<(?:button|a)[^>]*\bclass="([^"]*)"[^>]*>\s*([^<]*)/g
   let m
   while ((m = re.exec(html))) {
-    const textContent = m[2].replace(/<[^>]*>/g, '').trim()
-    if (textContent === text) out.push(m[1])
+    if (m[2].trim() === text) out.push(m[1])
   }
   return out
 }
