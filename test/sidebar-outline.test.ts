@@ -13,16 +13,16 @@ function readOutline(html: string): string {
 }
 
 function isActiveSidebarLink(html: string, link: string): boolean {
-  // The active class combo is applied to <a> tags with the exact href.
-  // We scan the whole HTML because the sidebar extract may not include
-  // enough context to disambiguate from the nav (which uses different
-  // active classes inside <ul class="...dropdown">).
+  // Extract the sidebar <aside> to avoid false positives from nav dropdown
+  const asideMatch = html.match(/<aside[^>]*aria-label="Section navigation"[\s\S]*?<\/aside>/)
+  if (!asideMatch) return false
+  const sidebarHtml = asideMatch[0]
   const escaped = link.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-  // Look inside an <li> (sidebar items) for the active class combo.
+  // Active sidebar links carry the `nav-active` class
   const re = new RegExp(
-    `<li[^>]*>\\s*<a[^>]*href="${escaped}"[^>]*class="[^"]*text-brand font-semibold`,
+    `<a[^>]*href="${escaped}"[^>]*class="[^"]*\\bnav-active\\b`,
   )
-  return re.test(html)
+  return re.test(sidebarHtml)
 }
 
 describe('Sidebar', () => {

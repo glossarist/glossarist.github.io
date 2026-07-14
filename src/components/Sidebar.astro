@@ -8,10 +8,18 @@ interface Props {
 const { pathname } = Astro.props
 const sidebar = sidebarFor(pathname)
 
+// Normalize: strip trailing slash (except root) and .html suffix for comparison
+function norm(p: string): string {
+  let n = p
+  if (n.endsWith('.html')) n = n.slice(0, -5)
+  if (n !== '/' && n.endsWith('/')) n = n.slice(0, -1)
+  return n
+}
+
 function isActive(link: string, current: string): boolean {
-  if (link === current) return true
-  if (link.endsWith('/') && current.startsWith(link)) return true
-  return false
+  const n = norm(link)
+  const c = norm(current)
+  return c === n || c.startsWith(n + '/')
 }
 ---
 <aside class="sidebar hidden md:block sticky top-16 max-h-[calc(100vh-4rem)] overflow-y-auto py-4 pr-2 pl-6 text-sm w-64 border-r border-[var(--g-divider)]" aria-label="Section navigation">
@@ -26,7 +34,7 @@ function isActive(link: string, current: string): boolean {
               class:list={[
                 'block px-2 py-1.5 rounded leading-snug no-underline',
                 isActive(item.link, pathname)
-                  ? 'text-brand font-semibold'
+                  ? 'nav-active text-brand font-semibold'
                   : 'text-[var(--g-text-1)] hover:bg-[var(--g-bg-soft)] hover:text-brand'
               ]}
             >
