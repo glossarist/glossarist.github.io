@@ -21,10 +21,78 @@ const outline = headings.filter(h => h.depth >= 2 && h.depth <= 3)
         <li class:list={[h.depth === 3 && 'pl-3']}>
           <a
             href={`#${h.slug}`}
-            class="block py-1 px-2 text-[var(--g-text-2)] no-underline hover:text-brand leading-snug"
+            data-toc-slug={h.slug}
+            class="toc-link block py-1 px-2 text-[var(--g-text-2)] no-underline hover:text-brand leading-snug border-l-2 border-transparent transition-colors"
           >{h.text}</a>
         </li>
       ))}
     </ul>
   </aside>
 )}
+
+<style is:global>
+.toc-link.toc-active {
+  color: var(--g-brand);
+  font-weight: 500;
+  border-left-color: var(--g-brand);
+}
+</style>
+
+<script>
+  function initScrollSpy() {
+    const tocLinks = document.querySelectorAll<HTMLAnchorElement>('[data-toc-slug]')
+    if (tocLinks.length === 0) return
+
+    const headingMap = new Map<Element, HTMLAnchorElement>()
+    tocLinks.forEach(link => {
+      const slug = link.getAttribute('data-toc-slug')
+      if (!slug) return
+      const heading = document.getElementById(slug)
+      if (heading) headingMap.set(heading, link)
+    })
+    if (headingMap.size === 0) return
+
+    let currentActive: HTMLAnchorElement | null = null
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        // Find the topmost intersecting heading
+        let topMost: Element | null = null
+        let topMostTop = Infinity
+        for (const entry of entries) {
+          if (entry.isIntersecting && entry.boundingClientRect.top < topMostTop) {
+            topMost = entry.target
+            topMostTop = entry.boundingClientRect.top
+          }
+        }
+        if (topMost) {
+          const link = headingMap.get(topMost)
+          if (link && link !== currentActive) {
+            if (currentActive) currentActive.classList.remove('toc-active')
+            link.classList.add('toc-active')
+            currentActive = link
+          }
+        }
+      },
+      {
+        // Trigger when heading is between 80px from top (below sticky header)
+        // and 30% from top — gives a comfortable scroll spy zone
+        rootMargin: '-80px 0px -70% 0px',
+        threshold: 0,
+      },
+    )
+
+    headingMap.forEach((_, heading) => observer.observe(heading))
+
+    // Highlight the first heading on page load
+    if (!currentActive && tocLinks.length > 0) {
+      const first = tocLinks[0] as HTMLAnchorElement
+      first.classList.add('toc-active')
+      currentActive = first
+    }
+  }
+
+  // Run on initial load and on Astro view transitions (if enabled)
+  document.addEventListener('DOMContentLoaded', initScrollSpy)
+  document.addEventListener('astro:page-load', initScrollSpy)
+</script>

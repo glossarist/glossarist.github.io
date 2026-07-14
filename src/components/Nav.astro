@@ -50,9 +50,14 @@ function norm(p: string): string {
 
 const current = norm(Astro.url.pathname)
 
-// A sub-link is active if current === link OR current starts with `${link}/`.
-// For directory links like `/model/`, this matches `/model/concepts`
-// but not `/docs/model-foo` (false-positive guard for sibling prefixes).
+// Exact match — used for individual dropdown items so that "Overview" is only
+// highlighted when you're actually on the overview page, not on every child.
+function linkExact(link: string): boolean {
+  return current === norm(link)
+}
+
+// Prefix match — used for dropdown parent buttons so the section is
+// highlighted when you're on any page within it.
 function linkActive(link: string): boolean {
   const n = norm(link)
   return current === n || current.startsWith(n + '/')
@@ -97,7 +102,7 @@ function parentActive(item: { items?: { link: string }[], link?: string }): bool
             <div class="absolute top-full left-0 pt-2 z-50 hidden group-hover:block">
               <ul class="bg-[var(--g-bg)] border border-[var(--g-divider)] rounded-lg p-1.5 list-none m-0 min-w-[220px] shadow-lg">
                 {item.items.map((sub) => {
-                  const on = linkActive(sub.link)
+                  const on = linkExact(sub.link)
                   return (
                     <li class="m-0">
                       <a
