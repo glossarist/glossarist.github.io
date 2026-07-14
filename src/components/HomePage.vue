@@ -505,7 +505,7 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
       <div class="users-grid">
         <a href="https://isotc211.geolexica.org/" target="_blank" rel="noopener" class="user-card">
           <div class="user-card-logo">
-            <img src="/images/iso-symbol.svg" alt="ISO" />
+            <img src="/images/iso-red.svg" alt="ISO" />
           </div>
           <div class="user-card-body">
             <strong>ISO/TC 211 Geolexica</strong>
@@ -516,7 +516,7 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
         </a>
         <a href="https://isotc204.geolexica.org/" target="_blank" rel="noopener" class="user-card">
           <div class="user-card-logo">
-            <img src="/images/iso-symbol.svg" alt="ISO" />
+            <img src="/images/iso-red.svg" alt="ISO" />
           </div>
           <div class="user-card-body">
             <strong>ISO/TC 204 Geolexica</strong>
@@ -526,13 +526,37 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
           <span class="user-card-arrow">&rarr;</span>
         </a>
         <a href="https://osgeo.geolexica.org/" target="_blank" rel="noopener" class="user-card">
-          <div class="user-card-logo">
+          <div class="user-card-logo osgeo-logo-wrap">
             <img src="/images/osgeo-logo.svg" alt="OSGeo" />
           </div>
           <div class="user-card-body">
             <strong>OSGeo Geolexica</strong>
             <span>444 concepts · Open Source Geospatial</span>
             <span class="user-card-detail">Foundation terminology</span>
+          </div>
+          <span class="user-card-arrow">&rarr;</span>
+        </a>
+        <a href="https://www.oimlsmart.org/vocab/" target="_blank" rel="noopener" class="user-card">
+          <div class="user-card-logo">
+            <img src="/images/oiml-logo-light.svg" alt="OIML" class="block dark:hidden" />
+            <img src="/images/oiml-logo-dark.svg" alt="OIML" class="hidden dark:block" />
+          </div>
+          <div class="user-card-body">
+            <strong>OIML VIML</strong>
+            <span>International Vocabulary of Legal Metrology</span>
+            <span class="user-card-detail">VIM editions 1968/2000/2012/2022</span>
+          </div>
+          <span class="user-card-arrow">&rarr;</span>
+        </a>
+        <a href="https://www.glossarist.org/iala-vocab/" target="_blank" rel="noopener" class="user-card">
+          <div class="user-card-logo">
+            <img src="/images/iala-logo-light.svg" alt="IALA" class="block dark:hidden" />
+            <img src="/images/iala-logo-dark.svg" alt="IALA" class="hidden dark:block" />
+          </div>
+          <div class="user-card-body">
+            <strong>IALA Vocabulary</strong>
+            <span>International Association of Marine Aids to Navigation</span>
+            <span class="user-card-detail">Maritime terminology registry</span>
           </div>
           <span class="user-card-arrow">&rarr;</span>
         </a>
@@ -1553,6 +1577,12 @@ collection.to_jsonld(<span class="code-str">'output.jsonld'</span>)</pre>
   max-width: 34px;
   max-height: 34px;
   object-fit: contain;
+}
+
+/* OSGeo logo is light-mode only; needs a white tile in dark mode */
+.dark .osgeo-logo-wrap {
+  background: #ffffff;
+  border-color: #e5e7eb;
 }
 
 .user-card-body {
