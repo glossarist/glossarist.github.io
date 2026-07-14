@@ -41,6 +41,13 @@ ISO 25964 Part 2 aligns with [SKOS](https://www.w3.org/TR/skos-reference/) (the 
 
 ### Hierarchical relationships
 
+The concept hierarchy in Glossarist implements the full ISO 25964 three-subtype model:
+
+<figure>
+  <img src="/images/model/Concepts.png" alt="UML class diagram of the Glossarist Concept model showing the relationship hierarchy" />
+  <figcaption><strong>Concept model hierarchy.</strong> ManagedConcept and LocalizedConcept types, their relationship collections, and how typed semantic links (broader/narrower with generic, partitive, and instantial subtypes) connect concepts into navigable systems.</figcaption>
+</figure>
+
 Glossarist implements all three ISO 25964 hierarchical subtypes:
 
 | ISO 25964 | Glossarist type | Direction |
@@ -68,18 +75,31 @@ ISO 25964 / SKOS defines five mapping types for aligning concepts across differe
 
 These mappings enable interoperability between Glossarist-managed registries and external vocabularies (e.g., mapping an ISO/TC 211 concept to a corresponding INSPIRE concept).
 
-### Associative relationships
+### Full relationship type coverage
 
-ISO 25964 defines associative (RT) relationships and their subtypes:
+Glossarist implements 52 typed semantic relationship types spanning five standards. The ISO 25964 contribution is the hierarchical and associative system:
 
-| ISO 25964 type | Glossarist type |
-|----------------|-----------------|
-| Related term (RT) | `related_concept` |
-| Related term, broader | `related_concept_broader` |
-| Related term, narrower | `related_concept_narrower` |
-| Sequentially related | `sequentially_related` |
-| Spatially related | `spatially_related` |
-| Temporally related | `temporally_related` |
+| Category | Standard | Types |
+|----------|----------|-------|
+| Hierarchical — generic | ISO 25964 / SKOS | `broader`, `narrower`, `broader_generic`, `narrower_generic` |
+| Hierarchical — partitive | ISO 25964 / ISO 19135 | `broader_partitive`, `narrower_partitive`, `has_part`, `is_part_of` |
+| Hierarchical — instantial | ISO 25964 / ISO 19135 | `broader_instantial`, `narrower_instantial`, `instance_of`, `has_instance` |
+| Equivalence | ISO 10241-1 / SKOS | `equivalent`, `exact_match` |
+| SKOS mapping | SKOS | `close_match`, `broad_match`, `narrow_match`, `related_match` |
+| Associative | ISO 10241-1 / ISO 25964 | `see`, `references`, `related_concept`, `related_concept_broader`, `related_concept_narrower` |
+| Spatiotemporal | ISO 25964 / TBX | `sequentially_related`, `spatially_related`, `temporally_related` |
+| Lifecycle | ISO 10241-1 / ISO 19135 | `deprecates`, `deprecated_by`, `supersedes`, `superseded_by`, `replaces`, `replaced_by`, `invalidates`, `invalidated_by`, `retires`, `retired_by` |
+| Lexical | ISO 12620 / TBX | `homograph`, `false_friend` |
+| Comparative | ISO 10241-1 | `compare`, `contrast` |
+| Designation-level | ISO 10241-1 | `abbreviated_form_for`, `short_form_for` |
+
+### Cross-dataset navigation
+
+Relationships can link concepts **across datasets** using URN-based references. Each dataset declares a `urn` (e.g., `urn:oiml:pub:v:1:2022` for VIML 2022) in its `register.yaml`. Cross-dataset relationships reference the target by URN and concept identifier, enabling federated concept systems that span multiple registries.
+
+### Inverse edge derivation
+
+Many relationship types are directional — `broader` in one direction implies `narrower` in the reverse. The [concept-browser](/docs/software/concept-browser) derives these inverse edges automatically, so a relationship need only be declared in one direction.
 
 ### SKOS / RDF export
 

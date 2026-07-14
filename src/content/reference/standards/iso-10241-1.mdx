@@ -30,6 +30,13 @@ Glossarist's concept model is built directly on the ISO 10241-1 entry structure.
 
 ### Entry structure
 
+Glossarist's two-tier concept model — a language-independent `ManagedConcept` holding multiple per-language `LocalizedConcept` instances — is the direct implementation of the ISO 10241-1 entry structure:
+
+<figure>
+  <img src="/images/model/ManagedConcepts.png" alt="UML class diagram of ManagedConcept and ManagedConceptCollection" />
+  <figcaption><strong>ManagedConcept and ManagedConceptCollection.</strong> A managed concept holds a stable, language-independent identity (UUID, status, domains, cross-language relationships) and maps language codes to LocalizedConcept instances — each carrying its own designations, definitions, notes, examples, and sources.</figcaption>
+</figure>
+
 | ISO 10241-1 section | Glossarist entity | Field |
 |---------------------|-------------------|-------|
 | Concept identifier | `ManagedConcept` | `id`, `identifier`, `data.uri` |
@@ -56,6 +63,15 @@ ISO 10241-1 §5.4.2 defines relationships at the designation level — links bet
 | Comparative | `compare`, `contrast` |
 | Associative | `see` |
 | Lifecycle | `deprecates`, `supersedes`, `superseded_by` |
+
+### Sources and provenance
+
+ISO 10241-1 requires that every definition, note, and example document its authoritative source. Glossarist implements this as a multi-level source system — sources can appear on the managed concept, localized concept, individual definition/note/example, and individual designation:
+
+<figure>
+  <img src="/images/model/ConceptSource.png" alt="UML class diagram of the ConceptSource model" />
+  <figcaption><strong>ConceptSource provenance model.</strong> Every source carries a type (authoritative or lineage), a status (one of 10 values tracking how the text relates to the original), structured citation origin, and modification notes — enabling full traceability of terminology data.</figcaption>
+</figure>
 
 ### Non-verbal representations (§6.5)
 
