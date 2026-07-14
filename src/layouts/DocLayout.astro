@@ -32,21 +32,32 @@ const showChrome = !fullscreen
 
 <BaseLayout title={title} description={description} fullscreen={fullscreen}>
   <div class:list={[
-    'doc-container grid gap-8 max-w-[1440px] mx-auto px-6 items-start',
-    showChrome ? 'doc-with-chrome' : 'grid-cols-1',
+    'doc-container',
+    showChrome ? 'doc-with-chrome' : 'doc-fullscreen',
   ]}>
     {showChrome && <Sidebar pathname={pathname} />}
-    <main class="py-8 min-w-0">
+    <main class="doc-main">
       <article class="prose">
         <slot />
       </article>
       {showChrome && (
-        <div class="mt-12 pt-4 border-t border-[var(--g-divider)] text-xs text-[var(--g-text-2)]">
+        <div class="doc-footer">
           {lastUpdated && (
-            <span>
-              Updated: {new Date(lastUpdated).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+            <span class="doc-updated">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M23 4v6h-6"/>
+                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+              </svg>
+              Updated {new Date(lastUpdated).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
             </span>
           )}
+          <a href={`https://github.com/glossarist/glossarist.github.io/edit/main/src/content/${pathname}`} class="doc-edit-link" target="_blank" rel="noopener">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+            </svg>
+            Edit this page
+          </a>
         </div>
       )}
     </main>
@@ -55,20 +66,64 @@ const showChrome = !fullscreen
 </BaseLayout>
 
 <style>
+.doc-container {
+  display: grid;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  align-items: start;
+}
 .doc-container.doc-with-chrome {
-  grid-template-columns: 16rem minmax(0, 1fr) 12rem;
+  grid-template-columns: 15rem minmax(0, 1fr) 12rem;
+  gap: 2rem;
+}
+.doc-container.doc-fullscreen {
+  grid-template-columns: minmax(0, 1fr);
+}
+.doc-main {
+  padding: 3rem 0;
+  min-width: 0;
 }
 .doc-container :global(.prose) {
   max-width: none;
+  padding: 0;
 }
+.doc-footer {
+  margin-top: 4rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--g-divider);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8125rem;
+  color: var(--g-text-3);
+}
+.doc-updated {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.doc-edit-link {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--g-text-3);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.doc-edit-link:hover {
+  color: var(--g-brand);
+}
+
 @media (max-width: 1024px) {
   .doc-container.doc-with-chrome {
-    grid-template-columns: 16rem minmax(0, 1fr);
+    grid-template-columns: 15rem minmax(0, 1fr);
   }
 }
 @media (max-width: 768px) {
   .doc-container.doc-with-chrome {
     grid-template-columns: minmax(0, 1fr);
   }
+  .doc-container { padding: 0 1.25rem; }
 }
 </style>
