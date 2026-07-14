@@ -39,7 +39,8 @@
   --g-code-line-highlight-color: rgba(0, 0, 0, 0.05);
 
   /* Typography */
-  --g-font-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  --g-font-base: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --g-font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --g-font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
 
   /* Layout */
@@ -94,6 +95,7 @@ body {
 /* ---------- Typography ---------- */
 h1, h2, h3, h4, h5, h6 {
   color: var(--g-text-1);
+  font-family: var(--g-font-display);
   font-weight: 600;
   letter-spacing: -0.02em;
   margin: 0 0 1rem;
