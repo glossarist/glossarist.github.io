@@ -9,19 +9,26 @@ function readHeader(rel: string): string {
   return m[0]
 }
 
-// Return array of class strings applied to elements containing the given text
+// Return array of class strings applied to elements containing the given text.
+// Only matches <button> and <a> elements (not <div> wrappers) to avoid
+// capturing the outer nav group div instead of the actual interactive element.
+// Handles buttons that contain child elements (e.g. SVG chevrons) by stripping
+// inner HTML tags before comparing text content.
 function classesOnElementContaining(html: string, text: string): string[] {
   const out: string[] = []
-  const re = /<(?:button|a|div)[^>]*class="([^"]*)"[^>]*>([^<]*)<\/(?:button|a|div)>/g
+  const re = /<(?:button|a)[^>]*\bclass="([^"]*)"[^>]*>([\s\S]*?)<\/(?:button|a)>/g
   let m
   while ((m = re.exec(html))) {
-    if (m[2].trim() === text) out.push(m[1])
+    const textContent = m[2].replace(/<[^>]*>/g, '').trim()
+    if (textContent === text) out.push(m[1])
   }
   return out
 }
 
+// An element is active if it carries the `nav-active` class, which we add
+// to every active nav element (dropdown buttons, plain links, menu items).
 function isActive(cls: string): boolean {
-  return cls.includes('text-brand') && cls.includes('font-semibold')
+  return cls.includes('nav-active')
 }
 
 describe('Nav active highlighting', () => {
