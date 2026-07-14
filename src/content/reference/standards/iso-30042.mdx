@@ -40,36 +40,24 @@ The conversion path:
 GCR YAML files  ←→  glossarist-ruby  ←→  TBX-XML
 ```
 
+### Designation type hierarchy
+
+TBX inherits its designation type system from ISO 12620. Glossarist implements the full MECE (Mutually Exclusive, Collectively Exhaustive) hierarchy:
+
+<figure>
+  <img src="/images/model/Designations.png" alt="UML class diagram of the Glossarist Designation type hierarchy" />
+  <figcaption><strong>Designation type hierarchy.</strong> Five concrete types branch from the abstract Base: expressions, abbreviations, symbols (letter and graphical), prefixes, and suffixes. All inherit normative status, geographical area, language/script/system, pronunciation, sources, term type, and relationship fields.</figcaption>
+</figure>
+
 ### Term types
 
 ISO 30042 / TBX defines a set of term type classifications (drawn from ISO 12620). Glossarist implements all of them as the `term_type` field on designations:
 
-| TBX term type | Glossarist `term_type` |
-|---------------|------------------------|
-| full form | `full_form` |
-| abbreviation | `abbreviation` |
-| acronym | `acronym` |
-| initialism | `initialism` |
-| clipped term | `clipped_term` |
-| short form | `short_form` |
-| transliterated form | `transliterated_form` |
-| transcribed form | `transcribed_form` |
-| variant | `variant` |
-| symbol | `symbol` |
-| formula | `formula` |
-| equation | `equation` |
-| logical expression | `logical_expression` |
-| common name | `common_name` |
-| entry term | `entry_term` |
-| internationalism | `internationalism` |
-| international scientific term | `international_scientific_term` |
-| part number | `part_number` |
-| phraseological unit | `phraseological_unit` |
-| shortcut | `shortcut` |
-| SKU | `sku` |
-| standard text | `standard_text` |
-| synonym | `synonym` |
-| synonymous phrase | `synonymous_phrase` |
+| Category | Term type values |
+|----------|-----------------|
+| **Orthographic / structural** | `full_form`, `abbreviation`, `acronym`, `initialism`, `clipped_term`, `short_form`, `transliterated_form`, `transcribed_form`, `variant` |
+| **Symbolic / formulaic** | `symbol`, `formula`, `equation`, `logical_expression` |
+| **Usage / provenance** | `common_name`, `entry_term`, `internationalism`, `international_scientific_term`, `part_number`, `phraseological_unit`, `shortcut`, `sku`, `standard_text`, `synonym`, `synonymous_phrase` |
 
 See [Term Types](/model/term-types) for the full list with examples.
 
@@ -77,28 +65,43 @@ See [Term Types](/model/term-types) for the full list with examples.
 
 TBX encodes grammatical metadata (part of speech, gender, number). Glossarist implements these via `grammar_info` on expression designations:
 
-- **Part of speech:** `noun`, `verb`, `adjective`, `adverb`, `preposition`, `participle`, `other`
-- **Gender:** `masculine`, `feminine`, `neuter`, `common`
-- **Number:** `singular`, `dual`, `plural`
+| TBX data category | Glossarist field | Values |
+|-------------------|------------------|--------|
+| Part of speech | `grammar_info.part_of_speech` | `noun`, `verb`, `adjective`, `adverb`, `preposition`, `participle`, `other` |
+| Grammatical gender | `grammar_info.gender` | `masculine`, `feminine`, `neuter`, `common` |
+| Grammatical number | `grammar_info.number` | `singular`, `dual`, `plural` |
 
-### Designation relationships
+### Designation-level relationships
 
-TBX supports term-level cross-references. Glossarist implements these via designation-level `related` fields:
+TBX supports term-level cross-references for abbreviated and short forms. Glossarist implements these as designation-level `related` fields:
 
-| TBX relationship | Glossarist type |
-|------------------|-----------------|
-| Abbreviated form | `abbreviated_form_for` |
-| Short form | `short_form_for` |
+| TBX relationship | Glossarist type | Usage |
+|------------------|-----------------|-------|
+| Abbreviated form reference | `abbreviated_form_for` | Links an abbreviation back to its full form |
+| Short form reference | `short_form_for` | Links a short form back to its full form |
 
 ### Language and script identification
 
-TBX uses RFC 3066 / IETF language tags. Glossarist uses:
+TBX uses RFC 3066 / IETF language tags for the `xml:lang` attribute. Glossarist decomposes this into three ISO-standardized code systems:
 
-- **ISO 639** language codes (`eng`, `fra`, `deu`, `jpn`, `ara`, `rus`, `zho`)
-- **ISO 15924** script codes (`Latn`, `Arab`, `Cyrl`, `Hani`, `Kana`)
-- **ISO 24229** conversion system codes (`Hepburn`, `IPA`, `UN:rus-Cyrl:Latn:1993`)
+| Code system | Standard | Examples |
+|-------------|----------|----------|
+| Language | [ISO 639](https://en.wikipedia.org/wiki/ISO_639) | `eng`, `fra`, `deu`, `jpn`, `ara`, `rus`, `zho` |
+| Script | [ISO 15924](https://en.wikipedia.org/wiki/ISO_15924) | `Latn`, `Arab`, `Cyrl`, `Hani`, `Kana` |
+| Conversion system | [ISO 24229](https://en.wikipedia.org/wiki/ISO_24229) | `Hepburn`, `IPA`, `UN:rus-Cyrl:Latn:1993` |
 
-This allows Glossarist to represent multi-script entries — e.g., a Japanese concept with Kanji, Kana, and Romaji variants — which map cleanly to TBX `langSet` elements.
+This decomposition allows Glossarist to represent multi-script entries — e.g., a Japanese concept with Kanji, Kana, and Romaji variants — which map cleanly to TBX `langSet` elements with different `xml:lang` values.
+
+### Normative status mapping
+
+TBX uses the `normativeStatusCode` attribute on term elements. Glossarist maps these directly:
+
+| TBX status | Glossarist `normative_status` | Meaning |
+|------------|-------------------------------|---------|
+| `preferred` | `preferred` | The preferred term for this concept in this language |
+| `admitted` | `admitted` | A synonym accepted alongside the preferred term |
+| `notRecommended` | `deprecated` | A term that should not be used in new work |
+| `superseded` | `superseded` | A term replaced by a newer preferred term |
 
 ---
 
@@ -119,7 +122,7 @@ The exported TBX file can then be imported into any TBX-compatible tool (SDL Tra
 
 - [ISO 12620 — Data Categories](/reference/standards/iso-12620) — the data category registry that defines TBX's vocabulary
 - [ISO 10241-1 — Terminology Entries](/reference/standards/iso-10241-1) — the entry structure TBX encodes
-- [Concept Model: Term Types](/model/term-types) — all 24 term type values
 - [Concept Model: Designations](/model/designations) — the five designation types
+- [Concept Model: Term Types](/model/term-types) — all 24 term type values
 - [Glossarist Ruby](/docs/software/glossarist-ruby) — TBX conversion via the `tbx` gem
 - [Standards Compliance Overview](/reference/standards)

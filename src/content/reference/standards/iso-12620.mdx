@@ -26,13 +26,18 @@ Without ISO 12620, every terminology system invents its own field names and valu
 
 ### Term type classification
 
-The most prominent ISO 12620 contribution to Glossarist is the **term type** vocabulary. Every designation in Glossarist can carry a `term_type` field whose value must come from the ISO 12620 / TBX registry:
+The most prominent ISO 12620 contribution to Glossarist is the **term type** vocabulary. Every designation in Glossarist can carry a `term_type` field whose value must come from the ISO 12620 / TBX registry. The classification applies across all seven designation types:
+
+<figure>
+  <img src="/images/model/Designations.png" alt="UML class diagram of the Designation type hierarchy" />
+  <figcaption><strong>Designation type hierarchy.</strong> The seven designation types (expression, abbreviation, symbol, letter_symbol, graphical_symbol, prefix, suffix) all inherit the <code>term_type</code> field, which classifies each designation using the ISO 12620 data category registry.</figcaption>
+</figure>
 
 | Category | Term type values |
 |----------|-----------------|
-| **Orthographic / structural** | `full_form`, `abbreviation`, `acronym`, `initialism`, `clipped_term`, `short_form`, `transliterated_form`, `transcribed_form`, `variant` |
-| **Symbolic / formulaic** | `symbol`, `formula`, `equation`, `logical_expression` |
-| **Usage / provenance** | `common_name`, `entry_term`, `internationalism`, `international_scientific_term`, `part_number`, `phraseological_unit`, `shortcut`, `sku`, `standard_text`, `synonym`, `synonymous_phrase` |
+| **Orthographic / structural** | `full_form`, `abbreviation`, `acronym`, `initialism`, `clipped_term`, `short_form`, `transliterated_form`, `transcribed_form`, `truncation`, `variant` |
+| **Symbolic / formulaic** | `symbol`, `formula`, `equation`, `logical_expression`, `mathematical_expression`, `reference_symbol`, `figure_symbol`, `graphic_symbol`, `letter_symbol`, `roman_numeral` |
+| **Usage / provenance** | `code`, `common_name`, `entry_term`, `internationalism`, `international_scientific_term`, `part_number`, `phrase`, `phraseological_unit`, `scientific_name`, `shortcut`, `sku`, `standard_text`, `synonym`, `synonymous_phrase` |
 
 See [Term Types](/model/term-types) for the full taxonomy with definitions.
 
@@ -69,20 +74,22 @@ ISO 12620 defines a closed list of parts of speech. Glossarist implements this v
 
 ### Source status
 
-ISO 12620 defines how a source relates to the entry it documents. Glossarist implements these as the `ConceptSource.status` field with 10 values:
+ISO 12620 / TBX defines how a source relates to the entry it documents. Glossarist implements these as the `ConceptSource.status` field. Each describes how the entry's content relates to the cited source:
 
-| ISO 12620 source status | Glossarist `status` |
-|------------------------|---------------------|
-| Identical | `identical` |
-| Similar | `similar` |
-| Modified | `modified` |
-| Restyle | `restyle` |
-| Context added | `context_added` |
-| Generalisation | `generalisation` |
-| Specialisation | `specialisation` |
-| Unspecified | `unspecified` |
-| Related | `related` |
-| Not equal | `not_equal` |
+| Status | Meaning |
+|--------|---------|
+| `identical` | Content is identical to what appears in the source |
+| `modified` | Content has been modified from the source |
+| `restyled` | Content has been restyled (formatting changes only) |
+| `context_added` | Additional context has been added to the source content |
+| `generalisation` | Content is a generalisation of the source content |
+| `specialisation` | Content is a specialisation of the source content |
+| `unspecified` | The relationship to the source is unspecified |
+| `similar` | Content is similar but not identical to the source |
+| `related` | Content is related to the source but not derived from it |
+| `not_equal` | Content explicitly differs from the source |
+
+The optional `modification` field on each `ConceptSource` provides a free-text description of what changed relative to the original.
 
 ### Lexical relationships
 
