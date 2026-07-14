@@ -16,10 +16,12 @@ function norm(p: string): string {
   return n
 }
 
+// Exact match only — the current page is highlighted, not section roots.
+// The dropdown BUTTON in the nav uses prefix matching to show which section
+// you're in; individual sidebar links use exact matching so Overview is only
+// highlighted when you're actually on the overview page.
 function isActive(link: string, current: string): boolean {
-  const n = norm(link)
-  const c = norm(current)
-  return c === n || c.startsWith(n + '/')
+  return norm(current) === norm(link)
 }
 ---
 <aside class="sidebar hidden md:block sticky top-16 max-h-[calc(100vh-4rem)] overflow-y-auto py-4 pr-2 pl-6 text-sm w-64 border-r border-[var(--g-divider)]" aria-label="Section navigation">

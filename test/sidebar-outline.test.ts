@@ -80,11 +80,11 @@ describe('Sidebar', () => {
       expect(isActiveSidebarLink(html, '/docs/software/glossarist-ruby')).toBe(true)
     })
 
-    it('does highlight the section Overview when on a deeper page (conventional)', () => {
-      // /docs/software/ is the parent of /docs/software/glossarist-ruby —
-      // sidebar marks the section root active when you're inside it.
+    it('does NOT highlight the section Overview when on a deeper page', () => {
+      // Only the current page should be highlighted — not the section root.
+      // The dropdown BUTTON uses prefix matching; sidebar links use exact matching.
       const html = readBuilt('dist/docs/software/glossarist-ruby/index.html')
-      expect(isActiveSidebarLink(html, '/docs/software/')).toBe(true)
+      expect(isActiveSidebarLink(html, '/docs/software/')).toBe(false)
     })
 
     it('does NOT highlight a sibling section', () => {
