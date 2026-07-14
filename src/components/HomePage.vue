@@ -1,13 +1,11 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref, computed } from 'vue'
+import { ref, computed } from 'vue'
 import { premierProjects } from '../data/projects'
 import stats from '../../public/data/stats.json'
 
 const st = stats
 
-const cycleIndex = ref(0)
 const activeCodeTab = ref('yaml')
-let cycleTimer: ReturnType<typeof setInterval> | null = null
 
 const langCycle = [
   { code: 'eng', term: 'entity' },
@@ -20,19 +18,8 @@ const langCycle = [
   { code: 'jpn', term: 'エンティティ' },
 ]
 
-const currentLang = computed(() => langCycle[cycleIndex.value].code)
-const currentTerm = computed(() => langCycle[cycleIndex.value].term)
-const cycleKey = computed(() => cycleIndex.value)
-
-onMounted(() => {
-  cycleTimer = setInterval(() => {
-    cycleIndex.value = (cycleIndex.value + 1) % langCycle.length
-  }, 2400)
-})
-
-onUnmounted(() => {
-  if (cycleTimer) clearInterval(cycleTimer)
-})
+// Duplicate the list for seamless infinite scroll
+const tickerItems = computed(() => [...langCycle, ...langCycle])
 
 const codePanels = {
   yaml: {
@@ -113,7 +100,15 @@ collection.to_skos(<span class="c-str">'output.ttl'</span>)`,
 
         <h1 class="hp-hero-title">
           One concept,<br />
-          <em>many languages</em>.
+          <span class="hp-ticker" aria-label="many languages">
+            <span class="hp-ticker-track">
+              <span
+                v-for="(lang, i) in tickerItems"
+                :key="i"
+                class="hp-ticker-item"
+              >{{ lang.term }}</span>
+            </span>
+          </span>
         </h1>
 
         <p class="hp-hero-lede">
@@ -131,16 +126,6 @@ collection.to_skos(<span class="c-str">'output.ttl'</span>)`,
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
             GitHub
           </a>
-        </div>
-
-        <div class="hp-lang-cycle">
-          <span class="hp-lang-code">{{ currentLang }}</span>
-          <span class="hp-lang-sep">→</span>
-          <span class="hp-lang-term-wrap">
-            <Transition name="lang-fade" mode="out-in">
-              <span :key="cycleKey" class="hp-lang-term">{{ currentTerm }}</span>
-            </Transition>
-          </span>
         </div>
       </div>
     </section>
@@ -529,31 +514,56 @@ collection.to_skos(<span class="c-str">'output.ttl'</span>)`,
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
-  margin-bottom: 3rem;
+  margin-bottom: 0;
 }
-.hp-lang-cycle {
-  display: flex;
+
+/* ─── Language ticker ─── */
+.hp-ticker {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  max-width: 700px;
+  margin-top: 0.25rem;
+  /* Fade edges */
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+.hp-ticker-track {
+  display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
-  font-family: var(--g-font-display);
+  gap: 0;
+  white-space: nowrap;
+  animation: hp-ticker-scroll 24s linear infinite;
+  will-change: transform;
 }
-.hp-lang-code {
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: rgba(184, 245, 236, 0.7);
-}
-.hp-lang-sep { color: rgba(232, 238, 245, 0.3); }
-.hp-lang-term {
+.hp-ticker-item {
   font-family: 'EB Garamond', Georgia, serif;
   font-style: italic;
-  font-size: 1.375rem;
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 500;
   color: #7ee0d4;
+  padding-right: 2.5rem;
+  letter-spacing: -0.01em;
 }
-.lang-fade-enter-active, .lang-fade-leave-active { transition: all 0.3s ease; }
-.lang-fade-enter-from { opacity: 0; transform: translateY(8px); }
-.lang-fade-leave-to { opacity: 0; transform: translateY(-8px); }
+.hp-ticker-item::after {
+  content: '·';
+  margin-left: -1.25rem;
+  color: rgba(126, 224, 212, 0.3);
+  font-style: normal;
+  font-size: 0.7em;
+  vertical-align: middle;
+}
+.hp-ticker-item:last-child::after { content: ''; }
+@keyframes hp-ticker-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.hp-ticker:hover .hp-ticker-track {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hp-ticker-track { animation: none; }
+}
 
 /* ─── Stats ─── */
 .hp-stats {
