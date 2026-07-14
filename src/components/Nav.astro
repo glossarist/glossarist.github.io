@@ -80,10 +80,10 @@ function parentActive(item: { items?: { link: string }[], link?: string }): bool
           <>
             <button
               class:list={[
-                'nav-dropdown-btn flex items-center gap-1 bg-transparent border-none px-3 py-1.5 cursor-pointer rounded-md text-sm font-medium transition-colors',
+                'nav-dropdown-btn flex items-center gap-1 bg-transparent border-none px-3 py-1.5 cursor-pointer rounded-md text-sm transition-colors',
                 parentOn
-                  ? 'nav-active text-brand bg-[var(--g-brand-soft)]'
-                  : 'text-[var(--g-text-1)] hover:text-brand hover:bg-[var(--g-bg-soft)]',
+                  ? 'nav-active text-brand font-semibold'
+                  : 'text-[var(--g-text-1)] font-medium hover:text-brand',
               ]}
             >
               {item.text}
@@ -91,24 +91,29 @@ function parentActive(item: { items?: { link: string }[], link?: string }): bool
                 <path d="M3 4.5L6 7.5L9 4.5"/>
               </svg>
             </button>
-            <ul class="absolute top-full left-0 mt-1 bg-[var(--g-bg)] border border-[var(--g-divider)] rounded-lg p-1.5 list-none m-0 min-w-[220px] hidden group-hover:block shadow-lg">
-              {item.items.map((sub) => {
-                const on = linkActive(sub.link)
-                return (
-                  <li class="m-0">
-                    <a
-                      href={sub.link}
-                      class:list={[
-                        'block px-3 py-1.5 rounded-md no-underline text-sm transition-colors',
-                        on
-                          ? 'nav-active text-brand font-semibold bg-[var(--g-brand-soft)]'
-                          : 'text-[var(--g-text-1)] hover:bg-[var(--g-bg-soft)] hover:text-brand',
-                      ]}
-                    >{sub.text}</a>
-                  </li>
-                )
-              })}
-            </ul>
+            {/* Wrapper with pt-2 creates a transparent hoverable bridge between
+                the button and the dropdown — prevents the menu from disappearing
+                when the mouse crosses the gap. */}
+            <div class="absolute top-full left-0 pt-2 z-50 hidden group-hover:block">
+              <ul class="bg-[var(--g-bg)] border border-[var(--g-divider)] rounded-lg p-1.5 list-none m-0 min-w-[220px] shadow-lg">
+                {item.items.map((sub) => {
+                  const on = linkActive(sub.link)
+                  return (
+                    <li class="m-0">
+                      <a
+                        href={sub.link}
+                        class:list={[
+                          'block px-3 py-1.5 rounded-md no-underline text-sm transition-colors',
+                          on
+                            ? 'nav-active text-brand font-medium'
+                            : 'text-[var(--g-text-1)] hover:bg-[var(--g-bg-soft)] hover:text-brand',
+                        ]}
+                      >{sub.text}</a>
+                    </li>
+                  )
+                })}
+              </ul>
+            </div>
           </>
         ) : (
           <a
@@ -117,7 +122,7 @@ function parentActive(item: { items?: { link: string }[], link?: string }): bool
               'nav-plain-link px-3 py-1.5 text-sm rounded-md no-underline transition-colors',
               parentOn
                 ? 'nav-active text-brand font-medium'
-                : 'text-[var(--g-text-2)] hover:text-[var(--g-text-1)] hover:bg-[var(--g-bg-soft)]',
+                : 'text-[var(--g-text-2)] hover:text-[var(--g-text-1)]',
             ]}
           >{item.text}</a>
         )}
