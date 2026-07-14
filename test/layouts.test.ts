@@ -150,9 +150,9 @@ describe('BlogLayout', () => {
     expect(html).toMatch(/<h1[^>]*>.*Concept Model v3\.1.*<\/h1>/)
   })
 
-  it('uses single-column max-w-[720px] layout', () => {
+  it('uses single-column narrow content layout', () => {
     const html = readBuilt('dist/blog/2026-07-05-concept-model-v3.1/index.html')
-    expect(html).toContain('max-w-[720px]')
+    expect(html).toContain('blog-post')
   })
 })
 

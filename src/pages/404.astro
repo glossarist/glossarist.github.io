@@ -1,26 +1,70 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
 ---
+
 <BaseLayout title="404 — Page not found">
-  <div class="not-found">
-    <h1>404</h1>
-    <p>Sorry, that page doesn't exist.</p>
-    <p><a href="/">Return home</a> · <a href="/blog">Read the blog</a> · <a href="/docs">Browse docs</a></p>
-  </div>
+  <section class="g-hero not-found-hero" style="min-height: 70vh; display: flex; align-items: center;">
+    <div class="g-hero-grain"></div>
+    <div class="g-hero-inner">
+      <div class="not-found-content">
+        <span class="not-found-code">404</span>
+        <h1 class="g-display-title" style="font-size: clamp(2rem, 5vw, 3.5rem);">
+          This page <em>doesn't exist</em>.
+        </h1>
+        <p class="g-lede" style="margin-bottom: 2.5rem;">
+          The page you're looking for may have been moved, renamed, or never
+          existed. Try one of these destinations instead.
+        </p>
+        <div class="not-found-links">
+          <a href="/" class="g-cta g-cta-light">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            </svg>
+            Return home
+          </a>
+          <a href="/model/" class="g-cta g-cta-light">
+            Concept Model
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M13 5l7 7-7 7"/>
+            </svg>
+          </a>
+          <a href="/docs/software/" class="g-cta g-cta-light">
+            Software
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M13 5l7 7-7 7"/>
+            </svg>
+          </a>
+          <a href="/blog/" class="g-cta g-cta-light">
+            Blog
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M13 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
 </BaseLayout>
 
 <style>
-.not-found {
-  text-align: center;
-  padding: 4rem 1.5rem;
+.not-found-content {
+  max-width: 600px;
 }
-.not-found h1 {
-  font-size: 6rem;
-  margin: 0;
-  color: var(--g-brand, #3b82f6);
+.not-found-code {
+  display: block;
+  font-family: var(--g-font-display);
+  font-size: clamp(5rem, 15vw, 9rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  color: var(--g-teal);
+  opacity: 0.9;
+  margin-bottom: -0.5rem;
+  text-shadow: 0 0 80px rgba(63, 182, 176, 0.3);
 }
-.not-found p {
-  margin: 1rem 0;
-  color: var(--g-text-2, #4b5563);
+.not-found-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
 }
 </style>

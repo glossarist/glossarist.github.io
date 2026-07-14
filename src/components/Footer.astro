@@ -1,11 +1,149 @@
 ---
 const year = new Date().getFullYear()
 ---
-<footer class="flex flex-col gap-2 px-6 py-8 border-t border-[var(--g-divider)] text-center text-sm text-[var(--g-text-2)] mt-16">
-  <div>
-    An open source project of <a href="https://www.ribose.com" class="text-brand hover:underline">Ribose</a>
+
+<footer class="g-footer">
+  <div class="g-footer-inner">
+    <div class="g-footer-brand">
+      <a href="/" class="g-footer-logo">
+        <img src="/logo-glossarist.svg" alt="Glossarist" width="32" height="30" />
+        <span>Glossarist</span>
+      </a>
+      <p class="g-footer-tagline g-greek">γλωσσάριον — for multi-language concept systems</p>
+    </div>
+
+    <nav class="g-footer-nav">
+      <div class="g-footer-col">
+        <h4>Model</h4>
+        <a href="/model/">Overview</a>
+        <a href="/model/concepts">Concepts</a>
+        <a href="/model/relationships">Relationships</a>
+        <a href="/model/designations">Designations</a>
+      </div>
+      <div class="g-footer-col">
+        <h4>Reference</h4>
+        <a href="/reference/">Overview</a>
+        <a href="/reference/schema-browser">Schema Browser</a>
+        <a href="/reference/ontology">Ontology</a>
+        <a href="/reference/standards">Standards</a>
+      </div>
+      <div class="g-footer-col">
+        <h4>Software</h4>
+        <a href="/docs/software/">All Software</a>
+        <a href="/docs/software/glossarist-ruby">Glossarist Ruby</a>
+        <a href="/docs/software/glossarist-js">Glossarist JS</a>
+        <a href="/docs/software/desktop">Desktop App</a>
+      </div>
+      <div class="g-footer-col">
+        <h4>Community</h4>
+        <a href="https://github.com/glossarist">GitHub</a>
+        <a href="/blog/">Blog</a>
+        <a href="/about">About</a>
+        <a href="https://www.ribose.com">Ribose</a>
+      </div>
+    </nav>
   </div>
-  <div>
-    Copyright © {year} Ribose
+
+  <div class="g-footer-bottom">
+    <span>Open source project maintained by <a href="https://www.ribose.com">Ribose</a></span>
+    <span>Copyright © {year} Ribose</span>
   </div>
 </footer>
+
+<style>
+.g-footer {
+  border-top: 1px solid var(--g-divider);
+  background: var(--g-bg-soft);
+  margin-top: 0;
+}
+.g-footer-inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 4rem 1.5rem 3rem;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 3rem;
+}
+.g-footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.g-footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+  font-family: var(--g-font-display);
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: -0.03em;
+  color: var(--g-text-1);
+}
+.g-footer-logo img { width: 32px; height: auto; }
+.g-footer-tagline {
+  font-size: 0.9375rem;
+  color: var(--g-text-2);
+  line-height: 1.5;
+  margin: 0;
+  max-width: 280px;
+}
+.g-footer-nav {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+.g-footer-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.g-footer-col h4 {
+  font-family: var(--g-font-display);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--g-text-3);
+  margin: 0 0 0.5rem;
+}
+.g-footer-col a {
+  font-size: 0.875rem;
+  color: var(--g-text-2);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.g-footer-col a:hover {
+  color: var(--g-brand);
+}
+.g-footer-bottom {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 1.5rem 1.5rem;
+  border-top: 1px solid var(--g-divider);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8125rem;
+  color: var(--g-text-3);
+}
+.g-footer-bottom a { color: var(--g-brand); }
+
+@media (max-width: 768px) {
+  .g-footer-inner {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 3rem 1.25rem 2rem;
+  }
+  .g-footer-nav {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  .g-footer-bottom {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+    padding: 1.25rem 1.25rem;
+  }
+}
+</style>

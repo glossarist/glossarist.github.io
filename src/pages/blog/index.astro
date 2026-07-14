@@ -6,7 +6,7 @@ const posts = (await getCollection('blog'))
   .sort((a, b) => Date.parse(b.data.date) - Date.parse(a.data.date))
 
 function formatDate(dateStr: string): string {
-  return new Date(dateStr).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+  return new Date(dateStr).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
 }
 
 function formatAuthors(list: string[]): string {
@@ -18,80 +18,136 @@ function formatAuthors(list: string[]): string {
 ---
 
 <BaseLayout title="Blog" description="Glossarist blog — announcements and deep dives">
-  <div class="blog-index">
-    <h1>Blog</h1>
-    <p class="blog-tagline">Announcements, release notes, and deep dives from the Glossarist community.</p>
-    <ul class="post-list">
-      {posts.map(post => (
-        <li class="post-card">
-          <a href={`/blog/${post.id}`} class="post-link">
-            <div class="post-meta">
+  <section class="g-hero" style="min-height: auto;">
+    <div class="g-hero-grain"></div>
+    <div class="g-hero-inner" style="padding: 5rem 1.5rem 4rem;">
+      <div class="g-section-label g-label-light" style="margin-bottom: 1.5rem;">
+        <span class="g-label-num">·</span>
+        <span class="g-label-text">Blog</span>
+      </div>
+      <h1 class="g-display-title">
+        Announcements &amp;<br /><em>deep dives</em>.
+      </h1>
+      <p class="g-lede">
+        Release notes, technical breakdowns, and insights from the Glossarist
+        community — covering the concept model, the software ecosystem, and
+        real-world terminology management.
+      </p>
+    </div>
+  </section>
+
+  <div class="blog-index-container">
+    <div class="blog-posts">
+      {posts.map((post, i) => (
+        <article class:list={['blog-entry', i === 0 && 'blog-entry-featured']}>
+          <a href={`/blog/${post.id}`} class="blog-entry-link">
+            <div class="blog-entry-meta">
               <time datetime={post.data.date}>{formatDate(post.data.date)}</time>
               {post.data.authors.length > 0 && (
-                <span class="post-authors"> · {formatAuthors(post.data.authors)}</span>
+                <>
+                  <span class="blog-entry-sep">·</span>
+                  <span>{formatAuthors(post.data.authors)}</span>
+                </>
               )}
             </div>
-            <h2 class="post-title">{post.data.title}</h2>
+            <h2 class="blog-entry-title">{post.data.title}</h2>
             {post.data.description && (
-              <p class="post-description">{post.data.description}</p>
+              <p class="blog-entry-desc">{post.data.description}</p>
             )}
+            <span class="blog-entry-arrow">
+              Read
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M13 5l7 7-7 7"/>
+              </svg>
+            </span>
           </a>
-        </li>
+        </article>
       ))}
-    </ul>
+    </div>
   </div>
 </BaseLayout>
 
 <style>
-.blog-index {
-  max-width: 720px;
+.blog-index-container {
+  max-width: 800px;
   margin: 0 auto;
-  padding: 2rem 1.5rem;
+  padding: 3rem 1.5rem 5rem;
 }
-.blog-index h1 {
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin: 0 0 0.5rem;
+.blog-posts {
+  display: flex;
+  flex-direction: column;
 }
-.blog-tagline {
-  color: var(--g-text-2, #4b5563);
-  margin-bottom: 2.5rem;
+.blog-entry {
+  border-bottom: 1px solid var(--g-divider);
+  transition: background 0.2s;
 }
-.post-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.blog-entry:first-child {
+  border-top: 1px solid var(--g-divider);
 }
-.post-card {
-  margin-bottom: 2rem;
-  padding: 1.5rem;
-  border: 1px solid var(--g-divider, #e5e7eb);
-  border-radius: 8px;
-  transition: border-color 0.15s, transform 0.15s;
+.blog-entry:hover {
+  background: var(--g-bg-soft);
 }
-.post-card:hover {
-  border-color: var(--g-brand, #3b82f6);
-  transform: translateY(-1px);
-}
-.post-link {
+.blog-entry-link {
   display: block;
+  padding: 2rem 1.5rem;
   color: inherit;
   text-decoration: none;
+  transition: transform 0.2s;
 }
-.post-meta {
-  font-size: 0.875rem;
-  color: var(--g-text-3, #6b7280);
-  margin-bottom: 0.5rem;
+.blog-entry:hover .blog-entry-link {
+  transform: translateX(4px);
 }
-.post-title {
-  font-size: 1.25rem;
+.blog-entry-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+  color: var(--g-text-3);
+  margin-bottom: 0.6rem;
+  font-family: var(--g-font-display);
+  letter-spacing: 0.02em;
+}
+.blog-entry-sep { opacity: 0.5; }
+.blog-entry-title {
+  font-family: var(--g-font-display);
+  font-size: 1.375rem;
   font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
   margin: 0 0 0.5rem;
-  color: var(--g-brand, #3b82f6);
+  color: var(--g-text-1);
+  transition: color 0.15s;
 }
-.post-description {
-  color: var(--g-text-2, #4b5563);
-  margin: 0;
-  line-height: 1.5;
+.blog-entry:hover .blog-entry-title {
+  color: var(--g-brand);
+}
+.blog-entry-desc {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--g-text-2);
+  margin: 0 0 0.75rem;
+}
+.blog-entry-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  font-family: var(--g-font-display);
+  color: var(--g-text-3);
+  transition: color 0.15s;
+}
+.blog-entry:hover .blog-entry-arrow {
+  color: var(--g-teal);
+}
+.blog-entry:hover .blog-entry-arrow svg {
+  transform: translateX(3px);
+}
+.blog-entry-arrow svg { transition: transform 0.2s; }
+
+@media (max-width: 640px) {
+  .blog-index-container { padding: 2rem 1.25rem 3rem; }
+  .blog-entry-link { padding: 1.5rem 1rem; }
+  .blog-entry-title { font-size: 1.125rem; }
 }
 </style>

@@ -17,34 +17,81 @@ function norm(p: string): string {
 }
 
 // Exact match only — the current page is highlighted, not section roots.
-// The dropdown BUTTON in the nav uses prefix matching to show which section
-// you're in; individual sidebar links use exact matching so Overview is only
-// highlighted when you're actually on the overview page.
 function isActive(link: string, current: string): boolean {
   return norm(current) === norm(link)
 }
 ---
-<aside class="sidebar hidden md:block sticky top-16 max-h-[calc(100vh-4rem)] overflow-y-auto py-4 pr-2 pl-6 text-sm w-64 border-r border-[var(--g-divider)]" aria-label="Section navigation">
+
+<aside class="g-sidebar" aria-label="Section navigation">
   {sidebar.map(group => (
-    <section class="mb-6">
-      <h2 class="text-xs font-semibold uppercase tracking-wider text-[var(--g-text-2)] mt-0 mb-2 px-2">{group.text}</h2>
-      <ul class="list-none m-0 p-0">
+    <section class="g-sidebar-group">
+      <h2 class="g-sidebar-heading">{group.text}</h2>
+      <ul class="g-sidebar-list">
         {group.items.map(item => (
-          <li class="m-0">
+          <li>
             <a
               href={item.link}
               class:list={[
-                'block px-2 py-1.5 rounded leading-snug no-underline',
-                isActive(item.link, pathname)
-                  ? 'nav-active text-brand font-semibold'
-                  : 'text-[var(--g-text-1)] hover:bg-[var(--g-bg-soft)] hover:text-brand'
+                'g-sidebar-link',
+                isActive(item.link, pathname) && 'nav-active g-sidebar-active',
               ]}
-            >
-              {item.text}
-            </a>
+            >{item.text}</a>
           </li>
         ))}
       </ul>
     </section>
   ))}
 </aside>
+
+<style>
+.g-sidebar {
+  position: sticky;
+  top: 4rem;
+  max-height: calc(100vh - 4rem);
+  overflow-y: auto;
+  padding: 2rem 0.75rem 2rem 1.5rem;
+  font-size: 0.875rem;
+  width: 15rem;
+  border-right: 1px solid var(--g-divider);
+}
+.g-sidebar-group {
+  margin-bottom: 1.75rem;
+}
+.g-sidebar-group:last-child { margin-bottom: 0; }
+.g-sidebar-heading {
+  font-family: var(--g-font-display);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--g-text-3);
+  margin: 0 0 0.625rem;
+  padding: 0 0.625rem;
+}
+.g-sidebar-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.g-sidebar-link {
+  display: block;
+  padding: 0.375rem 0.625rem;
+  border-radius: 6px;
+  color: var(--g-text-2);
+  text-decoration: none;
+  line-height: 1.4;
+  transition: all 0.15s;
+  border-left: 2px solid transparent;
+}
+.g-sidebar-link:hover {
+  color: var(--g-brand);
+  background: var(--g-bg-soft);
+  text-decoration: none;
+}
+.g-sidebar-active {
+  color: var(--g-brand) !important;
+  font-weight: 600;
+  background: var(--g-brand-soft);
+  border-left-color: var(--g-brand);
+}
+</style>
