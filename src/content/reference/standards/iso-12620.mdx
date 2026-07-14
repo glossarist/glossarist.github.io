@@ -1,0 +1,105 @@
+---
+title: "ISO 12620: Data Categories"
+description: Data category registry for terminology — the controlled vocabulary of term type classifications and metadata fields
+---
+
+# ISO 12620 — Data Category Registry
+
+## What this standard is
+
+[ISO 12620](https://www.iso.org/standard/69550.html) provides a **data category registry** — a controlled, standardized vocabulary of metadata fields and values used to describe terminology data. Published in 2009, it is the reference dictionary that TBX (ISO 30042) draws from to populate its elements and attributes.
+
+The standard defines:
+
+- **Data categories** — named fields for terminology metadata (e.g., `partOfSpeech`, `grammaticalGender`, `termType`)
+- **Value lists** — the allowed values for each data category (e.g., `noun`, `verb`, `adjective` for `partOfSpeech`)
+- **Open vs. closed value sets** — some categories allow user-defined extensions, others are fixed
+- **DatCatInfo** declarations — machine-readable descriptions of each data category
+
+### Key concept: data categories vs. free text
+
+Without ISO 12620, every terminology system invents its own field names and value vocabularies. System A calls it "Part of Speech"; System B calls it "Grammar"; System C calls it "POS" — and their value lists differ too. ISO 12620 eliminates this ambiguity by providing a single, normative registry that everyone references.
+
+---
+
+## How Glossarist implements it
+
+### Term type classification
+
+The most prominent ISO 12620 contribution to Glossarist is the **term type** vocabulary. Every designation in Glossarist can carry a `term_type` field whose value must come from the ISO 12620 / TBX registry:
+
+| Category | Term type values |
+|----------|-----------------|
+| **Orthographic / structural** | `full_form`, `abbreviation`, `acronym`, `initialism`, `clipped_term`, `short_form`, `transliterated_form`, `transcribed_form`, `variant` |
+| **Symbolic / formulaic** | `symbol`, `formula`, `equation`, `logical_expression` |
+| **Usage / provenance** | `common_name`, `entry_term`, `internationalism`, `international_scientific_term`, `part_number`, `phraseological_unit`, `shortcut`, `sku`, `standard_text`, `synonym`, `synonymous_phrase` |
+
+See [Term Types](/model/term-types) for the full taxonomy with definitions.
+
+### Part of speech
+
+ISO 12620 defines a closed list of parts of speech. Glossarist implements this via `grammar_info.part_of_speech`:
+
+| ISO 12620 value | Glossarist value |
+|-----------------|------------------|
+| `noun` | `noun` |
+| `verb` | `verb` |
+| `adjective` | `adjective` |
+| `adverb` | `adverb` |
+| `preposition` | `preposition` |
+| `participle` | `participle` |
+| `other` | `other` |
+
+### Grammatical number
+
+| ISO 12620 value | Glossarist value |
+|-----------------|------------------|
+| `singular` | `singular` |
+| `dual` | `dual` |
+| `plural` | `plural` |
+
+### Grammatical gender
+
+| ISO 12620 value | Glossarist value |
+|-----------------|------------------|
+| `masculine` | `masculine` |
+| `feminine` | `feminine` |
+| `neuter` | `neuter` |
+| `common` | `common` (for languages that combine m/f) |
+
+### Source status
+
+ISO 12620 defines how a source relates to the entry it documents. Glossarist implements these as the `ConceptSource.status` field with 10 values:
+
+| ISO 12620 source status | Glossarist `status` |
+|------------------------|---------------------|
+| Identical | `identical` |
+| Similar | `similar` |
+| Modified | `modified` |
+| Restyle | `restyle` |
+| Context added | `context_added` |
+| Generalisation | `generalisation` |
+| Specialisation | `specialisation` |
+| Unspecified | `unspecified` |
+| Related | `related` |
+| Not equal | `not_equal` |
+
+### Lexical relationships
+
+ISO 12620 / TBX defines two lexical relationship types that are language-specific:
+
+- **`homograph`** — same spelling, different meaning (intra-language)
+- **`false_friend`** — similar spelling across languages but different meaning (cross-language)
+
+These are implemented in Glossarist at the [LocalizedConcept level](/model/relationships) because they only exist within or between specific languages — a concept that is a false friend in French may not be one in German.
+
+---
+
+## Related
+
+- [ISO 30042 — TBX Format](/reference/standards/iso-30042) — the markup framework that uses these data categories
+- [ISO 10241-1 — Terminology Entries](/reference/standards/iso-10241-1) — the entry structure these fields populate
+- [Concept Model: Term Types](/model/term-types) — all 24 term type values with examples
+- [Concept Model: Sources](/model/sources) — source status and provenance tracking
+- [Concept Model: Relationships](/model/relationships) — homograph and false friend relationships
+- [Standards Compliance Overview](/reference/standards)

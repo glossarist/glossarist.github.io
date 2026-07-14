@@ -44,6 +44,16 @@ export const sidebars: Record<string, SidebarGroup[]> = {
         { text: 'Standards', link: '/reference/standards' },
       ],
     },
+    {
+      text: 'ISO Standards',
+      items: [
+        { text: 'ISO 10241-1 — Terminology Entries', link: '/reference/standards/iso-10241-1' },
+        { text: 'ISO 704 — Principles & Methods', link: '/reference/standards/iso-704' },
+        { text: 'ISO 30042 — TBX Format', link: '/reference/standards/iso-30042' },
+        { text: 'ISO 12620 — Data Categories', link: '/reference/standards/iso-12620' },
+        { text: 'ISO 25964 — Thesauri', link: '/reference/standards/iso-25964' },
+      ],
+    },
   ],
   '/docs/software/': [
     {

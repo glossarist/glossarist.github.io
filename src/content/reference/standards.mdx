@@ -1,65 +1,68 @@
 ---
 title: Standards Compliance
-description: Which ISO standards Glossarist implements and how
+description: Which ISO standards Glossarist implements and how — detailed per-standard pages
 ---
 
 # Standards Compliance
 
-Glossarist implements and aligns with multiple ISO standards for terminology management.
+Glossarist implements and aligns with multiple ISO standards for terminology management. Each standard governs a different layer of the system — from the theoretical concept model to the machine-readable exchange format.
 
-## [ISO 10241-1](https://www.iso.org/standard/40362.html) — Terminology entries
+<div class="standards-index-grid">
+  <a href="/reference/standards/iso-10241-1" class="standards-index-card">
+    <div class="card-header">
+      <span class="card-num">ISO 10241-1</span>
+      <span class="card-arrow">→</span>
+    </div>
+    <h3>Terminology Entries</h3>
+    <p>Structured terminology entries in standardized vocabularies — the presentation standard that defines how a concept entry is organized.</p>
+  </a>
+  <a href="/reference/standards/iso-704" class="standards-index-card">
+    <div class="card-header">
+      <span class="card-num">ISO 704</span>
+      <span class="card-arrow">→</span>
+    </div>
+    <h3>Principles & Methods</h3>
+    <p>Concept systems, definitions, and term formation rules — the theoretical foundation for terminology work.</p>
+  </a>
+  <a href="/reference/standards/iso-30042" class="standards-index-card">
+    <div class="card-header">
+      <span class="card-num">ISO 30042</span>
+      <span class="card-arrow">→</span>
+    </div>
+    <h3>TBX Format</h3>
+    <p>Terminology markup framework for data exchange — the XML-based interchange format between systems.</p>
+  </a>
+  <a href="/reference/standards/iso-12620" class="standards-index-card">
+    <div class="card-header">
+      <span class="card-num">ISO 12620</span>
+      <span class="card-arrow">→</span>
+    </div>
+    <h3>Data Categories</h3>
+    <p>Term type classifications and data category registry — the controlled vocabulary for terminology metadata.</p>
+  </a>
+  <a href="/reference/standards/iso-25964" class="standards-index-card">
+    <div class="card-header">
+      <span class="card-num">ISO 25964</span>
+      <span class="card-arrow">→</span>
+    </div>
+    <h3>Thesauri</h3>
+    <p>Hierarchical and mapping relationships for thesaurus interoperability with SKOS.</p>
+  </a>
+</div>
 
-Terminology entries in standardized terminology. Glossarist implements:
+## Supporting code systems
 
-- Concept structure, designations, definitions, sources
-- [ManagedConcept](/model/concepts), [LocalizedConcept](/model/concepts), [ConceptSource](/model/sources)
-- Relationship types: `deprecates`, `supersedes`, `compare`, `contrast`, `see`
-
-## [ISO 704](https://www.iso.org/standard/79077.html) — Terminology work: principles and methods
-
-Concept systems and the concept-term interaction cycle. Glossarist implements:
-
-- Domain classification
-- Hierarchical relationships (broader/narrower)
-- [Concept-term interaction cycle](/model/)
-
-## [ISO 30042](https://www.iso.org/standard/62510.html) / TBX — Terminology markup framework
-
-TBX-XML export via glossarist-ruby (tbx gem). Glossarist supports:
-
-- Term types, abbreviation types, grammatical information
-- GCR package format as TBX exchange medium
-- [TBX term types](/model/term-types)
-
-## [ISO 12620](https://www.iso.org/standard/69550.html) — Data category registry
-
-Term types and data category classifications. Glossarist implements:
-
-- [Term type values](/model/term-types)
-- Register values
-- Part of speech
-- Source status/type
-
-## [ISO 25964](https://www.iso.org/standard/53657.html) / SKOS — Thesaurus interoperability
-
-SKOS concept schemes and mapping relationships. Glossarist implements:
-
-- 14 SKOS concept schemes (taxonomy TTLs in concept-model)
-- Hierarchical relationships: broader/narrower (generic, partitive, instantial)
-- Mapping relationships: `exact_match`, `close_match`, `broad_match`, `narrow_match`, `related_match`
-- SKOS/RDF export via glossarist-ruby
-
-## Code systems
+In addition to the terminology standards above, Glossarist uses established ISO code systems for language, script, and transliteration identification:
 
 | Standard | Purpose | Examples |
 |----------|---------|----------|
-| ISO 639 | Language codes | `eng`, `fra`, `deu`, `jpn` |
-| ISO 15924 | Script codes | `Latn`, `Arab`, `Cyrl`, `Hani` |
-| ISO 24229 | Conversion system codes | `Var:jpn-Hrkt:Latn:Hepburn-1886` |
+| [ISO 639](https://en.wikipedia.org/wiki/ISO_639) | Language codes | `eng`, `fra`, `deu`, `jpn`, `ara`, `rus`, `zho` |
+| [ISO 15924](https://en.wikipedia.org/wiki/ISO_15924) | Script codes | `Latn`, `Arab`, `Cyrl`, `Hani`, `Kana` |
+| [ISO 24229](https://en.wikipedia.org/wiki/ISO_24229) | Conversion system codes | `Hepburn`, `IPA`, `UN:rus-Cyrl:Latn:1993` |
 
 ## IEC Electropedia compatibility
 
-Glossarist maintains compatibility with IEC Electropedia data format, including URN resolution for IEC and ISO identifiers.
+Glossarist maintains compatibility with [IEC Electropedia](https://www.electropedia.org/) data format, including URN resolution for IEC and ISO identifiers (e.g., `urn:iec:std:iec:60050-113-01-01`).
 
 ## Cross-references
 

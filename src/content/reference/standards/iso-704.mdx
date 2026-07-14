@@ -1,0 +1,96 @@
+---
+title: "ISO 704: Principles & Methods"
+description: Terminology work principles and methods — the theoretical foundation for concept systems, definitions, and term formation
+---
+
+# ISO 704 — Terminology Work: Principles and Methods
+
+## What this standard is
+
+[ISO 704](https://www.iso.org/standard/79077.html) establishes the **principles and methods of terminology work**. It is the foundational theoretical document — it defines *what a concept is*, *how concepts form systems*, and *how terms are created for them*. First published in 1987 and revised in 2000 and 2024, ISO 704 provides the intellectual framework upon which all other terminology standards (10241-1, 30042, 12620, 25964) build.
+
+The standard covers:
+
+- **Concept theory** — what constitutes a concept and how concepts differ from terms
+- **Characteristics** — the individual features that distinguish one concept from another
+- **Concept systems** — how concepts form hierarchical and associative networks
+- **The concept-term interaction cycle** — the workflow for establishing terminology
+- **Definition writing** — principles for writing clear, complete definitions
+- **Term formation** — methods for creating new terms (neology)
+
+### Key concept: the concept–term distinction
+
+ISO 704's most fundamental principle is that **a concept and a term are different things**. A concept is a unit of thought (an abstraction of reality); a term is the linguistic sign that designates it. One concept can be expressed by many terms across many languages — but it remains one concept.
+
+This is the core principle reflected in the Glossarist logo: 文 and ΓΛ merge into one mark because one concept is expressed across many scripts.
+
+---
+
+## How Glossarist implements it
+
+### The concept–term separation
+
+Glossarist implements the ISO 704 concept–term distinction directly in its two-tier model:
+
+| ISO 704 concept | Glossarist entity |
+|-----------------|-------------------|
+| **Concept** (unit of thought) | [`ManagedConcept`](/model/concepts) — language-independent identity |
+| **Term** (linguistic sign) | [`LocalizedConcept`](/model/concepts) → `terms[]` — per-language designations |
+
+A `ManagedConcept` holds the stable identity (UUID, status, domains, cross-language relationships). Each `LocalizedConcept` is one language's expression of that concept — with its own designations, definitions, notes, and examples.
+
+### Concept systems
+
+ISO 704 defines two main types of concept systems:
+
+1. **Hierarchical** — concepts are organized by genus-species (generic), part-whole (partitive), or instance-of (instantial) relationships
+2. **Associative** — concepts are linked by thematic, causal, or temporal associations without a hierarchy
+
+Glossarist implements both through the [27-type relationship system](/model/relationships):
+
+| ISO 704 system type | Glossarist relationship types |
+|---------------------|-------------------------------|
+| Generic hierarchy | `broader`, `narrower`, `broader_generic`, `narrower_generic` |
+| Partitive hierarchy | `broader_partitive`, `narrower_partitive` |
+| Instantial hierarchy | `broader_instantial`, `narrower_instantial` |
+| Associative | `see`, `related_concept`, `sequentially_related`, `spatially_related`, `temporally_related` |
+
+### Characteristics and domains
+
+ISO 704 defines *characteristics* as the features that distinguish concepts within a system. In Glossarist, characteristics are expressed through:
+
+- **`domains`** on ManagedConcept — language-agnostic classification tags that place a concept within a subject field
+- **`definition`** on LocalizedConcept — the intensional definition that lists the distinguishing characteristics
+
+### The concept-term interaction cycle
+
+ISO 704 describes a cyclic workflow for terminology work:
+
+1. **Identify the concept** and its characteristics
+2. **Position it** within the concept system
+3. **Write or verify** the definition
+4. **Establish or select** the terms that designate it
+5. **Record** the result
+
+Glossarist's [Desktop App](/docs/software/desktop) implements this cycle through its change request workflow: create a concept, define it, relate it to others, assign designations, submit for review, and publish.
+
+### Definition writing principles
+
+ISO 704 requires definitions to be:
+
+- **Intensional** — state the genus and the differentiating characteristics
+- **Not circular** — the term being defined must not appear in its own definition
+- **Not negative** — unless the concept is inherently negative
+
+Glossarist's `DetailedDefinition` type supports these principles with text content and per-definition sources that document where the definition originated.
+
+---
+
+## Related
+
+- [ISO 10241-1 — Terminology Entries](/reference/standards/iso-10241-1) — the presentation standard that applies these principles
+- [ISO 25964 — Thesauri](/reference/standards/iso-25964) — extends the hierarchical model for thesaurus interoperability
+- [Concept Model: Concepts](/model/concepts) — ManagedConcept and LocalizedConcept
+- [Concept Model: Relationships](/model/relationships) — the 27-type relationship system
+- [Concept Model: Datasets & Sections](/model/datasets) — domain classification
+- [Standards Compliance Overview](/reference/standards)

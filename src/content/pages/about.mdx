@@ -5,120 +5,431 @@ description: Open-source software for maintaining multi-language concept systems
 
 import LogoMerge from '../../components/LogoMerge.astro'
 
-# About Glossarist
-
-## The Name & Logo
-
-### The Name
-
-**Glossarist** takes its name from the Greek word *γλωσσάριον* (glōssárion) — a small glossary or vocabulary. The name reflects our mission: to provide tools that manage glossaries and concept systems with the rigor that international standards demand, while remaining accessible and practical.
-
-### The Logo
-
-The Glossarist logo is a synthesis of two writing traditions, reflecting the multilingual nature of terminology management:
-
-<div class="logo-showcase">
-  <div class="logo-card">
-    <img src="/logo-glossarist.svg" alt="Glossarist Logo" class="logo-display" />
+{/* ============================================================
+    HERO — full-width dark gradient with logo
+    ============================================================ */}
+<section class="about-hero">
+  <div class="hero-grain"></div>
+  <div class="hero-inner">
+    <div class="hero-logo-row">
+      <img src="/logo-glossarist.svg" alt="Glossarist logo" class="hero-logo-img" width="160" height="151" />
+      <div class="hero-meta">
+        <span class="hero-greek">γλωσσάριον</span>
+        <span class="hero-greek-meta">glōssárion · a small glossary</span>
+      </div>
+    </div>
+    <h1 class="hero-title">
+      <span class="hero-title-line">The convergence</span>
+      <span class="hero-title-line">of <em>scripts</em>.</span>
+    </h1>
+    <div class="hero-lede">
+      <p>Glossarist is open-source software for maintaining multi-language concept systems — where a single concept can be expressed in many languages, yet remains one concept.</p>
+    </div>
+    <div class="hero-scroll-cue">
+      <span>Scroll</span>
+      <svg width="14" height="22" viewBox="0 0 14 22" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M7 1v18M1 13l6 6 6-6"/>
+      </svg>
+    </div>
   </div>
-</div>
+</section>
 
-**文 — the Han character *wén*** appears in the blue forms at the center. In the classical tradition, 文 is one of the most foundational concepts. Its earliest form denotes *pattern* — the mark that differentiates form from emptiness (紋, the difference between 無 and 有, between nothing and something). From this root, 文 also means *writing itself* — Han characters being extensions of pictorial drawings, the very act of rendering thought into visible form. As the medium that carries cultural tradition and knowledge across generations, 文 is the representation of the scholar and the civilizing principle. In the Glossarist logo, 文 stands for structured written knowledge — the pattern that gives concepts precise, communicable form.
-
-**ΓΛ — the Greek capital letters Gamma and Lambda** appear in the green and teal forms, referencing *γλωσσάριον*. Greek is the language of classical scholarship and the root of much modern scientific terminology. The angular geometric forms of ΓΛ represent precision and classification.
-
-Together, these two script traditions merge into a single mark. This mirrors Glossarist's core principle: **a single concept can be expressed in many languages, yet remains one concept**. The Glossarist model serves as the single source of truth that encompasses multiple languages, each of which can be viewed separately but all of which refer back to the same underlying concept.
-
-{/* LogoMerge rendered inline */}
-
-<LogoMerge />
-
-### The Color Blobs
-
-The logo is composed of overlapping colored shapes in blues, teals, and greens — not a single flat color. Each color region represents a distinct **property** of a concept:
-
-- **Dark navy** (#2d4164) — The concept identity itself, the stable core
-- **Bridge blue** (#456399) — The depth of the model: structured hierarchy and cross-language bridges
-- **Steel blue** (#3a5c80) — Designations: the names and terms that identify a concept across languages
-- **Grey-blue** (#97a4b7) — The translational layer: the soft transitions between one language's expression and another's
-- **Teal** (#3fb6b0) — Relationships: how one concept connects to and is defined by others
-- **Sea green** (#7ee0d4) — Sources and provenance: the authoritative references that ground each concept
-- **Mint** (#b8f5ec) — Notes, examples, and editorial metadata
-
-The shapes overlap and blend into one another because **a concept is colored by other concepts through its relationships**. No concept exists in isolation — its meaning is shaped by the network of broader, narrower, related, and equivalent concepts that surround it. The overlapping color regions in the logo visualize this interconnected nature: the boundaries between properties are not sharp lines but gradients, just as the boundary between "definition" and "context" in terminology work is often fluid.
-
-### The Colors
-
-The color palette is drawn from the natural world of water and stone:
-
-- **Deep navy to bridge blue to steel blue** — The authoritative layer, evoking ink on paper and the gravitas of standards documents
-- **Grey-blue** — The translational layer, the subtle blending between linguistic forms
-- **Teal to sea green** — The relational layer, evoking the flow of information between languages and domains
-- **Mint** — The metadata layer, the supporting information that gives context
-
-This palette was chosen to feel both authoritative (dark blues) and approachable (teals and greens), reflecting Glossarist's balance of standards rigor with practical usability.
-
-## What is Glossarist?
-
-Glossarist is open-source software for maintaining multi-language concept systems. It provides a complete ecosystem of tools for managing terminology registries — from concept modeling to desktop editing, web browsing, and machine-format export.
-
-Glossarist is designed around the principle that terminology management should follow established ISO standards, making it suitable for standards bodies, terminology committees, and organizations that need rigorous concept management.
-
-## The Glossarist Model
-
-At the core of Glossarist is a rich [concept model](/model/) aligned with multiple ISO standards:
-
-- [**ISO 10241-1**](https://www.iso.org/standard/40362.html) — Terminology entries in standardized terminology
-- [**ISO 704**](https://www.iso.org/standard/79077.html) — Terminology work: principles and methods
-- [**ISO 30042 / TBX**](https://www.iso.org/standard/62510.html) — Terminology markup framework
-- [**ISO 12620**](https://www.iso.org/standard/69550.html) — Data category registry
-- [**ISO 25964 / SKOS**](https://www.iso.org/standard/53657.html) — Thesaurus interoperability
-
-The model supports multi-language concepts with designations, definitions, notes, examples, relationships, authoritative sources, and revision history.
-
-See the [full standards compliance reference](/reference/standards) for details on how each standard maps to Glossarist entities.
-
-## Use Cases
-
-<div class="use-cases-grid">
-  <div class="use-case-card">
-    <h4>Terminology Management</h4>
-    <p>Manage multi-language concept systems with ISO-aligned workflows</p>
+{/* ============================================================
+    THE NAME — editorial section with large Greek display
+    ============================================================ */}
+<section class="about-section about-name-section">
+  <div class="section-container">
+    <div class="section-label">
+      <span class="section-num">01</span>
+      <span class="section-label-text">The Name</span>
+    </div>
+    <div class="name-grid">
+      <div class="name-display">
+        <span class="name-greek">γλωσσάριον</span>
+        <span class="name-translit">glōssárion</span>
+        <span class="name-translation">— a small glossary, a vocabulary</span>
+      </div>
+      <div class="name-body">
+        <p><strong>Glossarist</strong> takes its name from the Greek word <em>γλωσσάριον</em> (<em>glōssárion</em>) — a small glossary or vocabulary. The name reflects our mission: to provide tools that manage glossaries and concept systems with the rigor that international standards demand, while remaining accessible and practical.</p>
+      </div>
+    </div>
   </div>
-  <div class="use-case-card">
-    <h4>Standards Compliance</h4>
-    <p>Export to TBX, SKOS, Turtle, and other ISO-standard formats</p>
+</section>
+
+{/* ============================================================
+    THE LOGO — full-bleed showcase
+    ============================================================ */}
+<section class="about-logo-showcase">
+  <div class="logo-showcase-inner">
+    <img src="/logo-glossarist.svg" alt="The Glossarist mark" class="logo-showcase-img" width="400" height="377" />
+    <div class="logo-showcase-caption">
+      <p>The mark is a synthesis of two writing traditions.</p>
+    </div>
   </div>
-  <div class="use-case-card">
-    <h4>Collaborative Editing</h4>
-    <p>Change request workflows with review, acceptance, and revision history</p>
+</section>
+
+{/* ============================================================
+    CULTURAL ROOTS — 文 + ΓΛ two-column deep dive
+    ============================================================ */}
+<section class="about-section about-roots-section">
+  <div class="section-container">
+    <div class="section-label">
+      <span class="section-num">02</span>
+      <span class="section-label-text">Cultural Synthesis</span>
+    </div>
+
+    <div class="roots-grid">
+      {/* 文 — Han character */}
+      <div class="root-panel root-panel-han">
+        <div class="root-glyph-row">
+          <span class="root-glyph root-glyph-han">文</span>
+          <div class="root-meta">
+            <span class="root-script-label">Han character</span>
+            <span class="root-reading">wén</span>
+          </div>
+        </div>
+        <div class="root-tags">
+          <span class="root-tag">Pattern</span>
+          <span class="root-tag">Culture</span>
+          <span class="root-tag">Writing</span>
+        </div>
+
+        In the classical tradition, **文** is one of the most foundational concepts. Its earliest form denotes *pattern* — the mark that differentiates form from emptiness (紋, the difference between 無 and 有, between nothing and something).
+
+        From this root, 文 also means *writing itself* — Han characters being extensions of pictorial drawings, the very act of rendering thought into visible form. As the medium that carries cultural tradition and knowledge across generations, 文 is the representation of the scholar and the civilizing principle.
+
+        In the Glossarist logo, 文 stands for **structured written knowledge** — the pattern that gives concepts precise, communicable form.
+      </div>
+
+      {/* ΓΛ — Greek letters */}
+      <div class="root-panel root-panel-greek">
+        <div class="root-glyph-row">
+          <span class="root-glyph root-glyph-greek">ΓΛ</span>
+          <div class="root-meta">
+            <span class="root-script-label">Greek capitals</span>
+            <span class="root-reading">Gamma · Lambda</span>
+          </div>
+        </div>
+        <div class="root-tags">
+          <span class="root-tag">γλωσσάριον</span>
+          <span class="root-tag">Classification</span>
+          <span class="root-tag">Precision</span>
+        </div>
+
+        **ΓΛ** — the Greek capital letters Gamma and Lambda — reference *γλωσσάριον*. Greek is the language of classical scholarship and the root of much modern scientific terminology.
+
+        The angular geometric forms of ΓΛ represent **precision** and **classification** — the systematic ordering of knowledge that underpins terminology work.
+
+        In the Glossarist logo, ΓΛ stands for the **analytical framework** — the classification and cross-referencing that makes a concept system navigable.
+      </div>
+    </div>
+
+    <div class="roots-synthesis">
+      <div class="roots-synthesis-line"></div>
+      <div class="roots-synthesis-body">
+        <p>Together, these two script traditions merge into a single mark. This mirrors Glossarist's core principle: <strong>a single concept can be expressed in many languages, yet remains one concept.</strong> The Glossarist model serves as the single source of truth that encompasses multiple languages, each of which can be viewed separately but all of which refer back to the same underlying concept.</p>
+      </div>
+    </div>
   </div>
-  <div class="use-case-card">
-    <h4>Web Publishing</h4>
-    <p>Deploy interactive terminology browsers as static sites</p>
+</section>
+
+{/* ============================================================
+    LOGO MERGE — animated diagram
+    ============================================================ */}
+<section class="about-merge-section">
+  <div class="section-container-narrow">
+    <div class="section-label">
+      <span class="section-num">·</span>
+      <span class="section-label-text">The Merge</span>
+    </div>
+    <div class="merge-frame">
+      <LogoMerge />
+    </div>
   </div>
-</div>
+</section>
 
-## Open Source
+{/* ============================================================
+    COLOR PALETTE — interactive swatches
+    ============================================================ */}
+<section class="about-section about-colors-section">
+  <div class="section-container">
+    <div class="section-label">
+      <span class="section-num">03</span>
+      <span class="section-label-text">The Palette</span>
+    </div>
 
-Glossarist is an open source project. All repositories are available on GitHub under permissive licenses.
+    <div class="colors-intro">
+      <p>The logo is composed of overlapping colored shapes in blues, teals, and greens — not a single flat color. Each color region represents a distinct <strong>property</strong> of a concept. The shapes overlap and blend because <em>a concept is colored by other concepts through its relationships</em> — no concept exists in isolation.</p>
+    </div>
 
-- **GitHub Organization**: [github.com/glossarist](https://github.com/glossarist)
-- **Contributing**: We welcome contributions! Check individual repositories for guidelines.
-- **Issues**: Report bugs or request features on the respective GitHub issue trackers.
+    <div class="palette-grid">
+      <div class="swatch" style="--sw: #2d4164">
+        <div class="swatch-color"></div>
+        <div class="swatch-info">
+          <span class="swatch-hex">#2d4164</span>
+          <span class="swatch-name">Dark Navy</span>
+          <span class="swatch-meaning">The concept identity — the stable core</span>
+        </div>
+      </div>
+      <div class="swatch" style="--sw: #456399">
+        <div class="swatch-color"></div>
+        <div class="swatch-info">
+          <span class="swatch-hex">#456399</span>
+          <span class="swatch-name">Bridge Blue</span>
+          <span class="swatch-meaning">Structured hierarchy and cross-language bridges</span>
+        </div>
+      </div>
+      <div class="swatch" style="--sw: #3a5c80">
+        <div class="swatch-color"></div>
+        <div class="swatch-info">
+          <span class="swatch-hex">#3a5c80</span>
+          <span class="swatch-name">Steel Blue</span>
+          <span class="swatch-meaning">Designations — names and terms across languages</span>
+        </div>
+      </div>
+      <div class="swatch" style="--sw: #97a4b7">
+        <div class="swatch-color"></div>
+        <div class="swatch-info">
+          <span class="swatch-hex">#97a4b7</span>
+          <span class="swatch-name">Grey-Blue</span>
+          <span class="swatch-meaning">The translational layer between languages</span>
+        </div>
+      </div>
+      <div class="swatch" style="--sw: #3fb6b0">
+        <div class="swatch-color"></div>
+        <div class="swatch-info">
+          <span class="swatch-hex">#3fb6b0</span>
+          <span class="swatch-name">Teal</span>
+          <span class="swatch-meaning">Relationships — how concepts connect</span>
+        </div>
+      </div>
+      <div class="swatch" style="--sw: #7ee0d4">
+        <div class="swatch-color"></div>
+        <div class="swatch-info">
+          <span class="swatch-hex">#7ee0d4</span>
+          <span class="swatch-name">Sea Green</span>
+          <span class="swatch-meaning">Sources and provenance — authoritative references</span>
+        </div>
+      </div>
+      <div class="swatch" style="--sw: #b8f5ec">
+        <div class="swatch-color"></div>
+        <div class="swatch-info">
+          <span class="swatch-hex">#b8f5ec</span>
+          <span class="swatch-name">Mint</span>
+          <span class="swatch-meaning">Notes, examples, and editorial metadata</span>
+        </div>
+      </div>
+    </div>
 
-Glossarist is used in production by standards bodies including [ISO/TC 211 Geolexica](https://isotc211.geolexica.org/) (1,507 concepts, 15 languages). See the [homepage](/) for the full list of adopters and the [software page](/docs/software/) for the complete tooling ecosystem.
+    <div class="colors-philosophy">
+      <h3>Drawn from water and stone</h3>
+      <p>The palette was drawn from the natural world of water and stone — deep navy for the authoritative layer (evoking ink on paper and the gravitas of standards documents), grey-blue for the translational layer (the subtle blending between linguistic forms), and teal-to-green for the relational layer (evoking the flow of information between languages and domains). This balance of authoritative darks and approachable brights reflects Glossarist's stance: standards rigor with practical usability.</p>
+    </div>
+  </div>
+</section>
 
-## Get Started
+{/* ============================================================
+    WHAT IS GLOSSARIST — editorial prose
+    ============================================================ */}
+<section class="about-section about-what-section">
+  <div class="section-container-narrow">
+    <div class="section-label">
+      <span class="section-num">04</span>
+      <span class="section-label-text">What is Glossarist?</span>
+    </div>
+    <div class="what-body">
+      <div class="what-lede">
+        <p>Glossarist is open-source software for maintaining multi-language concept systems.</p>
+      </div>
+      <p>It provides a complete ecosystem of tools for managing terminology registries — from concept modeling to desktop editing, web browsing, and machine-format export. Glossarist is designed around the principle that terminology management should follow established ISO standards, making it suitable for standards bodies, terminology committees, and organizations that need rigorous concept management.</p>
+    </div>
+  </div>
+</section>
 
-1. **Explore the Concept Model** — Read the [Concept Model docs](/model/)
-2. **Try the Desktop App** — [Download](/docs/software/desktop) and get started
-3. **Adopt Glossarist** — Read the [Adoption Guide](/docs/adopt/)
-4. **Browse the Reference Tools** — [Schema Browser](/reference/schema-browser), [Entity Fields](/reference/entity-fields), [Ontology Browser](/reference/ontology)
-5. **View on GitHub** — Browse the [source code](https://github.com/glossarist)
+{/* ============================================================
+    STANDARDS — ISO compliance grid
+    ============================================================ */}
+<section class="about-section about-standards-section">
+  <div class="section-container">
+    <div class="section-label">
+      <span class="section-num">05</span>
+      <span class="section-label-text">Standards Aligned</span>
+    </div>
 
----
+    <div class="standards-grid">
+      <a href="/reference/standards/iso-10241-1" class="standard-card">
+        <span class="standard-num">ISO 10241-1</span>
+        <span class="standard-title">Terminology Entries — Structured entries in standardized vocabularies</span>
+      </a>
+      <a href="/reference/standards/iso-704" class="standard-card">
+        <span class="standard-num">ISO 704</span>
+        <span class="standard-title">Principles & Methods — Concept systems, definitions, and term formation</span>
+      </a>
+      <a href="/reference/standards/iso-30042" class="standard-card">
+        <span class="standard-num">ISO 30042</span>
+        <span class="standard-title">TBX Format — Terminology markup framework for data exchange</span>
+      </a>
+      <a href="/reference/standards/iso-12620" class="standard-card">
+        <span class="standard-num">ISO 12620</span>
+        <span class="standard-title">Data Categories — Term type classifications and data category registry</span>
+      </a>
+      <a href="/reference/standards/iso-25964" class="standard-card">
+        <span class="standard-num">ISO 25964</span>
+        <span class="standard-title">Thesauri — Hierarchical and mapping relationships with SKOS</span>
+      </a>
+    </div>
 
-*Open source project maintained by [Ribose](https://www.ribose.com)*
+    <div class="standards-note">
+      <p>See the <a href="/reference/standards">standards compliance reference</a> for detailed per-standard pages on what each ISO standard covers and how Glossarist implements it. Read the <a href="/model/">concept model docs</a> for the data model.</p>
+    </div>
+  </div>
+</section>
 
+{/* ============================================================
+    USE CASES — card grid
+    ============================================================ */}
+<section class="about-section about-usecases-section">
+  <div class="section-container">
+    <div class="section-label">
+      <span class="section-num">06</span>
+      <span class="section-label-text">Use Cases</span>
+    </div>
 
+    <div class="usecases-grid">
+      <div class="usecase-card">
+        <div class="usecase-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M3 5h18M3 12h18M3 19h12"/>
+          </svg>
+        </div>
+        <h4>Terminology Management</h4>
+        <p>Manage multi-language concept systems with ISO-aligned workflows.</p>
+      </div>
+      <div class="usecase-card">
+        <div class="usecase-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M9 12l2 2 4-4M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z"/>
+          </svg>
+        </div>
+        <h4>Standards Compliance</h4>
+        <p>Export to TBX, SKOS, Turtle, and other ISO-standard formats.</p>
+      </div>
+      <div class="usecase-card">
+        <div class="usecase-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="9" cy="8" r="3"/>
+            <path d="M3 20c0-3 2.7-5 6-5s6 2 6 5M16 8h5M16 11.5h5M16 15h5"/>
+          </svg>
+        </div>
+        <h4>Collaborative Editing</h4>
+        <p>Change request workflows with review, acceptance, and revision history.</p>
+      </div>
+      <div class="usecase-card">
+        <div class="usecase-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M3 12h18M12 3c2.5 2.5 4 5.5 4 9s-1.5 6.5-4 9c-2.5-2.5-4-5.5-4-9s1.5-6.5 4-9z"/>
+          </svg>
+        </div>
+        <h4>Web Publishing</h4>
+        <p>Deploy interactive terminology browsers as static sites.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{/* ============================================================
+    OPEN SOURCE — adoption note
+    ============================================================ */}
+<section class="about-section about-opensource-section">
+  <div class="section-container-narrow">
+    <div class="section-label">
+      <span class="section-num">07</span>
+      <span class="section-label-text">Open Source</span>
+    </div>
+    <div class="opensource-body">
+      <p>Glossarist is an open source project. All repositories are available on GitHub under permissive licenses. We welcome contributions — check individual repositories for guidelines, and report bugs or request features on the respective GitHub issue trackers.</p>
+      <div class="opensource-facts">
+        <div class="opensource-fact">
+          <span class="fact-label">GitHub</span>
+          <span class="fact-value"><a href="https://github.com/glossarist">github.com/glossarist</a></span>
+        </div>
+        <div class="opensource-fact">
+          <span class="fact-label">In Production</span>
+          <span class="fact-value"><a href="https://isotc211.geolexica.org/">ISO/TC 211 Geolexica</a> — 1,507 concepts, 15 languages</span>
+        </div>
+      </div>
+      <a href="https://github.com/glossarist" class="opensource-cta">
+        <span>Browse the source</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M13 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+{/* ============================================================
+    GET STARTED — numbered steps
+    ============================================================ */}
+<section class="about-getstarted-section">
+  <div class="section-container">
+    <div class="getstarted-header">
+      <div class="section-label section-label-light">
+        <span class="section-num">08</span>
+        <span class="section-label-text">Get Started</span>
+      </div>
+      <h2 class="getstarted-title">Begin your journey</h2>
+    </div>
+
+    <div class="steps-grid">
+      <a href="/model/" class="step-card">
+        <span class="step-num">01</span>
+        <div class="step-body">
+          <h4>Explore the Concept Model</h4>
+          <p>Understand the data model behind Glossarist.</p>
+        </div>
+      </a>
+      <a href="/docs/software/desktop" class="step-card">
+        <span class="step-num">02</span>
+        <div class="step-body">
+          <h4>Try the Desktop App</h4>
+          <p>Download and get started managing concepts.</p>
+        </div>
+      </a>
+      <a href="/docs/adopt/" class="step-card">
+        <span class="step-num">03</span>
+        <div class="step-body">
+          <h4>Adopt Glossarist</h4>
+          <p>Follow the adoption guide for your organization.</p>
+        </div>
+      </a>
+      <a href="/reference/schema-browser" class="step-card">
+        <span class="step-num">04</span>
+        <div class="step-body">
+          <h4>Browse the Reference Tools</h4>
+          <p>Schema Browser, Entity Fields, Ontology Browser.</p>
+        </div>
+      </a>
+      <a href="https://github.com/glossarist" class="step-card">
+        <span class="step-num">05</span>
+        <div class="step-body">
+          <h4>View on GitHub</h4>
+          <p>Browse the source code across all repositories.</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+{/* ============================================================
+    SIGN-OFF
+    ============================================================ */}
+<section class="about-signoff">
+  <div class="signoff-inner">
+    <img src="/logo-glossarist.svg" alt="" width="56" height="53" class="signoff-logo" />
+    <div class="signoff-text">
+      <p>Open source project maintained by <a href="https://www.ribose.com">Ribose</a>.</p>
+    </div>
+  </div>
+</section>

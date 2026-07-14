@@ -1,0 +1,104 @@
+---
+title: "ISO 25964: Thesauri"
+description: Thesaurus interoperability with SKOS — hierarchical and mapping relationships for cross-vocabulary concept alignment
+---
+
+# ISO 25964 — Thesauri and Interoperability with SKOS
+
+## What this standard is
+
+[ISO 25964](https://www.iso.org/standard/53657.html) defines **thesaurus structure and interoperability** for information retrieval. Published in two parts (Part 1: Thesauri for Information Retrieval, 2011; Part 2: Interoperability with other vocabularies, 2013), it is the standard that governs how controlled vocabularies organize concepts for search, indexing, and cross-vocabulary mapping.
+
+The standard defines:
+
+- **Hierarchical relationships** — broader/narrower term (BT/NT) with three subtypes
+- **Associative relationships** — related term (RT) and its specialized forms
+- **Equivalence relationships** — preferred term (USE) and used-for (UF)
+- **Mapping relationships** — cross-vocabulary alignment (exact, close, broad, narrow, related match)
+- **Concept scheme structure** — how concepts are grouped into thesauri
+
+### Key concept: the three hierarchical subtypes
+
+ISO 25964 refines the simple broader/narrower relationship into three subtypes — a crucial distinction that most thesaurus implementations miss:
+
+1. **Generic (BTG/NTG)** — genus–species: "mammal" BTG "dog"
+2. **Partitive (BTP/NTP)** — whole–part: "car" BTP "wheel"
+3. **Instantial (BTI/NTI)** — class–instance: "planet" BTI "Earth"
+
+This refinement is essential for precise terminology work — the relationship between "car" and "wheel" is fundamentally different from the relationship between "vehicle" and "car".
+
+---
+
+## How Glossarist implements it
+
+### SKOS concept schemes
+
+ISO 25964 Part 2 aligns with [SKOS](https://www.w3.org/TR/skos-reference/) (the W3C Simple Knowledge Organization System). Glossarist implements 14 SKOS concept schemes, defined as taxonomy TTL files in the [concept-model repository](https://github.com/glossarist/concept-model):
+
+- Concept groups (dataset-level organization)
+- Concept schemes (vocabulary-level grouping)
+- Mapping relationships (cross-vocabulary alignment)
+
+### Hierarchical relationships
+
+Glossarist implements all three ISO 25964 hierarchical subtypes:
+
+| ISO 25964 | Glossarist type | Direction |
+|-----------|-----------------|-----------|
+| BT (broader term) | `broader` | concept → parent |
+| NT (narrower term) | `narrower` | concept → child |
+| BTG (broader generic) | `broader_generic` | genus direction |
+| NTG (narrower generic) | `narrower_generic` | species direction |
+| BTP (broader partitive) | `broader_partitive` | whole direction |
+| NTP (narrower partitive) | `narrower_partitive` | part direction |
+| BTI (broader instantial) | `broader_instantial` | class direction |
+| NTI (narrower instantial) | `narrower_instantial` | instance direction |
+
+### Mapping relationships
+
+ISO 25964 / SKOS defines five mapping types for aligning concepts across different vocabularies:
+
+| SKOS property | Glossarist type | Meaning |
+|---------------|-----------------|---------|
+| `skos:exactMatch` | `exact_match` | Concepts are exactly equivalent |
+| `skos:closeMatch` | `close_match` | Concepts are approximately equivalent |
+| `skos:broadMatch` | `broad_match` | Target concept is broader |
+| `skos:narrowMatch` | `narrow_match` | Target concept is narrower |
+| `skos:relatedMatch` | `related_match` | Target concept is related (not hierarchical) |
+
+These mappings enable interoperability between Glossarist-managed registries and external vocabularies (e.g., mapping an ISO/TC 211 concept to a corresponding INSPIRE concept).
+
+### Associative relationships
+
+ISO 25964 defines associative (RT) relationships and their subtypes:
+
+| ISO 25964 type | Glossarist type |
+|----------------|-----------------|
+| Related term (RT) | `related_concept` |
+| Related term, broader | `related_concept_broader` |
+| Related term, narrower | `related_concept_narrower` |
+| Sequentially related | `sequentially_related` |
+| Spatially related | `spatially_related` |
+| Temporally related | `temporally_related` |
+
+### SKOS / RDF export
+
+Glossarist exports concepts as SKOS/RDF via [glossarist-ruby](/docs/software/glossarist-ruby):
+
+```bash
+# Export a GCR package as SKOS Turtle
+glossarist convert --input concepts/ --output glossary.ttl --format ttl
+```
+
+The exported RDF file uses standard SKOS properties (`skos:Concept`, `skos:broader`, `skos:exactMatch`, etc.) and can be loaded into any RDF triplestore or SPARQL endpoint.
+
+---
+
+## Related
+
+- [ISO 704 — Principles & Methods](/reference/standards/iso-704) — the concept theory that underpins hierarchical relationships
+- [ISO 10241-1 — Terminology Entries](/reference/standards/iso-10241-1) — the entry structure for equivalence and associative links
+- [Concept Model: Relationships](/model/relationships) — the full 27-type relationship system
+- [Ontology Browser](/reference/ontology) — explore the concept hierarchy interactively
+- [Glossarist Ruby](/docs/software/glossarist-ruby) — SKOS/RDF export
+- [Standards Compliance Overview](/reference/standards)
