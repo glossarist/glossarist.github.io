@@ -25,31 +25,30 @@ function isActive(cls: string): boolean {
 }
 
 describe('Nav active highlighting', () => {
-  describe('Model dropdown (/docs/model/*)', () => {
-    it('highlights Model parent + Concepts child on /docs/model/concepts', () => {
-      const header = readHeader('dist/docs/model/concepts.html')
+  describe('Model dropdown (/model/*)', () => {
+    it('highlights Model parent + Concepts child on /model/concepts', () => {
+      const header = readHeader('dist/model/concepts.html')
       const modelBtnClasses = classesOnElementContaining(header, 'Model')
       expect(modelBtnClasses.some(isActive)).toBe(true)
       const conceptsLinkClasses = classesOnElementContaining(header, 'Concepts')
       expect(conceptsLinkClasses.some(isActive)).toBe(true)
     })
 
-    it('highlights Model parent + Sources child on /docs/model/sources', () => {
-      const header = readHeader('dist/docs/model/sources.html')
+    it('highlights Model parent + Sources child on /model/sources', () => {
+      const header = readHeader('dist/model/sources.html')
       expect(classesOnElementContaining(header, 'Model').some(isActive)).toBe(true)
       expect(classesOnElementContaining(header, 'Sources').some(isActive)).toBe(true)
     })
 
-    it('highlights Model parent + Standards child on /docs/standards', () => {
-      const header = readHeader('dist/docs/standards.html')
-      expect(classesOnElementContaining(header, 'Model').some(isActive)).toBe(true)
-      // Standards lives in the Model dropdown
+    it('highlights Reference parent + Standards child on /reference/standards', () => {
+      const header = readHeader('dist/reference/standards.html')
+      expect(classesOnElementContaining(header, 'Reference').some(isActive)).toBe(true)
       const standardsClasses = classesOnElementContaining(header, 'Standards')
       expect(standardsClasses.some(isActive)).toBe(true)
     })
 
-    it('highlights Overview child on /docs/model/ (directory index)', () => {
-      const header = readHeader('dist/docs/model.html')
+    it('highlights Overview child on /model/ (directory index)', () => {
+      const header = readHeader('dist/model/index.html')
       expect(classesOnElementContaining(header, 'Model').some(isActive)).toBe(true)
     })
   })
@@ -77,22 +76,22 @@ describe('Nav active highlighting', () => {
   })
 
   describe('Software dropdown (/docs/software/*)', () => {
-    it('highlights Software parent + glossarist-ruby child on its page', () => {
+    it('highlights Software parent + Glossarist Ruby child on its page', () => {
       const header = readHeader('dist/docs/software/glossarist-ruby.html')
       expect(classesOnElementContaining(header, 'Software').some(isActive)).toBe(true)
-      expect(classesOnElementContaining(header, 'glossarist-ruby').some(isActive)).toBe(true)
+      expect(classesOnElementContaining(header, 'Glossarist Ruby').some(isActive)).toBe(true)
     })
 
-    it('highlights Software parent + glossarist-js child on its page', () => {
+    it('highlights Software parent + Glossarist JS child on its page', () => {
       const header = readHeader('dist/docs/software/glossarist-js.html')
       expect(classesOnElementContaining(header, 'Software').some(isActive)).toBe(true)
-      expect(classesOnElementContaining(header, 'glossarist-js').some(isActive)).toBe(true)
+      expect(classesOnElementContaining(header, 'Glossarist JS').some(isActive)).toBe(true)
     })
 
     it('highlights Software parent + concept-browser child on its page', () => {
       const header = readHeader('dist/docs/software/concept-browser.html')
       expect(classesOnElementContaining(header, 'Software').some(isActive)).toBe(true)
-      expect(classesOnElementContaining(header, 'concept-browser').some(isActive)).toBe(true)
+      expect(classesOnElementContaining(header, 'Concept Browser').some(isActive)).toBe(true)
     })
 
     it('does NOT highlight Model on /docs/software/* (sibling-prefix guard)', () => {
@@ -102,9 +101,9 @@ describe('Nav active highlighting', () => {
   })
 
   describe('Docs dropdown', () => {
-    it('highlights Docs parent + Desktop App child on /docs/desktop/', () => {
-      const header = readHeader('dist/docs/desktop.html')
-      expect(classesOnElementContaining(header, 'Docs').some(isActive)).toBe(true)
+    it('highlights Software parent + Desktop App child on /docs/software/desktop/', () => {
+      const header = readHeader('dist/docs/software/desktop/index.html')
+      expect(classesOnElementContaining(header, 'Software').some(isActive)).toBe(true)
     })
 
     it('highlights Docs parent on /docs/core-concepts/', () => {
@@ -160,7 +159,7 @@ describe('Nav active highlighting', () => {
 
   describe('footer gating', () => {
     it('renders footer on regular pages', () => {
-      const html = readBuilt('dist/docs/model/concepts.html')
+      const html = readBuilt('dist/model/concepts.html')
       expect(html).toMatch(/<footer[^>]*>/)
     })
 

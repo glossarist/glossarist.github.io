@@ -130,7 +130,7 @@ onUnmounted(() => {
           One concept, many language designations, typed relationships, and multi-format export.
         </div>
         <div class="hero-actions">
-          <a href="/docs/model/" class="btn btn-primary">
+          <a href="/model/" class="btn btn-primary">
             Explore the Model
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
@@ -170,7 +170,7 @@ onUnmounted(() => {
           </div>
           <h4>1. Model</h4>
           <p>Define your concept system using the rich Glossarist domain model — {{ st.classes }} entity types, {{ st.relationships }} relationship types, {{ st.designations }} designation types, validation shapes.</p>
-          <a href="/docs/model/" class="pipeline-link">Concept Model &rarr;</a>
+          <a href="/model/" class="pipeline-link">Concept Model &rarr;</a>
         </div>
         <div class="pipeline-connector">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -181,7 +181,7 @@ onUnmounted(() => {
           </div>
           <h4>2. Author</h4>
           <p>Write terminology concepts in human-readable YAML (V2 or V3 schema). ManagedConcept, LocalizedConcept, designations, sources — all in structured YAML.</p>
-          <a href="/docs/model/schemas" class="pipeline-link">YAML Schema Ref &rarr;</a>
+          <a href="/model/schemas" class="pipeline-link">YAML Schema Ref &rarr;</a>
         </div>
         <div class="pipeline-connector">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -231,7 +231,7 @@ onUnmounted(() => {
             <div class="field-row"><code>related</code><span>{{ st.relationships }} typed relationship kinds</span></div>
             <div class="field-row"><code>domains</code><span>Subject area references</span></div>
           </div>
-          <a href="/docs/model/concepts" class="model-card-link">Concept docs &rarr;</a>
+          <a href="/model/concepts" class="model-card-link">Concept docs &rarr;</a>
         </div>
 
         <div class="model-card mc-local">
@@ -246,7 +246,7 @@ onUnmounted(() => {
             <div class="field-row"><code>notes / examples</code><span>Supplementary content</span></div>
             <div class="field-row"><code>language_code</code><span>ISO 639 3-letter code</span></div>
           </div>
-          <a href="/docs/model/concepts" class="model-card-link">Localization &rarr;</a>
+          <a href="/model/concepts" class="model-card-link">Localization &rarr;</a>
         </div>
 
         <div class="model-card mc-desig">
@@ -261,7 +261,7 @@ onUnmounted(() => {
             <span class="tree-branch indent-1"><span class="model-dot md-desig"></span> Symbol → Letter · Graphical</span>
             <span class="tree-branch indent-1"><span class="model-dot md-desig"></span> Prefix · Suffix</span>
           </div>
-          <a href="/docs/model/designations" class="model-card-link">Designation types &rarr;</a>
+          <a href="/model/designations" class="model-card-link">Designation types &rarr;</a>
         </div>
 
         <div class="model-card mc-rel">
@@ -278,7 +278,7 @@ onUnmounted(() => {
             <span class="rel-chip">compare/contrast</span>
             <span class="rel-chip">+ 27 more</span>
           </div>
-          <a href="/docs/model/relationships" class="model-card-link">All 32 types &rarr;</a>
+          <a href="/model/relationships" class="model-card-link">All 32 types &rarr;</a>
         </div>
 
         <div class="model-card mc-source">
@@ -292,7 +292,7 @@ onUnmounted(() => {
             <div class="field-row"><code>status</code><span>identical · modified · restyled · +4</span></div>
             <div class="field-row"><code>origin</code><span>Citation reference</span></div>
           </div>
-          <a href="/docs/model/sources" class="model-card-link">Source model &rarr;</a>
+          <a href="/model/sources" class="model-card-link">Source model &rarr;</a>
         </div>
 
         <div class="model-card mc-onto">
@@ -331,7 +331,7 @@ onUnmounted(() => {
           <div class="code-desc">
             <h4>V3 YAML — Human-Readable Concept Data</h4>
             <p>Write terminology concepts in structured YAML. Each file contains a ManagedConcept with all its localizations, designations, and relationships.</p>
-            <a href="/docs/model/schemas" class="btn btn-sm btn-secondary">Schema Reference</a>
+            <a href="/model/schemas" class="btn btn-sm btn-secondary">Schema Reference</a>
           </div>
           <div class="code-block">
             <pre><span class="code-comment"># concepts/3.1.1.1.yaml</span>

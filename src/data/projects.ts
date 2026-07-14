@@ -50,9 +50,16 @@ export const projects: Project[] = [
 
 export const premierProjects = projects.filter(p => p.featured)
 
+const displayNames: Record<string, string> = {
+  'glossarist-ruby': 'Glossarist Ruby',
+  'glossarist-js': 'Glossarist JS',
+  'glossarist-desktop': 'Desktop App',
+  'concept-browser': 'Concept Browser',
+}
+
 export const softwareNavItems = [...projects]
   .sort((a, b) => a.name.localeCompare(b.name))
   .map(p => ({
-    text: p.name,
+    text: displayNames[p.name] || p.name,
     link: p.docs || `/docs/software/${p.slug}`
   }))

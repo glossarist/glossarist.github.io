@@ -41,6 +41,15 @@ const reference = defineCollection({
   }),
 })
 
+const model = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/model', generateId }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string().optional(),
+    fullscreen: z.boolean().optional(),
+  }),
+})
+
 const pages = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/pages', generateId }),
   schema: z.object({
@@ -49,4 +58,4 @@ const pages = defineCollection({
   }),
 })
 
-export const collections = { blog, docs, reference, pages }
+export const collections = { blog, docs, model, reference, pages }

@@ -2,9 +2,9 @@ import { describe, it, expect } from 'vitest'
 import { readBuilt, exists, existsSync, readdirSync, readFileSync, join, root } from "./_helpers"
 
 
-describe('ModelLanding.astro (rendered in /docs/model)', () => {
+describe('ModelLanding.astro (rendered in /model)', () => {
   it('renders the entity-types stat block', () => {
-    const html = readBuilt('dist/docs/model/index.html')
+    const html = readBuilt('dist/model/index.html')
     expect(html).toContain('Entity Types')
     expect(html).toContain('Validation Shapes')
     expect(html).toContain('Relationship Types')
@@ -12,16 +12,16 @@ describe('ModelLanding.astro (rendered in /docs/model)', () => {
   })
 
   it('renders links to all six core entity pages', () => {
-    const html = readBuilt('dist/docs/model/index.html')
-    expect(html).toContain('href="/docs/model/concepts"')
-    expect(html).toContain('href="/docs/model/designations"')
-    expect(html).toContain('href="/docs/model/relationships"')
-    expect(html).toContain('href="/docs/model/sources"')
+    const html = readBuilt('dist/model/index.html')
+    expect(html).toContain('href="/model/concepts"')
+    expect(html).toContain('href="/model/designations"')
+    expect(html).toContain('href="/model/relationships"')
+    expect(html).toContain('href="/model/sources"')
     expect(html).toContain('href="/reference/ontology"')
   })
 
   it('renders the Formal Ontology entity', () => {
-    const html = readBuilt('dist/docs/model/index.html')
+    const html = readBuilt('dist/model/index.html')
     expect(html).toContain('Formal Ontology')
     expect(html).toContain('owl:Class')
     expect(html).toContain('sh:Shape')

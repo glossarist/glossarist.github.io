@@ -25,7 +25,7 @@ describe('MDX migration (no .md files remain)', () => {
     expect(mdx.length).toBeGreaterThan(70)
     // Sanity-check a few known files
     expect(mdx).toContain('blog/2026-07-05-concept-model-v3.1.mdx')
-    expect(mdx).toContain('docs/model/concepts.mdx')
+    expect(mdx).toContain('model/concepts.mdx')
     expect(mdx).toContain('pages/about.mdx')
     expect(mdx).toContain('reference/ontology.mdx')
   })

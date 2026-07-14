@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content'
 import DocLayout from '../../layouts/DocLayout.astro'
 import OntologyBrowser from '../../components/OntologyBrowser.vue'
 import SchemaReference from '../../components/SchemaReference.vue'
+import YamlSchemas from '../../components/YamlSchemas.vue'
 
 export async function getStaticPaths() {
   const refs = await getCollection('reference')
@@ -20,6 +21,7 @@ const pathname = `/reference/${entry.id}`
 const isInteractive = entry.data.fullscreen === true
 const showOntology = entry.id === 'ontology'
 const showSchemaBrowser = entry.id === 'schema-browser'
+const showEntityFields = entry.id === 'entity-fields'
 ---
 
 <DocLayout
@@ -33,6 +35,8 @@ const showSchemaBrowser = entry.id === 'schema-browser'
     <OntologyBrowser client:visible />
   ) : showSchemaBrowser ? (
     <SchemaReference client:visible />
+  ) : showEntityFields ? (
+    <YamlSchemas client:visible />
   ) : (
     <Content />
   )}

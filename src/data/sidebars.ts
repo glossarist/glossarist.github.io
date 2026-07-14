@@ -12,59 +12,79 @@ export interface SidebarGroup {
 }
 
 export const sidebars: Record<string, SidebarGroup[]> = {
-  '/docs/desktop/': [
-    {
-      text: 'Desktop Application',
-      items: [
-        { text: 'Getting Started', link: '/docs/desktop/' },
-        { text: 'Installation', link: '/docs/desktop/getting-started/installation' },
-        { text: 'First Launch', link: '/docs/desktop/getting-started/initial-setup' },
-      ],
-    },
-    {
-      text: 'Tutorials',
-      items: [
-        { text: 'Making a Change', link: '/docs/desktop/tutorials/create-change-request' },
-        { text: 'Reviewing a Change', link: '/docs/desktop/tutorials/review-change-request' },
-        { text: 'Linking Concepts', link: '/docs/desktop/tutorials/linking-concepts' },
-      ],
-    },
-    {
-      text: 'Interface Reference',
-      items: [
-        { text: 'Modules', link: '/docs/desktop/ui/modules/' },
-        { text: 'Panels', link: '/docs/desktop/ui/panels/' },
-        { text: 'Widgets', link: '/docs/desktop/ui/widgets/' },
-      ],
-    },
-    {
-      text: 'Topics',
-      items: [
-        { text: 'Synchronization', link: '/docs/desktop/topics/synchronization' },
-        { text: 'Concept Relationships', link: '/docs/desktop/topics/concept-relationships' },
-        { text: 'Application Settings', link: '/docs/desktop/topics/settings' },
-      ],
-    },
-  ],
-  '/docs/model/': [
+  '/model/': [
     {
       text: 'Concept Model',
       items: [
-        { text: 'Overview', link: '/docs/model/' },
-        { text: 'Concepts', link: '/docs/model/concepts' },
-        { text: 'Designations', link: '/docs/model/designations' },
-        { text: 'Relationships', link: '/docs/model/relationships' },
-        { text: 'Sources', link: '/docs/model/sources' },
-        { text: 'Datasets & Sections', link: '/docs/model/datasets' },
-        { text: 'Non-verbal Entities', link: '/docs/model/non-verbal' },
-        { text: 'Term Types', link: '/docs/model/term-types' },
+        { text: 'Overview', link: '/model/' },
+        { text: 'Concepts', link: '/model/concepts' },
+        { text: 'Designations', link: '/model/designations' },
+        { text: 'Relationships', link: '/model/relationships' },
+        { text: 'Sources', link: '/model/sources' },
+        { text: 'Datasets & Sections', link: '/model/datasets' },
+        { text: 'Non-verbal Entities', link: '/model/non-verbal' },
+        { text: 'Term Types', link: '/model/term-types' },
       ],
     },
     {
-      text: 'Schemas & Standards',
+      text: 'Schemas',
       items: [
-        { text: 'YAML Schemas', link: '/docs/model/schemas/' },
-        { text: 'Standards', link: '/docs/standards' },
+        { text: 'YAML Schemas', link: '/model/schemas/' },
+      ],
+    },
+  ],
+  '/reference/': [
+    {
+      text: 'Reference',
+      items: [
+        { text: 'Overview', link: '/reference/' },
+        { text: 'Schema Browser', link: '/reference/schema-browser' },
+        { text: 'Entity Fields', link: '/reference/entity-fields' },
+        { text: 'Ontology Browser', link: '/reference/ontology' },
+        { text: 'Standards', link: '/reference/standards' },
+      ],
+    },
+  ],
+  '/docs/software/': [
+    {
+      text: 'Software',
+      items: [
+        { text: 'Overview', link: '/docs/software/' },
+        { text: 'Glossarist Ruby', link: '/docs/software/glossarist-ruby' },
+        { text: 'Glossarist JS', link: '/docs/software/glossarist-js' },
+        { text: 'Concept Browser', link: '/docs/software/concept-browser' },
+        { text: 'Desktop App', link: '/docs/software/desktop' },
+      ],
+    },
+    {
+      text: 'Desktop — Getting Started',
+      items: [
+        { text: 'Installation', link: '/docs/software/desktop/getting-started/installation' },
+        { text: 'First Launch', link: '/docs/software/desktop/getting-started/initial-setup' },
+      ],
+    },
+    {
+      text: 'Desktop — Tutorials',
+      items: [
+        { text: 'Making a Change', link: '/docs/software/desktop/tutorials/create-change-request' },
+        { text: 'Reviewing a Change', link: '/docs/software/desktop/tutorials/review-change-request' },
+        { text: 'Linking Concepts', link: '/docs/software/desktop/tutorials/linking-concepts' },
+      ],
+    },
+    {
+      text: 'Desktop — Interface',
+      items: [
+        { text: 'Modules', link: '/docs/software/desktop/ui/modules/' },
+        { text: 'Panels', link: '/docs/software/desktop/ui/panels/' },
+        { text: 'Widgets', link: '/docs/software/desktop/ui/widgets/' },
+      ],
+    },
+    {
+      text: 'Desktop — Topics',
+      items: [
+        { text: 'Synchronization', link: '/docs/software/desktop/topics/synchronization' },
+        { text: 'Concept Relationships', link: '/docs/software/desktop/topics/concept-relationships' },
+        { text: 'Application Settings', link: '/docs/software/desktop/topics/settings' },
       ],
     },
   ],
@@ -87,18 +107,6 @@ export const sidebars: Record<string, SidebarGroup[]> = {
         { text: '1. Concept Management Principles', link: '/docs/adopt/1-workflows/' },
         { text: '2. Infrastructure Setup', link: '/docs/adopt/2-infrastructure/' },
         { text: '3. Migrating Existing Data', link: '/docs/adopt/3-migration/' },
-      ],
-    },
-  ],
-  '/docs/software/': [
-    {
-      text: 'Software',
-      items: [
-        { text: 'Overview', link: '/docs/software/' },
-        { text: 'glossarist-ruby', link: '/docs/software/glossarist-ruby' },
-        { text: 'glossarist-js', link: '/docs/software/glossarist-js' },
-        { text: 'Concept Browser', link: '/docs/software/concept-browser' },
-        { text: 'Desktop App', link: '/docs/software/desktop' },
       ],
     },
   ],
