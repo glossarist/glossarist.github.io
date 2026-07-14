@@ -127,22 +127,27 @@ ul, ol {
   padding-left: 1.5rem;
   margin: 0 0 1rem;
 }
-ul { list-style-type: disc; }
-ol { list-style-type: decimal; }
-ul ul { list-style-type: circle; }
-ul ul ul { list-style-type: square; }
-ol ol { list-style-type: lower-alpha; }
-ol ol ol { list-style-type: lower-roman; }
 li {
   margin: 0.3rem 0;
   line-height: var(--g-content-line-height);
   padding-left: 0.25rem;
 }
-li::marker {
+li > ul, li > ol { margin: 0.3rem 0; }
+
+/* Scope list-style-type to prose content only.
+   Tailwind v4 puts utilities in @layer; unlayered CSS always wins regardless
+   of specificity, so a global `ul { list-style-type: disc }` would override
+   .list-none on nav/sidebar. */
+.prose ul { list-style-type: disc; }
+.prose ol { list-style-type: decimal; }
+.prose ul ul { list-style-type: circle; }
+.prose ul ul ul { list-style-type: square; }
+.prose ol ol { list-style-type: lower-alpha; }
+.prose ol ol ol { list-style-type: lower-roman; }
+.prose li::marker {
   color: var(--g-text-3);
   font-size: 0.95em;
 }
-li > ul, li > ol { margin: 0.3rem 0; }
 
 img {
   max-width: 100%;
