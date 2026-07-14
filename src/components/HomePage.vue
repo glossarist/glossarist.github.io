@@ -1,21 +1,21 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { premierProjects } from '../data/projects'
-import stats from '../../public/data/stats.json'
+import stats from '../data/stats.json'
 
 const st = stats
 
 const activeCodeTab = ref('yaml')
 
 const langCycle = [
-  { code: 'eng', term: 'entity' },
-  { code: 'fra', term: 'entité' },
-  { code: 'deu', term: 'Entität' },
-  { code: 'spa', term: 'entidad' },
-  { code: 'zho', term: '实体' },
-  { code: 'ara', term: 'كيان' },
-  { code: 'rus', term: 'сущность' },
-  { code: 'jpn', term: 'エンティティ' },
+  { code: 'eng', term: 'many languages' },
+  { code: 'fra', term: 'plusieurs langues' },
+  { code: 'deu', term: 'viele Sprachen' },
+  { code: 'spa', term: 'muchos idiomas' },
+  { code: 'zho', term: '多种语言' },
+  { code: 'ara', term: 'لغات كثيرة' },
+  { code: 'rus', term: 'много языков' },
+  { code: 'jpn', term: '多くの言語' },
 ]
 
 // Duplicate the list for seamless infinite scroll
@@ -562,7 +562,13 @@ collection.to_skos(<span class="c-str">'output.ttl'</span>)`,
   animation-play-state: paused;
 }
 @media (prefers-reduced-motion: reduce) {
-  .hp-ticker-track { animation: none; }
+  .hp-ticker-track {
+    animation-play-state: paused;
+  }
+  /* Hover overrides reduced-motion — user explicitly wants to see the animation */
+  .hp-ticker:hover .hp-ticker-track {
+    animation-play-state: running;
+  }
 }
 
 /* ─── Stats ─── */

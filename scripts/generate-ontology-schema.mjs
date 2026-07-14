@@ -592,6 +592,11 @@ function main() {
   };
   writeFileSync(STATS_OUTPUT, JSON.stringify(stats, null, 2) + '\n');
   console.log(`Wrote ${STATS_OUTPUT}`);
+
+  // Also write to src/data/ for static imports (Vite warns on importing from public/)
+  const STATS_SRC = resolve(ROOT, 'src', 'data', 'stats.json');
+  writeFileSync(STATS_SRC, JSON.stringify(stats, null, 2) + '\n');
+  console.log(`Wrote ${STATS_SRC}`);
 }
 
 main();
