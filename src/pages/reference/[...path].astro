@@ -10,14 +10,14 @@ export async function getStaticPaths() {
   return refs
     .filter(entry => entry.id !== 'index')
     .map(entry => ({
-      params: { slug: entry.id },
+      params: { path: entry.id },
       props: { entry },
     }))
 }
 
 const { entry } = Astro.props
 const { Content, headings } = await render(entry)
-const pathname = `/reference/${entry.id}`
+const pathname = `/reference/${entry.id === 'index' ? '' : entry.id + '/'}`
 const isInteractive = entry.data.fullscreen === true
 const showOntology = entry.id === 'ontology'
 const showSchemaBrowser = entry.id === 'schema-browser'

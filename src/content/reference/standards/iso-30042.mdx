@@ -1,0 +1,125 @@
+---
+title: "ISO 30042: TBX Format"
+description: Terminology markup framework (TBX) — the XML-based exchange format for terminology data between systems
+---
+
+# ISO 30042 — TBX: Terminology Markup Framework
+
+## What this standard is
+
+[ISO 30042](https://www.iso.org/standard/62510.html) defines **TBX (TermBase eXchange)**, the XML-based markup framework for representing and exchanging terminology data. Published in 2008 (revision in 2019), TBX ensures that terminology entries can move between different terminology management systems — translation tools, termbases, glossary editors — without loss of information.
+
+The standard defines:
+
+- **TBX-Core** — the minimal structural elements every TBX file must have
+- **TBX dialects** — specialized profiles for specific industries (TBX-Basic, TBX-Min, TBX-Default, TBX-xCS)
+- **Data category categories** — the vocabulary of fields and values that describe terms
+- **XCS files** (eXtensible Constraint Specification) — machine-readable declarations of which data categories a specific TBX file uses
+
+### Key concept: the three-level structure
+
+TBX organizes terminology data in a three-level hierarchy:
+
+1. **`<termEntry>`** — the concept level (one entry per concept)
+2. **`<langSet>`** — the language level (one set per language)
+3. **`<tig>` / `<ntig>`** — the term level (one group per designation)
+
+This mirrors the ISO 704 principle: one concept, many languages, many terms within each language.
+
+---
+
+## How Glossarist implements it
+
+### GCR as TBX exchange medium
+
+Glossarist's native serialization format is **YAML** (human-readable, git-friendly). For TBX interchange, the [glossarist-ruby](/docs/software/glossarist-ruby) gem provides bidirectional conversion between GCR (Glossarist Concept Representation) packages and TBX-XML.
+
+The conversion path:
+
+```
+GCR YAML files  ←→  glossarist-ruby  ←→  TBX-XML
+```
+
+### Term types
+
+ISO 30042 / TBX defines a set of term type classifications (drawn from ISO 12620). Glossarist implements all of them as the `term_type` field on designations:
+
+| TBX term type | Glossarist `term_type` |
+|---------------|------------------------|
+| full form | `full_form` |
+| abbreviation | `abbreviation` |
+| acronym | `acronym` |
+| initialism | `initialism` |
+| clipped term | `clipped_term` |
+| short form | `short_form` |
+| transliterated form | `transliterated_form` |
+| transcribed form | `transcribed_form` |
+| variant | `variant` |
+| symbol | `symbol` |
+| formula | `formula` |
+| equation | `equation` |
+| logical expression | `logical_expression` |
+| common name | `common_name` |
+| entry term | `entry_term` |
+| internationalism | `internationalism` |
+| international scientific term | `international_scientific_term` |
+| part number | `part_number` |
+| phraseological unit | `phraseological_unit` |
+| shortcut | `shortcut` |
+| SKU | `sku` |
+| standard text | `standard_text` |
+| synonym | `synonym` |
+| synonymous phrase | `synonymous_phrase` |
+
+See [Term Types](/model/term-types) for the full list with examples.
+
+### Grammatical information
+
+TBX encodes grammatical metadata (part of speech, gender, number). Glossarist implements these via `grammar_info` on expression designations:
+
+- **Part of speech:** `noun`, `verb`, `adjective`, `adverb`, `preposition`, `participle`, `other`
+- **Gender:** `masculine`, `feminine`, `neuter`, `common`
+- **Number:** `singular`, `dual`, `plural`
+
+### Designation relationships
+
+TBX supports term-level cross-references. Glossarist implements these via designation-level `related` fields:
+
+| TBX relationship | Glossarist type |
+|------------------|-----------------|
+| Abbreviated form | `abbreviated_form_for` |
+| Short form | `short_form_for` |
+
+### Language and script identification
+
+TBX uses RFC 3066 / IETF language tags. Glossarist uses:
+
+- **ISO 639** language codes (`eng`, `fra`, `deu`, `jpn`, `ara`, `rus`, `zho`)
+- **ISO 15924** script codes (`Latn`, `Arab`, `Cyrl`, `Hani`, `Kana`)
+- **ISO 24229** conversion system codes (`Hepburn`, `IPA`, `UN:rus-Cyrl:Latn:1993`)
+
+This allows Glossarist to represent multi-script entries — e.g., a Japanese concept with Kanji, Kana, and Romaji variants — which map cleanly to TBX `langSet` elements.
+
+---
+
+## TBX export
+
+To export a GCR package as TBX:
+
+```bash
+# Using glossarist-ruby
+glossarist convert --input concepts/ --output glossary.tbx --format tbx
+```
+
+The exported TBX file can then be imported into any TBX-compatible tool (SDL Trados, memoQ, Termium, etc.).
+
+---
+
+## Related
+
+- [ISO 12620 — Data Categories](/reference/standards/iso-12620) — the data category registry that defines TBX's vocabulary
+- [ISO 10241-1 — Terminology Entries](/reference/standards/iso-10241-1) — the entry structure TBX encodes
+- [Concept Model: Term Types](/model/term-types) — all 24 term type values
+- [Concept Model: Designations](/model/designations) — the five designation types
+- [Glossarist Ruby](/docs/software/glossarist-ruby) — TBX conversion via the `tbx` gem
+- [Standards Compliance Overview](/reference/standards)

@@ -1,0 +1,84 @@
+---
+title: "ISO 10241-1: Terminology Entries"
+description: Structured terminology entries in standardized vocabularies — the presentation standard that defines how a concept entry is organized
+---
+
+# ISO 10241-1 — Terminology Entries in Standards
+
+## What this standard is
+
+[ISO 10241-1](https://www.iso.org/standard/40362.html) defines the **general requirements for terminological entries in standardized vocabularies** and gives examples of how they should be presented. Published in 2011, it is the presentation-layer companion to ISO 704 (which defines the principles) — together they specify what a well-formed terminology entry looks like when it appears in an official standard or glossary.
+
+The standard covers:
+
+- The structure of a terminological entry (concept → designations → definition → notes → examples → sources)
+- Required, recommended, and optional fields
+- Presentation rules for terms, definitions, and cross-references
+- How to handle non-verbal representations (images, tables, formulas)
+- Designation-level relationships (abbreviations, short forms, variants)
+- Comparative and associative relationships between concepts
+
+### Key concept: the "terminological entry"
+
+An ISO 10241-1 entry is not a dictionary definition. It is a **structured record** whose purpose is to establish a concept unambiguously and document every way the concept is referred to, defined, sourced, and related to other concepts.
+
+---
+
+## How Glossarist implements it
+
+Glossarist's concept model is built directly on the ISO 10241-1 entry structure. Every [ManagedConcept](/model/concepts) in Glossarist corresponds to one terminological entry.
+
+### Entry structure
+
+| ISO 10241-1 section | Glossarist entity | Field |
+|---------------------|-------------------|-------|
+| Concept identifier | `ManagedConcept` | `id`, `identifier`, `data.uri` |
+| Designations (terms) | `LocalizedConcept` → `terms[]` | `designation`, `normative_status`, `type` |
+| Definition | `LocalizedConcept` | `definition` (DetailedDefinition) |
+| Notes | `LocalizedConcept` | `notes[]` |
+| Examples | `LocalizedConcept` | `examples[]` |
+| Sources | `ConceptSource` | `type`, `status`, `origin`, `modification` |
+| Non-verbal reps | `LocalizedConcept` | `non_verbal_rep` |
+| Relationships | `ConceptRelation` | `type`, `content` |
+
+### Designation-level relationships (§5.4.2)
+
+ISO 10241-1 §5.4.2 defines relationships at the designation level — links between individual terms rather than concepts. Glossarist implements these via the `DesignationRelationship` type:
+
+- **`abbreviated_form_for`** — links an abbreviation to its full form
+- **`short_form_for`** — links a short form to its full form
+
+### Concept-level relationships
+
+| ISO 10241-1 type | Glossarist type |
+|------------------|-----------------|
+| Equivalence | `equivalent` |
+| Comparative | `compare`, `contrast` |
+| Associative | `see` |
+| Lifecycle | `deprecates`, `supersedes`, `superseded_by` |
+
+### Non-verbal representations (§6.5)
+
+ISO 10241-1 §6.5 specifies that entries may reference non-verbal material (images, tables, formulas) by URI. Glossarist's `non_verbal_rep` field implements this with support for relative paths, URNs, and URLs.
+
+### Normative status
+
+ISO 10241-1 defines preferred, admitted, deprecated, and superseded designations. Glossarist implements these as the `normative_status` enum on every designation:
+
+| ISO 10241-1 status | Glossarist `normative_status` |
+|--------------------|-------------------------------|
+| Preferred term | `preferred` |
+| Admitted term | `admitted` |
+| Deprecated term | `deprecated` |
+| Superseded term | `superseded` |
+
+---
+
+## Related
+
+- [ISO 704 — Principles & Methods](/reference/standards/iso-704) — the theory behind the entry structure
+- [ISO 30042 — TBX Format](/reference/standards/iso-30042) — machine-readable exchange format for entries
+- [Concept Model: Concepts](/model/concepts) — ManagedConcept and LocalizedConcept
+- [Concept Model: Designations](/model/designations) — the five designation types
+- [Concept Model: Sources](/model/sources) — authoritative and lineage sources
+- [Standards Compliance Overview](/reference/standards)
