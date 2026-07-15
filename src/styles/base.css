@@ -450,10 +450,12 @@
   /* ---------- Reduced motion ---------- */
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
+    /* Disable CSS animations (continuous loops like ticker) but keep
+       transitions (brief one-shot effects like the motd fade) so the
+       rotating taglines still animate visibly. */
     * {
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
     }
   }
 }
