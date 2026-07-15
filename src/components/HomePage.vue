@@ -524,6 +524,8 @@ collection.to_skos(<span class="c-str">'output.ttl'</span>)`,
   overflow: hidden;
   max-width: 700px;
   margin-top: 0.25rem;
+  /* Vertical padding so italic descenders (p, g, y, ы) aren't clipped */
+  padding: 0.15em 0 0.35em;
   /* Fade edges */
   -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
   mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
@@ -541,6 +543,7 @@ collection.to_skos(<span class="c-str">'output.ttl'</span>)`,
   font-style: italic;
   font-size: clamp(2rem, 5vw, 4rem);
   font-weight: 500;
+  line-height: 1.2;
   color: #7ee0d4;
   padding-right: 2.5rem;
   letter-spacing: -0.01em;
