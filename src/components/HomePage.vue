@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { premierProjects } from '../data/projects'
 import stats from '../data/stats.json'
 
@@ -7,29 +7,36 @@ const st = stats
 
 const activeCodeTab = ref('yaml')
 
-// Ticker items: "many languages" translations interleaved with
-// value-proposition taglines, all scrolling in the green text below
-// "One concept,".
-const langCycle = [
-  { term: 'many languages' },
-  { term: 'Convergence of scripts' },
-  { term: 'plusieurs langues' },
-  { term: 'Expression of ideas' },
-  { term: 'viele Sprachen' },
-  { term: 'Lineage of concepts' },
-  { term: 'muchos idiomas' },
-  { term: 'Relationships between terms' },
-  { term: '多種語言' },
-  { term: '多种语言' },
-  { term: 'Multilingual datasets' },
-  { term: 'لغات كثيرة' },
-  { term: 'Machine-readable glossaries' },
-  { term: 'много языков' },
-  { term: '多くの言語' },
+// Phrases that complete "One concept, ..." — translations of "many
+// languages" (showing multilingual nature) + model-domain completions
+// (showing model depth). Each reads as a full sentence.
+const tickerPhrases = [
+  'many languages',
+  'plusieurs langues',
+  'viele Sprachen',
+  'muchos idiomas',
+  '多種語言',
+  '多种语言',
+  'لغات كثيرة',
+  'много языков',
+  '多くの言語',
+  'many designations',
+  'many definitions',
+  'many scripts',
 ]
 
-// Duplicate the list for seamless infinite scroll
-const tickerItems = computed(() => [...langCycle, ...langCycle])
+const tickerIndex = ref(0)
+let tickerTimer: ReturnType<typeof setInterval> | null = null
+
+onMounted(() => {
+  tickerTimer = setInterval(() => {
+    tickerIndex.value = (tickerIndex.value + 1) % tickerPhrases.length
+  }, 3000)
+})
+
+onUnmounted(() => {
+  if (tickerTimer) clearInterval(tickerTimer)
+})
 
 const codePanels = {
   yaml: {
@@ -111,17 +118,13 @@ collection.to_skos(<span class="c-str">'output.ttl'</span>)`,
         <h1 class="hp-hero-title">
           One concept,<br />
           <span class="hp-ticker" aria-label="many languages">
-            <span class="hp-ticker-track">
-              <span
-                v-for="(lang, i) in tickerItems"
-                :key="i"
-                class="hp-ticker-item"
-              >{{ lang.term }}</span>
-            </span>
+            <Transition name="ticker-slide" mode="out-in">
+              <span :key="tickerIndex" class="hp-ticker-item">{{ tickerPhrases[tickerIndex] }}</span>
+            </Transition>
           </span>
         </h1>
 
-        <p class="hp-hero-lede">
+        <p class="hp-hero-lede" style="margin-bottom: 2.5rem;">
           Glossarist is open-source software for maintaining multi-language
           concept systems — aligned with ISO standards for terminology
           management, from model to publication.
@@ -527,52 +530,40 @@ collection.to_skos(<span class="c-str">'output.ttl'</span>)`,
   margin-bottom: 0;
 }
 
-/* ─── Language ticker ─── */
+/* ─── Language ticker (slide-in, pause, slide-out) ─── */
 .hp-ticker {
   display: block;
   position: relative;
   overflow: hidden;
-  max-width: 700px;
   margin-top: 0.25rem;
-  /* Vertical padding so italic descenders (p, g, y, ы) aren't clipped */
+  /* Vertical padding so italic descenders aren't clipped */
   padding: 0.15em 0 0.35em;
-  /* Fade edges */
-  -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
-  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
-}
-.hp-ticker-track {
-  display: inline-flex;
-  align-items: center;
-  gap: 0;
-  white-space: nowrap;
-  animation: hp-ticker-scroll 40s linear infinite;
-  will-change: transform;
 }
 .hp-ticker-item {
+  display: inline-block;
   font-family: 'EB Garamond', Georgia, serif;
   font-style: italic;
   font-size: clamp(2rem, 5vw, 4rem);
   font-weight: 500;
   line-height: 1.2;
   color: #7ee0d4;
-  padding-right: 2.5rem;
   letter-spacing: -0.01em;
+  will-change: transform, opacity;
 }
-.hp-ticker-item::after {
-  content: '·';
-  margin-left: -1.25rem;
-  color: rgba(126, 224, 212, 0.3);
-  font-style: normal;
-  font-size: 0.7em;
-  vertical-align: middle;
+/* Slide in from right, hold, slide out to left */
+.ticker-slide-enter-active {
+  transition: opacity 0.5s ease, transform 0.5s ease;
 }
-.hp-ticker-item:last-child::after { content: ''; }
-@keyframes hp-ticker-scroll {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+.ticker-slide-leave-active {
+  transition: opacity 0.5s ease, transform 0.5s ease;
 }
-.hp-ticker:hover .hp-ticker-track {
-  animation-play-state: paused;
+.ticker-slide-enter-from {
+  opacity: 0;
+  transform: translateX(40px);
+}
+.ticker-slide-leave-to {
+  opacity: 0;
+  transform: translateX(-40px);
 }
 
 /* ─── Stats ─── */
