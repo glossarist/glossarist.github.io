@@ -19,6 +19,7 @@ const langCycle = [
   { term: 'Lineage of concepts' },
   { term: 'muchos idiomas' },
   { term: 'Relationships between terms' },
+  { term: '多種語言' },
   { term: '多种语言' },
   { term: 'Multilingual datasets' },
   { term: 'لغات كثيرة' },
@@ -572,15 +573,6 @@ collection.to_skos(<span class="c-str">'output.ttl'</span>)`,
 }
 .hp-ticker:hover .hp-ticker-track {
   animation-play-state: paused;
-}
-@media (prefers-reduced-motion: reduce) {
-  .hp-ticker-track {
-    animation-play-state: paused;
-  }
-  /* Hover overrides reduced-motion — user explicitly wants to see the animation */
-  .hp-ticker:hover .hp-ticker-track {
-    animation-play-state: running;
-  }
 }
 
 /* ─── Stats ─── */
