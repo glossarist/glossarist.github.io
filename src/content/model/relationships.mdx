@@ -58,6 +58,28 @@ related:
     content: "3.1.1.1.2"      # NTP: 3.1.1.1.2 is a part of this
 ```
 
+### Partitive hyperedges (n-ary)
+
+When a partitive decomposition is *one-to-many* and the membership is
+jointly significant, use a `PartitiveHyperedge` instead of N binary
+`broader_partitive` / `narrower_partitive` edges. Hyperedges carry
+enumeration completeness (`closed` / `open`) and diagram-notation
+markers (`double` / `dashed`) that binary edges cannot.
+
+```yaml
+partitive_hyperedges:
+  - comprehensive: { source: VIM, id: "112-02-09" }
+    parts:
+      - { source: VIM, id: "112-02-10" }
+      - { source: VIM, id: "112-02-26" }
+    enumeration: closed      # ALL parts encoded
+    markers: [double]        # close-set double line on the rake
+```
+
+Both shapes coexist on the same concept — no automatic consolidation
+is performed. See [Partitive Hyperedges](/model/partitive-hyperedges)
+for the full model, YAML authoring, RDF emission, and validation rules.
+
 ### Equivalence and mapping
 
 ```yaml

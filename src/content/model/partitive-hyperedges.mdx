@@ -1,0 +1,156 @@
+---
+title: Partitive Hyperedges
+description: One-to-many partitive decompositions with enumeration and diagram notation, complementing binary broader_partitive / narrower_partitive edges
+---
+
+# Partitive Hyperedges
+
+A **`PartitiveHyperedge`** is a one-to-many partitive decomposition: one comprehensive concept (the whole) is related to one or more part concepts as a *single* relationship. It captures invariants that binary [`broader_partitive`](/model/relationships#hierarchical-relationships) / `narrower_partitive` edges cannot:
+
+- **Set membership** — which comprehensive owns which parts, as one rake rather than N independent binary edges
+- **Plurality markers** — diagram-notation flags (`double`, `dashed`) carried from VIM concept-relationship diagrams
+- **Enumeration completeness** — whether the encoded parts are ALL the parts (`closed`) or only SOME (`open`)
+
+Hyperedges are a V3-only construct. They live on the [`ManagedConcept`](/model/concepts#managedconcept) (concept level, alongside `related`), not on its data payload.
+
+## When to use a hyperedge vs. a binary edge
+
+| Shape | Use when … |
+|-------|------------|
+| Binary `broader_partitive` / `narrower_partitive` | The relationship is pairwise and does not need enumeration or diagram-notation metadata |
+| `PartitiveHyperedge` | The relationship is one-to-many with diagram metadata, or the "these are all the parts" invariant matters |
+
+Both shapes coexist on the same concept — no automatic consolidation is performed. A concept can carry binary edges for pairwise cross-references *and* hyperedges describing its own decomposition into parts.
+
+## Model
+
+```
+PartitiveHyperedge
+  +comprehensive: ConceptRef [1]              // the whole
+  +parts:         ConceptRef [1..*]           // the parts
+  +enumeration:   PartitiveEnumeration [0..1] // default: closed
+  +markers:       PluralityMarker [0..*]      // diagram notation
+  +content:       LocalizedString [0..1]      // optional label / note
+```
+
+Wired into `ManagedConcept` as `+partitive_hyperedges: PartitiveHyperedge [0..*]`.
+
+### PartitiveEnumeration
+
+Two values, SSOT-loaded from the [partitive-enumeration SKOS taxonomy](https://github.com/glossarist/concept-model/blob/main/ontologies/taxonomies/partitive-enumeration.ttl):
+
+- **`closed`** *(default)* — the encoded parts are ALL the parts of the comprehensive. Adding or removing a part would change the relationship.
+- **`open`** — the encoded parts are SOME of the parts; others may exist but are not encoded.
+
+### PluralityMarker
+
+Two values, SSOT-loaded from the [plurality-marker SKOS taxonomy](https://github.com/glossarist/concept-model/blob/main/ontologies/taxonomies/plurality-marker.ttl). Orthogonal to enumeration — both may be set on the same hyperedge.
+
+- **`double`** — close-set double line at the receiver end of the rake. Indicates that several partitive concepts of a given type are involved.
+- **`dashed`** — broken or dashed line. Indicates that plurality is uncertain.
+
+## YAML authoring
+
+Hyperedges live under the top-level `partitive_hyperedges` key on a managed concept:
+
+```yaml
+termid: "112-02-09"
+status: valid
+
+partitive_hyperedges:
+  - comprehensive:
+      source: VIM
+      id: "112-02-09"
+    parts:
+      - { source: VIM, id: "112-02-10" }   # measured quantity value
+      - { source: VIM, id: "112-02-26" }   # measurement uncertainty
+    enumeration: closed
+    markers:
+      - double
+    content:
+      eng: |
+        A measurement result is composed of a measured quantity value
+        and a measurement uncertainty. No other components are part
+        of the result.
+```
+
+### Minimal (closed, no markers)
+
+When `enumeration` is omitted, the schema default (`closed`) applies. Markers default to an empty array.
+
+```yaml
+partitive_hyperedges:
+  - comprehensive: { source: VIM, id: "1.1" }
+    parts:
+      - { source: VIM, id: "1.2" }
+      - { source: VIM, id: "1.3" }
+```
+
+### Open enumeration
+
+Use `enumeration: open` when the encoded parts are a partial list:
+
+```yaml
+partitive_hyperedges:
+  - comprehensive: { source: EXAMPLE, id: "X" }
+    parts:
+      - { source: EXAMPLE, id: "Y" }
+    enumeration: open   # other parts may exist
+```
+
+### Cross-dataset parts
+
+Parts and comprehensive can reference concepts in other datasets using the same `source` + `id` shape as binary relationships:
+
+```yaml
+partitive_hyperedges:
+  - comprehensive:
+      source: urn:oiml:pub:v:2-200:2012
+      id: "2.9"
+    parts:
+      - source: urn:oiml:pub:v:1:1993
+        id: "2.10"
+```
+
+## RDF emission
+
+Hyperedges emit one `gloss:PartitiveHyperedge` subject per entry, anchored to the carrying concept via `gloss:hasPartitiveHyperedge`:
+
+```turtle
+<concept/112-02-09> gloss:hasPartitiveHyperedge [
+  a gloss:PartitiveHyperedge ;
+  gloss:comprehensive <concept/112-02-09> ;
+  gloss:hasPart <concept/112-02-10>, <concept/112-02-26> ;
+  gloss:enumeration <partitiveEnumeration/closed> ;
+  gloss:hasPluralityMarker <pluralityMarker/double> ;
+  gloss:hyperedgeContent "A measurement result is composed of ..." ;
+] .
+```
+
+Enumeration and markers serialize as `skos:Concept` references into the corresponding taxonomies (not as xsd:string literals), matching the SHACL `sh:valuesFrom` pattern used by every other enum in the model.
+
+## Validation
+
+Shape checks live in the validator framework, not in the model constructor:
+
+- **`comprehensive`** must be a non-empty `ConceptRef` (source or id required)
+- **`parts`** must contain at least one `ConceptRef`; cannot include the comprehensive (no self-loop)
+- **`markers`** cannot contain duplicates; values must be in `PLURALITY_MARKER_VALUES`
+- **`enumeration`** values must be in `PARTITIVE_ENUMERATION_VALUES`
+
+### Ownership invariant
+
+A soft `sh:Warning` SHACL constraint (`gloss:PartitiveHyperedgeOwnershipShape`) flags hyperedges whose carrying concept is not the comprehensive — useful for catching accidental cross-references without blocking legitimate indexing patterns.
+
+## Standards alignment
+
+Hyperedges are a Glossarist extension to ISO 25964's partitive hierarchy. The binary `broader_partitive` / `narrower_partitive` types continue to map directly to `iso-thes:broaderPartitive` / `iso-thes:narrowerPartitive`; the n-ary hyperedge has no direct SKOS equivalent and serializes as a `gloss:PartitiveHyperedge` blank node or named node.
+
+The `double` and `dashed` markers originate from VIM concept-relationship diagrams (OIML V 2:2012, Fig. A.6 and similar). They travel with the hyperedge so the rendering layer can reproduce the source diagram's notation.
+
+## See also
+
+- [Relationships](/model/relationships) — binary typed relationships (52 types)
+- [Concepts](/model/concepts) — `ManagedConcept` and `LocalizedConcept`
+- [Datasets & Sections](/model/datasets) — where hyperedges live in the dataset layout
+- [Concept model v3.1 release notes](https://github.com/glossarist/concept-model/blob/main/RELEASE_NOTES.md) — full release notes
