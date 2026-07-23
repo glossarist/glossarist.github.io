@@ -58,27 +58,57 @@ related:
     content: "3.1.1.1.2"      # NTP: 3.1.1.1.2 is a part of this
 ```
 
-### Partitive hyperedges (n-ary)
+### Partitive relations (n-ary)
 
-When a partitive decomposition is *one-to-many* and the membership is
-jointly significant, use a `PartitiveHyperedge` instead of N binary
-`broader_partitive` / `narrower_partitive` edges. Hyperedges carry
-enumeration completeness (`closed` / `open`) and diagram-notation
-markers (`double` / `dashed`) that binary edges cannot.
+When a partitive decomposition is *one-to-many* and the membership,
+completeness, or type-shared plurality is jointly significant, use
+a `PartitiveRelation` (ISO 704) instead of N binary `has_part` /
+`is_part_of` edges. Relations carry:
+
+- `completeness` — `complete` (partitives fitted together constitute
+  the comprehensive) or `partial` (others exist beyond those encoded)
+- `plurality` — ISO 704's close-set double line and broken line as
+  structured data (`is_shared`, `is_uncertain`, optional `shared_type`)
+- `criterion` — ISO 12620 subdivision criterion for coordinate-concept
+  coherence
+- per-partitive `certainty` — confirmed (default) or possible
+  (Glossarist extension)
 
 ```yaml
-partitive_hyperedges:
+partitive_relations:
   - comprehensive: { source: VIM, id: "112-02-09" }
-    parts:
-      - { source: VIM, id: "112-02-10" }
-      - { source: VIM, id: "112-02-26" }
-    enumeration: closed      # ALL parts encoded
-    markers: [double]        # close-set double line on the rake
+    partitives:
+      - ref: { source: VIM, id: "112-02-10" }
+      - ref: { source: VIM, id: "112-03-26" }
+    completeness: complete
+    plurality:
+      is_shared: true        # ISO 704 close-set double line
+    criterion:
+      eng: measurement result composition
 ```
 
+ISO 704 requires **two or more** partitives per relation. A single
+partitive should be expressed as a binary `has_part` edge instead.
+
 Both shapes coexist on the same concept — no automatic consolidation
-is performed. See [Partitive Hyperedges](/model/partitive-hyperedges)
+is performed. The `check-binary-has-part-redundancy` validator
+warns when binary `has_part` edges duplicate a PartitiveRelation's
+assertions. See [Partitive Relations](/model/partitive-relations)
 for the full model, YAML authoring, RDF emission, and validation rules.
+
+### ExternalConcept resolution
+
+Two new binary relationship types support placeholders for
+concepts referenced but not defined in this dataset:
+
+- `provides` — subject concept provides substance for an
+  [ExternalConcept](/model/concepts#externalconcept)
+- `provided_by` — subject ExternalConcept is provided by the object
+  concept
+
+Established at the collection level (whoever has both datasets
+loaded). Distinct from `supersedes` / `superseded_by` — the
+external concept stays; its substance just comes from elsewhere.
 
 ### Equivalence and mapping
 

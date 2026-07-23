@@ -7,6 +7,19 @@ date: 2026-07-22
 ---
 
 {/* byline rendered by BlogLayout */}
+
+> **Update 2026-07-23 — superseded by PartitiveRelation v2.**
+> The design described in this post had three architectural problems
+> that surfaced under review (misnamed per ISO 704/12620, conflated
+> data semantics with diagram notation, missing criterion dimension).
+> The v2 redesign renames `PartitiveHyperedge` → `PartitiveRelation`,
+> promotes markers to structured data, adds per-partitive certainty
+> and ExternalConcept support, and is **breaking**. See
+> [PartitiveRelation v2 — ISO-aligned redesign](/blog/2026-07-23-partitive-relations-v2)
+> for the current design and the
+> [migration script](https://github.com/glossarist/concept-model/blob/main/exe/migrate-to-partitive-relation-v2)
+> to upgrade. This post is preserved as the historical announcement.
+
 Today we're announcing **`PartitiveHyperedge`** — a new model class for one-to-many partitive decompositions that carry enumeration completeness and VIM-style diagram notation. It complements the existing binary `broader_partitive` / `narrower_partitive` edges, which remain unchanged. The model is now synced across [glossarist-ruby](/docs/software/glossarist-ruby), [glossarist-js](/docs/software/glossarist-js), [concept-model](https://github.com/glossarist/concept-model), and [concept-browser](/docs/software/concept-browser).
 
 ## Why a new relationship shape?
@@ -17,7 +30,7 @@ The VIM concept-relationship diagrams (OIML V 2:2012 and successors) encode info
 2. **Plurality markers.** VIM diagrams use a close-set double line at the receiver end to say "several parts of the same type are involved," and a dashed line to say "plurality is uncertain." These travel with the rake, not with any single binary edge.
 3. **Enumeration completeness.** A rake whose backline ends without ellipsis is **closed** — the listed teeth are ALL the parts of the comprehensive. A rake with a trailing ellipsis is **open** — others exist but are not encoded. This is a separate axis from plurality.
 
-`PartitiveHyperedge` captures all three on a single object. See the new [Partitive Hyperedges](/model/partitive-hyperedges) model page for the full field reference.
+`PartitiveHyperedge` captures all three on a single object. See the new [Partitive Relations](/model/partitive-relations) model page for the full field reference (now describing the v2 `PartitiveRelation` redesign that supersedes this announcement).
 
 ## The model
 
@@ -150,7 +163,7 @@ If you build terminology tooling, glossaries, or standards vocabularies, we'd lo
 
 ## Further reading
 
-- [Partitive Hyperedges](/model/partitive-hyperedges) — full model reference
+- [Partitive Relations](/model/partitive-relations) — full model reference (v2 redesign that supersedes this announcement)
 - [Relationships](/model/relationships) — 52 binary typed relationship kinds
 - [Concepts](/model/concepts) — ManagedConcept and LocalizedConcept
 - [Datasets & Sections](/model/datasets) — dataset layout and register.yaml
