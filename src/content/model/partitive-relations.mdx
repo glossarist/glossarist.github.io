@@ -1,0 +1,277 @@
+---
+title: Partitive Relations
+description: ISO 704 / 1087-1 / 12620 partitive relations — one-to-many decompositions with completeness, type-shared plurality, per-partitive certainty, and subdivision criterion
+---
+
+# Partitive Relations
+
+A **`PartitiveRelation`** is an [ISO 704](https://www.iso.org/standard/38109.html) / [ISO 1087-1](https://www.iso.org/standard/56528.html) / [ISO 12620](https://www.iso.org/standard/56034.html) partitive relation: one comprehensive concept (the whole) is related to two or more partitive concepts (the parts) as a *single relationship*. The partitives fitted together constitute the comprehensive. It captures invariants that binary [`has_part`](/model/relationships#hierarchical-relationships) / `is_part_of` edges cannot:
+
+- **Set membership** — which comprehensive owns which parts, as one rake rather than N independent binary edges
+- **Completeness** — whether the encoded partitives fitted together constitute the comprehensive (`complete`) or only some of it (`partial`)
+- **Type-shared plurality** — ISO 704's close-set double line and broken line notation, encoded as structured data
+- **Per-partitive certainty** — a Glossarist extension distinguishing "confirmed" partitives from "possible" ones within one rake
+- **Subdivision criterion** — ISO 12620's coordinate-concept coherence: partitives within one relation share a criterion
+
+PartitiveRelations live on the [`ManagedConcept`](/model/concepts#managedconcept) (concept level, alongside `related`), not on its data payload.
+
+## ISO terminology
+
+| Role | ISO 12620 name |
+|------|---------------|
+| The whole concept | superordinate concept partitive |
+| Each part concept | subordinate concept partitive |
+| The relation itself | partitive relation |
+| Siblings within one rake | coordinate concepts |
+
+All partitives within one PartitiveRelation are coordinate concepts: they share the comprehensive AND the criterion of subdivision.
+
+## When to use a PartitiveRelation vs. a binary edge
+
+| Shape | Use when … |
+|-------|------------|
+| Binary `has_part` / `is_part_of` | The relationship is pairwise and needs no completeness or plurality metadata |
+| `PartitiveRelation` | The relationship is one-to-many with completeness claims, type-shared plurality, per-partitive certainty, or subdivision criterion |
+
+Both shapes coexist on the same concept — no automatic consolidation is performed. The `check-binary-has-part-redundancy` validator warns when binary `has_part` edges duplicate a PartitiveRelation's assertions.
+
+ISO 704 requires partitive relations to have **two or more** partitives. A single partitive should be expressed as a binary `has_part` edge instead.
+
+## Model
+
+```
+PartitiveRelation
+  +comprehensive: ConceptRef [1]                // superordinate concept partitive
+  +partitives:    PartitiveMember [2..*]        // subordinate concepts partitive
+  +completeness:  Completeness [0..1]           // default: complete
+  +plurality:     TypeSharedPlurality [0..1]    // optional
+  +criterion:     LocalizedString [0..1]        // subdivision criterion
+
+PartitiveMember
+  +ref:           ConceptRef [1]                // the partitive concept
+  +certainty:     MemberCertainty [0..1]        // default: confirmed
+
+TypeSharedPlurality
+  +is_shared:     Boolean [1..1]                // ISO 704 close-set double line
+  +is_uncertain:  Boolean [0..1]                // ISO 704 broken line
+  +shared_type:   ConceptRef [0..1]             // Glossarist extension
+```
+
+Wired into `ManagedConcept` as `+partitive_relations: PartitiveRelation [0..*]`.
+
+### Completeness
+
+Two values, SSOT-loaded from the [completeness SKOS taxonomy](https://github.com/glossarist/concept-model/blob/main/ontologies/taxonomies/completeness.ttl):
+
+- **`complete`** *(default)* — the encoded partitives fitted together constitute the comprehensive. The backline ends with a tooth; no further partitives exist.
+- **`partial`** — the encoded partitives are some of the partitives of the comprehensive; others exist but are not encoded. The backline continues without a tooth.
+
+### MemberCertainty
+
+Two values, SSOT-loaded from the [member-certainty SKOS taxonomy](https://github.com/glossarist/concept-model/blob/main/ontologies/taxonomies/member-certainty.ttl):
+
+- **`confirmed`** *(default)* — this partitive is definitely a member of the decomposition.
+- **`possible`** — this partitive may or may not be a member. Used when sources disagree, identification is provisional, or the source diagram's broken line applied to this tooth.
+
+MemberCertainty is a Glossarist extension beyond ISO 704 notation, which only supports set-level plurality uncertainty.
+
+### TypeSharedPlurality
+
+Encodes ISO 704's diagram notation as structured data (not as opaque strings):
+
+- **`is_shared`** *(required)* — ISO 704 close-set double line. True when several partitive concepts of a given type are involved. Distinct from cardinality alone: three partitives of different types do not satisfy this; three partitives of the same type do.
+- **`is_uncertain`** — ISO 704 broken line. True when the type-shared plurality is uncertain. Requires `is_shared: true` for semantic coherence.
+- **`shared_type`** *(optional)* — Glossarist extension. The type the partitives share, when known. ISO notation does not encode this; it is left for the reader to infer.
+
+## YAML authoring
+
+PartitiveRelations live under the top-level `partitive_relations` key on a managed concept:
+
+```yaml
+termid: "112-02-09"
+status: valid
+
+partitive_relations:
+  - comprehensive:
+      source: VIM
+      id: "112-02-09"
+    partitives:
+      - ref: { source: VIM, id: "112-02-10" }   # measured quantity value
+      - ref: { source: VIM, id: "112-03-26" }   # measurement uncertainty
+    completeness: complete
+    plurality:
+      is_shared: true
+    criterion:
+      eng: measurement result composition
+```
+
+### Minimal (plain complete)
+
+When `completeness` is omitted, the schema default (`complete`) applies. Plurality defaults to absent. `certainty` on each member defaults to `confirmed`.
+
+```yaml
+partitive_relations:
+  - comprehensive: { source: VIM, id: "1.1" }
+    partitives:
+      - ref: { source: VIM, id: "1.2" }
+      - ref: { source: VIM, id: "1.3" }
+```
+
+### Mixed per-partitive certainty
+
+A Glossarist extension: distinguish confirmed partitives from possible ones within one rake. Use case: "A is composed of `{b, c}` (sure of it) and `{d}` (might be, but there may be more)."
+
+```yaml
+partitive_relations:
+  - comprehensive: { source: VIM, id: "1.3" }
+    partitives:
+      - ref: { source: VIM, id: "1.4" }
+        certainty: confirmed
+      - ref: { source: VIM, id: "1.5" }
+        certainty: confirmed
+      - ref: { source: VIM, id: "1.22" }
+        certainty: possible
+    completeness: partial
+    criterion:
+      eng: quantity classification
+```
+
+### Two decompositions of the same comprehensive
+
+ISO 12620's coordinate-concept coherence: partitives within one relation share the comprehensive AND the criterion of subdivision. Two relations on the same comprehensive with different criteria are distinct decompositions.
+
+```yaml
+partitive_relations:
+  - comprehensive: { source: EXAMPLE, id: "116-01-01" }
+    partitives:
+      - ref: { source: EXAMPLE, id: "116-01-02" }
+      - ref: { source: EXAMPLE, id: "116-01-03" }
+    completeness: complete
+    criterion: { eng: physical structure }
+  - comprehensive: { source: EXAMPLE, id: "116-01-01" }
+    partitives:
+      - ref: { source: EXAMPLE, id: "116-01-04" }
+      - ref: { source: EXAMPLE, id: "116-01-05" }
+    completeness: complete
+    criterion: { eng: functional subsystem }
+```
+
+The coherence validator rejects two relations with identical `(comprehensive, criterion)` as duplicates.
+
+### Cross-dataset partitives
+
+Partitives and comprehensive can reference concepts in other datasets using the same `source` + `id` shape as binary relationships:
+
+```yaml
+partitive_relations:
+  - comprehensive:
+      source: urn:oiml:pub:v:2-200:2012
+      id: "2.9"
+    partitives:
+      - ref:
+          source: urn:oiml:pub:v:1:1993
+          id: "2.10"
+```
+
+## ExternalConcept support
+
+A partitive can reference an [ExternalConcept](/model/concepts#externalconcept) — a ManagedConcept with `status: external` that lives in this dataset but is defined elsewhere. Use case: "we know X is a partitive, but we don't define X ourselves; it lives in another dataset."
+
+```yaml
+partitive_relations:
+  - comprehensive: { source: EXAMPLE, id: "114-01-01" }
+    partitives:
+      - ref: { source: EXAMPLE, id: "114-01-02" }
+        certainty: confirmed
+      - ref: { source: EXAMPLE, id: "ext-qft" }   # ExternalConcept
+        certainty: possible
+    completeness: partial
+```
+
+When another dataset defining `ext-qft` is loaded, the collection manager adds a `provided_by` binary edge from the ExternalConcept to the defining concept. Future references transparently resolve.
+
+## RDF emission
+
+Each relation emits one `gloss:PartitiveRelation` subject, anchored to the carrying concept via `gloss:hasPartitiveRelation`. Each partitive is a `gloss:PartitiveMember` with `gloss:ref` (ConceptRef) and optional `gloss:certainty`:
+
+```turtle
+<concept/112-02-09> gloss:hasPartitiveRelation [
+  a gloss:PartitiveRelation ;
+  gloss:comprehensive <concept/112-02-09> ;
+  gloss:hasPartitive
+    [ a gloss:PartitiveMember ; gloss:ref <concept/112-02-10> ] ,
+    [ a gloss:PartitiveMember ; gloss:ref <concept/112-03-26> ] ;
+  gloss:completeness <completeness/complete> ;
+  gloss:hasPlurality [
+    a gloss:TypeSharedPlurality ;
+    gloss:isShared true ;
+  ] ;
+  gloss:criterion "measurement result composition"@en ;
+] .
+```
+
+Completeness and certainty serialize as `skos:Concept` references into the corresponding taxonomies (not as xsd:string literals), matching the SHACL `sh:valuesFrom` pattern used by every other enum in the model. The `criterion` field uses language-tagged literals (`@container: @language` in JSON-LD).
+
+## Validation
+
+Shape checks live in the validator framework, not in the model constructor:
+
+- **`comprehensive`** must be a non-empty `ConceptRef`
+- **`partitives`** must contain at least two `PartitiveMember` instances (ISO 704 requirement)
+- **`completeness`** values must be in `COMPLETENESS_VALUES`
+- **`certainty`** values on each partitive must be in `MEMBER_CERTAINTY_VALUES`
+- **No duplicate decompositions**: two relations on the same comprehensive with the same criterion are flagged as duplicates
+- **Plurality coherence**: `is_uncertain: true` requires `is_shared: true` (ISO 704's broken line qualifies the close-set double line plurality claim)
+
+### Ownership invariant
+
+A soft `sh:Warning` SHACL constraint (`gloss:PartitiveRelationOwnershipShape`) flags relations whose carrying concept is not the comprehensive — useful for catching accidental cross-references without blocking legitimate indexing patterns.
+
+### ExternalConcept coherence
+
+A separate SHACL warning shape (`gloss:ExternalConceptCoherenceShape`) flags external concepts that carry a definition or sources — those would contradict `status: external`.
+
+In Ruby, this is `Glossarist::Validation::Rules::PartitiveRelationRule` (rule code `GLS-221`). In JS, it's `PartitiveRelationShapeRule`. Both auto-register with the default validator chain.
+
+## Standards alignment
+
+PartitiveRelations are Glossarist's implementation of ISO 704 / ISO 1087-1 / ISO 12620 partitive relations. The binary `broader_partitive` / `narrower_partitive` types continue to map directly to `iso-thes:broaderPartitive` / `iso-thes:narrowerPartitive`; the n-ary relation has no direct SKOS equivalent and serializes as a `gloss:PartitiveRelation` blank node or named node.
+
+Glossarist extensions beyond ISO notation:
+
+- **MemberCertainty** (per-partitive confirmed/possible) — ISO notation only supports set-level plurality uncertainty
+- **TypeSharedPlurality.shared_type** — ISO notation marks "of a given type" visually but does not encode which type
+- **criterion as structured data** — ISO mentions criterion in the coordinate-concept definition but does not encode it
+
+## Migrating from v1 `PartitiveHyperedge`
+
+The v2 design renames `PartitiveHyperedge` → `PartitiveRelation` and restructures the fields. Run the migration script:
+
+```bash
+bundle exec exe/migrate-to-partitive-relation-v2 --dry-run path/to/concepts/
+# review, then:
+bundle exec exe/migrate-to-partitive-relation-v2 --backup path/to/concepts/
+```
+
+| v1 field | v2 field | Notes |
+|----------|----------|-------|
+| `partitive_hyperedges` (top-level key) | `partitive_relations` | renamed |
+| `parts: [ConceptRef]` | `partitives: [{ref: ConceptRef, certainty?: MemberCertainty}]` | restructured |
+| `enumeration: closed` | `completeness: complete` | renamed |
+| `enumeration: open` | `completeness: partial` | renamed |
+| `markers: [double]` | `plurality: {is_shared: true}` | data not notation |
+| `markers: [dashed]` | `plurality: {is_uncertain: true}` | data not notation |
+| `markers: [double, dashed]` | `plurality: {is_shared: true, is_uncertain: true}` | both |
+| `content` (any) | *(dropped)* | moved to LocalizedConcept notes; structural edges don't carry prose |
+
+Lossy cases (rare) are flagged for human review.
+
+## See also
+
+- [Relationships](/model/relationships) — binary typed relationships (54 types including `provides` / `provided_by`)
+- [Concepts](/model/concepts) — `ManagedConcept`, `LocalizedConcept`, and `ExternalConcept`
+- [Datasets & Sections](/model/datasets) — where PartitiveRelations live in the dataset layout
+- [Concept model v3.2 release notes](https://github.com/glossarist/concept-model/blob/main/RELEASE_NOTES.md) — full release notes
+- [ISO 704](https://www.iso.org/standard/38109.html) — Terminology work — Principles and methods
+- [ISO 1087-1](https://www.iso.org/standard/56528.html) — Terminology work — Vocabulary
+- [ISO 12620](https://www.iso.org/standard/56034.html) — Terminology and other language and content resources

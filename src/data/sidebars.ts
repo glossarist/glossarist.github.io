@@ -20,6 +20,7 @@ export const sidebars: Record<string, SidebarGroup[]> = {
         { text: 'Concepts', link: '/model/concepts' },
         { text: 'Designations', link: '/model/designations' },
         { text: 'Relationships', link: '/model/relationships' },
+        { text: 'Partitive Relations', link: '/model/partitive-relations' },
         { text: 'Sources', link: '/model/sources' },
         { text: 'Datasets & Sections', link: '/model/datasets' },
         { text: 'Non-verbal Entities', link: '/model/non-verbal' },

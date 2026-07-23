@@ -16,6 +16,7 @@ const categories: { key: string; label: string; types: string[] }[] = [
   { key: 'spatiotemporal', label: 'Spatiotemporal (ISO 25964 / TBX)', types: ['sequentially_related', 'spatially_related', 'temporally_related'] },
   { key: 'lexical', label: 'Lexical (ISO 12620 / TBX)', types: ['homograph', 'false_friend'] },
   { key: 'designation', label: 'Designation-level (ISO 10241-1)', types: ['abbreviated_form_for', 'short_form_for'] },
+  { key: 'external', label: 'ExternalConcept Resolution (Glossarist extension)', types: ['provides', 'provided_by'] },
 ]
 
 const inverses: Record<string, string> = {
@@ -57,6 +58,9 @@ const inverses: Record<string, string> = {
   invalidated_by: 'invalidates',
   retires: 'retired_by',
   retired_by: 'retires',
+  // ExternalConcept resolution
+  provides: 'provided_by',
+  provided_by: 'provides',
   // Mapping
   broad_match: 'narrow_match',
   narrow_match: 'broad_match',

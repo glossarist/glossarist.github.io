@@ -1,0 +1,211 @@
+---
+title: "PartitiveRelation v2 — ISO-aligned redesign with ExternalConcept support"
+description: "Glossarist v3.2 ships PartitiveRelation: an ISO 704 / 1087-1 / 12620-aligned redesign that renames PartitiveHyperedge, promotes diagram notation to data, adds per-partitive certainty, subdivision criterion, and first-class ExternalConcept support with provides/provided_by resolution. Includes a migration script."
+authors:
+  - Ribose
+date: 2026-07-23
+---
+
+{/* byline rendered by BlogLayout */}
+
+Today we're shipping the **`PartitiveRelation`** redesign — an ISO-aligned replacement for the `PartitiveHyperedge` model we shipped [yesterday](/blog/2026-07-22-partitive-hyperedges). Yesterday's design worked end-to-end but had three architectural problems that surfaced under review. Today's v2 fixes them.
+
+If you're already using v1 PartitiveHyperedges, the [migration script](https://github.com/glossarist/concept-model/blob/main/exe/migrate-to-partitive-relation-v2) is one command. The wire format changes; the data survives.
+
+## What was wrong with v1
+
+1. **Misnamed.** ISO 704 / 1087-1 / 12620 call this a *partitive relation*. The "hyperedge" framing was a graph-theoretic interpretation that introduced naming confusion — Hyperedge sounds different from Relation, suggesting different semantics. They aren't.
+
+2. **Misstructured.** `enumeration: closed|open` and `markers: [double, dashed]` conflated data semantics with diagram notation. Per-partitive certainty (b confirmed, d possible within the same rake) couldn't be expressed at all. The `[dashed]` marker encoded set-level uncertainty at the *rake* boundary; the actual semantic — "we're sure of some teeth, uncertain about others" — was undecodable from the data.
+
+3. **Missing coherence dimension.** ISO 12620's coordinate-concept definition requires partitives to share a *criterion of subdivision*. Without modeling it, two different decompositions of the same comprehensive (e.g. bicycle-by-physical-structure vs bicycle-by-functional-subsystem) were indistinguishable.
+
+## The v2 model
+
+```
+PartitiveRelation
+  +comprehensive: ConceptRef [1]              // superordinate concept partitive
+  +partitives:    PartitiveMember [2..*]      // subordinate concepts partitive
+  +completeness:  Completeness [0..1]         // complete (default) | partial
+  +plurality:     TypeSharedPlurality [0..1]  // ISO diagram notation as data
+  +criterion:     LocalizedString [0..1]      // ISO 12620 subdivision criterion
+
+PartitiveMember
+  +ref:           ConceptRef [1]
+  +certainty:     MemberCertainty [0..1]      // confirmed (default) | possible
+
+TypeSharedPlurality
+  +is_shared:     Boolean [1..1]              // ISO close-set double line
+  +is_uncertain:  Boolean [0..1]              // ISO broken line
+  +shared_type:   ConceptRef [0..1]           // Glossarist extension
+```
+
+The naming now matches ISO terminology everywhere. Fields do work that fields should do.
+
+## Diagram notation promoted to data
+
+The v1 `markers: [double, dashed]` were opaque strings. They encoded semantic claims but only as typographic flags — tools couldn't reason about plurality from the data alone.
+
+V2 promotes them to structured `TypeSharedPlurality`:
+
+```yaml
+partitive_relations:
+  - comprehensive: { source: VIM, id: "112-02-09" }
+    partitives:
+      - ref: { source: VIM, id: "112-02-10" }
+      - ref: { source: VIM, id: "112-03-26" }
+    completeness: complete
+    plurality:
+      is_shared: true                     # ISO 704 close-set double line
+      shared_type: { source: VIM, id: "..." }  # Glossarist extension
+```
+
+The `double` marker meant "several partitives **of a given type**" — a type-shared plurality claim, not just a cardinality claim. Now `is_shared: true` carries that semantic, and the optional `shared_type` records *which* type they share. The v1 marker could only say "shared type exists"; v2 lets you encode what the type is.
+
+## Per-partitive certainty (Glossarist extension)
+
+ISO 704's broken line expresses set-level plurality uncertainty. We extend beyond that: individual partitives can carry `certainty: possible` while others stay `confirmed` within the same rake.
+
+```yaml
+partitive_relations:
+  - comprehensive: { source: VIM, id: "1.3" }
+    partitives:
+      - ref: { source: VIM, id: "1.4" }
+        certainty: confirmed
+      - ref: { source: VIM, id: "1.5" }
+        certainty: confirmed
+      - ref: { source: VIM, id: "1.22" }
+        certainty: possible       # might not actually be a partitive
+    completeness: partial
+    criterion: { eng: quantity classification }
+```
+
+Use case: source VIM diagram shows a rake with confirmed teeth {1.4, 1.5} and one dashed tooth {1.22}. ISO notation alone can't distinguish "all teeth uncertain" from "only 1.22 uncertain". Per-member certainty can.
+
+## Subdivision criterion (ISO 12620 coherence)
+
+ISO 12620 defines **coordinate concept** as: a subordinate concept with the same superordinate AND the same criterion of subdivision. Without modeling criterion, you can't tell whether two partitives in the same rake are coordinate (sharing a subdivision principle) or just incidentally co-decomposed.
+
+V2 adds `criterion: LocalizedString [0..1]` and a coherence validator:
+
+```yaml
+# Two decompositions of the same comprehensive, distinguished by criterion
+partitive_relations:
+  - comprehensive: { source: X, id: "bicycle" }
+    partitives:
+      - ref: { source: X, id: "frame" }
+      - ref: { source: X, id: "wheel" }
+    completeness: complete
+    criterion: { eng: physical structure }
+  - comprehensive: { source: X, id: "bicycle" }
+    partitives:
+      - ref: { source: X, id: "structural" }
+      - ref: { source: X, id: "propulsion" }
+    completeness: complete
+    criterion: { eng: functional subsystem }
+```
+
+The coherence validator flags duplicate `(comprehensive, criterion)` pairs as errors. Two relations with different criteria on the same comprehensive are distinct decompositions.
+
+## ExternalConcept: first-class support for placeholders
+
+V2 adds two things together:
+
+1. A new `ConceptStatus` value: **`external`**. A ManagedConcept with `status: external` is referenced from this dataset but defined elsewhere. ISO 704 calls these *parenthetic terms* (concepts taken as primitives, assumed understood). We use the semantic name `ExternalConcept` rather than the typographic name.
+
+2. Two new relationship types: **`provides`** / **`provided_by`**. Resolution edges established at the *collection level* — whoever has both datasets loaded (human or auto-resolution routine).
+
+```yaml
+# Dataset A: concepts/ext-qft.yaml
+id: ext-qft
+status: external
+data:
+  identifier: ext-qft
+  designations:
+    - designation: "quantum field theory"
+      type: expression
+# (no definition, no sources — that's the point)
+
+# Later, when Dataset B is loaded and matched:
+related:
+  - type: provided_by
+    ref: { source: urn:dataset-b, id: "qft" }
+```
+
+Dataset B is untouched. The edge lives on the ExternalConcept in dataset A. Future references to `ext-qft` transparently resolve to B's `qft`.
+
+We deliberately did **not** reuse `supersedes` / `superseded_by` — those imply *replacement* (the old thing is gone). ExternalConcepts stay; their substance just comes from elsewhere.
+
+## Migrating from v1 PartitiveHyperedge
+
+```bash
+bundle exec exe/migrate-to-partitive-relation-v2 --dry-run path/to/concepts/
+# review output, then:
+bundle exec exe/migrate-to-partitive-relation-v2 --backup path/to/concepts/
+```
+
+The migration is mostly deterministic. Two lossy cases are flagged for human review:
+
+| v1 shape | Migration |
+|----------|-----------|
+| `partitive_hyperedges` (top-level key) | renamed to `partitive_relations` |
+| `parts: [{source, id}]` | restructured to `partitives: [{ref: {source, id}}]` |
+| `enumeration: closed` | `completeness: complete` |
+| `enumeration: open` | `completeness: partial` |
+| `markers: [double]` | `plurality: {is_shared: true}` |
+| `markers: [dashed]` | `plurality: {is_uncertain: true}` |
+| `markers: [double, dashed]` | `plurality: {is_shared: true, is_uncertain: true}` |
+| `content` (any) | dropped — moved to LocalizedConcept notes if valuable |
+
+Lossy cases:
+- `markers: [dashed]` alone (no `[double]`) — broken line without close-set double line is semantically odd. Migration preserves `is_uncertain: true` and flags for review.
+- Per-partitive certainty — v1 couldn't encode which tooth was uncertain. Migration defaults all to `confirmed`; reviewers mark specific ones as `possible` based on source diagrams.
+
+## Cross-repo rollout
+
+The redesign is currently in [concept-model](https://github.com/glossarist/concept-model) (PR [#74](https://github.com/glossarist/concept-model/pull/74), merged). Downstream consumers need updates before vocab datasets migrate. See the [downstream consumer guide](https://github.com/glossarist/concept-model/blob/main/TODO.partitive-relation-v2/17-downstream-consumer-guide.md) for file-by-file change lists per repo.
+
+**Lockstep**: glossarist-ruby and glossarist-js must ship v2 support BEFORE vocab datasets migrate. The v1 backward-compat reader lives for one release cycle in each consumer.
+
+- **[glossarist-ruby](/docs/software/glossarist-ruby)** — `V3::PartitiveRelation`, `PartitiveMember`, `TypeSharedPlurality`, `Completeness`, `MemberCertainty` model classes; `ConceptStatus#external` value; `RelatedConceptType#provides` / `#provided_by` values; `PartitiveRelationRule` validator (GLS-221); bundled v1→v2 schema migration reader.
+- **[glossarist-js](/docs/software/glossarist-js)** — same model classes; parser accepts both v1 and v2 shapes for one release cycle; serializer emits only v2.
+- **[concept-browser](/docs/software/concept-browser)** — `PartitiveRelationList.vue` with completeness and plurality badges, per-partitive certainty rendering, ExternalConcept indicator; stats track relation counts and resolution rates.
+- **[vocab datasets](https://github.com/glossarist/vocab)** — migration script runs across VIM 2007/2010/2012 (~32 relations total); ~3 hours manual review for per-partitive certainty and criterion filling.
+
+## What else changed
+
+Three architectural cleanups rode along:
+
+1. **`content` field removed** from PartitiveRelation. Structural edges don't carry prose — that was conflating "type-level meaning" (belongs in the SKOS taxonomy) with "per-instance note" (belongs on LocalizedConcept).
+
+2. **Cardinality tightened** from `[1..*]` to `[2..*]` per ISO 704's "two or more" requirement. A single partitive should be a binary `has_part` edge.
+
+3. **ConceptRef accepts three forms** via `anyOf`: fully resolved `(source, id, text)`, resolved `(source, id)`, or text-only `(text)` for inline ExternalConcept placeholders.
+
+## Validation
+
+New Ruby validators join the existing suite:
+
+- `check-partitive-relation-coherence` — cardinality, duplicate `(comprehensive, criterion)` pairs, plurality coherence
+- `check-external-concept-shape` — external concepts must not have definition or sources
+- `check-binary-has-part-redundancy` — warns when binary `has_part` edges duplicate PartitiveRelation assertions
+
+All three auto-discover data; no hard-coded registries. All 10 validators + 21 RSpec tests green in CI.
+
+## What's next
+
+- **SequentialRelation** — ISO 12620 sequential concept systems (spatial/temporal rakes) modeled by analogy to PartitiveRelation. Trigger: when a real dataset needs n-ary spatial/temporal grouping AND PartitiveRelation has been stable for one release cycle.
+- **Definition types** — ISO 12620 distinguishes intensional, extensional, partitive, and translated definitions. DetailedDefinition would gain a `type` field.
+- **Auto-resolution routine** for ExternalConcept — when manual `provided_by` workflow becomes a bottleneck.
+
+See the [Partitive Relations](/model/partitive-relations) model page for the full field reference. The v1 announcement [yesterday's post](/blog/2026-07-22-partitive-hyperedges) stands as the historical record; this v2 post supersedes it.
+
+## Further reading
+
+- [Partitive Relations](/model/partitive-relations) — full model reference
+- [Relationships](/model/relationships) — binary typed relationships (now 54 types with `provides` / `provided_by`)
+- [Concepts](/model/concepts) — ManagedConcept, LocalizedConcept, and ExternalConcept
+- [Downstream consumer guide](https://github.com/glossarist/concept-model/blob/main/TODO.partitive-relation-v2/17-downstream-consumer-guide.md) — file-by-file change lists per repo
+- [Migration script](https://github.com/glossarist/concept-model/blob/main/exe/migrate-to-partitive-relation-v2) — `--dry-run` and `--backup` modes
+- [ISO 704](https://www.iso.org/standard/38109.html) — Terminology work — Principles and methods
+- [ISO 12620](https://www.iso.org/standard/56034.html) — Terminology and other language and content resources
