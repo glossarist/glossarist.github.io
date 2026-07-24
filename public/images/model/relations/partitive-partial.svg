@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 340" role="img" aria-labelledby="title desc">
+  <title id="title">Partitive relation — partial decomposition</title>
+  <desc id="desc">ISO 704 rake notation, partial. The backline continues past the last tooth without ending — a trailing segment indicating one or more further partitive concepts exist that are not encoded.</desc>
+
+  <defs>
+    <style>
+      .label { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 14px; fill: #1f2937; }
+      .label-id { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; fill: #6b7280; }
+      .label-note { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 11px; fill: #6b7280; font-style: italic; }
+      .box { fill: #ffffff; stroke: #1f2937; stroke-width: 1.5; }
+      .box-comp { fill: #ecfdf5; stroke: #047857; stroke-width: 2; }
+      .rake { stroke: #1f2937; stroke-width: 1.5; fill: none; }
+    </style>
+  </defs>
+
+  <rect width="540" height="340" fill="#ffffff"/>
+
+  <!-- comprehensive -->
+  <rect x="180" y="30" width="180" height="56" rx="8" class="box box-comp"/>
+  <text x="270" y="55" text-anchor="middle" class="label">system of quantities</text>
+  <text x="270" y="73" text-anchor="middle" class="label-id">VIM 112-01-03</text>
+
+  <!-- backline from comp down — continues past last tooth (no end tooth) -->
+  <path d="M 270 86 L 270 250" class="rake"/>
+
+  <!-- three teeth — last one at y=210; backline continues to y=250 -->
+  <path d="M 270 160 L 90 160 L 90 200" class="rake"/>
+  <path d="M 270 185 L 270 185 L 270 185" class="rake"/>
+  <path d="M 270 160 L 270 160 L 270 160" class="rake"/>
+
+  <!-- leftmost tooth -->
+  <path d="M 270 145 L 90 145 L 90 200" class="rake"/>
+  <!-- middle tooth -->
+  <path d="M 270 175 L 270 175 L 270 200" class="rake"/>
+  <!-- right tooth -->
+  <path d="M 270 205 L 450 205 L 450 240" class="rake"/>
+
+  <!-- backline continuation past the last tooth (the "without a tooth" tail) -->
+  <path d="M 270 230 L 270 270" class="rake" stroke-dasharray="4 3"/>
+
+  <text x="290" y="262" class="label-note">… other partitives may exist</text>
+
+  <!-- partitive 1 -->
+  <rect x="20" y="200" width="140" height="50" rx="8" class="box"/>
+  <text x="90" y="222" text-anchor="middle" class="label">base quantity</text>
+  <text x="90" y="238" text-anchor="middle" class="label-id">VIM 112-01-04</text>
+
+  <!-- partitive 2 (middle - short tooth) -->
+  <rect x="200" y="200" width="140" height="50" rx="8" class="box"/>
+  <text x="270" y="222" text-anchor="middle" class="label">derived quantity</text>
+  <text x="270" y="238" text-anchor="middle" class="label-id">VIM 112-01-05</text>
+
+  <!-- partitive 3 -->
+  <rect x="380" y="240" width="140" height="50" rx="8" class="box"/>
+  <text x="450" y="262" text-anchor="middle" class="label">quantity equation</text>
+  <text x="450" y="278" text-anchor="middle" class="label-id">VIM 112-01-22</text>
+
+  <text x="270" y="110" text-anchor="middle" class="label-note">completeness: partial</text>
+</svg>

@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 220" role="img" aria-labelledby="title desc">
+  <title id="title">Associative relation — double-headed arrow</title>
+  <desc id="desc">ISO 704 / 10241-1 associative (pragmatic) relation. A non-hierarchical thematic connection between two concepts, depicted as a double-headed arrow. All associative subtypes use this single visual form.</desc>
+
+  <defs>
+    <style>
+      .label { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 14px; fill: #1f2937; }
+      .label-id { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; fill: #6b7280; }
+      .label-edge { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; fill: #1f2937; }
+      .label-note { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 11px; fill: #6b7280; font-style: italic; }
+      .box { fill: #ffffff; stroke: #1f2937; stroke-width: 1.5; }
+      .edge { stroke: #1f2937; stroke-width: 1.5; fill: none; }
+    </style>
+    <marker id="arrow-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 10 0 L 0 5 L 10 10 z" fill="#1f2937"/>
+    </marker>
+    <marker id="arrow-end" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1f2937"/>
+    </marker>
+  </defs>
+
+  <rect width="540" height="220" fill="#ffffff"/>
+
+  <!-- concept A -->
+  <rect x="40" y="80" width="160" height="56" rx="8" class="box"/>
+  <text x="120" y="103" text-anchor="middle" class="label">thermometry</text>
+  <text x="120" y="121" text-anchor="middle" class="label-id">VIM 112-04-XX</text>
+
+  <!-- double-headed arrow -->
+  <line x1="200" y1="108" x2="340" y2="108" class="edge"
+        marker-start="url(#arrow-start)" marker-end="url(#arrow-end)"/>
+  <text x="270" y="98" text-anchor="middle" class="label-edge">related_concept</text>
+  <text x="270" y="125" text-anchor="middle" class="label-id">(associative)</text>
+
+  <!-- concept B -->
+  <rect x="340" y="80" width="160" height="56" rx="8" class="box"/>
+  <text x="420" y="103" text-anchor="middle" class="label">temperature</text>
+  <text x="420" y="121" text-anchor="middle" class="label-id">VIM 112-01-XX</text>
+
+  <text x="270" y="175" text-anchor="middle" class="label-note">Non-hierarchical thematic connection.</text>
+  <text x="270" y="190" text-anchor="middle" class="label-note">All associative subtypes use this single visual form.</text>
+</svg>

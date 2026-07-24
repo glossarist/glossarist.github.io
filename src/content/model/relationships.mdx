@@ -58,6 +58,11 @@ related:
     content: "3.1.1.1.2"      # NTP: 3.1.1.1.2 is a part of this
 ```
 
+<figure>
+  <img src="/images/model/relations/binary-has-part.svg" alt="Two concept boxes connected by a labeled arrow. The left box 'bicycle' points to the right box 'wheel' via an arrow labeled 'has_part' (inverse: is_part_of)." loading="lazy" />
+  <figcaption>Binary partitive edge. Use for single pairwise assertions without completeness or plurality claims.</figcaption>
+</figure>
+
 ### Partitive relations (n-ary)
 
 When a partitive decomposition is *one-to-many* and the membership,
@@ -95,6 +100,16 @@ is performed. The `check-binary-has-part-redundancy` validator
 warns when binary `has_part` edges duplicate a PartitiveRelation's
 assertions. See [Partitive Relations](/model/partitive-relations)
 for the full model, YAML authoring, RDF emission, and validation rules.
+
+<figure>
+  <img src="/images/model/relations/generic-tree.svg" alt="ISO 704 generic-relation tree. A superordinate concept 'measurement unit' at the top branches down to 'SI unit' and 'off-system unit', with three dots indicating more specific concepts exist." loading="lazy" />
+  <figcaption>ISO 704 generic relation (genus-species). Tree notation distinguishes it from the partitive rake. A heavy starting line marks a separate terminological dimension; three dots indicate further species exist.</figcaption>
+</figure>
+
+<figure>
+  <img src="/images/model/relations/associative.svg" alt="Two concept boxes connected by a double-headed arrow labeled 'related_concept (associative)'." loading="lazy" />
+  <figcaption>ISO 704 / 10241-1 associative relation. Non-hierarchical thematic connection; all associative subtypes use this single double-headed arrow form.</figcaption>
+</figure>
 
 ### ExternalConcept resolution
 
