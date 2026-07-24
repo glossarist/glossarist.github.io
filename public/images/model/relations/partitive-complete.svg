@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 320" role="img" aria-labelledby="title desc">
+  <title id="title">Partitive relation — complete decomposition</title>
+  <desc id="desc">ISO 704 rake notation. A comprehensive concept at the top is connected via a bracket rake to two partitive concepts. The backline ends with a tooth, indicating the encoded partitives fitted together constitute the comprehensive — no others exist.</desc>
+
+  <defs>
+    <style>
+      .label { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 14px; fill: #1f2937; }
+      .label-id { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; fill: #6b7280; }
+      .label-note { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 11px; fill: #6b7280; font-style: italic; }
+      .box { fill: #ffffff; stroke: #1f2937; stroke-width: 1.5; }
+      .box-comp { fill: #ecfdf5; stroke: #047857; stroke-width: 2; }
+      .rake { stroke: #1f2937; stroke-width: 1.5; fill: none; }
+    </style>
+  </defs>
+
+  <!-- background -->
+  <rect width="540" height="320" fill="#ffffff"/>
+
+  <!-- comprehensive concept (top) -->
+  <rect x="180" y="30" width="180" height="56" rx="8" class="box box-comp"/>
+  <text x="270" y="55" text-anchor="middle" class="label">measurement result</text>
+  <text x="270" y="73" text-anchor="middle" class="label-id">VIM 112-02-09</text>
+
+  <!-- rake: vertical backline from comp down, horizontal teeth to partitives -->
+  <!-- backline: from comp bottom (270,86) down to y=210 -->
+  <path d="M 270 86 L 270 210" class="rake"/>
+
+  <!-- tooth to partitive 1 (left): horizontal at y=210 from 270 to 130 -->
+  <path d="M 270 210 L 130 210 L 130 240" class="rake"/>
+
+  <!-- tooth to partitive 2 (right): horizontal at y=210 from 270 to 410 -->
+  <path d="M 270 210 L 410 210 L 410 240" class="rake"/>
+
+  <!-- "backline ends with a tooth" indicator — short vertical tail below the horizontal -->
+  <!-- (the last tooth IS at y=210; the backline ends here, signifying 'complete') -->
+  <text x="270" y="200" text-anchor="middle" class="label-note">completeness: complete</text>
+
+  <!-- partitive 1 (left) -->
+  <rect x="50" y="240" width="160" height="56" rx="8" class="box"/>
+  <text x="130" y="265" text-anchor="middle" class="label">measured quantity value</text>
+  <text x="130" y="283" text-anchor="middle" class="label-id">VIM 112-02-10</text>
+
+  <!-- partitive 2 (right) -->
+  <rect x="330" y="240" width="160" height="56" rx="8" class="box"/>
+  <text x="410" y="265" text-anchor="middle" class="label">measurement uncertainty</text>
+  <text x="410" y="283" text-anchor="middle" class="label-id">VIM 112-03-26</text>
+</svg>

@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 340" role="img" aria-labelledby="title desc">
+  <title id="title">Partitive relation — mixed per-partitive certainty</title>
+  <desc id="desc">Glossarist extension. A rake where two teeth are solid (certainty: confirmed) and one tooth is dashed (certainty: possible). ISO 704 notation alone cannot distinguish per-tooth uncertainty from set-level uncertainty.</desc>
+
+  <defs>
+    <style>
+      .label { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 14px; fill: #1f2937; }
+      .label-id { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; fill: #6b7280; }
+      .label-note { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 11px; fill: #6b7280; font-style: italic; }
+      .label-cert { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 10px; }
+      .box { fill: #ffffff; stroke: #1f2937; stroke-width: 1.5; }
+      .box-comp { fill: #ecfdf5; stroke: #047857; stroke-width: 2; }
+      .box-possible { fill: #fef3c7; stroke: #92400e; stroke-width: 1.5; stroke-dasharray: 4 3; }
+      .rake { stroke: #1f2937; stroke-width: 1.5; fill: none; }
+      .rake-possible { stroke: #92400e; stroke-width: 1.5; fill: none; stroke-dasharray: 4 3; }
+    </style>
+  </defs>
+
+  <rect width="540" height="340" fill="#ffffff"/>
+
+  <!-- comprehensive -->
+  <rect x="180" y="30" width="180" height="56" rx="8" class="box box-comp"/>
+  <text x="270" y="55" text-anchor="middle" class="label">system of quantities</text>
+  <text x="270" y="73" text-anchor="middle" class="label-id">VIM 112-01-03</text>
+
+  <!-- backline (solid) -->
+  <path d="M 270 86 L 270 210" class="rake"/>
+
+  <!-- confirmed teeth (solid) -->
+  <path d="M 270 210 L 100 210 L 100 240" class="rake"/>
+  <path d="M 270 210 L 270 210 L 270 240" class="rake"/>
+
+  <!-- possible tooth (dashed) -->
+  <path d="M 270 210 L 440 210 L 440 240" class="rake-possible"/>
+
+  <text x="270" y="200" text-anchor="middle" class="label-note">mixed certainty (Glossarist extension)</text>
+
+  <!-- confirmed partitive 1 -->
+  <rect x="30" y="240" width="140" height="56" rx="8" class="box"/>
+  <text x="100" y="262" text-anchor="middle" class="label">base quantity</text>
+  <text x="100" y="278" text-anchor="middle" class="label-id">VIM 112-01-04</text>
+  <text x="100" y="295" text-anchor="middle" class="label-cert" fill="#047857">confirmed</text>
+
+  <!-- confirmed partitive 2 -->
+  <rect x="200" y="240" width="140" height="56" rx="8" class="box"/>
+  <text x="270" y="262" text-anchor="middle" class="label">derived quantity</text>
+  <text x="270" y="278" text-anchor="middle" class="label-id">VIM 112-01-05</text>
+  <text x="270" y="295" text-anchor="middle" class="label-cert" fill="#047857">confirmed</text>
+
+  <!-- possible partitive -->
+  <rect x="370" y="240" width="140" height="56" rx="8" class="box-possible"/>
+  <text x="440" y="262" text-anchor="middle" class="label">quantity equation</text>
+  <text x="440" y="278" text-anchor="middle" class="label-id">VIM 112-01-22</text>
+  <text x="440" y="295" text-anchor="middle" class="label-cert" fill="#92400e">possible</text>
+</svg>

@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 340" role="img" aria-labelledby="title desc">
+  <title id="title">Generic relation — ISO 704 tree notation</title>
+  <desc id="desc">ISO 704 generic (genus-species) relation. A superordinate concept branches down to subordinate concepts. A short branch with three dots indicates one or more other specific concepts exist but are not included. A heavy starting line indicates a separate terminological dimension.</desc>
+
+  <defs>
+    <style>
+      .label { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 14px; fill: #1f2937; }
+      .label-id { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; fill: #6b7280; }
+      .label-note { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 11px; fill: #6b7280; font-style: italic; }
+      .box { fill: #ffffff; stroke: #1f2937; stroke-width: 1.5; }
+      .box-genus { fill: #eff6ff; stroke: #1d4ed8; stroke-width: 2; }
+      .tree { stroke: #1f2937; stroke-width: 1.5; fill: none; }
+      .tree-heavy { stroke: #1f2937; stroke-width: 4; fill: none; }
+    </style>
+  </defs>
+
+  <rect width="540" height="340" fill="#ffffff"/>
+
+  <!-- superordinate (genus) -->
+  <rect x="180" y="30" width="180" height="56" rx="8" class="box box-genus"/>
+  <text x="270" y="55" text-anchor="middle" class="label">measurement unit</text>
+  <text x="270" y="73" text-anchor="middle" class="label-id">VIM 112-01-09</text>
+
+  <!-- trunk down from genus -->
+  <path d="M 270 86 L 270 140" class="tree-heavy"/>
+  <text x="290" y="115" class="label-note">heavy line = separate dimension</text>
+
+  <!-- horizontal branch -->
+  <path d="M 100 140 L 440 140" class="tree"/>
+
+  <!-- drops to each species -->
+  <path d="M 100 140 L 100 200" class="tree"/>
+  <path d="M 270 140 L 270 200" class="tree"/>
+
+  <!-- drop to ellipsis (3 dots) — "more exist" indicator -->
+  <path d="M 440 140 L 440 175" class="tree"/>
+  <circle cx="440" cy="180" r="2.5" fill="#1f2937"/>
+  <circle cx="440" cy="187" r="2.5" fill="#1f2937"/>
+  <circle cx="440" cy="194" r="2.5" fill="#1f2937"/>
+  <text x="460" y="190" class="label-note">more species exist</text>
+
+  <text x="270" y="160" text-anchor="middle" class="label-note">broader_generic / narrower_generic</text>
+
+  <!-- species 1 -->
+  <rect x="30" y="200" width="140" height="56" rx="8" class="box"/>
+  <text x="100" y="222" text-anchor="middle" class="label">SI unit</text>
+  <text x="100" y="240" text-anchor="middle" class="label-id">VIM 112-01-10</text>
+
+  <!-- species 2 -->
+  <rect x="200" y="200" width="140" height="56" rx="8" class="box"/>
+  <text x="270" y="222" text-anchor="middle" class="label">off-system unit</text>
+  <text x="270" y="240" text-anchor="middle" class="label-id">VIM 112-01-11</text>
+
+  <text x="270" y="295" text-anchor="middle" class="label-id">ISO 704 tree notation. Subordinate concepts inherit all</text>
+  <text x="270" y="311" text-anchor="middle" class="label-id">characteristics of the superordinate (genus-species).</text>
+</svg>

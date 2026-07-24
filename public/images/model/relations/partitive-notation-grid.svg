@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 380" role="img" aria-labelledby="title desc">
+  <title id="title">Partitive relation — all four diagram notation variants</title>
+  <desc id="desc">Four panels showing how ISO 704 rake notation combines with completeness and plurality markers: (1) complete, plain; (2) partial — backline continues without a tooth; (3) close-set double line at the receiver — type-shared plurality; (4) broken line — type-shared plurality is uncertain.</desc>
+
+  <defs>
+    <style>
+      .label { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 13px; fill: #1f2937; }
+      .label-mini { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 11px; fill: #6b7280; font-style: italic; }
+      .box { fill: #ffffff; stroke: #1f2937; stroke-width: 1.2; }
+      .box-comp { fill: #ecfdf5; stroke: #047857; stroke-width: 1.5; }
+      .rake { stroke: #1f2937; stroke-width: 1.2; fill: none; }
+      .panel-title { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 12px; fill: #1f2937; font-weight: 600; }
+    </style>
+  </defs>
+
+  <rect width="540" height="380" fill="#ffffff"/>
+
+  <!-- ============ Panel 1: complete, plain (top-left) ============ -->
+  <g transform="translate(10, 10)">
+    <text x="120" y="14" text-anchor="middle" class="panel-title">complete · plain</text>
+
+    <rect x="40" y="25" width="160" height="36" rx="6" class="box-comp"/>
+    <text x="120" y="48" text-anchor="middle" class="label">comprehensive</text>
+
+    <path d="M 120 61 L 120 110" class="rake"/>
+    <path d="M 120 110 L 60 110 L 60 135" class="rake"/>
+    <path d="M 120 110 L 180 110 L 180 135" class="rake"/>
+    <text x="120" y="100" text-anchor="middle" class="label-mini">backline ends with tooth</text>
+
+    <rect x="20" y="135" width="80" height="32" rx="6" class="box"/>
+    <text x="60" y="156" text-anchor="middle" class="label">part 1</text>
+    <rect x="140" y="135" width="80" height="32" rx="6" class="box"/>
+    <text x="180" y="156" text-anchor="middle" class="label">part 2</text>
+  </g>
+
+  <!-- ============ Panel 2: partial (top-right) ============ -->
+  <g transform="translate(280, 10)">
+    <text x="120" y="14" text-anchor="middle" class="panel-title">partial · backline continues</text>
+
+    <rect x="40" y="25" width="160" height="36" rx="6" class="box-comp"/>
+    <text x="120" y="48" text-anchor="middle" class="label">comprehensive</text>
+
+    <path d="M 120 61 L 120 150" class="rake"/>
+    <path d="M 120 110 L 60 110 L 60 135" class="rake"/>
+    <path d="M 120 110 L 180 110 L 180 135" class="rake"/>
+    <text x="135" y="142" class="label-mini">…others may exist</text>
+
+    <rect x="20" y="135" width="80" height="32" rx="6" class="box"/>
+    <text x="60" y="156" text-anchor="middle" class="label">part 1</text>
+    <rect x="140" y="135" width="80" height="32" rx="6" class="box"/>
+    <text x="180" y="156" text-anchor="middle" class="label">part 2</text>
+  </g>
+
+  <!-- ============ Panel 3: close-set double line (bottom-left) ============ -->
+  <g transform="translate(10, 200)">
+    <text x="120" y="14" text-anchor="middle" class="panel-title">close-set double line · type-shared plurality</text>
+
+    <rect x="40" y="25" width="160" height="36" rx="6" class="box-comp"/>
+    <text x="120" y="48" text-anchor="middle" class="label">comprehensive</text>
+
+    <path d="M 120 61 L 120 110" class="rake"/>
+    <!-- two parallel tooth lines (close-set) -->
+    <path d="M 120 110 L 60 110 L 60 135" class="rake"/>
+    <path d="M 120 110 L 180 110 L 180 135" class="rake"/>
+    <path d="M 120 106 L 60 106 L 60 135" class="rake"/>
+    <path d="M 120 106 L 180 106 L 180 135" class="rake"/>
+
+    <rect x="20" y="135" width="80" height="32" rx="6" class="box"/>
+    <text x="60" y="156" text-anchor="middle" class="label">part 1</text>
+    <rect x="140" y="135" width="80" height="32" rx="6" class="box"/>
+    <text x="180" y="156" text-anchor="middle" class="label">part 2</text>
+
+    <text x="120" y="180" text-anchor="middle" class="label-mini">several partitives of a given type are involved</text>
+  </g>
+
+  <!-- ============ Panel 4: broken line (bottom-right) ============ -->
+  <g transform="translate(280, 200)">
+    <text x="120" y="14" text-anchor="middle" class="panel-title">broken line · plurality uncertain</text>
+
+    <rect x="40" y="25" width="160" height="36" rx="6" class="box-comp"/>
+    <text x="120" y="48" text-anchor="middle" class="label">comprehensive</text>
+
+    <path d="M 120 61 L 120 110" class="rake"/>
+    <!-- dashed tooth lines (broken) -->
+    <path d="M 120 110 L 60 110 L 60 135" class="rake" stroke-dasharray="4 3"/>
+    <path d="M 120 110 L 180 110 L 180 135" class="rake" stroke-dasharray="4 3"/>
+
+    <rect x="20" y="135" width="80" height="32" rx="6" class="box"/>
+    <text x="60" y="156" text-anchor="middle" class="label">part 1</text>
+    <rect x="140" y="135" width="80" height="32" rx="6" class="box"/>
+    <text x="180" y="156" text-anchor="middle" class="label">part 2</text>
+
+    <text x="120" y="180" text-anchor="middle" class="label-mini">plurality is uncertain (qualifies the double-line claim)</text>
+  </g>
+</svg>

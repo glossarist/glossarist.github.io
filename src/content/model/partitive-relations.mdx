@@ -26,6 +26,15 @@ PartitiveRelations live on the [`ManagedConcept`](/model/concepts#managedconcept
 
 All partitives within one PartitiveRelation are coordinate concepts: they share the comprehensive AND the criterion of subdivision.
 
+## Visual notation (ISO 704 rake)
+
+ISO 704 depicts partitive relations as a **rake** (or bracket): the comprehensive at the top, the backline descending, and teeth out to each partitive. The four variants below show how completeness and plurality combine.
+
+<figure>
+  <img src="/images/model/relations/partitive-notation-grid.svg" alt="Four ISO 704 rake notation variants: complete plain, partial with continuing backline, close-set double line for type-shared plurality, and broken line for uncertain plurality." loading="lazy" />
+  <figcaption>The four ISO 704 rake variants. Top row: completeness (complete vs partial). Bottom row: plurality markers (close-set double line vs broken line).</figcaption>
+</figure>
+
 ## When to use a PartitiveRelation vs. a binary edge
 
 | Shape | Use when … |
@@ -121,6 +130,11 @@ partitive_relations:
 
 A Glossarist extension: distinguish confirmed partitives from possible ones within one rake. Use case: "A is composed of `{b, c}` (sure of it) and `{d}` (might be, but there may be more)."
 
+<figure>
+  <img src="/images/model/relations/partitive-mixed-certainty.svg" alt="Rake with two solid teeth (confirmed) and one dashed tooth (possible). The dashed tooth connects to a yellow-outlined partitive box labeled 'possible'." loading="lazy" />
+  <figcaption>Per-partitive certainty. ISO 704 notation alone cannot distinguish "all teeth uncertain" from "only one tooth uncertain." Glossarist's <code>MemberCertainty</code> can.</figcaption>
+</figure>
+
 ```yaml
 partitive_relations:
   - comprehensive: { source: VIM, id: "1.3" }
@@ -187,6 +201,11 @@ partitive_relations:
         certainty: possible
     completeness: partial
 ```
+
+<figure>
+  <img src="/images/model/relations/external-concept-resolution.svg" alt="Two datasets side by side. Dataset A contains an ExternalConcept 'quantum field theory' with status: external. Dataset B contains a fully-defined concept with the same name. A provided_by arrow points from the ExternalConcept in A to the defining concept in B." loading="lazy" />
+  <figcaption>ExternalConcept resolution. The placeholder lives in Dataset A; the defining concept lives in Dataset B. The collection manager adds the <code>provided_by</code> edge when both datasets are loaded together.</figcaption>
+</figure>
 
 When another dataset defining `ext-qft` is loaded, the collection manager adds a `provided_by` binary edge from the ExternalConcept to the defining concept. Future references transparently resolve.
 
