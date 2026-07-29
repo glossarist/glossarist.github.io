@@ -1,0 +1,132 @@
+---
+title: "ISO 704:2022 partitive relations — MECE multiplicity, delimiting parts, and ExternalConcept"
+description: "Glossarist now implements ISO 704:2022 partitive relations with the full per-member multiplicity model (presence x count as orthogonal MECE dimensions), delimiting parts, completeness claims, subdivision criterion, and first-class ExternalConcept support with provided_by resolution. The optomechanical mouse canonical example demonstrates all features."
+authors:
+  - Ribose
+date: 2026-07-29
+---
+
+{/* byline rendered by BlogLayout */}
+
+Today we're announcing full [ISO 704:2022](https://www.iso.org/standard/38109.html) partitive relation support in Glossarist. This is the third iteration of the partitive model — each version has been informed by real-world use and feedback from the glossarist-ruby, glossarist-js, and concept-browser teams. The result is a model that faithfully implements the standard while remaining practical for tooling.
+
+## What changed
+
+The headline feature is the **MECE multiplicity decomposition**. ISO 704:2022 uses diagram line notation to express per-member multiplicity: solid vs dashed lines for presence, single vs double lines for count, bold (3x-width) for delimiting parts. Glossarist now encodes all three as structured data fields rather than opaque strings.
+
+## The MECE model: presence x count
+
+ISO 704:2022 distinguishes five multiplicity types using combinations of two orthogonal axes:
+
+- **Presence**: `required` (must exist) or `optional` (may exist)
+- **Count**: `exactly_one`, `at_least_one`, or `multiple`
+
+That's 6 combinations, 5 valid. The invalid one (`optional + at_least_one`) is rejected because if a part is optional, the at-least-one constraint is vacuous — it collapses to `(optional, multiple)`.
+
+| Presence | Count | Visual | ISO 704 name |
+|----------|-------|--------|--------------|
+| required | exactly_one | 1 solid | compulsory |
+| optional | exactly_one | 1 dashed | optional |
+| required | multiple | 2 solid | compulsory multiple |
+| optional | multiple | 2 dashed | optional multiple |
+| required | at_least_one | 1 solid + 1 dashed | compulsory at-least-one |
+
+This decomposition is **DRY** (2+3=5 values instead of a flat 5-value enum), **MECE** (every combination is valid or explicitly invalid), and **OCP-compliant** (adding a new count type is additive — no existing values change).
+
+### Delimiting parts
+
+A **delimiting part** (ISO 704:2022 bold 3x-width line) behaves like a delimiting characteristic: it distinguishes the comprehensive from coordinate concepts. This is the third orthogonal dimension on each `PartitiveMember`.
+
+## The optomechanical mouse
+
+ISO 704:2022 §5.5.4.2.2 uses "optomechanical mouse" as its canonical worked example. Here it is in Glossarist:
+
+```yaml
+partitive_relations:
+  - comprehensive: { source: EXAMPLE, id: "optomechanical-mouse" }
+    partitives:
+      - ref: { source: EXAMPLE, id: "mouse-ball" }
+        is_delimiting: true
+      - ref: { source: EXAMPLE, id: "x-axis-roller" }
+        is_delimiting: true
+      - ref: { source: EXAMPLE, id: "y-axis-roller" }
+        is_delimiting: true
+      - ref: { source: EXAMPLE, id: "infrared-emitter" }
+        is_delimiting: true
+      - ref: { source: EXAMPLE, id: "infrared-sensor" }
+        is_delimiting: true
+      - ref: { source: EXAMPLE, id: "circuit-board" }
+      - ref: { source: EXAMPLE, id: "mouse-button" }
+      - ref: { source: EXAMPLE, id: "mouse-wheel" }
+        presence: optional
+    completeness: complete
+    criterion:
+      eng: physical component decomposition
+```
+
+Key observations from this example:
+
+- **Five delimiting parts** (mouse ball, two rollers, IR emitter, IR sensor) — these distinguish "optomechanical mouse" from coordinate concepts "mechanical mouse" and "optical mouse".
+- **Mouse wheel is optional** (`presence: optional`) — not found on all optomechanical mice.
+- **Mouse button is not delimiting** — all computer mice have buttons, so it doesn't help distinguish.
+- **Completeness: complete** — this is the full decomposition.
+
+## ExternalConcept support
+
+Sometimes you know a concept is a partitive but can't define it yourself — it lives in another dataset. ISO 704:2022 calls these "parenthetic terms"; we use the semantic name **ExternalConcept**.
+
+An ExternalConcept is a ManagedConcept with `status: external` and minimal data (just a designation). When another dataset defining the concept is loaded, the collection manager adds a `provided_by` binary edge:
+
+```yaml
+# Dataset A: the ExternalConcept (placeholder)
+id: ext-qft
+status: external
+data:
+  identifier: ext-qft
+  designations:
+    - designation: "quantum field theory"
+
+# After Dataset B is loaded and matched:
+related:
+  - type: provided_by
+    ref: { source: urn:dataset-b, id: "qft" }
+```
+
+Dataset B is untouched. The edge lives on the ExternalConcept in Dataset A.
+
+## What else is new
+
+- **Subdivision criterion** (Glossarist extension) — ISO 12620's coordinate-concept coherence: partitives within one relation share the comprehensive AND the criterion. Two relations with the same comprehensive but different criteria are distinct decompositions (e.g., bicycle-by-physical-structure vs bicycle-by-functional-subsystem).
+- **Completeness** — whether the encoded partitives are ALL the parts (`complete`, default) or only SOME (`partial`).
+- **10 Ruby validators** covering schema validation, enum drift, SHACL coverage, JSON-LD context completeness, LUTAML reference resolution, PartitiveRelation coherence, ExternalConcept shape, and binary-has-part redundancy.
+- **35 RSpec specs** including MECE coverage tests that verify all 5 valid presence/count combinations are exercised.
+
+## What was dropped
+
+The earlier TypeSharedPlurality and MemberCertainty designs (from the initial PartitiveRelation v2 announcement) have been replaced by the MECE presence/count model. The flat `Multiplicity` enum has been decomposed into its orthogonal factors. The `content` field was removed — structural edges don't carry prose.
+
+## Cross-repo status
+
+| Repo | Status |
+|------|--------|
+| [concept-model](https://github.com/glossarist/concept-model) | Shipped. Full ISO 704:2022 model with MECE decomposition, 10 validators, 35 specs. |
+| [glossarist-ruby](/docs/software/glossarist-ruby) | In progress. PartitiveRelation model, RDF emission, validator rule. |
+| [glossarist-js](/docs/software/glossarist-js) | Shipped. PartitiveMember with presence/count/is_delimiting, construction-time validation, `multiplicityFromPair` utility. |
+| [concept-browser](/docs/software/concept-browser) | Planned. PartitiveRelationList rendering with delimiting-part badges. |
+
+## Prior iterations
+
+1. **v1 — PartitiveHyperedge** (2026-07-22): flat enumeration + diagram-notation markers. Announced [here](/blog/2026-07-22-partitive-hyperedges) (superseded).
+2. **v2 — PartitiveRelation** (2026-07-23): ISO-aligned rename, criterion field, ExternalConcept, provides/provided_by. Announced [here](/blog/2026-07-23-partitive-relations-v2) (superseded).
+3. **v3 — ISO 704:2022 MECE** (today): presence/count decomposition, delimiting parts, `multiplicityFromPair` utility.
+
+Each iteration was informed by real-world use and inter-repo design feedback. The final model is stable and aligns with both the standard and practical tooling needs.
+
+## Further reading
+
+- [Partitive Relations](/model/partitive-relations) — full model reference with the optomechanical mouse example
+- [Relationships](/model/relationships) — binary typed relationships (54 types)
+- [Concepts](/model/concepts) — ManagedConcept, LocalizedConcept, and ExternalConcept
+- [ISO 704:2022](https://www.iso.org/standard/38109.html) — Terminology work — Principles and methods
+- [ISO 12620](https://www.iso.org/standard/56034.html) — Terminology and other language and content resources
+- [glossarist-js](/docs/software/glossarist-js) — JavaScript SDK with multiplicityFromPair utility
