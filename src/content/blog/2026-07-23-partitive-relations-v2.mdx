@@ -8,6 +8,12 @@ date: 2026-07-23
 
 {/* byline rendered by BlogLayout */}
 
+> **Update 2026-07-29 — superseded by ISO 704:2022 MECE model.**
+> The TypeSharedPlurality + MemberCertainty design described here has
+> been replaced by the MECE presence/count decomposition (ISO 704:2022
+> §5.5.4.3). See [ISO 704:2022 partitive relations](/blog/2026-07-29-iso704-2022-partitive-relations)
+> for the current model. This post is preserved as the historical record.
+
 Today we're shipping the **`PartitiveRelation`** redesign — an ISO-aligned replacement for the `PartitiveHyperedge` model we shipped [yesterday](/blog/2026-07-22-partitive-hyperedges). Yesterday's design worked end-to-end but had three architectural problems that surfaced under review. Today's v2 fixes them.
 
 If you're already using v1 PartitiveHyperedges, the [migration script](https://github.com/glossarist/concept-model/blob/main/exe/migrate-to-partitive-relation-v2) is one command. The wire format changes; the data survives.
