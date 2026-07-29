@@ -1,0 +1,241 @@
+---
+title: "Generic relations, per-file storage, and definition types"
+description: "Glossarist v3.3 ships GenericRelation (the genus/species rake parallel to PartitiveRelation), promotes n-ary relations to first-class files at relations/<id>/<slug>.yaml, and adds ISO 704:2022 §5.3 definition types. The clean break drops backward compatibility for bundled partitive_relations arrays."
+authors:
+  - Ribose
+date: 2026-07-30
+---
+
+{/* byline rendered by BlogLayout */}
+
+Today we're shipping three changes that finish the ISO 704:2022 rake story
+for Glossarist:
+
+1. **`GenericRelation`** — the genus/species n-ary rake, structural mirror
+   of `PartitiveRelation`
+2. **Per-file n-ary relation storage** — every Partitive / Generic relation
+   now lives at `relations/<comprehensive-id>/<criterion-slug>.yaml`
+3. **ISO 704:2022 §5.3 definition types** — `intensional`, `extensional`,
+   `partitive`, `translated` on `DetailedDefinition`
+
+This is a **clean break**. We've dropped backward compatibility for the
+bundled `partitive_relations:` arrays on concept files. The wire format is
+per-file only. A migration script handles existing data.
+
+## 1. GenericRelation
+
+Yesterday's post outlined the [ISO 704:2022 MECE model](/blog/2026-07-29-iso704-2022-partitive-relations)
+for PartitiveRelation. The same diagram notation, the same MECE member
+dimensions, and the same criterion-of-subdivision coherence apply to generic
+(genus/species) rakes.
+
+The trigger for adding GenericRelation was concrete: OIML V 2-200:2010
+contains ~8 generic hyperedges, several with **6 criterion-of-subdivision
+groups per comprehensive**. *Measurement standard* (5.1) decomposes by
+realization medium, by calibration role, by governance level, by
+metrological hierarchy, by reference/working, and by travel — six distinct
+rakes on the same comprehensive.
+
+Binary `broader_generic` edges can't express this grouping coherently. You'd
+have six flat lists of narrower edges with no way to distinguish which species
+belong to which decomposition.
+
+`GenericRelation` solves this with the same shape as `PartitiveRelation`:
+
+```
+GenericRelation
+  +comprehensive: ConceptRef [1]              # genus concept
+  +members:       GenericMember [2..*]        # species concepts
+  +completeness:  Completeness [0..1]         # complete | partial
+  +criterion:     LocalizedString [0..1]      # subdivision principle
+  +sources:       ConceptSource [0..*]        # bibliographic provenance
+  +notes:         LocalizedString [0..1]      # optional commentary
+  +status:        ConceptStatus [0..1]        # lifecycle (independent)
+```
+
+Two GenericRelations on the same comprehensive, distinguished by criterion,
+are distinct decompositions — not duplicates.
+
+### ExternalConcept as comprehensive
+
+Two of OIML's generic rakes have parenthetical/external comprehensives —
+"(quantity expressed by a measurement unit)" and "(precision condition of
+measurement)". These are ISO 704's "parenthetic terms": concepts taken as
+primitives, assumed understood.
+
+Glossarist handles this: an ExternalConcept (`status: external`) can serve
+as the comprehensive of a GenericRelation. The relation file lives in the
+ExternalConcept's owning dataset; the ExternalConcept's `provided_by` edge
+resolves the actual definition from elsewhere.
+
+A new validator — `check-external-as-comprehensive` — warns when such an
+ExternalConcept has no `provided_by` edge, since the decomposition dangles
+otherwise.
+
+## 2. Per-file relation storage
+
+This is the architectural change with the biggest impact on dataset layout.
+
+Until now, `partitive_relations:` arrays lived inside concept YAML files.
+That worked when the array was small. With OIML-scale data it breaks:
+
+- **i18n bloat** — a concept like *measurement standard* has 6 generic
+  rakes, each carrying localized criterion + notes + sources' modification
+  text. ~60+ localized strings piled into the concept file alongside its
+  own localized_concepts.
+- **Editing conflicts** — translator working on French definition vs
+  terminologist restructuring the rake both touch the same YAML.
+- **Provenance** — every relation should carry its own sources; that bulk
+  doesn't belong on the concept.
+- **Lifecycle independence** — a concept can be `valid` while one of its
+  decompositions is `draft`. If they share a file, the file's status is
+  ambiguous.
+
+### The new layout
+
+```
+concepts/
+  5-1.yaml                         # ManagedConcept
+relations/
+  5-1/
+    by-realization-medium.yaml     # GenericRelation
+    by-governance-level.yaml       # GenericRelation
+    by-metrological-hierarchy.yaml # GenericRelation
+    ... (6 files for OIML 5.1)
+```
+
+Each file holds exactly one relation (one comprehensive + one criterion
++ its members). The directory IS the index — `relations/5-1/` enumerates
+every decomposition of concept 5.1.
+
+### Why inline i18n (not per-language sub-files)
+
+Hyperedge text is short — criterion is a phrase, notes are 1-2 sentences.
+Inline `LocalizedString` (object keyed by ISO 639 code) is the right
+granularity. Per-language sub-files would 4x the file count for marginal
+translator benefit.
+
+This matches what `PartitiveRelation.criterion` already does — extend the
+pattern to `notes` and any other text fields.
+
+### What stays bundled
+
+**Binary `related` edges** stay in the concept file. The argument for
+per-file doesn't apply with the same force:
+
+- A binary edge has at most one `content` (localized text), usually short
+- Edges are structurally part of the concept's *neighborhood*
+- Splitting would 10x the file count for concepts with many `related`
+  entries
+
+The dividing line is "n-ary with criterion." Anything that crosses it
+becomes a file. Binary stays inline.
+
+## 3. Definition types (ISO 704:2022 §5.3)
+
+ISO 704 distinguishes four definition strategies. We've added `type` to
+`DetailedDefinition`:
+
+```yaml
+definition:
+  - type: intensional
+    content: "A measurement unit is a real scalar quantity..."
+  - type: partitive
+    content: "A measurement standard is composed of a reference
+              material, a measuring system, or a material measure."
+```
+
+Values: `intensional` (default), `extensional`, `partitive`, `translated`.
+
+Additive change. When `type` is omitted, the definition is treated as
+`intensional` — no migration needed for existing data.
+
+## The clean break
+
+We are **not** preserving backward compatibility for the bundled
+`partitive_relations:` array format. The clean break simplified the
+implementation considerably:
+
+- No "two readers, one writer" plumbing in glossarist-ruby / glossarist-js
+- No long-tail support burden
+- Schema is simpler — concept.yaml has no relation-shaped `$defs`
+- Validators don't need a "bundled or per-file?" dispatch
+
+The only adopters today are internal (glossarist-ruby, glossarist-js,
+concept-browser, vocab datasets) — all are updated in lockstep with this
+release. External adopters, if any emerge, get the new format from day one.
+
+### Migration
+
+The `migrate-to-per-file-relations` script in `concept-model/exe/` handles
+existing data:
+
+```bash
+bundle exec exe/migrate-to-per-file-relations --backup path/to/concepts/
+```
+
+For each concept file with `partitive_relations`, the script:
+
+1. Extracts each relation
+2. Derives a slug from the criterion (or "decomposition" if absent)
+3. Writes it to `relations/<comprehensive-id>/<slug>.yaml`
+4. Removes the `partitive_relations` array from the concept file
+
+The `--dry-run` flag previews; the `--backup` flag preserves `.bak` files.
+
+## Lockstep rollout
+
+- **[concept-model](https://github.com/glossarist/concept-model)** — schemas,
+  LUTAML, ontology, SHACL, JSON-LD, validators, migration script, examples
+- **[glossarist-ruby](/docs/software/glossarist-ruby)** — `V3::GenericRelation`,
+  `V3::GenericMember`, `V3::ConceptSystemMember` (abstract base),
+  `V3::AbstractNaryRelation` (abstract base), `V3::RelationLoader`,
+  `V3::DefinitionType`. `V3::PartitiveRelation` refactored to inherit from
+  `AbstractNaryRelation`.
+- **[glossarist-js](/docs/software/glossarist-js)** — mirror classes:
+  `GenericRelation`, `GenericMember`, `ConceptSystemMember`, `RelationLoader`,
+  `DefinitionType`
+- **[concept-browser](/docs/software/concept-browser)** —
+  `GenericRelationList.vue` (mirrors `PartitiveRelationList.vue` with type
+  label swapped); adapter types extended
+- **[vocab datasets](https://github.com/glossarist/vocab)** — migration
+  script runs across VIM 2007/2010/2012 + OIML V 2-200:2010
+
+## What we deliberately did not do
+
+Three architectural non-decisions worth flagging:
+
+1. **No `ConceptSystem` entity.** ISO 704 §5.4 describes concept systems as
+   the substrate. We already model that via `domains` + `tags` + the relation
+   graph — adding a fourth entity duplicates existing structure.
+2. **No computed inheritance walk.** ISO 704 §6.4's inheritance principle is
+   a reasoning pattern over correct intensional definitions, not a data
+   structure. Adding one would duplicate data already in definitions.
+3. **No `AssociativeRelation` n-ary.** No evidence of associative rakes in
+   our datasets yet. Binary `related` covers observed cases. Trigger to
+   revisit: when a real dataset shows associative rakes with role-bearing
+   members.
+
+See [docs/design/iso704-2022-mapping.md](https://github.com/glossarist/concept-model/blob/main/docs/design/iso704-2022-mapping.md)
+for the full reasoning.
+
+## What's next
+
+- **OIML V 2-200:2010 migration** — the ~8 generic rakes move to per-file
+  format with criterion-of-subdivision groups preserved.
+- **VIM variants** — VIM 2007/2010/2012 partitive relations already migrated;
+  no additional work needed.
+- **SequentialRelation** — ISO 12620 sequential concept systems (spatial/
+  temporal rakes) modeled by analogy. Trigger: when a real dataset needs
+  n-ary spatial/temporal grouping AND Partitive/Generic have been stable
+  for one release cycle.
+
+## Further reading
+
+- [Generic Relations](/model/generic-relations) — model reference
+- [Partitive Relations](/model/partitive-relations) — structural mirror
+- [Relationships](/model/relationships) — binary typed edges
+- [Concepts](/model/concepts) — ManagedConcept, LocalizedConcept, ExternalConcept
+- [ISO 704:2022 MECE partitive relations](/blog/2026-07-29-iso704-2022-partitive-relations) — yesterday's post
+- [ISO 704](https://www.iso.org/standard/38109.html) — Terminology work: Principles and methods
+- [ISO 12620](https://www.iso.org/standard/56034.html) — Terminology and other content resources
