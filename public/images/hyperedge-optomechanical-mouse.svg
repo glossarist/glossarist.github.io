@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 380" role="img" aria-labelledby="title desc">
+  <title id="title">Partitive hyperedge — optomechanical mouse (ISO 704:2022 §5.5.4.2.2 canonical example)</title>
+  <desc id="desc">The optomechanical mouse comprehensive concept at the top. Eight parts drop from a shared horizontal backline. Five parts are drawn with bold 3x-width lines (delimiting — mouse ball, x-axis roller, y-axis roller, infrared emitter, infrared sensor); two parts with normal solid lines (circuit board, mouse button — required but not delimiting); one part with a dashed line (mouse wheel — optional, not all optomechanical mice have one).</desc>
+  <style>
+    .box { fill: #f8f9fa; stroke: #343a40; stroke-width: 1.5; }
+    .label { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 12px; fill: #212529; }
+    .small { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 10px; fill: #6c757d; }
+    .name { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 10px; font-weight: 600; fill: #0c5460; }
+    .backline { stroke: #212529; stroke-width: 2; fill: none; }
+    .tooth-solid { stroke: #212529; stroke-width: 1.5; fill: none; }
+    .tooth-dashed { stroke: #212529; stroke-width: 1.5; stroke-dasharray: 4 3; fill: none; }
+    .tooth-delimit { stroke: #212529; stroke-width: 5; fill: none; }
+  </style>
+
+  <!-- Comprehensive concept -->
+  <rect x="380" y="20" width="200" height="42" rx="6" class="box"/>
+  <text x="480" y="40" text-anchor="middle" class="label" font-weight="600">optomechanical mouse</text>
+  <text x="480" y="55" text-anchor="middle" class="small">comprehensive · ISO 704:2022 §5.5.4.2.2</text>
+
+  <!-- Backline (complete) -->
+  <line x1="60" y1="100" x2="900" y2="100" class="backline"/>
+  <text x="30" y="104" class="small">complete</text>
+
+  <!-- ===== 5 delimiting parts (bold 3x) ===== -->
+  <!-- 1. mouse ball -->
+  <line x1="90" y1="100" x2="90" y2="210" class="tooth-delimit"/>
+  <rect x="40" y="230" width="100" height="40" rx="6" class="box"/>
+  <text x="90" y="248" text-anchor="middle" class="label">mouse ball</text>
+  <text x="90" y="262" text-anchor="middle" class="name">delimiting</text>
+
+  <!-- 2. x-axis roller -->
+  <line x1="190" y1="100" x2="190" y2="210" class="tooth-delimit"/>
+  <rect x="140" y="230" width="100" height="40" rx="6" class="box"/>
+  <text x="190" y="248" text-anchor="middle" class="label">x-axis roller</text>
+  <text x="190" y="262" text-anchor="middle" class="name">delimiting</text>
+
+  <!-- 3. y-axis roller -->
+  <line x1="290" y1="100" x2="290" y2="210" class="tooth-delimit"/>
+  <rect x="240" y="230" width="100" height="40" rx="6" class="box"/>
+  <text x="290" y="248" text-anchor="middle" class="label">y-axis roller</text>
+  <text x="290" y="262" text-anchor="middle" class="name">delimiting</text>
+
+  <!-- 4. infrared emitter -->
+  <line x1="390" y1="100" x2="390" y2="210" class="tooth-delimit"/>
+  <rect x="340" y="230" width="100" height="40" rx="6" class="box"/>
+  <text x="390" y="248" text-anchor="middle" class="label">infrared emitter</text>
+  <text x="390" y="262" text-anchor="middle" class="name">delimiting</text>
+
+  <!-- 5. infrared sensor -->
+  <line x1="490" y1="100" x2="490" y2="210" class="tooth-delimit"/>
+  <rect x="440" y="230" width="100" height="40" rx="6" class="box"/>
+  <text x="490" y="248" text-anchor="middle" class="label">infrared sensor</text>
+  <text x="490" y="262" text-anchor="middle" class="name">delimiting</text>
+
+  <!-- ===== 2 non-delimiting required parts (solid) ===== -->
+  <!-- 6. circuit board -->
+  <line x1="600" y1="100" x2="600" y2="210" class="tooth-solid"/>
+  <rect x="550" y="230" width="100" height="40" rx="6" class="box"/>
+  <text x="600" y="248" text-anchor="middle" class="label">circuit board</text>
+  <text x="600" y="262" text-anchor="middle" class="small">required</text>
+
+  <!-- 7. mouse button -->
+  <line x1="710" y1="100" x2="710" y2="210" class="tooth-solid"/>
+  <rect x="660" y="230" width="100" height="40" rx="6" class="box"/>
+  <text x="710" y="248" text-anchor="middle" class="label">mouse button</text>
+  <text x="710" y="262" text-anchor="middle" class="small">required</text>
+
+  <!-- ===== 1 optional part (dashed) ===== -->
+  <!-- 8. mouse wheel -->
+  <line x1="820" y1="100" x2="820" y2="210" class="tooth-dashed"/>
+  <rect x="770" y="230" width="100" height="40" rx="6" class="box"/>
+  <text x="820" y="248" text-anchor="middle" class="label">mouse wheel</text>
+  <text x="820" y="262" text-anchor="middle" class="small">optional</text>
+
+  <!-- Footer legend -->
+  <text x="480" y="320" text-anchor="middle" class="small">The 5 delimiting parts distinguish "optomechanical mouse" from coordinate concepts:</text>
+  <text x="480" y="336" text-anchor="middle" class="small">"mechanical mouse" (no infrared emitter/sensor) and "optical mouse" (no ball, no rollers).</text>
+  <text x="480" y="358" text-anchor="middle" class="small">Mouse button and wheel are not delimiting — all computer mice have buttons; wheels are optional.</text>
+</svg>

@@ -39,6 +39,28 @@ The OIML *measurement standard* (5.1) decomposes by **multiple criteria**. Each 
 
 Two hyperedges, same comprehensive, different criteria. Species within one rake are coordinate concepts (share genus + share criterion). Species across rakes are NOT coordinate — they belong to different decompositions.
 
+### The canonical ISO 704:2022 example — optomechanical mouse
+
+ISO 704:2022 §5.5.4.2.2 uses *optomechanical mouse* as its canonical worked example. The five delimiting parts distinguish it from coordinate concepts (*mechanical mouse*, *optical mouse*); the non-delimiting parts (circuit board, button) don't; the wheel is optional:
+
+![Optomechanical mouse — ISO 704:2022 canonical partitive example](/images/hyperedge-optomechanical-mouse.svg)
+
+### Fictitious example — bicycle (partitive)
+
+A *bicycle* decomposed by physical structure, exercising every MECE dimension:
+
+![Bicycle partitive hyperedge — fictitious example](/images/hyperedge-bicycle.svg)
+
+Bold lines = delimiting (frame, wheel, handlebar distinguish bicycle from unicycle/tricycle/scooter/motorcycle). Double solid lines = `count: multiple` (typically 2 wheels, 2 pedals, 2 brakes). Dashed = `presence: optional` (bell, light). Some optional parts combine both — `optional + multiple` (light: 0, 1, or 2+).
+
+### Fictitious example — vehicle (generic)
+
+A *vehicle* genus with **two distinct criterion groups** — by motive power and by terrain:
+
+![Vehicle generic hyperedge — fictitious example with two criterion groups](/images/hyperedge-vehicle.svg)
+
+Each rake is a distinct hyperedge (distinct file under `relations/example-vehicle/`). Species within one rake are coordinate (bicycle and car share "vehicle" + "by motive power"); species across rakes are not (bicycle and boat share the genus but not a criterion).
+
 ## How they work
 
 ### MECE member multiplicity

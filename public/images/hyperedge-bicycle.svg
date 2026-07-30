@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 400" role="img" aria-labelledby="title desc">
+  <title id="title">Partitive hyperedge — fictitious example: bicycle by physical structure</title>
+  <desc id="desc">A bicycle comprehensive concept at the top. Nine parts drop from a shared backline. Frame, wheel, and handlebar are delimiting (bold 3x-width lines) — they distinguish bicycles from unicycles, tricycles, and scooters. Pedal, chain, brake, and saddle are required but not delimiting (solid lines). Wheel and pedal have double solid lines indicating "multiple" (typically 2 each). Bell is optional (dashed) and light is optional and multiple (double dashed).</desc>
+  <style>
+    .box { fill: #f8f9fa; stroke: #343a40; stroke-width: 1.5; }
+    .label { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 12px; fill: #212529; }
+    .small { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 10px; fill: #6c757d; }
+    .name { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 10px; font-weight: 600; fill: #0c5460; }
+    .opt-name { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 10px; font-weight: 600; fill: #856404; }
+    .backline { stroke: #212529; stroke-width: 2; fill: none; }
+    .solid { stroke: #212529; stroke-width: 1.5; fill: none; }
+    .dashed { stroke: #212529; stroke-width: 1.5; stroke-dasharray: 4 3; fill: none; }
+    .delimit { stroke: #212529; stroke-width: 5; fill: none; }
+    .delimit-multi { stroke: #212529; stroke-width: 5; fill: none; }
+  </style>
+
+  <!-- Comprehensive -->
+  <rect x="420" y="20" width="120" height="42" rx="6" class="box"/>
+  <text x="480" y="40" text-anchor="middle" class="label" font-weight="600">bicycle</text>
+  <text x="480" y="55" text-anchor="middle" class="small">fictitious comprehensive</text>
+
+  <!-- Backline -->
+  <line x1="40" y1="100" x2="920" y2="100" class="backline"/>
+  <text x="20" y="104" class="small">complete</text>
+
+  <!-- ===== Delimiting parts (bold 3x) ===== -->
+  <!-- 1. frame: delimiting + required + exactly_one -->
+  <line x1="80" y1="100" x2="80" y2="210" class="delimit"/>
+  <rect x="35" y="230" width="90" height="40" rx="6" class="box"/>
+  <text x="80" y="248" text-anchor="middle" class="label">frame</text>
+  <text x="80" y="262" text-anchor="middle" class="name">delimiting</text>
+
+  <!-- 2. wheel: delimiting + required + multiple (typically 2) -->
+  <line x1="74" y1="100" x2="74" y2="210" class="delimit-multi"/>
+  <line x1="156" y1="100" x2="156" y2="210" class="delimit-multi"/>
+  <rect x="115" y="230" width="80" height="40" rx="6" class="box"/>
+  <text x="155" y="248" text-anchor="middle" class="label">wheel</text>
+  <text x="155" y="262" text-anchor="middle" class="name">delimiting ×2</text>
+
+  <!-- 3. handlebar: delimiting + required + exactly_one -->
+  <line x1="240" y1="100" x2="240" y2="210" class="delimit"/>
+  <rect x="195" y="230" width="90" height="40" rx="6" class="box"/>
+  <text x="240" y="248" text-anchor="middle" class="label">handlebar</text>
+  <text x="240" y="262" text-anchor="middle" class="name">delimiting</text>
+
+  <!-- ===== Required non-delimiting parts (solid) ===== -->
+  <!-- 4. pedal: required + multiple (2) -->
+  <line x1="314" y1="100" x2="314" y2="210" class="solid"/>
+  <line x1="326" y1="100" x2="326" y2="210" class="solid"/>
+  <rect x="290" y="230" width="60" height="40" rx="6" class="box"/>
+  <text x="320" y="248" text-anchor="middle" class="label">pedal</text>
+  <text x="320" y="262" text-anchor="middle" class="small">required ×2</text>
+
+  <!-- 5. chain: required + exactly_one -->
+  <line x1="400" y1="100" x2="400" y2="210" class="solid"/>
+  <rect x="365" y="230" width="70" height="40" rx="6" class="box"/>
+  <text x="400" y="248" text-anchor="middle" class="label">chain</text>
+  <text x="400" y="262" text-anchor="middle" class="small">required</text>
+
+  <!-- 6. brake: required + multiple (typically 2) -->
+  <line x1="474" y1="100" x2="474" y2="210" class="solid"/>
+  <line x1="486" y1="100" x2="486" y2="210" class="solid"/>
+  <rect x="450" y="230" width="60" height="40" rx="6" class="box"/>
+  <text x="480" y="248" text-anchor="middle" class="label">brake</text>
+  <text x="480" y="262" text-anchor="middle" class="small">required ×2</text>
+
+  <!-- 7. saddle: required + exactly_one -->
+  <line x1="560" y1="100" x2="560" y2="210" class="solid"/>
+  <rect x="520" y="230" width="80" height="40" rx="6" class="box"/>
+  <text x="560" y="248" text-anchor="middle" class="label">saddle</text>
+  <text x="560" y="262" text-anchor="middle" class="small">required</text>
+
+  <!-- ===== Optional parts (dashed) ===== -->
+  <!-- 8. bell: optional + exactly_one -->
+  <line x1="660" y1="100" x2="660" y2="210" class="dashed"/>
+  <rect x="625" y="230" width="70" height="40" rx="6" class="box"/>
+  <text x="660" y="248" text-anchor="middle" class="label">bell</text>
+  <text x="660" y="262" text-anchor="middle" class="opt-name">optional</text>
+
+  <!-- 9. light: optional + multiple (could be 0, 1, 2+) -->
+  <line x1="774" y1="100" x2="774" y2="210" class="dashed"/>
+  <line x1="786" y1="100" x2="786" y2="210" class="dashed"/>
+  <rect x="745" y="230" width="70" height="40" rx="6" class="box"/>
+  <text x="780" y="248" text-anchor="middle" class="label">light</text>
+  <text x="780" y="262" text-anchor="middle" class="opt-name">optional ×*</text>
+
+  <!-- ===== Comparison concept (out of rake, for context) ===== -->
+  <rect x="855" y="230" width="80" height="40" rx="6" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="895" y="248" text-anchor="middle" class="small">unicycle</text>
+  <text x="895" y="262" text-anchor="middle" class="small">(coordinate)</text>
+
+  <!-- Footer -->
+  <text x="480" y="320" text-anchor="middle" class="small">Criterion: physical structure. Delimiting parts distinguish "bicycle" from coordinate concepts:</text>
+  <text x="480" y="336" text-anchor="middle" class="small">unicycle (1 wheel), tricycle (3 wheels), scooter (no pedals, no chain), motorcycle (motor-driven).</text>
+  <text x="480" y="358" text-anchor="middle" class="small">Double lines indicate count=multiple (typically 2). Dashed lines indicate presence=optional.</text>
+  <text x="480" y="380" text-anchor="middle" class="small">Bold 3x-width = is_delimiting (behaves like a delimiting characteristic per ISO 704:2022 §5.5.4.2.1).</text>
+</svg>
