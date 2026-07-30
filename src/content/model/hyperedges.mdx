@@ -33,17 +33,25 @@ The VIM *measurement result* (2.9) decomposes into three parts. The diagram enco
 
 ### Generalization hyperedge example
 
-The OIML *measurement standard* (5.1) decomposes by **multiple criteria**. Each criterion is a distinct hyperedge on the same genus:
+The OIML *measurement standard* (5.1) decomposes by **multiple criteria**. Each criterion is a distinct hyperedge on the same genus, and each species carries its delimiting characteristic in a side rectangle per ISO 704:2022 §5.5.4.2.1:
 
-![Generalization hyperedge with two criterion groups](/images/hyperedge-generalization.svg)
+![Generalization hyperedge with two criterion groups and delimiting characteristics](/images/hyperedge-generalization.svg)
 
 Two hyperedges, same comprehensive, different criteria. Species within one rake are coordinate concepts (share genus + share criterion). Species across rakes are NOT coordinate — they belong to different decompositions.
 
-### The canonical ISO 704:2022 example — optomechanical mouse
+### The canonical ISO 704:2022 §5.5.4.2.1 example — computer mouse (generic)
 
-ISO 704:2022 §5.5.4.2.2 uses *optomechanical mouse* as its canonical worked example. The five delimiting parts distinguish it from coordinate concepts (*mechanical mouse*, *optical mouse*); the non-delimiting parts (circuit board, button) don't; the wheel is optional:
+ISO 704:2022 §5.5.4.2.1 uses *computer mouse* as its canonical worked example for **generic relations**. The same genus is decomposed by two distinct criteria of subdivision (multidimensionality, §5.6.3): by means of movement detection (mechanical / optomechanical / optical) and by computer connection (wired / wireless). Each species carries a delimiting characteristic:
 
-![Optomechanical mouse — ISO 704:2022 canonical partitive example](/images/hyperedge-optomechanical-mouse.svg)
+![Computer mouse — ISO 704:2022 §5.5.4.2.1 canonical generic example with multidimensionality](/images/hyperedge-computer-mouse.svg)
+
+The thicker blue and brown backlines distinguish the two criteria. The characteristic rectangles carry the intension-difference that makes each species distinct within its rake.
+
+### The canonical ISO 704:2022 §5.5.4.2.2 example — optomechanical mouse (partitive)
+
+Distinct from §5.5.4.2.1 above. The optomechanical mouse is also used as the canonical **partitive** example — its parts (mouse ball, rollers, infrared emitter/sensor, etc.) are modeled as a PartitiveHyperedge. The five delimiting parts distinguish it from coordinate concepts (*mechanical mouse*, *optical mouse*):
+
+![Optomechanical mouse — ISO 704:2022 §5.5.4.2.2 canonical partitive example](/images/hyperedge-optomechanical-mouse.svg)
 
 ### Fictitious example — bicycle (partitive)
 
@@ -165,12 +173,21 @@ AbstractHyperedge
   +notes:         LocalizedString [0..1]      # optional commentary
   +status:        ConceptStatus [0..1]        # lifecycle (independent of comprehensive)
 
-HyperedgeMember
+HyperedgeMember (abstract)
   +ref:           ConceptRef [1]
   +presence:      Presence [0..1]             # required (default) | optional
   +count:         Count [0..1]                # exactly_one (default) | at_least_one | multiple
-  +is_delimiting: Boolean [0..1]              # ISO 704 delimiting part
+  +is_delimiting: Boolean [0..1]              # ISO 704 delimiting part (partitive)
+
+GenericMember extends HyperedgeMember
+  +characteristic: LocalizedString [0..1]     # ISO 704:2022 §5.5.4.2.1 delimiting
+                                              # characteristic that distinguishes
+                                              # this species from coordinate concepts
 ```
+
+The `characteristic` field on `GenericMember` carries the **delimiting characteristic** (ISO 704:2022 §5.5.4.2.1) — the intension-difference that makes the species coordinate with its siblings within the rake. Without it, the rake is just a list of narrower concepts, not a coordinated decomposition.
+
+For partitive members, `is_delimiting` plays the analogous role (a boolean flag, no text — parts either delimit or they don't).
 
 `PartitiveHyperedge`, `GenericHyperedge`, `PartitiveMember`, `GenericMember` are thin leaf classes that inherit the shared shape. Adding a fourth n-ary type later (e.g. `SequentialHyperedge` for ISO 12620 sequential concept systems) is one class addition — no validator or schema refactor.
 
@@ -186,8 +203,14 @@ comprehensive:
   id: "5.1"
 members:
   - ref: { source: VIML, id: "5.13" }
+    characteristic:
+      eng: material sufficiently homogeneous and stable for a certified property
   - ref: { source: VIML, id: "3.2" }
+    characteristic:
+      eng: assembly of measuring instruments and auxiliary apparatus
   - ref: { source: VIML, id: "3.6" }
+    characteristic:
+      eng: device that reproduces a given quantity value during use
 completeness: complete
 criterion:
   eng: by realization medium
