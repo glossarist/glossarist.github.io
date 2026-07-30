@@ -1,0 +1,211 @@
+---
+title: Hyperedges
+description: "ISO 704:2022 n-ary concept relations — partitive (whole/part) and generalization (genus/species) hyperedges with MECE member multiplicity, criterion of subdivision, and per-file storage."
+---
+
+# Hyperedges
+
+A **hyperedge** is Glossarist's model for [ISO 704:2022](https://www.iso.org/standard/38109.html) §5.5.4 n-ary concept relations — the rake or bracket diagrams that appear in terminology source materials when one comprehensive concept is decomposed into multiple coordinate concepts.
+
+Glossarist supports two kinds:
+
+| Type | ISO 704 § | Comprehensive means | Members are |
+|------|----------|---------------------|-------------|
+| `PartitiveHyperedge` | §5.5.4.3 | the **whole** | **parts** that fitted together constitute the whole |
+| `GenericHyperedge` | §5.5.4.1 | the **genus** | **species** that share the genus |
+
+Both share the same wire shape, the same MECE member dimensions, and the same validators. They differ only in semantic interpretation of `comprehensive` and `members`.
+
+## How they look
+
+A hyperedge is drawn as a **rake**: a horizontal backline connects the comprehensive concept to multiple member concepts dropping down as teeth. ISO 704:2022 defines specific line notations for each tooth that encode per-member semantics.
+
+### Partitive hyperedge example
+
+The VIM *measurement result* (2.9) decomposes into three parts. The diagram encodes multiplicity per part:
+
+![Partitive hyperedge diagram](/images/hyperedge-partitive.svg)
+
+- **Solid line** = required (must exist in every instance)
+- **Dashed line** = optional (exists in some instances only)
+- **Bold 3x-width line** = delimiting (distinguishes the comprehensive from coordinate concepts)
+- **Joined backline** = complete decomposition (all parts encoded)
+
+### Generalization hyperedge example
+
+The OIML *measurement standard* (5.1) decomposes by **multiple criteria**. Each criterion is a distinct hyperedge on the same genus:
+
+![Generalization hyperedge with two criterion groups](/images/hyperedge-generalization.svg)
+
+Two hyperedges, same comprehensive, different criteria. Species within one rake are coordinate concepts (share genus + share criterion). Species across rakes are NOT coordinate — they belong to different decompositions.
+
+## How they work
+
+### MECE member multiplicity
+
+ISO 704:2022 encodes per-member multiplicity via diagram line notation. Glossarist decomposes this into two orthogonal dimensions (Mutually Exclusive, Collectively Exhaustive):
+
+- **Presence** (`required` | `optional`) — line style
+- **Count** (`exactly_one` | `at_least_one` | `multiple`) — line count
+
+A third orthogonal flag — **is_delimiting** (boolean) — encodes the bold 3x-width line.
+
+![MECE member multiplicity table](/images/hyperedge-mece-multiplicity.svg)
+
+Six combinations mathematically possible; five valid. The invalid one (`optional + at_least_one`) collapses to `optional + multiple` because an optional part has vacuous at-least-one. Both the JSON Schema and the Ruby/JS validators reject it with a clear error message.
+
+### Coordinate-concept coherence (ISO 12620)
+
+All members within one hyperedge are **coordinate concepts** — they share the comprehensive AND the criterion of subdivision. The coherence validator enforces:
+
+1. Each hyperedge has ≥2 members (ISO 704 "two or more")
+2. No duplicate `(comprehensive, criterion)` pairs — two hyperedges on the same comprehensive with the same criterion are duplicates (error)
+3. Warns when a comprehensive has 2+ hyperedges and any lack criterion — distinctness can't be verified
+
+### Criterion of subdivision
+
+The `criterion` field is what makes members coordinate rather than incidentally co-decomposed. OIML V 2-200:2010 *measurement standard* has 6 criterion groups (by realization medium, by calibration role, by governance level, by metrological hierarchy, by reference/working, by travel) — each is a distinct hyperedge, each carries its own criterion.
+
+Criterion is a localized string — it can carry text in multiple languages:
+
+```yaml
+criterion:
+  eng: by realization medium
+  fra: par milieu de réalisation
+  ara: بحسب وسط التحقيق
+```
+
+### Per-file storage
+
+Every hyperedge lives at:
+
+```
+relations/<comprehensive-id>/<criterion-slug>.yaml
+```
+
+The concept file no longer carries hyperedges inline. The directory IS the index — `relations/5-1/` enumerates every decomposition of concept 5.1.
+
+![Per-file storage layout](/images/hyperedge-per-file-storage.svg)
+
+Reasons for the move:
+
+- **i18n bloat** — a comprehensive with 6 hyperedges × 3 languages × (criterion + notes + sources' modification) is ~60+ localized strings piled into the concept file
+- **Editing conflicts** — terminologist restructuring a rake vs translator working on definition no longer collide
+- **Provenance** — every hyperedge carries its own `sources` and `status`, independent of the concept's lifecycle
+- **Multi-dataset addressability** — the comprehensive can be in another dataset (ExternalConcept); per-file storage avoids editing "inside" a concept you don't own
+
+Binary `related` edges stay bundled in concept files — different scale, different lifecycle, different argument.
+
+### ExternalConcept as comprehensive
+
+Some source diagrams use parenthetical/external concepts as the comprehensive — e.g. "(precision condition of measurement)" in OIML. Glossarist supports this natively:
+
+```yaml
+# concepts/ext-precision-condition.yaml
+id: ext-precision-condition
+status: external
+data:
+  identifier: ext-precision-condition
+  designations:
+    - designation: "(precision condition of measurement)"
+      type: expression
+related:
+  - type: provided_by
+    ref: { source: urn:other-dataset, id: "precision-condition" }
+```
+
+```yaml
+# relations/ext-precision-condition/by-condition-type.yaml
+$id: ext-precision-condition/by-condition-type
+type: generic_relation
+comprehensive:
+  source: EXAMPLE
+  id: ext-precision-condition
+members:
+  - ref: { source: VIML, id: "2.20" }
+  - ref: { source: VIML, id: "2.22" }
+  - ref: { source: VIML, id: "2.24" }
+completeness: complete
+criterion: { eng: by precision level }
+```
+
+The `check-external-as-comprehensive` validator warns when an ExternalConcept used as comprehensive has no `provided_by` edge — the decomposition dangles otherwise.
+
+## Model
+
+```
+AbstractHyperedge
+  +comprehensive: ConceptRef [1]              # whole (partitive) or genus (generic)
+  +members:       HyperedgeMember [2..*]      # parts or species
+  +completeness:  Completeness [0..1]         # complete (default) | partial
+  +criterion:     LocalizedString [0..1]      # ISO 12620 subdivision principle
+  +sources:       ConceptSource [0..*]        # per-relation provenance
+  +notes:         LocalizedString [0..1]      # optional commentary
+  +status:        ConceptStatus [0..1]        # lifecycle (independent of comprehensive)
+
+HyperedgeMember
+  +ref:           ConceptRef [1]
+  +presence:      Presence [0..1]             # required (default) | optional
+  +count:         Count [0..1]                # exactly_one (default) | at_least_one | multiple
+  +is_delimiting: Boolean [0..1]              # ISO 704 delimiting part
+```
+
+`PartitiveHyperedge`, `GenericHyperedge`, `PartitiveMember`, `GenericMember` are thin leaf classes that inherit the shared shape. Adding a fourth n-ary type later (e.g. `SequentialHyperedge` for ISO 12620 sequential concept systems) is one class addition — no validator or schema refactor.
+
+## Wire format
+
+```yaml
+# relations/viml-5-1/by-realization-medium.yaml
+$id: viml-5-1/by-realization-medium
+type: generic_relation
+status: valid
+comprehensive:
+  source: VIML
+  id: "5.1"
+members:
+  - ref: { source: VIML, id: "5.13" }
+  - ref: { source: VIML, id: "3.2" }
+  - ref: { source: VIML, id: "3.6" }
+completeness: complete
+criterion:
+  eng: by realization medium
+  fra: par milieu de réalisation
+sources:
+  - type: authoritative
+    origin:
+      ref: { source: OIML, id: "V 2-200:2010" }
+      locality: { type: figure, reference_from: "5.1/Fig.1" }
+```
+
+The `type` field discriminates between `partitive_relation` and `generic_relation` on the wire. (The wire name retains `_relation` for backward-compatibility with the existing JSON Schema identifier; the in-code class name is `PartitiveHyperedge` / `GenericHyperedge`.)
+
+## When to use a hyperedge vs. a binary edge
+
+| Shape | Use when … |
+|-------|-----------|
+| Binary `has_part` / `is_part_of` | Pairwise part-of assertion with no multiplicity or completeness metadata |
+| Binary `broader_generic` / `narrower_generic` | Pairwise genus-species assertion |
+| `PartitiveHyperedge` | One-to-many part-of rake with multiplicity, delimiting parts, completeness, or subdivision criterion |
+| `GenericHyperedge` | One-to-many genus-species rake with criterion groups (e.g. OIML 5.1 has 6) |
+
+ISO 704 requires **two or more** members per hyperedge. A single pairwise assertion should always be a binary edge, not a hyperedge.
+
+## Validators
+
+Four Ruby validators enforce ISO 704 / ISO 12620 invariants:
+
+- `check-partitive-relation-coherence` — cardinality, duplicate criterion, MECE combo, delimiting+optional incoherence (partitive)
+- `check-generic-relation-coherence` — same checks (generic)
+- `check-relation-file-shape` — `$id` matches file path; no bundled arrays in concept files
+- `check-external-as-comprehensive` — ExternalConcept used as comprehensive must have `provided_by` edge
+
+Shared logic lives in `NaryCoherence` — single source of truth across both hyperedge types.
+
+## See also
+
+- [Concepts](/model/concepts) — ManagedConcept, LocalizedConcept, ExternalConcept
+- [Relationships](/model/relationships) — binary typed edges
+- [ISO 704:2022](https://www.iso.org/standard/38109.html) — Terminology work — Principles and methods
+- [ISO 12620](https://www.iso.org/standard/56034.html) — Terminology and other content resources
+- [Relations-as-files design](https://github.com/glossarist/concept-model/blob/main/docs/design/relations-as-files.md)
+- [Abstract n-ary relation design](https://github.com/glossarist/concept-model/blob/main/docs/design/abstract-nary-relation.md)
