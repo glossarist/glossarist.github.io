@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 360" role="img" aria-labelledby="title desc">
+  <title id="title">MECE member multiplicity — ISO 704:2022 line notation</title>
+  <desc id="desc">Five small rake fragments side-by-side, each demonstrating one of the five valid MECE combinations of presence × count, with the corresponding ISO 704 diagram line notation drawn between the comprehensive stub and the member stub.</desc>
+  <style>
+    .box { fill: #f8f9fa; stroke: #343a40; stroke-width: 1; }
+    .label { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 11px; fill: #212529; }
+    .small { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 10px; fill: #6c757d; }
+    .name { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 10px; font-weight: 600; fill: #0c5460; }
+    .backline { stroke: #212529; stroke-width: 1.5; fill: none; }
+    .solid { stroke: #212529; stroke-width: 1.5; fill: none; }
+    .dashed { stroke: #212529; stroke-width: 1.5; stroke-dasharray: 4 3; fill: none; }
+    .bold { stroke: #212529; stroke-width: 5; fill: none; }
+    .invalid { stroke: #c82333; stroke-width: 1.5; stroke-dasharray: 4 3; fill: none; }
+  </style>
+
+  <!-- Header -->
+  <text x="360" y="25" text-anchor="middle" class="label" font-weight="600">ISO 704:2022 member multiplicity — 5 valid combinations</text>
+
+  <!-- ============ 1. compulsory (required + exactly_one) ============ -->
+  <g transform="translate(20, 50)">
+    <rect x="20" y="0" width="80" height="22" rx="3" class="box"/>
+    <text x="60" y="15" text-anchor="middle" class="label">comprehensive</text>
+    <line x1="60" y1="22" x2="60" y2="80" class="solid"/>
+    <rect x="20" y="80" width="80" height="22" rx="3" class="box"/>
+    <text x="60" y="95" text-anchor="middle" class="label">part</text>
+    <text x="60" y="125" text-anchor="middle" class="name">compulsory</text>
+    <text x="60" y="140" text-anchor="middle" class="small">required + exactly_one</text>
+    <text x="60" y="155" text-anchor="middle" class="small">1 solid line</text>
+  </g>
+
+  <!-- ============ 2. optional (optional + exactly_one) ============ -->
+  <g transform="translate(150, 50)">
+    <rect x="20" y="0" width="80" height="22" rx="3" class="box"/>
+    <text x="60" y="15" text-anchor="middle" class="label">comprehensive</text>
+    <line x1="60" y1="22" x2="60" y2="80" class="dashed"/>
+    <rect x="20" y="80" width="80" height="22" rx="3" class="box"/>
+    <text x="60" y="95" text-anchor="middle" class="label">part</text>
+    <text x="60" y="125" text-anchor="middle" class="name">optional</text>
+    <text x="60" y="140" text-anchor="middle" class="small">optional + exactly_one</text>
+    <text x="60" y="155" text-anchor="middle" class="small">1 dashed line</text>
+  </g>
+
+  <!-- ============ 3. compulsory_multiple (required + multiple) ============ -->
+  <g transform="translate(280, 50)">
+    <rect x="20" y="0" width="80" height="22" rx="3" class="box"/>
+    <text x="60" y="15" text-anchor="middle" class="label">comprehensive</text>
+    <line x1="56" y1="22" x2="56" y2="80" class="solid"/>
+    <line x1="64" y1="22" x2="64" y2="80" class="solid"/>
+    <rect x="20" y="80" width="80" height="22" rx="3" class="box"/>
+    <text x="60" y="95" text-anchor="middle" class="label">parts</text>
+    <text x="60" y="125" text-anchor="middle" class="name">compulsory multiple</text>
+    <text x="60" y="140" text-anchor="middle" class="small">required + multiple</text>
+    <text x="60" y="155" text-anchor="middle" class="small">2 solid lines</text>
+  </g>
+
+  <!-- ============ 4. optional_multiple (optional + multiple) ============ -->
+  <g transform="translate(410, 50)">
+    <rect x="20" y="0" width="80" height="22" rx="3" class="box"/>
+    <text x="60" y="15" text-anchor="middle" class="label">comprehensive</text>
+    <line x1="56" y1="22" x2="56" y2="80" class="dashed"/>
+    <line x1="64" y1="22" x2="64" y2="80" class="dashed"/>
+    <rect x="20" y="80" width="80" height="22" rx="3" class="box"/>
+    <text x="60" y="95" text-anchor="middle" class="label">parts</text>
+    <text x="60" y="125" text-anchor="middle" class="name">optional multiple</text>
+    <text x="60" y="140" text-anchor="middle" class="small">optional + multiple</text>
+    <text x="60" y="155" text-anchor="middle" class="small">2 dashed lines</text>
+  </g>
+
+  <!-- ============ 5. compulsory_at_least_one (required + at_least_one) ============ -->
+  <g transform="translate(540, 50)">
+    <rect x="20" y="0" width="80" height="22" rx="3" class="box"/>
+    <text x="60" y="15" text-anchor="middle" class="label">comprehensive</text>
+    <line x1="56" y1="22" x2="56" y2="80" class="solid"/>
+    <line x1="64" y1="22" x2="64" y2="80" class="dashed"/>
+    <rect x="20" y="80" width="80" height="22" rx="3" class="box"/>
+    <text x="60" y="95" text-anchor="middle" class="label">part(s)</text>
+    <text x="60" y="125" text-anchor="middle" class="name">at-least-one</text>
+    <text x="60" y="140" text-anchor="middle" class="small">required + at_least_one</text>
+    <text x="60" y="155" text-anchor="middle" class="small">1 solid + 1 dashed</text>
+  </g>
+
+  <!-- ============ INVALID: optional + at_least_one ============ -->
+  <g transform="translate(280, 210)">
+    <rect x="20" y="0" width="80" height="22" rx="3" class="box" stroke="#c82333"/>
+    <text x="60" y="15" text-anchor="middle" class="label">comprehensive</text>
+    <line x1="56" y1="22" x2="56" y2="80" class="invalid"/>
+    <line x1="64" y1="22" x2="64" y2="80" class="invalid"/>
+    <rect x="20" y="80" width="80" height="22" rx="3" class="box" stroke="#c82333"/>
+    <text x="60" y="95" text-anchor="middle" class="label">part(s)</text>
+    <text x="60" y="125" text-anchor="middle" class="name" fill="#c82333">INVALID</text>
+    <text x="60" y="140" text-anchor="middle" class="small">optional + at_least_one</text>
+    <text x="60" y="155" text-anchor="middle" class="small">collapses to optional_multiple</text>
+  </g>
+
+  <!-- Footer -->
+  <text x="360" y="210" text-anchor="middle" class="small">— invalid combination (reject with clear error) —</text>
+  <text x="360" y="340" text-anchor="middle" class="small">Per ISO 704:2022 §5.5.4. An optional part has vacuous at-least-one (it may not exist at all),</text>
+  <text x="360" y="354" text-anchor="middle" class="small">so the combo collapses to (optional, multiple). The Ruby validator and JSON Schema both reject it.</text>
+</svg>

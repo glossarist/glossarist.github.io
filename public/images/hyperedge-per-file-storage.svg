@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 460" role="img" aria-labelledby="title desc">
+  <title id="title">Per-file storage layout for n-ary hyperedges</title>
+  <desc id="desc">Two side-by-side directory trees: concepts/ containing 5-1.yaml and ext-precision-condition.yaml, and relations/ containing subdirectories 5-1/ (six YAML files distinguished by criterion slug) and ext-precision-condition/ (one YAML file). Arrows show how a concept file references a comprehensive, and how each relation file points back to its comprehensive via a ConceptRef.</desc>
+  <style>
+    .dir { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; fill: #0c5460; font-weight: 600; }
+    .file { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; fill: #212529; }
+    .ext-file { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; fill: #cc8800; }
+    .note { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 10px; fill: #6c757d; }
+    .arrow { stroke: #495057; stroke-width: 1.2; fill: none; marker-end: url(#arr); }
+  </style>
+
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#495057"/>
+    </marker>
+  </defs>
+
+  <!-- LEFT: concepts/ -->
+  <text x="40" y="30" class="dir">concepts/</text>
+  <text x="40" y="55" class="file">├── 5-1.yaml</text>
+  <text x="180" y="55" class="note">concept (genus)</text>
+  <text x="40" y="75" class="file">│   └── definition, designations, status</text>
+
+  <text x="40" y="105" class="ext-file">├── ext-precision-condition.yaml</text>
+  <text x="280" y="105" class="note">ExternalConcept</text>
+  <text x="40" y="125" class="ext-file">│   └── status: external</text>
+  <text x="40" y="140" class="ext-file">│   └── related: [{ type: provided_by, … }]</text>
+
+  <text x="40" y="165" class="file">└── ...</text>
+
+  <!-- RIGHT: relations/ -->
+  <text x="370" y="30" class="dir">relations/</text>
+  <text x="370" y="55" class="dir">└── 5-1/</text>
+  <text x="370" y="75" class="file">    ├── by-realization-medium.yaml</text>
+  <text x="370" y="93" class="file">    ├── by-governance-level.yaml</text>
+  <text x="370" y="111" class="file">    ├── by-metrological-hierarchy.yaml</text>
+  <text x="370" y="129" class="file">    ├── by-reference-or-working.yaml</text>
+  <text x="370" y="147" class="file">    ├── by-calibration-role.yaml</text>
+  <text x="370" y="165" class="file">    └── by-travel.yaml</text>
+
+  <text x="370" y="200" class="dir">└── ext-precision-condition/</text>
+  <text x="370" y="220" class="ext-file">    └── by-condition-type.yaml</text>
+  <text x="370" y="238" class="note">(comprehensive is ExternalConcept)</text>
+
+  <!-- ARROWS: concept → relations dir -->
+  <path d="M 160 60 Q 260 50 360 70" class="arrow"/>
+  <text x="240" y="48" text-anchor="middle" class="note">references via ConceptRef</text>
+
+  <path d="M 280 105 Q 320 150 365 195" class="arrow"/>
+
+  <!-- FILE CONTENT PREVIEW -->
+  <rect x="40" y="280" width="560" height="160" rx="4" fill="#f8f9fa" stroke="#dee2e6"/>
+  <text x="60" y="302" class="dir" fill="#6c757d"># relations/5-1/by-realization-medium.yaml</text>
+  <text x="60" y="322" class="file">$id: 5-1/by-realization-medium</text>
+  <text x="60" y="340" class="file">type: generic_relation</text>
+  <text x="60" y="358" class="file">comprehensive: { source: VIML, id: "5.1" }</text>
+  <text x="60" y="376" class="file">members:</text>
+  <text x="60" y="392" class="file">  - ref: { source: VIML, id: "5.13" }</text>
+  <text x="60" y="408" class="file">  - ref: { source: VIML, id: "3.2"  }</text>
+  <text x="60" y="424" class="file">  - ref: { source: VIML, id: "3.6"  }</text>
+  <text x="350" y="322" class="file">completeness: complete</text>
+  <text x="350" y="340" class="file">criterion:</text>
+  <text x="350" y="356" class="file">  eng: by realization medium</text>
+  <text x="350" y="372" class="file">  fra: par milieu de réalisation</text>
+  <text x="350" y="392" class="ext-file">status: valid  # independent of concept</text>
+</svg>

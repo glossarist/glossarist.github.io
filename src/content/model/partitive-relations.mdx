@@ -3,6 +3,12 @@ title: Partitive Relations
 description: "ISO 704:2022 partitive relations — one-to-many decompositions with MECE presence/count, delimiting parts, completeness, and subdivision criterion"
 ---
 
+> **See also:** [Hyperedges](/model/hyperedges) — the unified model page covering
+> both partitive and generalization hyperedges with SVG diagrams, per-file storage
+> layout, and ExternalConcept-as-comprehensive. This page is the historical
+> reference for `PartitiveHyperedge` (originally named `PartitiveRelation`); the
+> implementation class is now `Glossarist::V3::PartitiveHyperedge`.
+
 # Partitive Relations
 
 A **`PartitiveRelation`** implements [ISO 704:2022](https://www.iso.org/standard/38109.html) §5.5.4 partitive relations: one comprehensive concept (the whole) is related to two or more partitive concepts (the parts) which fitted together constitute the comprehensive. It captures invariants that binary [`has_part`](/model/relationships#hierarchical-relationships) / `is_part_of` edges cannot:

@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 360" role="img" aria-labelledby="title desc">
+  <title id="title">Partitive hyperedge — measurement result decomposed into its parts</title>
+  <desc id="desc">A comprehensive concept "measurement result" at the top, with three parts dropping from a shared horizontal backline: measured quantity value (one solid line, compulsory), measurement uncertainty (one solid line, compulsory, delimiting), and measurement procedure (one dashed line, optional). The delimiting part is rendered with a 3x-width bold line per ISO 704:2022.</desc>
+  <style>
+    .box { fill: #f8f9fa; stroke: #343a40; stroke-width: 1.5; }
+    .label { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 13px; fill: #212529; }
+    .small { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 10px; fill: #6c757d; }
+    .backline { stroke: #212529; stroke-width: 2; fill: none; }
+    .tooth-solid { stroke: #212529; stroke-width: 1.5; fill: none; }
+    .tooth-dashed { stroke: #212529; stroke-width: 1.5; stroke-dasharray: 4 3; fill: none; }
+    .tooth-delimit { stroke: #212529; stroke-width: 5; fill: none; }
+  </style>
+
+  <!-- Comprehensive concept -->
+  <rect x="270" y="20" width="180" height="42" rx="6" class="box"/>
+  <text x="360" y="40" text-anchor="middle" class="label" font-weight="600">measurement result</text>
+  <text x="360" y="55" text-anchor="middle" class="small">comprehensive · VIM 2.9</text>
+
+  <!-- Backline (close-set = complete) -->
+  <line x1="120" y1="100" x2="600" y2="100" class="backline"/>
+  <text x="60" y="104" class="small">complete</text>
+
+  <!-- Drop lines (the rake teeth) -->
+  <!-- Tooth 1: solid (compulsory, exactly_one) -->
+  <line x1="180" y1="100" x2="180" y2="200" class="tooth-solid"/>
+  <text x="190" y="160" class="small">compulsory</text>
+
+  <!-- Tooth 2: bold 3x (delimiting, compulsory, exactly_one) -->
+  <line x1="360" y1="100" x2="360" y2="200" class="tooth-delimit"/>
+  <text x="372" y="160" class="small" font-weight="600">delimiting</text>
+
+  <!-- Tooth 3: dashed (optional, exactly_one) -->
+  <line x1="540" y1="100" x2="540" y2="200" class="tooth-dashed"/>
+  <text x="490" y="160" class="small">optional</text>
+
+  <!-- Partitive concept boxes -->
+  <rect x="100" y="220" width="160" height="40" rx="6" class="box"/>
+  <text x="180" y="238" text-anchor="middle" class="label">measured quantity value</text>
+  <text x="180" y="252" text-anchor="middle" class="small">VIM 2.10</text>
+
+  <rect x="280" y="220" width="160" height="40" rx="6" class="box"/>
+  <text x="360" y="238" text-anchor="middle" class="label">measurement uncertainty</text>
+  <text x="360" y="252" text-anchor="middle" class="small">VIM 2.26</text>
+
+  <rect x="460" y="220" width="160" height="40" rx="6" class="box"/>
+  <text x="540" y="238" text-anchor="middle" class="label">measurement procedure</text>
+  <text x="540" y="252" text-anchor="middle" class="small">VIM 2.6</text>
+
+  <!-- Footer legend -->
+  <text x="360" y="310" text-anchor="middle" class="small">ISO 704:2022 §5.5.4.3 — line notation: solid = required, dashed = optional, bold 3x = delimiting</text>
+  <text x="360" y="326" text-anchor="middle" class="small">All teeth share the comprehensive AND the criterion of subdivision (coordinate concepts, ISO 12620)</text>
+</svg>

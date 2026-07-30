@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 460" role="img" aria-labelledby="title desc">
+  <title id="title">Generalization hyperedge — measurement standard with two distinct decompositions</title>
+  <desc id="desc">A comprehensive concept "measurement standard" at the top. Two separate rakes drop from it, each labeled with its criterion of subdivision: "by realization medium" with three species (reference material, measuring system, material measure), and "by governance level" with two species (international, national). The two rakes share the same comprehensive but are distinct decompositions distinguished by criterion.</desc>
+  <style>
+    .box { fill: #f8f9fa; stroke: #343a40; stroke-width: 1.5; }
+    .box-ext { fill: #fff5e6; stroke: #cc8800; stroke-width: 1.5; stroke-dasharray: 4 3; }
+    .label { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 13px; fill: #212529; }
+    .small { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 10px; fill: #6c757d; }
+    .crit { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 11px; fill: #0c5460; font-style: italic; }
+    .backline { stroke: #212529; stroke-width: 2; fill: none; }
+    .tooth-solid { stroke: #212529; stroke-width: 1.5; fill: none; }
+  </style>
+
+  <!-- Genus concept (shared comprehensive) -->
+  <rect x="290" y="20" width="180" height="42" rx="6" class="box"/>
+  <text x="380" y="40" text-anchor="middle" class="label" font-weight="600">measurement standard</text>
+  <text x="380" y="55" text-anchor="middle" class="small">genus · VIML 5.1</text>
+
+  <!-- ============ Criterion group 1: by realization medium ============ -->
+  <text x="120" y="100" class="crit" font-weight="600">criterion: by realization medium</text>
+
+  <!-- Backline for group 1 -->
+  <line x1="60" y1="120" x2="240" y2="120" class="backline"/>
+
+  <!-- Drop lines (3 solid teeth = compulsory, exactly_one each) -->
+  <line x1="80" y1="120" x2="80" y2="200" class="tooth-solid"/>
+  <line x1="150" y1="120" x2="150" y2="200" class="tooth-solid"/>
+  <line x1="220" y1="120" x2="220" y2="200" class="tooth-solid"/>
+
+  <!-- Species boxes -->
+  <rect x="30" y="220" width="100" height="40" rx="6" class="box"/>
+  <text x="80" y="238" text-anchor="middle" class="label">reference</text>
+  <text x="80" y="252" text-anchor="middle" class="label">material</text>
+
+  <rect x="105" y="220" width="90" height="40" rx="6" class="box"/>
+  <text x="150" y="238" text-anchor="middle" class="label">measuring</text>
+  <text x="150" y="252" text-anchor="middle" class="label">system</text>
+
+  <rect x="180" y="220" width="80" height="40" rx="6" class="box"/>
+  <text x="220" y="238" text-anchor="middle" class="label">material</text>
+  <text x="220" y="252" text-anchor="middle" class="label">measure</text>
+
+  <!-- ============ Criterion group 2: by governance level ============ -->
+  <text x="490" y="100" class="crit" font-weight="600">criterion: by governance level</text>
+
+  <!-- Backline for group 2 -->
+  <line x1="440" y1="120" x2="700" y2="120" class="backline"/>
+
+  <!-- Drop lines (2 solid teeth) -->
+  <line x1="500" y1="120" x2="500" y2="200" class="tooth-solid"/>
+  <line x1="640" y1="120" x2="640" y2="200" class="tooth-solid"/>
+
+  <!-- Species boxes -->
+  <rect x="440" y="220" width="120" height="40" rx="6" class="box"/>
+  <text x="500" y="238" text-anchor="middle" class="label">international</text>
+  <text x="500" y="252" text-anchor="middle" class="label">standard</text>
+
+  <rect x="580" y="220" width="120" height="40" rx="6" class="box"/>
+  <text x="640" y="238" text-anchor="middle" class="label">national</text>
+  <text x="640" y="252" text-anchor="middle" class="label">standard</text>
+
+  <!-- ============ Separator ============ -->
+  <line x1="380" y1="85" x2="380" y2="280" stroke="#adb5bd" stroke-width="1" stroke-dasharray="2 4"/>
+
+  <!-- Footer legend -->
+  <text x="380" y="380" text-anchor="middle" class="small">ISO 704:2022 §5.5.4.1 — same genus, two distinct decompositions</text>
+  <text x="380" y="396" text-anchor="middle" class="small">Species within one rake are coordinate concepts (share genus + share criterion)</text>
+  <text x="380" y="418" text-anchor="middle" class="small">OIML V 2-200:2010 has 6 such groups on this single comprehensive</text>
+</svg>
