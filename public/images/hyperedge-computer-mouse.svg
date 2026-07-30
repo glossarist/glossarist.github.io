@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 540" role="img" aria-labelledby="title desc">
+  <title id="title">Generic hyperedge — computer mouse (ISO 704:2022 §5.5.4.2.1 canonical example with multidimensionality)</title>
+  <desc id="desc">A "computer mouse" genus concept at the top. Two separate rakes drop from it, each labeled with its criterion of subdivision. By means of movement detection: mechanical mouse, optomechanical mouse, optical mouse — each with a delimiting characteristic in a side rectangle. By computer connection: wired mouse, wireless mouse — each with its delimiting characteristic. Thicker backlines distinguish the two criteria of subdivision (multidimensionality per ISO 704:2022 §5.6.3).</desc>
+  <style>
+    .box { fill: #f8f9fa; stroke: #343a40; stroke-width: 1.5; }
+    .genus-box { fill: #e7f1fa; stroke: #0c5460; stroke-width: 2; }
+    .label { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 12px; fill: #212529; }
+    .small { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 10px; fill: #6c757d; }
+    .crit { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 11px; fill: #0c5460; font-style: italic; font-weight: 600; }
+    .char-label { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 9px; fill: #6c757d; font-style: italic; }
+    .char-text { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 10px; fill: #212529; }
+    .backline-1 { stroke: #0c5460; stroke-width: 2.5; fill: none; }
+    .backline-2 { stroke: #8b4513; stroke-width: 2.5; fill: none; }
+    .tooth-1 { stroke: #0c5460; stroke-width: 1.5; fill: none; }
+    .tooth-2 { stroke: #8b4513; stroke-width: 1.5; fill: none; }
+    .char-connector { stroke: #adb5bd; stroke-width: 1; stroke-dasharray: 2 2; fill: none; }
+  </style>
+
+  <!-- Genus -->
+  <rect x="380" y="20" width="160" height="42" rx="6" class="genus-box"/>
+  <text x="460" y="40" text-anchor="middle" class="label" font-weight="600" fill="#0c5460">computer mouse</text>
+  <text x="460" y="55" text-anchor="middle" class="small">genus · ISO 704:2022 §5.5.4.2.1</text>
+
+  <!-- ============ Criterion 1: means of movement detection (thicker blue backline) ============ -->
+  <text x="170" y="100" text-anchor="middle" class="crit" fill="#0c5460">criterion 1: means of movement detection</text>
+  <line x1="40" y1="120" x2="320" y2="120" class="backline-1"/>
+  <line x1="40" y1="124" x2="320" y2="124" class="backline-1"/>
+
+  <!-- Drop lines -->
+  <line x1="80" y1="124" x2="80" y2="220" class="tooth-1"/>
+  <line x1="180" y1="124" x2="180" y2="220" class="tooth-1"/>
+  <line x1="280" y1="124" x2="280" y2="220" class="tooth-1"/>
+
+  <!-- Species boxes -->
+  <rect x="30" y="240" width="100" height="40" rx="6" class="box"/>
+  <text x="80" y="258" text-anchor="middle" class="label">mechanical</text>
+  <text x="80" y="272" text-anchor="middle" class="label">mouse</text>
+
+  <rect x="130" y="240" width="100" height="40" rx="6" class="box"/>
+  <text x="180" y="258" text-anchor="middle" class="label">optomechanical</text>
+  <text x="180" y="272" text-anchor="middle" class="label">mouse</text>
+
+  <rect x="230" y="240" width="100" height="40" rx="6" class="box"/>
+  <text x="280" y="258" text-anchor="middle" class="label">optical</text>
+  <text x="280" y="272" text-anchor="middle" class="label">mouse</text>
+
+  <!-- Ellipsis indicating more species not shown -->
+  <text x="335" y="262" class="small">...</text>
+
+  <!-- Characteristic side-rectangles for criterion 1 -->
+  <line x1="80" y1="280" x2="80" y2="305" class="char-connector"/>
+  <rect x="20" y="305" width="120" height="50" rx="3" fill="#fff" stroke="#adb5bd" stroke-width="1"/>
+  <text x="80" y="320" text-anchor="middle" class="char-label">delimiting characteristic</text>
+  <text x="80" y="335" text-anchor="middle" class="char-text">"detecting movement</text>
+  <text x="80" y="349" text-anchor="middle" class="char-text">by means of rollers"</text>
+
+  <line x1="180" y1="280" x2="180" y2="305" class="char-connector"/>
+  <rect x="120" y="305" width="120" height="50" rx="3" fill="#fff" stroke="#adb5bd" stroke-width="1"/>
+  <text x="180" y="320" text-anchor="middle" class="char-label">delimiting characteristic</text>
+  <text x="180" y="335" text-anchor="middle" class="char-text">"detecting movement</text>
+  <text x="180" y="349" text-anchor="middle" class="char-text">by rollers + light sensors"</text>
+
+  <line x1="280" y1="280" x2="280" y2="305" class="char-connector"/>
+  <rect x="220" y="305" width="120" height="50" rx="3" fill="#fff" stroke="#adb5bd" stroke-width="1"/>
+  <text x="280" y="320" text-anchor="middle" class="char-label">delimiting characteristic</text>
+  <text x="280" y="335" text-anchor="middle" class="char-text">"detecting movement</text>
+  <text x="280" y="349" text-anchor="middle" class="char-text">by means of light sensors"</text>
+
+  <!-- ============ Criterion 2: computer connection (thicker brown backline) ============ -->
+  <text x="690" y="100" text-anchor="middle" class="crit" fill="#8b4513">criterion 2: computer connection</text>
+  <line x1="560" y1="120" x2="880" y2="120" class="backline-2"/>
+  <line x1="560" y1="124" x2="880" y2="124" class="backline-2"/>
+
+  <!-- Drop lines -->
+  <line x1="630" y1="124" x2="630" y2="220" class="tooth-2"/>
+  <line x1="810" y1="124" x2="810" y2="220" class="tooth-2"/>
+
+  <!-- Species boxes -->
+  <rect x="580" y="240" width="100" height="40" rx="6" class="box"/>
+  <text x="630" y="258" text-anchor="middle" class="label">wired</text>
+  <text x="630" y="272" text-anchor="middle" class="label">mouse</text>
+
+  <rect x="760" y="240" width="100" height="40" rx="6" class="box"/>
+  <text x="810" y="258" text-anchor="middle" class="label">wireless</text>
+  <text x="810" y="272" text-anchor="middle" class="label">mouse</text>
+
+  <text x="893" y="262" class="small">...</text>
+
+  <!-- Characteristic side-rectangles for criterion 2 -->
+  <line x1="630" y1="280" x2="630" y2="305" class="char-connector"/>
+  <rect x="570" y="305" width="120" height="50" rx="3" fill="#fff" stroke="#adb5bd" stroke-width="1"/>
+  <text x="630" y="320" text-anchor="middle" class="char-label">delimiting characteristic</text>
+  <text x="630" y="335" text-anchor="middle" class="char-text">"using a corded</text>
+  <text x="630" y="349" text-anchor="middle" class="char-text">electrical connection"</text>
+
+  <line x1="810" y1="280" x2="810" y2="305" class="char-connector"/>
+  <rect x="750" y="305" width="120" height="50" rx="3" fill="#fff" stroke="#adb5bd" stroke-width="1"/>
+  <text x="810" y="320" text-anchor="middle" class="char-label">delimiting characteristic</text>
+  <text x="810" y="335" text-anchor="middle" class="char-text">"using a cordless</text>
+  <text x="810" y="349" text-anchor="middle" class="char-text">light or sound connection"</text>
+
+  <!-- ============ Separator between criteria ============ -->
+  <line x1="460" y1="85" x2="460" y2="380" stroke="#adb5bd" stroke-width="1" stroke-dasharray="2 4"/>
+
+  <!-- ============ Footnotes ============ -->
+  <text x="460" y="400" text-anchor="middle" class="small">Multidimensionality (ISO 704:2022 §5.6.3): one genus, multiple criteria of subdivision → multiple rakes.</text>
+  <text x="460" y="416" text-anchor="middle" class="small">Each species carries a delimiting characteristic that distinguishes it from coordinate concepts.</text>
+  <text x="460" y="432" text-anchor="middle" class="small">Thicker backlines distinguish the two criteria. Species within one rake are coordinate; across rakes they are not.</text>
+
+  <!-- Wire-format preview -->
+  <rect x="40" y="450" width="840" height="80" rx="4" fill="#f8f9fa" stroke="#dee2e6"/>
+  <text x="55" y="468" class="small" font-family="ui-monospace, monospace" fill="#0c5460"># relations/example-computer-mouse/by-means-of-movement-detection.yaml</text>
+  <text x="55" y="482" class="small" font-family="ui-monospace, monospace">$id: example-computer-mouse/by-means-of-movement-detection</text>
+  <text x="55" y="496" class="small" font-family="ui-monospace, monospace">type: generic_relation</text>
+  <text x="55" y="510" class="small" font-family="ui-monospace, monospace">comprehensive: { source: EXAMPLE, id: "computer-mouse" }</text>
+  <text x="55" y="524" class="small" font-family="ui-monospace, monospace">criterion: { eng: means of movement detection }</text>
+
+  <text x="455" y="468" class="small" font-family="ui-monospace, monospace">members:</text>
+  <text x="455" y="482" class="small" font-family="ui-monospace, monospace">  - ref: { source: EXAMPLE, id: "mechanical-mouse" }</text>
+  <text x="455" y="496" class="small" font-family="ui-monospace, monospace">    characteristic: { eng: detecting movement by rollers }</text>
+  <text x="455" y="510" class="small" font-family="ui-monospace, monospace">  - ref: { source: EXAMPLE, id: "optomechanical-mouse" }</text>
+  <text x="455" y="524" class="small" font-family="ui-monospace, monospace">    characteristic: { eng: ... by rollers + light sensors }</text>
+</svg>

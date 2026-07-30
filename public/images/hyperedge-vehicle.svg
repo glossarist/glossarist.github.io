@@ -1,105 +1,150 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 540" role="img" aria-labelledby="title desc">
-  <title id="title">Generic hyperedge — fictitious example: vehicle by motive power and by terrain</title>
-  <desc id="desc">A "vehicle" genus concept at the top. Two separate rakes drop from it, each labeled with its criterion of subdivision. By motive power: human-powered, animal-powered, motor-powered, wind-powered. By terrain: land, water, air, space. The two rakes share the same genus but are distinct decompositions distinguished by criterion. Species within one rake are coordinate; species across rakes are not.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 580" role="img" aria-labelledby="title desc">
+  <title id="title">Generic hyperedge — fictitious vehicle with delimiting characteristics on each species</title>
+  <desc id="desc">A "vehicle" genus at the top. Two rakes drop from it, each with its criterion of subdivision and each species carrying a delimiting characteristic in a side rectangle. By motive power: human-powered (characteristic: "propelled by human force"), animal-powered, motor-powered, wind-powered. By terrain: land, water, air, space.</desc>
   <style>
     .box { fill: #f8f9fa; stroke: #343a40; stroke-width: 1.5; }
+    .genus-box { fill: #e7f1fa; stroke: #0c5460; stroke-width: 2; }
     .label { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 12px; fill: #212529; }
     .small { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 10px; fill: #6c757d; }
-    .crit { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 11px; fill: #0c5460; font-style: italic; }
-    .backline { stroke: #212529; stroke-width: 2; fill: none; }
-    .solid { stroke: #212529; stroke-width: 1.5; fill: none; }
+    .crit { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 11px; fill: #0c5460; font-style: italic; font-weight: 600; }
+    .char-label { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 9px; fill: #6c757d; font-style: italic; }
+    .char-text { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 10px; fill: #212529; }
+    .backline-1 { stroke: #0c5460; stroke-width: 2.5; fill: none; }
+    .backline-2 { stroke: #8b4513; stroke-width: 2.5; fill: none; }
+    .tooth-1 { stroke: #0c5460; stroke-width: 1.5; fill: none; }
+    .tooth-2 { stroke: #8b4513; stroke-width: 1.5; fill: none; }
+    .char-connector { stroke: #adb5bd; stroke-width: 1; stroke-dasharray: 2 2; fill: none; }
   </style>
 
   <!-- Genus -->
-  <rect x="390" y="20" width="100" height="42" rx="6" class="box"/>
-  <text x="440" y="40" text-anchor="middle" class="label" font-weight="600">vehicle</text>
-  <text x="440" y="55" text-anchor="middle" class="small">fictitious genus</text>
+  <rect x="410" y="20" width="140" height="42" rx="6" class="genus-box"/>
+  <text x="480" y="40" text-anchor="middle" class="label" font-weight="600" fill="#0c5460">vehicle</text>
+  <text x="480" y="55" text-anchor="middle" class="small">fictitious genus</text>
 
   <!-- ============ Criterion 1: by motive power ============ -->
-  <text x="200" y="100" text-anchor="middle" class="crit" font-weight="600">criterion: by motive power</text>
+  <text x="200" y="100" text-anchor="middle" class="crit" fill="#0c5460">criterion 1: by motive power</text>
+  <line x1="40" y1="120" x2="380" y2="120" class="backline-1"/>
+  <line x1="40" y1="124" x2="380" y2="124" class="backline-1"/>
 
-  <!-- Backline -->
-  <line x1="60" y1="120" x2="380" y2="120" class="backline"/>
+  <line x1="80" y1="124" x2="80" y2="220" class="tooth-1"/>
+  <line x1="180" y1="124" x2="180" y2="220" class="tooth-1"/>
+  <line x1="280" y1="124" x2="280" y2="220" class="tooth-1"/>
+  <line x1="360" y1="124" x2="360" y2="220" class="tooth-1"/>
 
-  <!-- Drop lines: 4 solid teeth -->
-  <line x1="100" y1="120" x2="100" y2="210" class="solid"/>
-  <line x1="200" y1="120" x2="200" y2="210" class="solid"/>
-  <line x1="300" y1="120" x2="300" y2="210" class="solid"/>
-  <line x1="360" y1="120" x2="360" y2="210" class="solid"/>
+  <rect x="30" y="240" width="100" height="40" rx="6" class="box"/>
+  <text x="80" y="258" text-anchor="middle" class="label">human-powered</text>
+  <text x="80" y="272" text-anchor="middle" class="small">bicycle, scooter</text>
 
-  <!-- Species boxes -->
-  <rect x="50" y="230" width="100" height="40" rx="6" class="box"/>
-  <text x="100" y="248" text-anchor="middle" class="label">human-powered</text>
-  <text x="100" y="262" text-anchor="middle" class="small">bicycle, scooter</text>
+  <rect x="130" y="240" width="100" height="40" rx="6" class="box"/>
+  <text x="180" y="258" text-anchor="middle" class="label">animal-powered</text>
+  <text x="180" y="272" text-anchor="middle" class="small">horse cart</text>
 
-  <rect x="150" y="230" width="100" height="40" rx="6" class="box"/>
-  <text x="200" y="248" text-anchor="middle" class="label">animal-powered</text>
-  <text x="200" y="262" text-anchor="middle" class="small">horse cart, ox cart</text>
+  <rect x="230" y="240" width="100" height="40" rx="6" class="box"/>
+  <text x="280" y="258" text-anchor="middle" class="label">motor-powered</text>
+  <text x="280" y="272" text-anchor="middle" class="small">car, truck, train</text>
 
-  <rect x="250" y="230" width="100" height="40" rx="6" class="box"/>
-  <text x="300" y="248" text-anchor="middle" class="label">motor-powered</text>
-  <text x="300" y="262" text-anchor="middle" class="small">car, truck, train</text>
+  <rect x="310" y="240" width="100" height="40" rx="6" class="box"/>
+  <text x="360" y="258" text-anchor="middle" class="label">wind-powered</text>
+  <text x="360" y="272" text-anchor="middle" class="small">sailboat</text>
 
-  <rect x="330" y="230" width="80" height="40" rx="6" class="box"/>
-  <text x="370" y="248" text-anchor="middle" class="label">wind-powered</text>
-  <text x="370" y="262" text-anchor="middle" class="small">sailboat</text>
+  <!-- Characteristics for criterion 1 -->
+  <line x1="80" y1="280" x2="80" y2="305" class="char-connector"/>
+  <rect x="20" y="305" width="120" height="50" rx="3" fill="#fff" stroke="#adb5bd"/>
+  <text x="80" y="320" text-anchor="middle" class="char-label">characteristic</text>
+  <text x="80" y="335" text-anchor="middle" class="char-text">"propelled by</text>
+  <text x="80" y="349" text-anchor="middle" class="char-text">human force"</text>
 
-  <!-- (duplicate tooth fix removed above) -->
+  <line x1="180" y1="280" x2="180" y2="305" class="char-connector"/>
+  <rect x="120" y="305" width="120" height="50" rx="3" fill="#fff" stroke="#adb5bd"/>
+  <text x="180" y="320" text-anchor="middle" class="char-label">characteristic</text>
+  <text x="180" y="335" text-anchor="middle" class="char-text">"pulled by</text>
+  <text x="180" y="349" text-anchor="middle" class="char-text">draft animal"</text>
+
+  <line x1="280" y1="280" x2="280" y2="305" class="char-connector"/>
+  <rect x="220" y="305" width="120" height="50" rx="3" fill="#fff" stroke="#adb5bd"/>
+  <text x="280" y="320" text-anchor="middle" class="char-label">characteristic</text>
+  <text x="280" y="335" text-anchor="middle" class="char-text">"powered by</text>
+  <text x="280" y="349" text-anchor="middle" class="char-text">an engine"</text>
+
+  <line x1="360" y1="280" x2="360" y2="305" class="char-connector"/>
+  <rect x="300" y="305" width="120" height="50" rx="3" fill="#fff" stroke="#adb5bd"/>
+  <text x="360" y="320" text-anchor="middle" class="char-label">characteristic</text>
+  <text x="360" y="335" text-anchor="middle" class="char-text">"propelled by</text>
+  <text x="360" y="349" text-anchor="middle" class="char-text">wind on sails"</text>
 
   <!-- ============ Criterion 2: by terrain ============ -->
-  <text x="680" y="100" text-anchor="middle" class="crit" font-weight="600">criterion: by terrain</text>
+  <text x="700" y="100" text-anchor="middle" class="crit" fill="#8b4513">criterion 2: by terrain</text>
+  <line x1="540" y1="120" x2="900" y2="120" class="backline-2"/>
+  <line x1="540" y1="124" x2="900" y2="124" class="backline-2"/>
 
-  <!-- Backline -->
-  <line x1="520" y1="120" x2="840" y2="120" class="backline"/>
+  <line x1="580" y1="124" x2="580" y2="220" class="tooth-2"/>
+  <line x1="680" y1="124" x2="680" y2="220" class="tooth-2"/>
+  <line x1="780" y1="124" x2="780" y2="220" class="tooth-2"/>
+  <line x1="870" y1="124" x2="870" y2="220" class="tooth-2"/>
 
-  <!-- 4 solid teeth -->
-  <line x1="560" y1="120" x2="560" y2="210" class="solid"/>
-  <line x1="650" y1="120" x2="650" y2="210" class="solid"/>
-  <line x1="740" y1="120" x2="740" y2="210" class="solid"/>
-  <line x1="820" y1="120" x2="820" y2="210" class="solid"/>
+  <rect x="530" y="240" width="100" height="40" rx="6" class="box"/>
+  <text x="580" y="258" text-anchor="middle" class="label">land vehicle</text>
+  <text x="580" y="272" text-anchor="middle" class="small">car, bike, train</text>
 
-  <!-- Species boxes -->
-  <rect x="510" y="230" width="100" height="40" rx="6" class="box"/>
-  <text x="560" y="248" text-anchor="middle" class="label">land vehicle</text>
-  <text x="560" y="262" text-anchor="middle" class="small">car, bike, train</text>
+  <rect x="630" y="240" width="100" height="40" rx="6" class="box"/>
+  <text x="680" y="258" text-anchor="middle" class="label">water vehicle</text>
+  <text x="680" y="272" text-anchor="middle" class="small">boat, submarine</text>
 
-  <rect x="600" y="230" width="100" height="40" rx="6" class="box"/>
-  <text x="650" y="248" text-anchor="middle" class="label">water vehicle</text>
-  <text x="650" y="262" text-anchor="middle" class="small">boat, submarine</text>
+  <rect x="730" y="240" width="100" height="40" rx="6" class="box"/>
+  <text x="780" y="258" text-anchor="middle" class="label">air vehicle</text>
+  <text x="780" y="272" text-anchor="middle" class="small">plane, balloon</text>
 
-  <rect x="690" y="230" width="100" height="40" rx="6" class="box"/>
-  <text x="740" y="248" text-anchor="middle" class="label">air vehicle</text>
-  <text x="740" y="262" text-anchor="middle" class="small">plane, balloon</text>
+  <rect x="820" y="240" width="100" height="40" rx="6" class="box"/>
+  <text x="870" y="258" text-anchor="middle" class="label">space vehicle</text>
+  <text x="870" y="272" text-anchor="middle" class="small">rocket, probe</text>
 
-  <rect x="770" y="230" width="100" height="40" rx="6" class="box"/>
-  <text x="820" y="248" text-anchor="middle" class="label">space vehicle</text>
-  <text x="820" y="262" text-anchor="middle" class="small">rocket, probe</text>
+  <!-- Characteristics for criterion 2 -->
+  <line x1="580" y1="280" x2="580" y2="305" class="char-connector"/>
+  <rect x="520" y="305" width="120" height="50" rx="3" fill="#fff" stroke="#adb5bd"/>
+  <text x="580" y="320" text-anchor="middle" class="char-label">characteristic</text>
+  <text x="580" y="335" text-anchor="middle" class="char-text">"travels on</text>
+  <text x="580" y="349" text-anchor="middle" class="char-text">solid ground"</text>
 
-  <!-- ============ Separator ============ -->
-  <line x1="450" y1="85" x2="450" y2="290" stroke="#adb5bd" stroke-width="1" stroke-dasharray="2 4"/>
+  <line x1="680" y1="280" x2="680" y2="305" class="char-connector"/>
+  <rect x="620" y="305" width="120" height="50" rx="3" fill="#fff" stroke="#adb5bd"/>
+  <text x="680" y="320" text-anchor="middle" class="char-label">characteristic</text>
+  <text x="680" y="335" text-anchor="middle" class="char-text">"travels on</text>
+  <text x="680" y="349" text-anchor="middle" class="char-text">or under water"</text>
 
-  <!-- ============ Footnotes ============ -->
-  <text x="440" y="320" text-anchor="middle" class="small">Two GenericHyperedges on the same genus, distinguished by criterion. Each is a distinct decomposition.</text>
+  <line x1="780" y1="280" x2="780" y2="305" class="char-connector"/>
+  <rect x="720" y="305" width="120" height="50" rx="3" fill="#fff" stroke="#adb5bd"/>
+  <text x="780" y="320" text-anchor="middle" class="char-label">characteristic</text>
+  <text x="780" y="335" text-anchor="middle" class="char-text">"travels through</text>
+  <text x="780" y="349" text-anchor="middle" class="char-text">the atmosphere"</text>
 
-  <text x="440" y="345" text-anchor="middle" class="small">Within one rake, species are coordinate concepts (share genus + share criterion).</text>
-  <text x="440" y="361" text-anchor="middle" class="small">"bicycle" (human-powered) and "car" (motor-powered) are coordinate; "bicycle" and "boat" are NOT.</text>
+  <line x1="870" y1="280" x2="870" y2="305" class="char-connector"/>
+  <rect x="810" y="305" width="120" height="50" rx="3" fill="#fff" stroke="#adb5bd"/>
+  <text x="870" y="320" text-anchor="middle" class="char-label">characteristic</text>
+  <text x="870" y="335" text-anchor="middle" class="char-text">"travels beyond</text>
+  <text x="870" y="349" text-anchor="middle" class="char-text">Earth's atmosphere"</text>
 
-  <!-- Wire-format preview -->
-  <rect x="40" y="390" width="800" height="135" rx="4" fill="#f8f9fa" stroke="#dee2e6"/>
-  <text x="55" y="412" class="small" font-family="ui-monospace, monospace" fill="#6c757d"># relations/example-vehicle/by-motive-power.yaml</text>
-  <text x="55" y="428" class="small" font-family="ui-monospace, monospace">$id: example-vehicle/by-motive-power</text>
-  <text x="55" y="444" class="small" font-family="ui-monospace, monospace">type: generic_relation</text>
-  <text x="55" y="460" class="small" font-family="ui-monospace, monospace">comprehensive: { source: EXAMPLE, id: "vehicle" }</text>
-  <text x="55" y="476" class="small" font-family="ui-monospace, monospace">members:</text>
-  <text x="55" y="492" class="small" font-family="ui-monospace, monospace">  - ref: { source: EXAMPLE, id: "human-powered-vehicle" }</text>
-  <text x="55" y="508" class="small" font-family="ui-monospace, monospace">  - ref: { source: EXAMPLE, id: "animal-powered-vehicle" }</text>
-  <text x="55" y="524" class="small" font-family="ui-monospace, monospace">  - ... (motor-powered, wind-powered)</text>
+  <!-- Separator -->
+  <line x1="470" y1="85" x2="470" y2="380" stroke="#adb5bd" stroke-width="1" stroke-dasharray="2 4"/>
 
-  <text x="455" y="428" class="small" font-family="ui-monospace, monospace">completeness: complete</text>
-  <text x="455" y="444" class="small" font-family="ui-monospace, monospace">criterion:</text>
-  <text x="455" y="460" class="small" font-family="ui-monospace, monospace">  eng: by motive power</text>
-  <text x="455" y="476" class="small" font-family="ui-monospace, monospace">  fra: par force motrice</text>
+  <!-- Footer -->
+  <text x="480" y="395" text-anchor="middle" class="small">Multidimensionality (ISO 704:2022 §5.6.3): same genus, different criteria → distinct hyperedges.</text>
+  <text x="480" y="411" text-anchor="middle" class="small">Each species carries its delimiting characteristic — the intension-difference that makes it coordinate with its siblings.</text>
+  <text x="480" y="427" text-anchor="middle" class="small">Thicker backlines (blue / brown) distinguish the two criteria of subdivision.</text>
 
-  <text x="455" y="500" class="small" font-family="ui-monospace, monospace" fill="#6c757d"># relations/example-vehicle/by-terrain.yaml — second hyperedge</text>
-  <text x="455" y="516" class="small" font-family="ui-monospace, monospace" fill="#6c757d"># same comprehensive, different criterion → distinct</text>
+  <!-- Wire preview -->
+  <rect x="40" y="450" width="880" height="115" rx="4" fill="#f8f9fa" stroke="#dee2e6"/>
+  <text x="55" y="468" class="small" font-family="ui-monospace, monospace" fill="#6c757d"># relations/example-vehicle/by-motive-power.yaml</text>
+  <text x="55" y="484" class="small" font-family="ui-monospace, monospace">type: generic_relation</text>
+  <text x="55" y="498" class="small" font-family="ui-monospace, monospace">comprehensive: { source: EXAMPLE, id: "vehicle" }</text>
+  <text x="55" y="512" class="small" font-family="ui-monospace, monospace">criterion: { eng: by motive power }</text>
+  <text x="55" y="526" class="small" font-family="ui-monospace, monospace">members:</text>
+  <text x="55" y="540" class="small" font-family="ui-monospace, monospace">  - ref: { source: EXAMPLE, id: "human-powered-vehicle" }</text>
+  <text x="55" y="554" class="small" font-family="ui-monospace, monospace">    characteristic: { eng: propelled by human force }</text>
+
+  <text x="500" y="484" class="small" font-family="ui-monospace, monospace" fill="#6c757d"># relations/example-vehicle/by-terrain.yaml — distinct hyperedge</text>
+  <text x="500" y="500" class="small" font-family="ui-monospace, monospace" fill="#6c757d"># same comprehensive, different criterion</text>
+  <text x="500" y="516" class="small" font-family="ui-monospace, monospace" fill="#6c757d">type: generic_relation</text>
+  <text x="500" y="532" class="small" font-family="ui-monospace, monospace" fill="#6c757d">comprehensive: { source: EXAMPLE, id: "vehicle" }</text>
+  <text x="500" y="548" class="small" font-family="ui-monospace, monospace" fill="#6c757d">criterion: { eng: by terrain }</text>
+  <text x="500" y="564" class="small" font-family="ui-monospace, monospace" fill="#6c757d">members: [ ... land / water / air / space ... ]</text>
 </svg>

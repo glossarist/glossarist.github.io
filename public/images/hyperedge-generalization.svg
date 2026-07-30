@@ -1,68 +1,114 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 460" role="img" aria-labelledby="title desc">
-  <title id="title">Generalization hyperedge — measurement standard with two distinct decompositions</title>
-  <desc id="desc">A comprehensive concept "measurement standard" at the top. Two separate rakes drop from it, each labeled with its criterion of subdivision: "by realization medium" with three species (reference material, measuring system, material measure), and "by governance level" with two species (international, national). The two rakes share the same comprehensive but are distinct decompositions distinguished by criterion.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 580" role="img" aria-labelledby="title desc">
+  <title id="title">Generalization hyperedge — OIML measurement standard with two criteria and delimiting characteristics</title>
+  <desc id="desc">OIML V 2-200:2010 measurement standard (5.1) genus at the top. Two criterion groups drop from it. By realization medium: reference material (characteristic: "material, certified for property"), measuring system (characteristic: "assembly of measuring instruments"), material measure (characteristic: "device that reproduces a quantity"). By governance level: international (characteristic: "recognized by international agreement"), national (characteristic: "recognized by national authority"). Each species carries its delimiting characteristic in a side rectangle per ISO 704:2022 §5.5.4.2.1 convention.</desc>
   <style>
     .box { fill: #f8f9fa; stroke: #343a40; stroke-width: 1.5; }
-    .label { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 13px; fill: #212529; }
+    .genus-box { fill: #e7f1fa; stroke: #0c5460; stroke-width: 2; }
+    .label { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 12px; fill: #212529; }
     .small { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 10px; fill: #6c757d; }
-    .crit { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 11px; fill: #0c5460; font-style: italic; }
-    .backline { stroke: #212529; stroke-width: 2; fill: none; }
-    .tooth-solid { stroke: #212529; stroke-width: 1.5; fill: none; }
+    .crit { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 11px; fill: #0c5460; font-style: italic; font-weight: 600; }
+    .char-label { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 9px; fill: #6c757d; font-style: italic; }
+    .char-text { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 10px; fill: #212529; }
+    .backline-1 { stroke: #0c5460; stroke-width: 2.5; fill: none; }
+    .backline-2 { stroke: #8b4513; stroke-width: 2.5; fill: none; }
+    .tooth-1 { stroke: #0c5460; stroke-width: 1.5; fill: none; }
+    .tooth-2 { stroke: #8b4513; stroke-width: 1.5; fill: none; }
+    .char-connector { stroke: #adb5bd; stroke-width: 1; stroke-dasharray: 2 2; fill: none; }
   </style>
 
-  <!-- Genus concept (shared comprehensive) -->
-  <rect x="290" y="20" width="180" height="42" rx="6" class="box"/>
-  <text x="380" y="40" text-anchor="middle" class="label" font-weight="600">measurement standard</text>
-  <text x="380" y="55" text-anchor="middle" class="small">genus · VIML 5.1</text>
+  <!-- Genus -->
+  <rect x="290" y="20" width="200" height="42" rx="6" class="genus-box"/>
+  <text x="390" y="40" text-anchor="middle" class="label" font-weight="600" fill="#0c5460">measurement standard</text>
+  <text x="390" y="55" text-anchor="middle" class="small">genus · VIML 5.1</text>
 
-  <!-- ============ Criterion group 1: by realization medium ============ -->
-  <text x="120" y="100" class="crit" font-weight="600">criterion: by realization medium</text>
+  <!-- ============ Criterion 1: by realization medium ============ -->
+  <text x="140" y="100" text-anchor="middle" class="crit" fill="#0c5460">criterion 1: by realization medium</text>
+  <line x1="30" y1="120" x2="280" y2="120" class="backline-1"/>
+  <line x1="30" y1="124" x2="280" y2="124" class="backline-1"/>
 
-  <!-- Backline for group 1 -->
-  <line x1="60" y1="120" x2="240" y2="120" class="backline"/>
+  <line x1="70" y1="124" x2="70" y2="220" class="tooth-1"/>
+  <line x1="155" y1="124" x2="155" y2="220" class="tooth-1"/>
+  <line x1="240" y1="124" x2="240" y2="220" class="tooth-1"/>
 
-  <!-- Drop lines (3 solid teeth = compulsory, exactly_one each) -->
-  <line x1="80" y1="120" x2="80" y2="200" class="tooth-solid"/>
-  <line x1="150" y1="120" x2="150" y2="200" class="tooth-solid"/>
-  <line x1="220" y1="120" x2="220" y2="200" class="tooth-solid"/>
+  <rect x="20" y="240" width="100" height="40" rx="6" class="box"/>
+  <text x="70" y="258" text-anchor="middle" class="label">reference</text>
+  <text x="70" y="272" text-anchor="middle" class="label">material</text>
 
-  <!-- Species boxes -->
-  <rect x="30" y="220" width="100" height="40" rx="6" class="box"/>
-  <text x="80" y="238" text-anchor="middle" class="label">reference</text>
-  <text x="80" y="252" text-anchor="middle" class="label">material</text>
+  <rect x="105" y="240" width="100" height="40" rx="6" class="box"/>
+  <text x="155" y="258" text-anchor="middle" class="label">measuring</text>
+  <text x="155" y="272" text-anchor="middle" class="label">system</text>
 
-  <rect x="105" y="220" width="90" height="40" rx="6" class="box"/>
-  <text x="150" y="238" text-anchor="middle" class="label">measuring</text>
-  <text x="150" y="252" text-anchor="middle" class="label">system</text>
+  <rect x="190" y="240" width="100" height="40" rx="6" class="box"/>
+  <text x="240" y="258" text-anchor="middle" class="label">material</text>
+  <text x="240" y="272" text-anchor="middle" class="label">measure</text>
 
-  <rect x="180" y="220" width="80" height="40" rx="6" class="box"/>
-  <text x="220" y="238" text-anchor="middle" class="label">material</text>
-  <text x="220" y="252" text-anchor="middle" class="label">measure</text>
+  <!-- Characteristics for criterion 1 -->
+  <line x1="70" y1="280" x2="70" y2="305" class="char-connector"/>
+  <rect x="10" y="305" width="120" height="60" rx="3" fill="#fff" stroke="#adb5bd"/>
+  <text x="70" y="320" text-anchor="middle" class="char-label">characteristic</text>
+  <text x="70" y="335" text-anchor="middle" class="char-text">"material, sufficiently</text>
+  <text x="70" y="349" text-anchor="middle" class="char-text">homogeneous and stable</text>
+  <text x="70" y="363" text-anchor="middle" class="char-text">for certified property"</text>
 
-  <!-- ============ Criterion group 2: by governance level ============ -->
-  <text x="490" y="100" class="crit" font-weight="600">criterion: by governance level</text>
+  <line x1="155" y1="280" x2="155" y2="305" class="char-connector"/>
+  <rect x="95" y="305" width="120" height="60" rx="3" fill="#fff" stroke="#adb5bd"/>
+  <text x="155" y="320" text-anchor="middle" class="char-label">characteristic</text>
+  <text x="155" y="335" text-anchor="middle" class="char-text">"assembly of measuring</text>
+  <text x="155" y="349" text-anchor="middle" class="char-text">instruments + auxiliary</text>
+  <text x="155" y="363" text-anchor="middle" class="char-text">apparatus"</text>
 
-  <!-- Backline for group 2 -->
-  <line x1="440" y1="120" x2="700" y2="120" class="backline"/>
+  <line x1="240" y1="280" x2="240" y2="305" class="char-connector"/>
+  <rect x="180" y="305" width="120" height="60" rx="3" fill="#fff" stroke="#adb5bd"/>
+  <text x="240" y="320" text-anchor="middle" class="char-label">characteristic</text>
+  <text x="240" y="335" text-anchor="middle" class="char-text">"device that reproduces</text>
+  <text x="240" y="349" text-anchor="middle" class="char-text">a given quantity value</text>
+  <text x="240" y="363" text-anchor="middle" class="char-text">during use"</text>
 
-  <!-- Drop lines (2 solid teeth) -->
-  <line x1="500" y1="120" x2="500" y2="200" class="tooth-solid"/>
-  <line x1="640" y1="120" x2="640" y2="200" class="tooth-solid"/>
+  <!-- ============ Criterion 2: by governance level ============ -->
+  <text x="600" y="100" text-anchor="middle" class="crit" fill="#8b4513">criterion 2: by governance level</text>
+  <line x1="490" y1="120" x2="760" y2="120" class="backline-2"/>
+  <line x1="490" y1="124" x2="760" y2="124" class="backline-2"/>
 
-  <!-- Species boxes -->
-  <rect x="440" y="220" width="120" height="40" rx="6" class="box"/>
-  <text x="500" y="238" text-anchor="middle" class="label">international</text>
-  <text x="500" y="252" text-anchor="middle" class="label">standard</text>
+  <line x1="550" y1="124" x2="550" y2="220" class="tooth-2"/>
+  <line x1="700" y1="124" x2="700" y2="220" class="tooth-2"/>
 
-  <rect x="580" y="220" width="120" height="40" rx="6" class="box"/>
-  <text x="640" y="238" text-anchor="middle" class="label">national</text>
-  <text x="640" y="252" text-anchor="middle" class="label">standard</text>
+  <rect x="490" y="240" width="120" height="40" rx="6" class="box"/>
+  <text x="550" y="258" text-anchor="middle" class="label">international</text>
+  <text x="550" y="272" text-anchor="middle" class="label">standard</text>
 
-  <!-- ============ Separator ============ -->
-  <line x1="380" y1="85" x2="380" y2="280" stroke="#adb5bd" stroke-width="1" stroke-dasharray="2 4"/>
+  <rect x="640" y="240" width="120" height="40" rx="6" class="box"/>
+  <text x="700" y="258" text-anchor="middle" class="label">national</text>
+  <text x="700" y="272" text-anchor="middle" class="label">standard</text>
 
-  <!-- Footer legend -->
-  <text x="380" y="380" text-anchor="middle" class="small">ISO 704:2022 §5.5.4.1 — same genus, two distinct decompositions</text>
-  <text x="380" y="396" text-anchor="middle" class="small">Species within one rake are coordinate concepts (share genus + share criterion)</text>
-  <text x="380" y="418" text-anchor="middle" class="small">OIML V 2-200:2010 has 6 such groups on this single comprehensive</text>
+  <!-- Characteristics for criterion 2 -->
+  <line x1="550" y1="280" x2="550" y2="305" class="char-connector"/>
+  <rect x="490" y="305" width="120" height="60" rx="3" fill="#fff" stroke="#adb5bd"/>
+  <text x="550" y="320" text-anchor="middle" class="char-label">characteristic</text>
+  <text x="550" y="335" text-anchor="middle" class="char-text">"recognized by signatory</text>
+  <text x="550" y="349" text-anchor="middle" class="char-text">states of an international</text>
+  <text x="550" y="363" text-anchor="middle" class="char-text">agreement (OIML)"</text>
+
+  <line x1="700" y1="280" x2="700" y2="305" class="char-connector"/>
+  <rect x="640" y="305" width="120" height="60" rx="3" fill="#fff" stroke="#adb5bd"/>
+  <text x="700" y="320" text-anchor="middle" class="char-label">characteristic</text>
+  <text x="700" y="335" text-anchor="middle" class="char-text">"recognized by national</text>
+  <text x="700" y="349" text-anchor="middle" class="char-text">metrology authority</text>
+  <text x="700" y="363" text-anchor="middle" class="char-text">(NMI)"</text>
+
+  <!-- Separator -->
+  <line x1="385" y1="85" x2="385" y2="395" stroke="#adb5bd" stroke-width="1" stroke-dasharray="2 4"/>
+
+  <!-- Footer -->
+  <text x="390" y="415" text-anchor="middle" class="small">Multidimensionality (ISO 704:2022 §5.6.3): OIML 5.1 has 6 such criteria in the full diagram.</text>
+  <text x="390" y="431" text-anchor="middle" class="small">Each species carries its delimiting characteristic per §5.5.4.2.1.</text>
+
+  <!-- Wire preview -->
+  <rect x="40" y="450" width="700" height="115" rx="4" fill="#f8f9fa" stroke="#dee2e6"/>
+  <text x="55" y="468" class="small" font-family="ui-monospace, monospace" fill="#6c757d"># relations/viml-5-1/by-realization-medium.yaml</text>
+  <text x="55" y="484" class="small" font-family="ui-monospace, monospace">type: generic_relation</text>
+  <text x="55" y="498" class="small" font-family="ui-monospace, monospace">comprehensive: { source: VIML, id: "5.1" }</text>
+  <text x="55" y="512" class="small" font-family="ui-monospace, monospace">criterion: { eng: by realization medium }</text>
+  <text x="55" y="526" class="small" font-family="ui-monospace, monospace">members:</text>
+  <text x="55" y="540" class="small" font-family="ui-monospace, monospace">  - ref: { source: VIML, id: "5.13" }</text>
+  <text x="55" y="554" class="small" font-family="ui-monospace, monospace">    characteristic: { eng: material sufficiently homogeneous ... }</text>
 </svg>
