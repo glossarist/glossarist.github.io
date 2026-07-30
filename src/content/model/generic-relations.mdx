@@ -1,168 +1,28 @@
 ---
-title: Generic Relations
-description: "ISO 704 / 1087-1 / 12620 generic (genus/species) decompositions — modeled as per-file n-ary relations with criterion of subdivision, MECE member dimensions, and ExternalConcept integration."
+title: "Generic Relations (historical)"
+description: "Historical reference for the GenericRelation class, renamed to GenericHyperedge in Glossarist v3.3. See /model/hyperedges for the unified model."
 ---
 
-import InlineModal from "@components/InlineModal.vue";
+# Generic Relations (historical)
 
-> **See also:** [Hyperedges](/model/hyperedges) — the unified model page covering
-> both partitive and generalization hyperedges with SVG diagrams, per-file storage
-> layout, and ExternalConcept-as-comprehensive. This page is the historical
-> reference for `GenericHyperedge` (originally named `GenericRelation`); the
-> implementation class is now `Glossarist::V3::GenericHyperedge`.
+> **Renamed to `GenericHyperedge`** in Glossarist v3.3.
+> The partitive vs. generic distinction is now modeled as two leaf classes
+> (`PartitiveHyperedge`, `GenericHyperedge`) of a shared `AbstractHyperedge`
+> base. The wire discriminator `type: generic_relation` is unchanged.
 
-`GenericHyperedge` (wire name: `generic_relation`) is Glossarist's model for
-ISO 704 / ISO 1087-1 / ISO 12620 generalization relations — the genus/species
-decomposition shown as a rake or bracket in source diagrams. It connects a
-comprehensive concept (the **genus**) to two or more specific concepts (the
-**species**) which together constitute a decomposition by some criterion of
-subdivision.
+The full model — MECE member multiplicity, ExternalConcept as
+comprehensive, validators, per-file storage at
+`relations/<comprehensive-id>/<criterion-slug>.yaml` — lives on the
+unified page:
 
-It is the structural mirror of [`PartitiveRelation`](/model/partitive-relations):
-same Member shape, same Relation shape, same validators. The semantic
-difference is what "comprehensive" means — for Partitive it's the whole, for
-Generic it's the genus.
+**[→ Hyperedges](/model/hyperedges)**
 
-## Why n-ary?
-
-Most generic relations in real datasets are binary `broader_generic` /
-`narrower_generic` edges. A binary edge per pair is sufficient when you're
-just asserting "X is-a Y."
-
-GenericRelation is for the case where the source diagram shows a **rake**:
-one genus concept at the top, multiple species dropping from a shared
-backline, where the membership, completeness, or per-member presence/count
-is *jointly* significant.
-
-The trigger condition: when a real dataset has generic rakes with multiple
-criterion-of-subdivision groups (e.g. OIML V 2-200:2010's *measurement
-standard* has 6 distinct decompositions), binary edges can't express the
-grouping coherently.
-
-## OIML V 2-200:2010 evidence
-
-The OIML International Vocabulary of Terms in Legal Metrology has ~8 generic
-hyperedges in its concept diagrams. Three examples:
-
-- **5.1 *measurement standard*** — 6 criterion groups (by realization medium,
-  by calibration role, by governance level, by metrological hierarchy, by
-  reference/working, by travel)
-- **1.9 *measurement unit*** — 2 criterion groups (by system membership,
-  by unit multiple)
-- **(precision condition of measurement)** [ExternalConcept] — 2 criterion
-  groups (by condition type, by precision level)
-
-Each group is a distinct decomposition of the same comprehensive concept,
-distinguished by `criterion`. Without GenericRelation, these decompositions
-collapse into an undifferentiated list of binary edges.
-
-## Per-file storage
-
-Every n-ary relation lives at `relations/<comprehensive-id>/<criterion-slug>.yaml`.
-The concept file no longer carries relations inline. See
-[relations-as-files design](https://github.com/glossarist/concept-model/blob/main/docs/design/relations-as-files.md)
-for the rationale.
-
-```yaml
-# relations/viml-5-1/by-realization-medium.yaml
-$id: viml-5-1/by-realization-medium
-type: generic_relation
-status: valid
-comprehensive:
-  source: VIML
-  id: "5.1"
-members:
-  - ref: { source: VIML, id: "5.13" }
-  - ref: { source: VIML, id: "3.2" }
-  - ref: { source: VIML, id: "3.6" }
-completeness: complete
-criterion:
-  eng: by realization medium
-  fra: par milieu de réalisation
-sources:
-  - type: authoritative
-    origin:
-      ref: { source: OIML, id: "V 2-200:2010" }
-      locality: { type: figure, reference_from: "5.1/Fig.1" }
-```
-
-## Field reference
-
-| Field | Type | Notes |
-|-------|------|-------|
-| `$id` | string | `<comprehensive-id>/<criterion-slug>` — must match file path |
-| `type` | enum | `generic_relation` (discriminator) |
-| `comprehensive` | ConceptRef | The genus concept |
-| `members` | array of GenericMember, minItems 2 | The species concepts |
-| `completeness` | `complete` \| `partial` | Default: `complete` |
-| `criterion` | LocalizedString | ISO 12620 subdivision principle |
-| `sources` | array of ConceptSource | Bibliographic provenance |
-| `notes` | LocalizedString | Optional commentary |
-| `status` | ConceptStatus | Lifecycle of this decomposition (independent of genus) |
-
-### Member fields
-
-| Field | Type | Notes |
-|-------|------|-------|
-| `ref` | ConceptRef | The species concept |
-| `presence` | `required` \| `optional` | ISO 704 line style; default `required` |
-| `count` | `exactly_one` \| `at_least_one` \| `multiple` | ISO 704 line count; default `exactly_one` |
-| `is_delimiting` | boolean | Default `false`; behaves like a delimiting characteristic |
-
-## MECE member dimensions
-
-ISO 704:2022 §5.5.4 encodes member multiplicity via two orthogonal dimensions
-on the diagram notation. GenericRelation inherits PartitiveRelation's MECE
-decomposition of these dimensions:
-
-| presence | count | ISO 704 name |
-|----------|-------|--------------|
-| required | exactly_one | compulsory |
-| optional | exactly_one | optional |
-| required | multiple | compulsory_multiple |
-| optional | multiple | optional_multiple |
-| required | at_least_one | compulsory_at_least_one |
-| optional | at_least_one | **invalid** (collapses to optional_multiple) |
-
-## Coherence rules
-
-The `check-generic-relation-coherence` validator enforces:
-
-1. Each relation has ≥2 members (ISO 704 "two or more")
-2. No duplicate `(comprehensive, criterion)` pairs on the same genus
-3. Warns when a concept has 2+ relations and any lack criterion
-4. Errors on invalid `(optional, at_least_one)` MECE combo
-5. Warns on `is_delimiting: true` + `presence: optional` incoherence
-
-## Relation to PartitiveRelation
-
-| | PartitiveRelation | GenericRelation |
-|---|---|---|
-| `comprehensive` means | the whole | the genus |
-| `members` are | parts | species |
-| ISO 704 section | §5.5.4.3 | §5.5.4.1 |
-| Wire shape | identical | identical |
-| Validators | shared (NaryCoherence) | shared |
-
-The abstract `ConceptSystemMember` carries the shared MECE dimensions;
-`PartitiveMember` and `GenericMember` are distinct leaves for type safety.
-
-## ExternalConcept as comprehensive
-
-Some OIML generic rakes have an ExternalConcept as the comprehensive — e.g.
-"(precision condition of measurement)" is a parenthetical in the source
-diagram, taken as a primitive. Glossarist supports this: the ExternalConcept
-lives at `concepts/ext-precision-condition.yaml` with `status: external`, and
-the relation file references it normally.
-
-The `check-external-as-comprehensive` validator warns when such an
-ExternalConcept has no `provided_by` edge — the decomposition dangles
-otherwise.
+For the v3.3 release announcement covering the rename, the
+generalization hyperedge, and the move to per-file storage, see
+[Hyperedges, per-file storage, and definition types](/blog/2026-07-30-hyperedges-per-file-storage).
 
 ## See also
 
-- [Partitive Relations](/model/partitive-relations) — structural mirror
-- [Relationships](/model/relationships) — binary typed edges (broader, narrower, has_part, etc.)
-- [Concepts](/model/concepts) — ManagedConcept, LocalizedConcept, ExternalConcept
-- ISO 704:2022 §5.5.4.1 — generic concept systems
-- ISO 12620 — coordinate concept (coherence requirement)
+- [Hyperedges](/model/hyperedges) — unified model reference
+- [Partitive Relations (historical)](/model/partitive-relations) — whole/part mirror
+- [Relationships](/model/relationships) — binary typed edges

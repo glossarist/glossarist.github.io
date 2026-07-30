@@ -1,225 +1,28 @@
 ---
-title: Partitive Relations
-description: "ISO 704:2022 partitive relations — one-to-many decompositions with MECE presence/count, delimiting parts, completeness, and subdivision criterion"
+title: "Partitive Relations (historical)"
+description: "Historical reference for the PartitiveRelation class, renamed to PartitiveHyperedge in Glossarist v3.3. See /model/hyperedges for the unified model."
 ---
 
-> **See also:** [Hyperedges](/model/hyperedges) — the unified model page covering
-> both partitive and generalization hyperedges with SVG diagrams, per-file storage
-> layout, and ExternalConcept-as-comprehensive. This page is the historical
-> reference for `PartitiveHyperedge` (originally named `PartitiveRelation`); the
-> implementation class is now `Glossarist::V3::PartitiveHyperedge`.
+# Partitive Relations (historical)
 
-# Partitive Relations
+> **Renamed to `PartitiveHyperedge`** in Glossarist v3.3.
+> The partitive vs. generic distinction is now modeled as two leaf classes
+> (`PartitiveHyperedge`, `GenericHyperedge`) of a shared `AbstractHyperedge`
+> base. The wire discriminator `type: partitive_relation` is unchanged.
 
-A **`PartitiveRelation`** implements [ISO 704:2022](https://www.iso.org/standard/38109.html) §5.5.4 partitive relations: one comprehensive concept (the whole) is related to two or more partitive concepts (the parts) which fitted together constitute the comprehensive. It captures invariants that binary [`has_part`](/model/relationships#hierarchical-relationships) / `is_part_of` edges cannot:
+The full model — MECE member multiplicity, ExternalConcept as
+comprehensive, validators, per-file storage at
+`relations/<comprehensive-id>/<criterion-slug>.yaml` — lives on the
+unified page:
 
-- **Set membership** — which comprehensive owns which parts, as one rake rather than N independent binary edges
-- **Per-member multiplicity** — ISO 704:2022 presence (required/optional) and count (exactly-one/at-least-one/multiple) as structured data
-- **Delimiting parts** — parts that behave like delimiting characteristics, distinguishing the comprehensive from coordinate concepts
-- **Completeness** — whether the encoded partitives fitted together constitute the comprehensive (`complete`) or only some of it (`partial`)
-- **Subdivision criterion** — ISO 12620's coordinate-concept coherence: partitives within one relation share a criterion
+**[→ Hyperedges](/model/hyperedges)**
 
-PartitiveRelations live on the [`ManagedConcept`](/model/concepts#managedconcept) (concept level, alongside `related`), not on its data payload.
-
-## ISO 704:2022 terminology
-
-| Role | ISO term |
-|------|----------|
-| The whole concept | comprehensive concept (superordinate concept partitive) |
-| Each part concept | partitive concept (subordinate concept partitive) |
-| The relation | partitive relation |
-| Siblings in one rake | coordinate concepts |
-
-All partitives within one PartitiveRelation are **coordinate concepts** (ISO 12620): they share the comprehensive AND the criterion of subdivision.
-
-## The MECE multiplicity model
-
-ISO 704:2022 encodes per-member multiplicity via diagram line notation. Glossarist decomposes this into two orthogonal dimensions:
-
-- **Presence**: `required` (must exist in every instance) or `optional` (exists in some instances only)
-- **Count**: `exactly_one`, `at_least_one`, or `multiple`
-
-Plus a third orthogonal flag: **is_delimiting** (boolean) — whether this part is a delimiting part.
-
-### Valid combinations (6 total, 5 valid)
-
-| Presence | Count | ISO 704 visual | ISO 704 name |
-|----------|-------|----------------|--------------|
-| required | exactly_one | 1 solid line | compulsory |
-| optional | exactly_one | 1 dashed line | optional |
-| required | multiple | 2 solid lines | compulsory multiple |
-| optional | multiple | 2 dashed lines | optional multiple |
-| required | at_least_one | 1 solid + 1 dashed | compulsory at-least-one |
-| optional | at_least_one | **INVALID** — collapses to optional multiple | — |
-
-The invalid combination (`optional + at_least_one`) is rejected: if a part is optional, the at-least-one constraint is vacuous (the part may not exist at all), so it collapses to `(optional, multiple)`. Both the JSON Schema and the Ruby validator enforce this with a clear error message.
-
-### Delimiting parts (ISO 704:2022 §5.5.4.2.2)
-
-A **delimiting part** behaves like a delimiting characteristic: it distinguishes the comprehensive from coordinate concepts. In ISO 704 diagrams, delimiting parts are drawn with a bold (3x-width) line.
-
-**Canonical example** (ISO 704:2022 §5.5.4.2.2): for "optomechanical mouse":
-
-| Part | Delimiting? | Why? |
-|------|-------------|------|
-| mouse ball | yes | distinguishes from optical mice |
-| x-axis roller | yes | distinguishes from optical mice |
-| y-axis roller | yes | distinguishes from optical mice |
-| infrared emitter | yes | distinguishes from mechanical mice |
-| infrared sensor | yes | distinguishes from mechanical mice |
-| circuit board | no | all mice have circuit boards |
-| mouse button | no | all computer mice have buttons |
-| mouse wheel | no | not found on all optomechanical mice (optional) |
-
-Delimiting is **orthogonal** to presence and count — a delimiting part can be compulsory, optional, or any other multiplicity.
-
-## When to use a PartitiveRelation vs. a binary edge
-
-| Shape | Use when … |
-|-------|------------|
-| Binary `has_part` / `is_part_of` | The relationship is pairwise and needs no multiplicity, delimiting, or completeness metadata |
-| `PartitiveRelation` | The relationship is one-to-many with multiplicity, delimiting parts, completeness claims, or subdivision criterion |
-
-Both shapes coexist. ISO 704 requires **two or more** partitives per relation. A single partitive should be a binary `has_part` edge.
-
-## Model
-
-```
-PartitiveRelation
-  +comprehensive: ConceptRef [1]              // the whole
-  +partitives:    PartitiveMember [2..*]      // the parts
-  +completeness:  Completeness [0..1]         // default: complete
-  +criterion:     LocalizedString [0..1]      // subdivision criterion (Glossarist extension)
-
-PartitiveMember (three orthogonal dimensions)
-  +ref:           ConceptRef [1]              // the partitive concept
-  +presence:      PartitivePresence [0..1]    // default: required
-  +count:         PartitiveCount [0..1]       // default: exactly_one
-  +is_delimiting: Boolean [0..1]             // default: false
-```
-
-Wired into `ManagedConcept` as `+partitive_relations: PartitiveRelation [0..*]`.
-
-### Completeness
-
-- **`complete`** *(default)* — the encoded partitives fitted together constitute the comprehensive. No further partitives exist.
-- **`partial`** — the encoded partitives are some of the comprehensive's partitives; others exist but are not encoded.
-
-### PartitivePresence (ISO 704:2022)
-
-- **`required`** *(default)* — must exist in every instance. ISO 704: solid line.
-- **`optional`** — exists in some instances only. ISO 704: dashed line.
-
-### PartitiveCount (ISO 704:2022)
-
-- **`exactly_one`** *(default)* — exactly one instance. ISO 704: single line.
-- **`at_least_one`** — one or more must exist. ISO 704: 1 solid + 1 dashed. Only valid with `presence: required`.
-- **`multiple`** — two or more instances. ISO 704: double line.
-
-## YAML authoring
-
-```yaml
-termid: "112-02-09"
-status: valid
-
-partitive_relations:
-  - comprehensive:
-      source: VIM
-      id: "112-02-09"
-    partitives:
-      - ref: { source: VIM, id: "112-02-10" }
-      - ref: { source: VIM, id: "112-03-26" }
-    completeness: complete
-    criterion:
-      eng: measurement result composition
-```
-
-### ISO 704:2022 optomechanical mouse example
-
-The canonical worked example from ISO 704:2022 §5.5.4.2.2:
-
-```yaml
-partitive_relations:
-  - comprehensive: { source: EXAMPLE, id: "optomechanical-mouse" }
-    partitives:
-      - ref: { source: EXAMPLE, id: "mouse-ball" }
-        is_delimiting: true
-      - ref: { source: EXAMPLE, id: "x-axis-roller" }
-        is_delimiting: true
-      - ref: { source: EXAMPLE, id: "y-axis-roller" }
-        is_delimiting: true
-      - ref: { source: EXAMPLE, id: "infrared-emitter" }
-        is_delimiting: true
-      - ref: { source: EXAMPLE, id: "infrared-sensor" }
-        is_delimiting: true
-      - ref: { source: EXAMPLE, id: "circuit-board" }
-      - ref: { source: EXAMPLE, id: "mouse-button" }
-      - ref: { source: EXAMPLE, id: "mouse-wheel" }
-        presence: optional
-    completeness: complete
-    criterion:
-      eng: physical component decomposition
-```
-
-Mouse wheel has `presence: optional` (not found on all optomechanical mice). The five delimiting parts distinguish "optomechanical mouse" from coordinate concepts "mechanical mouse" and "optical mouse".
-
-### Two decompositions of the same comprehensive
-
-```yaml
-partitive_relations:
-  - comprehensive: { source: EXAMPLE, id: "bicycle" }
-    partitives:
-      - ref: { source: EXAMPLE, id: "frame" }
-      - ref: { source: EXAMPLE, id: "wheels" }
-    completeness: complete
-    criterion: { eng: physical structure }
-  - comprehensive: { source: EXAMPLE, id: "bicycle" }
-    partitives:
-      - ref: { source: EXAMPLE, id: "structural" }
-      - ref: { source: EXAMPLE, id: "propulsion" }
-    completeness: complete
-    criterion: { eng: functional subsystem }
-```
-
-The coherence validator rejects duplicate `(comprehensive, criterion)` pairs as errors.
-
-### ExternalConcept partitive
-
-```yaml
-partitive_relations:
-  - comprehensive: { source: EXAMPLE, id: "114-01-01" }
-    partitives:
-      - ref: { source: EXAMPLE, id: "114-01-02" }
-      - ref: { source: EXAMPLE, id: "ext-qft" }   # ExternalConcept
-        presence: optional
-    completeness: partial
-```
-
-## RDF emission
-
-```turtle
-<concept/optomechanical-mouse> gloss:hasPartitiveRelation [
-  a gloss:PartitiveRelation ;
-  gloss:comprehensive <concept/optomechanical-mouse> ;
-  gloss:hasPartitive
-    [ a gloss:PartitiveMember ; gloss:ref <concept/mouse-ball> ; gloss:isDelimiting true ] ,
-    [ a gloss:PartitiveMember ; gloss:ref <concept/mouse-wheel> ; gloss:presence <partitivePresence/optional> ] ;
-  gloss:completeness <completeness/complete> ;
-  gloss:criterion "physical component decomposition"@en ;
-] .
-```
-
-## Validation
-
-- **`comprehensive`** must be a non-empty ConceptRef
-- **`partitives`** must have >= 2 members (ISO 704 requirement)
-- **Invalid MECE combo**: `presence: optional + count: at_least_one` is rejected with a clear error
-- **No duplicates**: two relations on the same comprehensive with the same criterion are flagged
-- **Delimiting + optional warning**: a delimiting part that is optional is semantically incoherent (a warning, not an error)
+For the v3.3 release announcement covering the rename, the
+generalization parallel, and the move to per-file storage, see
+[Hyperedges, per-file storage, and definition types](/blog/2026-07-30-hyperedges-per-file-storage).
 
 ## See also
 
-- [Relationships](/model/relationships) — binary typed relationships (54 types including `provides` / `provided_by`)
-- [Concepts](/model/concepts) — ManagedConcept, LocalizedConcept, and ExternalConcept
-- [ISO 704:2022](https://www.iso.org/standard/38109.html) — Terminology work — Principles and methods
-- [ISO 12620](https://www.iso.org/standard/56034.html) — Terminology and other language and content resources
+- [Hyperedges](/model/hyperedges) — unified model reference
+- [Generic Relations (historical)](/model/generic-relations) — genus/species mirror
+- [Relationships](/model/relationships) — binary typed edges
