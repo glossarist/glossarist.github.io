@@ -3,7 +3,6 @@
   <desc id="desc">A comprehensive concept "measurement standard" at the top. Two separate rakes drop from it, each labeled with its criterion of subdivision: "by realization medium" with three species (reference material, measuring system, material measure), and "by governance level" with two species (international, national). The two rakes share the same comprehensive but are distinct decompositions distinguished by criterion.</desc>
   <style>
     .box { fill: #f8f9fa; stroke: #343a40; stroke-width: 1.5; }
-    .box-ext { fill: #fff5e6; stroke: #cc8800; stroke-width: 1.5; stroke-dasharray: 4 3; }
     .label { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 13px; fill: #212529; }
     .small { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 10px; fill: #6c757d; }
     .crit { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 11px; fill: #0c5460; font-style: italic; }

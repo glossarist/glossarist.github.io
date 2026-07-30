@@ -30,7 +30,7 @@
 
   <!-- RIGHT: relations/ -->
   <text x="370" y="30" class="dir">relations/</text>
-  <text x="370" y="55" class="dir">└── 5-1/</text>
+  <text x="370" y="55" class="dir">└── viml-5-1/</text>
   <text x="370" y="75" class="file">    ├── by-realization-medium.yaml</text>
   <text x="370" y="93" class="file">    ├── by-governance-level.yaml</text>
   <text x="370" y="111" class="file">    ├── by-metrological-hierarchy.yaml</text>
@@ -50,8 +50,8 @@
 
   <!-- FILE CONTENT PREVIEW -->
   <rect x="40" y="280" width="560" height="160" rx="4" fill="#f8f9fa" stroke="#dee2e6"/>
-  <text x="60" y="302" class="dir" fill="#6c757d"># relations/5-1/by-realization-medium.yaml</text>
-  <text x="60" y="322" class="file">$id: 5-1/by-realization-medium</text>
+  <text x="60" y="302" class="dir" fill="#6c757d"># relations/viml-5-1/by-realization-medium.yaml</text>
+  <text x="60" y="322" class="file">$id: viml-5-1/by-realization-medium</text>
   <text x="60" y="340" class="file">type: generic_relation</text>
   <text x="60" y="358" class="file">comprehensive: { source: VIML, id: "5.1" }</text>
   <text x="60" y="376" class="file">members:</text>

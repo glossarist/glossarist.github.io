@@ -83,7 +83,7 @@ Every hyperedge lives at:
 relations/<comprehensive-id>/<criterion-slug>.yaml
 ```
 
-The concept file no longer carries hyperedges inline. The directory IS the index — `relations/5-1/` enumerates every decomposition of concept 5.1.
+The concept file no longer carries hyperedges inline. The directory IS the index — `relations/viml-5-1/` enumerates every decomposition of concept 5.1.
 
 ![Per-file storage layout](/images/hyperedge-per-file-storage.svg)
 
@@ -177,7 +177,15 @@ sources:
       locality: { type: figure, reference_from: "5.1/Fig.1" }
 ```
 
-The `type` field discriminates between `partitive_relation` and `generic_relation` on the wire. (The wire name retains `_relation` for backward-compatibility with the existing JSON Schema identifier; the in-code class name is `PartitiveHyperedge` / `GenericHyperedge`.)
+The `type` field discriminates between `partitive_relation` and `generic_relation` on the wire.
+
+::: info
+**Wire name vs. class name.** The discriminator on the wire is
+`partitive_relation` / `generic_relation` (retained for backward-compatibility
+with the JSON Schema identifier). The in-code class name is
+`PartitiveHyperedge` / `GenericHyperedge`. Same shape, two names — one for
+the wire, one for the code.
+:::
 
 ## When to use a hyperedge vs. a binary edge
 

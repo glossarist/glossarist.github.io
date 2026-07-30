@@ -41,10 +41,10 @@ criterion of subdivision, making them **coordinate concepts** per ISO 12620.
 
 ## 1. GenericHyperedge
 
-Yesterday's post outlined the [ISO 704:2022 MECE model](/blog/2026-07-29-iso704-2022-partitive-relations)
-for PartitiveHyperedge. The same diagram notation, the same MECE member
-dimensions, and the same criterion-of-subdivision coherence apply to
-generalization (genus/species) rakes.
+The ISO 704:2022 MECE model — presence × count as orthogonal dimensions,
+plus the bold-line delimiting flag — applies to both partitive and
+generalization (genus/species) rakes. `PartitiveHyperedge` ships the
+partitive side; `GenericHyperedge` ships the genus/species side.
 
 The trigger for adding GenericHyperedge was concrete: OIML V 2-200:2010
 contains ~8 generic hyperedges, several with **6 criterion-of-subdivision
@@ -265,6 +265,60 @@ Three architectural non-decisions worth flagging:
 See [docs/design/iso704-2022-mapping.md](https://github.com/glossarist/concept-model/blob/main/docs/design/iso704-2022-mapping.md)
 for the full reasoning.
 
+## The optomechanical mouse (ISO 704:2022 §5.5.4.2.2)
+
+ISO 704:2022 uses *optomechanical mouse* as its canonical worked example for
+partitive decomposition. Here it is with all MECE dimensions exercised:
+
+```yaml
+# relations/example-optomechanical-mouse/by-physical-structure.yaml
+$id: example-optomechanical-mouse/by-physical-structure
+type: partitive_relation
+comprehensive: { source: EXAMPLE, id: "optomechanical-mouse" }
+members:
+  - ref: { source: EXAMPLE, id: "mouse-ball" }
+    is_delimiting: true
+  - ref: { source: EXAMPLE, id: "x-axis-roller" }
+    is_delimiting: true
+  - ref: { source: EXAMPLE, id: "y-axis-roller" }
+    is_delimiting: true
+  - ref: { source: EXAMPLE, id: "infrared-emitter" }
+    is_delimiting: true
+  - ref: { source: EXAMPLE, id: "infrared-sensor" }
+    is_delimiting: true
+  - ref: { source: EXAMPLE, id: "circuit-board" }
+    # not delimiting — all computer mice have circuit boards
+  - ref: { source: EXAMPLE, id: "mouse-button" }
+    # not delimiting — all computer mice have buttons
+  - ref: { source: EXAMPLE, id: "mouse-wheel" }
+    presence: optional
+    # not all optomechanical mice have a wheel
+completeness: complete
+criterion: { eng: physical structure }
+```
+
+The five delimiting parts distinguish *optomechanical mouse* from coordinate
+concepts like *mechanical mouse* (no infrared emitter/sensor) and *optical
+mouse* (no ball, no rollers). Mouse button and wheel are non-delimiting —
+they don't distinguish the comprehensive from its coordinates.
+
+## Design history
+
+This release consolidates four iterations of n-ary relation modeling, each
+driven by real dataset evidence:
+
+| Date | Iteration | What changed |
+|------|-----------|--------------|
+| 2026-07-22 | `PartitiveHyperedge` v1 | Initial model — `enumeration: closed\|open` + opaque `markers: [double, dashed]` |
+| 2026-07-23 | `PartitiveRelation` v2 | ISO 704 / 1087-1 / 12620 terminology; markers promoted to structured data; per-member certainty; `criterion` field; ExternalConcept support |
+| 2026-07-29 | ISO 704:2022 MECE | Flat multiplicity enum replaced by MECE pair `presence × count`; delimiting parts as third orthogonal dimension |
+| 2026-07-30 | Hyperedges + per-file + DefinitionType | (this release) `GenericHyperedge` parallel to `PartitiveHyperedge`; both inherit `AbstractHyperedge` / `HyperedgeMember`; per-file storage; ISO 704 §5.3 definition types |
+
+Each iteration is preserved as a tag in the concept-model repository. The
+current wire format and class names are the ones described in this post;
+prior formats are reachable via git history if you need to understand the
+evolutionary pressure that shaped the current design.
+
 ## What's next
 
 - **OIML V 2-200:2010 migration** — the ~8 generic rakes move to per-file
@@ -283,6 +337,5 @@ for the full reasoning.
 - [Partitive Relations](/model/partitive-relations) — historical reference
 - [Relationships](/model/relationships) — binary typed edges
 - [Concepts](/model/concepts) — ManagedConcept, LocalizedConcept, ExternalConcept
-- [ISO 704:2022 MECE partitive relations](/blog/2026-07-29-iso704-2022-partitive-relations) — yesterday's post
 - [ISO 704](https://www.iso.org/standard/38109.html) — Terminology work: Principles and methods
 - [ISO 12620](https://www.iso.org/standard/56034.html) — Terminology and other content resources
