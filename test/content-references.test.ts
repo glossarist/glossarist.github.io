@@ -219,11 +219,32 @@ describe('ISO 704 + ISO 10241-1 alignment', () => {
     expect(html).toContain('normative status')
   })
 
+  it('builds /reference/iso-12620-mapping covering all 10 subgroups', () => {
+    expect(existsSync(join(root, 'dist/reference/iso-12620-mapping/index.html'))).toBe(true)
+    const html = readFileSync(join(root, 'dist/reference/iso-12620-mapping/index.html'), 'utf-8')
+    // ISO 12620 Annex A defines 10 subgroups across 3 major groups — all must be present.
+    for (const section of [
+      'A.1',   // term
+      'A.2',   // term-related information
+      'A.3',   // equivalence
+      'A.4',   // subject field
+      'A.5',   // concept-related description
+      'A.6',   // concept relation
+      'A.7',   // conceptual structures
+      'A.8',   // note
+      'A.9',   // documentary language
+      'A.10',  // administrative information
+    ]) {
+      expect(html, `ISO 12620 mapping missing subgroup ${section}`).toContain(section)
+    }
+  })
+
   it('sidebar surfaces the new ISO-aligned pages', () => {
     const sidebars = readFileSync(join(root, 'src/data/sidebars.ts'), 'utf-8')
     expect(sidebars).toContain("/model/concept-system-types")
     expect(sidebars).toContain("/model/definitions")
     expect(sidebars).toContain("/reference/iso-10241-1-mapping")
+    expect(sidebars).toContain("/reference/iso-12620-mapping")
   })
 
   it('nav dropdown includes the new pages', () => {
@@ -231,6 +252,7 @@ describe('ISO 704 + ISO 10241-1 alignment', () => {
     expect(nav).toContain("/model/concept-system-types")
     expect(nav).toContain("/model/definitions")
     expect(nav).toContain("/reference/iso-10241-1-mapping")
+    expect(nav).toContain("/reference/iso-12620-mapping")
     expect(nav).toContain("/use-cases/")
   })
 })
