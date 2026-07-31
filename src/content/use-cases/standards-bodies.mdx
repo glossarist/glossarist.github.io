@@ -1,0 +1,131 @@
+---
+title: Standards Bodies — How ISO, IEC, OGC, and OIML deploy Glossarist
+description: "Cross-cutting view of how international standards bodies use Glossarist across multiple vocabularies: ISO/TC 211 (Geolexica), ISO/TC 204 (ITS), OIML (VIML), IALA, OSGeo, and more."
+domain: Standards Bodies
+organization: ISO / IEC / OGC / OIML / IALA
+startDate: "2018-01-01"
+order: 4
+---
+
+# Standards Bodies — How ISO, IEC, OGC, and OIML deploy Glossarist
+
+Glossarist powers the public terminology registries of multiple international standards bodies. Each deployment serves a different community but uses the same data model, the same validators, and the same concept-browser. This page is the cross-cutting view — for domain-specific deep dives, see the [Metrology](/use-cases/metrology) and [Geospatial](/use-cases/geospatial) use cases.
+
+## Deployments at a glance
+
+| Body | Deployment | Concepts | Languages | Concept-browser features used |
+|------|------------|----------|-----------|-------------------------------|
+| **ISO/TC 211** (Geographic information) | [GeoLexica](https://isotc211.geolexica.org/) | 1,507 | 15 | Edition series, sphere, sections tree |
+| **ISO/TC 204** (Intelligent transport systems) | [ISO/TC 204 Geolexica](https://isotc204.geolexica.org/) | 100+ | varies | Cross-references to ISO/TC 211 |
+| **OSGeo** (Open Source Geospatial Foundation) | [OSGeo Geolexica](https://osgeo.geolexica.org/) | 444 | 6 | Curated subset of GIS terminology |
+| **OIML** (Legal metrology) | [OIML VIML](https://www.oimlsmart.org/vocab/) | 600+ | 4 | Edition series (1968 / 2000 / 2013 / 2022), lineage group |
+| **OIML** (G 18 alphabetical glossary) | [OIML Terms](https://metanorma.github.io/oiml-terms/) | 2,132 | 2 | Cross-vocabulary `see` links back to VIM/VIML |
+| **IALA** (Marine aids to navigation) | [IALA Vocabulary](https://www.glossarist.org/iala-vocab/) | varies | varies | Domain-specific term types |
+
+## The shared infrastructure
+
+What makes this a *movement* rather than six independent projects: every deployment above runs on the same software stack — they differ only in data and configuration.
+
+```
+┌─────────────────────────────────────────────────────────┐
+│  concept-model (data model, schemas, SHACL, validators) │
+└─────────────────────────────────────────────────────────┘
+                          ↑
+┌─────────────────────────────────────────────────────────┐
+│  glossarist-ruby / glossarist-js (libraries)            │
+└─────────────────────────────────────────────────────────┘
+                          ↑
+       ┌────────────────────┴──────────────────┐
+       │                                         │
+┌──────────────┐                       ┌──────────────────┐
+│ Each body's  │                       │ concept-browser  │
+│ dataset repo │                       │ (SPA renderer)   │
+└──────────────┘                       └──────────────────┘
+       │                                         │
+       └────────────────────┬──────────────────┘
+                            ↓
+              ┌──────────────────────────┐
+              │  Per-body deployment     │
+              │  (site-config.yml + data)│
+              └──────────────────────────┘
+```
+
+A fix to `concept-model` SHACL shapes propagates to every deployment on the next rebuild. A new `concept-browser` feature (e.g. the 3D relation sphere) lands once and lights up across all sites.
+
+## Common patterns across bodies
+
+### Multi-edition vocabularies (lineage groups)
+
+OIML VIML has 4 editions (1968, 2000, 2013, 2022). Each edition is a separate dataset; concepts in newer editions declare `supersedes` edges to their predecessors. The concept-browser renders an edition-series timeline sidebar with current-edition markers.
+
+```yaml
+# datasets/vim-2022/concepts/measurement-result.yaml
+related:
+  - type: supersedes
+    ref:
+      source: urn:oiml:pub:v:2-200:2007
+      id: '2.9'
+```
+
+See [Metrology use case → Cross-edition navigation](/use-cases/metrology#cross-edition-navigation-via-supersedes).
+
+### Cross-vocabulary reference (topic groups)
+
+OIML Terms (G 18) is an alphabetical glossary of 2,132 terms sourced from 88 OIML publications. Many entries originate in VIM or VIML. Cross-dataset `see` edges link each G18 term to its authoritative definition:
+
+```yaml
+# datasets/g18/concepts/00079.yaml (measuring instrument)
+related:
+  - type: see
+    ref:
+      source: urn:oiml:pub:v:2-200:2007
+      id: '3.1'
+```
+
+This enables a reader on the G18 alphabetical glossary to jump directly to the VIM authoritative definition with one click.
+
+### Curated subsets
+
+OSGeo Geolexica is a curated subset of 444 concepts from the larger ISO/TC 211 register, focused on open-source geospatial tooling. The `tags` field on `ManagedConcept` enables curation:
+
+```yaml
+tags: [osgeo-curated, foundational-gis]
+```
+
+The concept-browser's `curated` group kind renders these with curator attribution.
+
+### Multi-dataset aggregation
+
+GeoLexica aggregates concepts from multiple standards bodies (ISO/TC 211 + IEC Electropedia + others) into a single browseable interface. Each dataset retains its identity (color, owner, sections tree), but readers can search and navigate across all of them.
+
+## Why standards bodies chose Glossarist
+
+| Pain point | Pre-Glossarist | With Glossarist |
+|------------|----------------|-----------------|
+| **Multilingual publication** | Hand-translated per edition, drift over time | Structural localizations; one concept → N language entries, all in sync |
+| **Cross-edition consistency** | Manual link auditing per edition | `supersedes`/`superseded_by` derived automatically at build |
+| **Standards compliance** | Per-body formatting; hard to audit | Built-in [ISO 704](https://www.iso.org/standard/38109.html) / [ISO 10241-1](https://www.iso.org/standard/40362.html) / [ISO 12620](https://www.iso.org/standard/37244.html) / [TBX](https://www.iso.org/standard/40362.html) alignment — see [/reference/iso-10241-1-mapping](/reference/iso-10241-1-mapping) and [/reference/iso-12620-mapping](/reference/iso-12620-mapping) |
+| **RDF / semantic web publication** | Per-body Turtle generation | Automatic SHACL-conformant Turtle + JSON-LD per concept |
+| **Reviewer workflow** | Email threads + Word comments | GitHub pull requests with structured change requests |
+| **Reader UX** | Per-body custom sites | Same concept-browser UX across all deployments; readers learn once |
+
+## Adopting the same pattern
+
+If you maintain a terminology registry for a standards body, scientific union, or regulatory agency, the path to a Glossarist deployment is:
+
+1. **Survey your data** — how many concepts, how many languages, what relations exist
+2. **Map your fields** to the Glossarist model using [ISO 10241-1 mapping](/reference/iso-10241-1-mapping) and [ISO 12620 mapping](/reference/iso-12620-mapping)
+3. **Migrate a sample** — convert ~50 concepts using the [migration guide](/docs/adopt/3-migration/)
+4. **Deploy a staging concept-browser** using the [Quickstart](/docs/adopt/quickstart)
+5. **Iterate** with your editorial team — see [Adoption Guide](/docs/adopt/) for the full workflow
+
+The Glossarist team is happy to advise on migrations. [Open an issue](https://github.com/glossarist/concept-model/issues) to start the conversation.
+
+## See also
+
+- [Metrology use case](/use-cases/metrology) — OIML / VIM deep dive
+- [Geospatial use case](/use-cases/geospatial) — ISO/TC 211 + OGC + INSPIRE deep dive
+- [Chemistry use case](/use-cases/chemistry) — IUPAC Gold Book + Colour Index deep dive
+- [Concept Browser](/docs/software/concept-browser) — deployment reference
+- [Concepts](/model/concepts) — the underlying data model shared by every deployment
+- [Reader's Guide](/readers-guide) — what readers see when you publish

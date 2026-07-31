@@ -58,8 +58,10 @@ describe('Markdown links resolve to content', () => {
   for (const file of mdxFiles) {
     const path = file.replace(/\.mdx$/, '')
     const withoutIndex = path.replace(/\/index$/, '')
-    builtRoutes.add('/' + withoutIndex)
-    if (path.endsWith('/index')) builtRoutes.add('/' + path)
+    // The `pages/` collection maps to top-level URLs (e.g. pages/about → /about)
+    const asRoute = withoutIndex.replace(/^pages\//, '')
+    builtRoutes.add('/' + asRoute)
+    if (path.endsWith('/index')) builtRoutes.add('/' + withoutIndex)
   }
 
   // Anchor-only and external links are skipped; only same-site paths matter.
