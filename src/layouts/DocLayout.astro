@@ -2,6 +2,7 @@
 import BaseLayout from './BaseLayout.astro'
 import Sidebar from '@components/Sidebar.astro'
 import Outline from '@components/Outline.astro'
+import { deriveBreadcrumbs } from './seo'
 
 interface Heading {
   depth: number
@@ -30,7 +31,7 @@ const {
 const showChrome = !fullscreen
 ---
 
-<BaseLayout title={title} description={description} fullscreen={fullscreen}>
+<BaseLayout title={title} description={description} fullscreen={fullscreen} breadcrumbs={deriveBreadcrumbs(pathname)}>
   <div class:list={[
     'doc-container',
     showChrome ? 'doc-with-chrome' : 'doc-fullscreen',

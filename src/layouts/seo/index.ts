@@ -11,5 +11,6 @@
  */
 export { buildHeadTags, buildCanonical } from './head-tags'
 export { buildJsonLd, buildTechArticleJsonLd, buildBreadcrumbJsonLd, buildWebSiteJsonLd } from './json-ld'
+export { deriveBreadcrumbs } from './breadcrumbs'
 export { HREFLANG_LOCALES } from './types'
 export type { SeoData, SeoType, BreadcrumbItem, HreflangLocale } from './types'
