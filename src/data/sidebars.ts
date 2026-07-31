@@ -24,6 +24,7 @@ export const sidebars: Record<string, SidebarGroup[]> = {
         { text: 'Hyperedges', link: '/model/hyperedges' },
         { text: 'Partitive Relations', link: '/model/partitive-relations' },
         { text: 'Generic Relations', link: '/model/generic-relations' },
+        { text: 'Sequential Relations', link: '/model/sequential-relations' },
         { text: 'Concept System Types', link: '/model/concept-system-types' },
         { text: 'Sources', link: '/model/sources' },
         { text: 'Datasets & Sections', link: '/model/datasets' },
