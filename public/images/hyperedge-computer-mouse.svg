@@ -117,7 +117,7 @@
 
   <text x="455" y="468" class="small" font-family="ui-monospace, monospace">members:</text>
   <text x="455" y="482" class="small" font-family="ui-monospace, monospace">  - ref: { source: EXAMPLE, id: "mechanical-mouse" }</text>
-  <text x="455" y="496" class="small" font-family="ui-monospace, monospace">    characteristic: { eng: detecting movement by rollers }</text>
+  <text x="455" y="496" class="small" font-family="ui-monospace, monospace">    delimitingCharacteristic: { eng: detecting movement by rollers }</text>
   <text x="455" y="510" class="small" font-family="ui-monospace, monospace">  - ref: { source: EXAMPLE, id: "optomechanical-mouse" }</text>
-  <text x="455" y="524" class="small" font-family="ui-monospace, monospace">    characteristic: { eng: ... by rollers + light sensors }</text>
+  <text x="455" y="524" class="small" font-family="ui-monospace, monospace">    delimitingCharacteristic: { eng: ... by rollers + light sensors }</text>
 </svg>

@@ -14,6 +14,7 @@ interface Props {
 const { title, description = 'Open-source software for maintaining multi-language concept systems', fullscreen = false } = Astro.props
 const pageTitle = title === 'Glossarist' ? title : `${title} | Glossarist`
 const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://www.glossarist.org').toString()
+const ogImage = new URL('/og-default.png', Astro.site ?? 'https://www.glossarist.org').toString()
 
 // JSON-LD structured data: TechArticle for docs/reference/model pages,
 // WebSite for the homepage. Helps search engines understand that this
@@ -59,6 +60,21 @@ const structured = isHome
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="en" href="https://www.glossarist.org/" />
+    <link rel="alternate" hreflang="fr" href="https://www.glossarist.org/?lang=fra" />
+    <link rel="alternate" hreflang="zh-Hans" href="https://www.glossarist.org/?lang=zho-Hans" />
+    <link rel="alternate" hreflang="zh-Hant" href="https://www.glossarist.org/?lang=zho-Hant" />
+    <link rel="alternate" hreflang="x-default" href="https://www.glossarist.org/" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:type" content={isHome ? 'website' : 'article'} />
+    <meta property="og:site_name" content="Glossarist" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
     <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="shortcut icon" href="/favicon.ico" />

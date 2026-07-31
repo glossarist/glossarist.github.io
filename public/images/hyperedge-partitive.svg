@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 360" role="img" aria-labelledby="title desc">
   <title id="title">Partitive hyperedge — VIM measurement result decomposed into its parts</title>
-  <desc id="desc">Comprehensive concept "measurement result" (VIM 2.9) at the top. Three partitive members drop from a shared horizontal backline (complete decomposition). Left tooth: single solid line = compulsory, exactly_one (measured quantity value, VIM 2.10). Middle tooth: double solid line = compulsory, multiple (measurement uncertainties, VIM 2.26 — one or more per result). Right tooth: single dashed line = optional, exactly_one (measurement procedure, VIM 2.6 — sometimes cited alongside the result, sometimes not). Per ISO 704:2022 §5.5.4.3 line notation.</desc>
+  <desc id="desc">Comprehensive concept "measurement result" (VIM 2.9) at the top. Three partitive members drop from a shared horizontal backline (complete decomposition). Left tooth: single solid line = compulsory, exactly_one (measured quantity value, VIM 2.10). Middle tooth: single solid + single dashed = compulsory, at_least_one (measurement uncertainty components, VIM 2.26 — at least one of Type A / Type B). Right tooth: single dashed line = optional, exactly_one (measurement procedure, VIM 2.6 — sometimes referenced alongside the result). Per ISO 704:2022 §5.5.4.3 line notation.</desc>
   <style>
     .box { fill: #f8f9fa; stroke: #343a40; stroke-width: 1.5; }
     .label { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 13px; fill: #212529; }
@@ -23,10 +23,10 @@
   <line x1="180" y1="100" x2="180" y2="200" class="tooth-solid"/>
   <text x="180" y="160" text-anchor="middle" class="small">required · exactly_one</text>
 
-  <!-- Tooth 2: double solid (compulsory, multiple) -->
-  <line x1="356" y1="100" x2="356" y2="200" class="tooth-solid"/>
-  <line x1="364" y1="100" x2="364" y2="200" class="tooth-solid"/>
-  <text x="360" y="160" text-anchor="middle" class="small">required · multiple</text>
+  <!-- Tooth 2: solid + dashed pair (compulsory, at_least_one) -->
+  <line x1="354" y1="100" x2="354" y2="200" class="tooth-solid"/>
+  <line x1="366" y1="100" x2="366" y2="200" class="tooth-dashed"/>
+  <text x="360" y="160" text-anchor="middle" class="small">required · at_least_one</text>
 
   <!-- Tooth 3: single dashed (optional, exactly_one) -->
   <line x1="540" y1="100" x2="540" y2="200" class="tooth-dashed"/>
@@ -39,7 +39,7 @@
 
   <rect x="280" y="220" width="160" height="40" rx="6" class="box"/>
   <text x="360" y="238" text-anchor="middle" class="label">measurement uncertainty</text>
-  <text x="360" y="252" text-anchor="middle" class="small">VIM 2.26</text>
+  <text x="360" y="252" text-anchor="middle" class="small">VIM 2.26 (Type A / Type B)</text>
 
   <rect x="460" y="220" width="160" height="40" rx="6" class="box"/>
   <text x="540" y="238" text-anchor="middle" class="label">measurement procedure</text>
@@ -47,6 +47,6 @@
 
   <!-- Footer legend -->
   <text x="360" y="310" text-anchor="middle" class="small">ISO 704:2022 §5.5.4.3 — line notation: single solid = required + exactly_one,</text>
-  <text x="360" y="326" text-anchor="middle" class="small">double solid = required + multiple, dashed = optional. All teeth share the comprehensive</text>
-  <text x="360" y="342" text-anchor="middle" class="small">AND the criterion of subdivision (coordinate concepts per ISO 12620).</text>
+  <text x="360" y="326" text-anchor="middle" class="small">solid + dashed pair = required + at_least_one, single dashed = optional.</text>
+  <text x="360" y="342" text-anchor="middle" class="small">All teeth share the comprehensive AND the criterion of subdivision (coordinate concepts per ISO 12620).</text>
 </svg>

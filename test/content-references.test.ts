@@ -163,7 +163,11 @@ describe('Hyperedges content (PR #86)', () => {
       'hyperedge-generalization.svg',
       'hyperedge-mece-multiplicity.svg',
       'hyperedge-per-file-storage.svg',
-      'hyperedge-generic-computer-mouse.svg',
+      'hyperedge-computer-mouse.svg',
+      'hyperedge-optomechanical-mouse.svg',
+      'hyperedge-bicycle.svg',
+      'hyperedge-vehicle.svg',
+      'hyperedge-sequential.svg',
     ]
     for (const name of expected) {
       const path = join(publicDir, 'images', name)
@@ -178,7 +182,11 @@ describe('Hyperedges content (PR #86)', () => {
       'hyperedge-generalization.svg',
       'hyperedge-mece-multiplicity.svg',
       'hyperedge-per-file-storage.svg',
-      'hyperedge-generic-computer-mouse.svg',
+      'hyperedge-computer-mouse.svg',
+      'hyperedge-optomechanical-mouse.svg',
+      'hyperedge-bicycle.svg',
+      'hyperedge-vehicle.svg',
+      'hyperedge-sequential.svg',
     ]
     for (const name of expected) {
       const svg = readFileSync(join(publicDir, 'images', name), 'utf-8')
@@ -357,6 +365,32 @@ describe('SEO invariants (JSON-LD + canonical)', () => {
       expect(html, `${path} missing canonical`).toMatch(/<link rel="canonical" href="https:\/\/www\.glossarist\.org[^"]*"/)
     }
   })
+
+  it('homepage emits hreflang alternate links for every locale', () => {
+    const html = readBuilt('dist/index.html')
+    // 4 supported locales + x-default
+    expect(html).toMatch(/<link rel="alternate" hreflang="en" /)
+    expect(html).toMatch(/<link rel="alternate" hreflang="fr" /)
+    expect(html).toMatch(/<link rel="alternate" hreflang="zh-Hans" /)
+    expect(html).toMatch(/<link rel="alternate" hreflang="zh-Hant" /)
+    expect(html).toMatch(/<link rel="alternate" hreflang="x-default" /)
+  })
+
+  it('every page emits OG + Twitter Card meta tags', () => {
+    const samples = [
+      'dist/index.html',
+      'dist/model/hyperedges/index.html',
+      'dist/use-cases/metrology/index.html',
+    ]
+    for (const path of samples) {
+      const html = readBuilt(path)
+      expect(html, `${path} missing og:title`).toMatch(/<meta property="og:title" content="[^"]+"/)
+      expect(html, `${path} missing og:description`).toMatch(/<meta property="og:description" content="[^"]+"/)
+      expect(html, `${path} missing og:url`).toMatch(/<meta property="og:url" content="https:\/\/www\.glossarist\.org/)
+      expect(html, `${path} missing og:image`).toMatch(/<meta property="og:image" content="[^"]+"/)
+      expect(html, `${path} missing twitter:card`).toMatch(/<meta name="twitter:card" content="[^"]+"/)
+    }
+  })
 })
 
 describe('Hyperedge SVG rendering invariants', () => {
@@ -400,10 +434,31 @@ describe('Hyperedge SVG rendering invariants', () => {
     const svg = readFileSync(join(root, 'public/images/hyperedge-partitive.svg'), 'utf-8')
     expect(svg).not.toMatch(/delimiting/i)
     expect(svg).not.toMatch(/tooth-delimit/)
-    // The corrected SVG must show three distinct MECE multiplicities
+    // The corrected SVG demonstrates three distinct MECE multiplicities
+    // (exactly_one, at_least_one, optional) — verifying the at_least_one
+    // notation is present catches regression to the earlier "multiple"
+    // version which was semantically off for VIM measurement uncertainty.
     expect(svg).toMatch(/required · exactly_one/)
-    expect(svg).toMatch(/required · multiple/)
+    expect(svg).toMatch(/required · at_least_one/)
     expect(svg).toMatch(/optional · exactly_one/)
+  })
+
+  it('hyperedge SVG wire previews use canonical field names (not "characteristic:")', () => {
+    // Regression for BUG-1 in TODO.refactor/01 — generic-relation members
+    // use `delimitingCharacteristic`, not the abbreviated `characteristic`.
+    // The shorter form was a documentation drift; glossarist-js uses the
+    // full name and so must every YAML preview in our SVGs.
+    const svgFiles = readdirSync(join(root, 'public/images'))
+      .filter(f => f.startsWith('hyperedge-') && f.endsWith('.svg'))
+    for (const file of svgFiles) {
+      const svg = readFileSync(join(root, 'public/images', file), 'utf-8')
+      // Member-level field references in YAML previews must use the full
+      // canonical name. Allow `characteristic` inside <text> that's NOT
+      // a YAML key (e.g. "delimiting characteristic" as a label) — only
+      // flag the YAML-key form `characteristic:` (with colon).
+      const offenders = [...svg.matchAll(/^\s*characteristic:\s*\{/gm)]
+      expect(offenders, `${file} uses 'characteristic:' as a YAML key — must be 'delimitingCharacteristic:'`).toEqual([])
+    }
   })
 })
 
