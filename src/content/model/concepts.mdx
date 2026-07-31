@@ -17,7 +17,7 @@ A `ManagedConcept` is the top-level concept entity in Glossarist. It represents 
 | `uri` | anyURI | 0..1 | URI for the concept |
 | `status` | [conceptStatus](/reference/entity-fields) | 0..1 | Lifecycle status |
 | `related` | [RelatedConcept](/reference/entity-fields)[] | 0..* | Related concepts |
-| `partitive_relations` | [PartitiveRelation](/model/partitive-relations)[] | 0..* | ISO 704/12620 partitive relations (one-to-many decompositions with completeness, plurality, criterion) |
+| `partitive_relations` | [PartitiveHyperedge](/model/partitive-relations)[] | 0..* | ISO 704/12620 partitive hyperedges (one-to-many whole/part decompositions with MECE presence/count, delimiting parts, completeness, subdivision criterion). Per-file storage at `relations/<id>/<slug>.yaml`. See also [Hyperedges](/model/hyperedges) for the abstract base. |
 | `dates` | [ConceptDate](/reference/entity-fields)[] | 0..* | Governance events |
 | `sources` | [ConceptSource](/model/sources)[] | 0..* | Concept-level sources |
 | `domains` | [Reference](/reference/entity-fields)[] | 0..* | Subject area references (rendered as `<domain>`) |

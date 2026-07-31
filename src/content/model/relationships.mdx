@@ -60,46 +60,45 @@ related:
 
 <figure>
   <img src="/images/model/relations/binary-has-part.svg" alt="Two concept boxes connected by a labeled arrow. The left box 'bicycle' points to the right box 'wheel' via an arrow labeled 'has_part' (inverse: is_part_of)." loading="lazy" />
-  <figcaption>Binary partitive edge. Use for single pairwise assertions without completeness or plurality claims.</figcaption>
+  <figcaption>Binary partitive edge. Use for single pairwise assertions without completeness or multiplicity claims.</figcaption>
 </figure>
 
 ### Partitive relations (n-ary)
 
 When a partitive decomposition is *one-to-many* and the membership,
-completeness, or type-shared plurality is jointly significant, use
-a `PartitiveRelation` (ISO 704) instead of N binary `has_part` /
-`is_part_of` edges. Relations carry:
+completeness, or per-member multiplicity is jointly significant, use
+a `PartitiveHyperedge` (ISO 704:2022 §5.5.4.3) instead of N binary
+`has_part` / `is_part_of` edges. Each hyperedge carries:
 
-- `completeness` — `complete` (partitives fitted together constitute
-  the comprehensive) or `partial` (others exist beyond those encoded)
-- `plurality` — ISO 704's close-set double line and broken line as
-  structured data (`is_shared`, `is_uncertain`, optional `shared_type`)
+- `completeness` — `complete` (parts fitted together constitute the
+  comprehensive) or `partial` (others exist beyond those encoded)
 - `criterion` — ISO 12620 subdivision criterion for coordinate-concept
   coherence
-- per-partitive `certainty` — confirmed (default) or possible
-  (Glossarist extension)
+- per-member **MECE multiplicity** — `presence` (`required` | `optional`)
+  × `count` (`exactly_one` | `at_least_one` | `multiple`), plus the
+  orthogonal `is_delimiting` flag (ISO 704 bold 3x-width line)
 
 ```yaml
-partitive_relations:
-  - comprehensive: { source: VIM, id: "112-02-09" }
-    partitives:
-      - ref: { source: VIM, id: "112-02-10" }
-      - ref: { source: VIM, id: "112-03-26" }
-    completeness: complete
-    plurality:
-      is_shared: true        # ISO 704 close-set double line
-    criterion:
-      eng: measurement result composition
+# relations/viml-112-02-09/measurement-result-composition.yaml
+$id: viml-112-02-09/measurement-result-composition
+type: partitive_relation
+comprehensive: { source: VIM, id: "112-02-09" }
+members:
+  - ref: { source: VIM, id: "112-02-10" }
+  - ref: { source: VIM, id: "112-03-26" }
+completeness: complete
+criterion: { eng: measurement result composition }
 ```
 
-ISO 704 requires **two or more** partitives per relation. A single
-partitive should be expressed as a binary `has_part` edge instead.
+ISO 704 requires **two or more** parts per rake. A single partitive
+assertion should be expressed as a binary `has_part` edge instead.
 
 Both shapes coexist on the same concept — no automatic consolidation
-is performed. The `check-binary-has-part-redundancy` validator
-warns when binary `has_part` edges duplicate a PartitiveRelation's
-assertions. See [Partitive Relations](/model/partitive-relations)
-for the full model, YAML authoring, RDF emission, and validation rules.
+is performed. The `check-binary-has-part-redundancy` validator warns
+when binary `has_part` edges duplicate a `PartitiveHyperedge`'s
+assertions. See [Partitive Relations](/model/partitive-relations) for
+the full model, YAML authoring, RDF emission, and validation rules,
+and [Hyperedges](/model/hyperedges) for the shared abstract base.
 
 <figure>
   <img src="/images/model/relations/generic-tree.svg" alt="ISO 704 generic-relation tree. A superordinate concept 'measurement unit' at the top branches down to 'SI unit' and 'off-system unit', with three dots indicating more specific concepts exist." loading="lazy" />

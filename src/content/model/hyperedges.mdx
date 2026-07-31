@@ -78,7 +78,7 @@ ISO 704:2022 encodes per-member multiplicity via diagram line notation. Glossari
 - **Presence** (`required` | `optional`) — line style
 - **Count** (`exactly_one` | `at_least_one` | `multiple`) — line count
 
-A third orthogonal flag — **is_delimiting** (boolean) — encodes the bold 3x-width line.
+The bold 3x-width line in ISO 704 diagrams is **not** a third MECE axis — it's modeled differently per leaf (`is_delimiting: boolean` on `PartitiveMember` for delimiting parts, `delimitingCharacteristic: LocalizedString` on `GenericMember` for the species intension-difference). See [Model](#model) below.
 
 ![MECE member multiplicity table](/images/hyperedge-mece-multiplicity.svg)
 
@@ -173,21 +173,25 @@ AbstractHyperedge
   +notes:         LocalizedString [0..1]      # optional commentary
   +status:        ConceptStatus [0..1]        # lifecycle (independent of comprehensive)
 
-HyperedgeMember (abstract)
+HyperedgeMember (abstract — shared MECE dimensions only)
   +ref:           ConceptRef [1]
   +presence:      Presence [0..1]             # required (default) | optional
   +count:         Count [0..1]                # exactly_one (default) | at_least_one | multiple
-  +is_delimiting: Boolean [0..1]              # ISO 704 delimiting part (partitive)
+
+PartitiveMember extends HyperedgeMember
+  +is_delimiting: Boolean [0..1]              # ISO 704 §5.5.4.2.2 delimiting part (default: false)
 
 GenericMember extends HyperedgeMember
-  +characteristic: LocalizedString [0..1]     # ISO 704:2022 §5.5.4.2.1 delimiting
-                                              # characteristic that distinguishes
-                                              # this species from coordinate concepts
+  +delimitingCharacteristic: LocalizedString [1]  # REQUIRED — ISO 704 §5.5.4.2.1 intension difference
 ```
 
-The `characteristic` field on `GenericMember` carries the **delimiting characteristic** (ISO 704:2022 §5.5.4.2.1) — the intension-difference that makes the species coordinate with its siblings within the rake. Without it, the rake is just a list of narrower concepts, not a coordinated decomposition.
+The split is deliberate:
 
-For partitive members, `is_delimiting` plays the analogous role (a boolean flag, no text — parts either delimit or they don't).
+- **`HyperedgeMember` carries only the shared MECE pair (`presence` × `count`).** These are the dimensions every n-ary member has regardless of hyperedge type.
+- **`PartitiveMember` adds `is_delimiting: boolean`** — a partitive-specific flag (ISO 704 §5.5.4.2.2) marking parts that behave like delimiting characteristics. Not all parts delimit, so the flag carries real information; rendered as the bold 3x-width line in source diagrams.
+- **`GenericMember` adds `delimitingCharacteristic: LocalizedString` (required)** — per ISO 704 §5.5.4.2.1, every species carries at least one delimiting characteristic (the intension-difference from coordinate concepts). Generic members don't get a boolean flag — they get the *text itself*, because the text is the data.
+
+Construction-time validation in `glossarist-js` enforces `delimitingCharacteristic`'s presence and non-emptiness on every `GenericMember`.
 
 `PartitiveHyperedge`, `GenericHyperedge`, `PartitiveMember`, `GenericMember` are thin leaf classes that inherit the shared shape. Adding a fourth n-ary type later (e.g. `SequentialHyperedge` for ISO 12620 sequential concept systems) is one class addition — no validator or schema refactor.
 
@@ -203,13 +207,13 @@ comprehensive:
   id: "5.1"
 members:
   - ref: { source: VIML, id: "5.13" }
-    characteristic:
+    delimitingCharacteristic:
       eng: material sufficiently homogeneous and stable for a certified property
   - ref: { source: VIML, id: "3.2" }
-    characteristic:
+    delimitingCharacteristic:
       eng: assembly of measuring instruments and auxiliary apparatus
   - ref: { source: VIML, id: "3.6" }
-    characteristic:
+    delimitingCharacteristic:
       eng: device that reproduces a given quantity value during use
 completeness: complete
 criterion:

@@ -1,28 +1,225 @@
 ---
-title: "Generic Relations (historical)"
-description: "Historical reference for the GenericRelation class, renamed to GenericHyperedge in Glossarist v3.3. See /model/hyperedges for the unified model."
+title: Generic Relations
+description: "GenericHyperedge — the generalization (genus/species) specialization of Hyperedge per ISO 704:2022 §5.5.4.1 / §5.5.4.2.1. Multidimensionality (§5.6.3), per-species delimiting characteristics, and the inheritance principle."
 ---
 
-# Generic Relations (historical)
+# Generic Relations
 
-> **Renamed to `GenericHyperedge`** in Glossarist v3.3.
-> The partitive vs. generic distinction is now modeled as two leaf classes
-> (`PartitiveHyperedge`, `GenericHyperedge`) of a shared `AbstractHyperedge`
-> base. The wire discriminator `type: generic_relation` is unchanged.
+`GenericHyperedge` is the generalization specialization of [`Hyperedge`](/model/hyperedges) — one comprehensive concept (the **genus**) decomposed into two or more specific concepts (the **species**) which together constitute a decomposition by some criterion of subdivision. Implements [ISO 704:2022](https://www.iso.org/standard/38109.html) §5.5.4.1 (generic concept systems) and §5.5.4.2.1 (generic relations and delimiting characteristics).
 
-The full model — MECE member multiplicity, ExternalConcept as
-comprehensive, validators, per-file storage at
-`relations/<comprehensive-id>/<criterion-slug>.yaml` — lives on the
-unified page:
+This page covers what's **unique** to generic rakes. The shared model — MECE member multiplicity, criterion of subdivision, per-file storage, ExternalConcept as comprehensive — lives on the [Hyperedges](/model/hyperedges) page.
 
-**[→ Hyperedges](/model/hyperedges)**
+## Why n-ary?
 
-For the v3.3 release announcement covering the rename, the
-generalization hyperedge, and the move to per-file storage, see
-[Hyperedges, per-file storage, and definition types](/blog/2026-07-30-hyperedges-per-file-storage).
+Most generic relations in real datasets are pairwise: binary `broader_generic` / `narrower_generic` edges suffice for "X is-a Y" assertions.
+
+`GenericHyperedge` is for the case where the source diagram shows a **rake**: one genus at the top, multiple species dropping from a shared backline, where the membership, completeness, or per-member presence/count is *jointly* significant.
+
+The trigger condition: when a real dataset has generic rakes with multiple criterion-of-subdivision groups, binary edges can't express the grouping coherently.
+
+## The canonical ISO 704:2022 example — *computer mouse*
+
+ISO 704:2022 §5.5.4.2.1 works through *computer mouse* in detail. The genus is decomposed under **two distinct criteria of subdivision** — a phenomenon ISO 704 calls **multidimensionality** (§5.6.3):
+
+- **By movement detection** → *mechanical mouse*, *optomechanical mouse*, *optical mouse*
+- **By computer connection** → *wired mouse*, *wireless mouse*
+
+Each rake is its own `GenericHyperedge` (its own file under `relations/<genus-id>/`):
+
+![Generic hyperedge — computer mouse with two criteria of subdivision (ISO 704:2022 §5.5.4.2.1)](/images/hyperedge-generic-computer-mouse.svg)
+
+Species **within one rake** are coordinate concepts (share genus + share criterion). Species **across rakes** are NOT coordinate — *optical mouse* (criterion: movement detection) and *wireless mouse* (criterion: connection) share the genus but no criterion, so they don't belong to the same coordinate set.
+
+### Per-species delimiting characteristic (ISO 704:2022 §5.5.4.2.1)
+
+ISO 704:2022 requires every species to carry at least one **delimiting characteristic** — the intension-difference that distinguishes it from coordinate concepts. For *computer mouse* under movement detection:
+
+| Species | Delimiting characteristic |
+|---------|---------------------------|
+| mechanical mouse | detecting movement by means of rollers |
+| optomechanical mouse | detecting movement by means of rollers and light sensors |
+| optical mouse | detecting movement by means of light sensors |
+
+Unlike [partitive rakes](/model/partitive-relations#delimiting-parts-iso-7042022-§55422), where `is_delimiting` is a boolean flag on `PartitiveMember` (some parts delimit, others don't), every `GenericMember` carries its delimiting characteristic **as data**: a required `delimitingCharacteristic: LocalizedString` field holding the actual text. This is the intension-difference between the species and its coordinate siblings — without it, the rake is just a list of narrower concepts, not a coordinated decomposition.
+
+`glossarist-js` enforces `delimitingCharacteristic`'s presence and non-emptiness at construction time on every `GenericMember`.
+
+### Inheritance principle (ISO 704:2022 §5.5.4.2.1 Note 1)
+
+> "If concept B is a specific concept of the generic concept A, then the intension of A is part of the intension of B."
+
+The species inherits the genus intension *plus* its delimiting characteristic. ISO 704 calls a vertical chain of generic relations a **concept ladder**; a group of coordinate concepts forms a **horizontal series**. The inheritance principle is a *validation test* for generic relations: if a putative species's intension does not include the genus intension, the relation is wrong.
+
+Glossarist does **not** materialize inherited characteristics on the species (that would duplicate the genus's definition onto every species). The inheritance principle is a reasoning pattern over correct definitions — see ["What we deliberately did not do"](/blog/2026-07-30-hyperedges-per-file-storage) in the v3.3 announcement.
+
+## Multidimensionality in real data — OIML V 2-200:2010
+
+The *computer mouse* example has 2 criteria. Real terminology vocabularies go further: OIML V 2-200:2010 carries vocabularies where a single genus is decomposed under 6 distinct criteria.
+
+| Genus | Criterion groups |
+|-------|------------------|
+| 5.1 *measurement standard* | 6 (by realization medium, by calibration role, by governance level, by metrological hierarchy, by reference/working, by travel) |
+| 1.9 *measurement unit* | 2 (by system membership, by unit multiple) |
+| *(precision condition of measurement)* [ExternalConcept] | 2 (by condition type, by precision level) |
+
+Each criterion group is a distinct `GenericHyperedge`. Without the hyperedge shape, these decompositions collapse into an undifferentiated list of binary `narrower_generic` edges with no way to say which species belong to which rake.
+
+![Generalization hyperedge — measurement standard with two criterion groups](/images/hyperedge-generalization.svg)
+
+## YAML authoring
+
+Per-file layout: `relations/<comprehensive-id>/<criterion-slug>.yaml` (see [Hyperedges — Per-file storage](/model/hyperedges#per-file-storage) for the rationale).
+
+```yaml
+# relations/example-computer-mouse/by-movement-detection.yaml
+$id: example-computer-mouse/by-movement-detection
+type: generic_relation
+status: valid
+comprehensive: { source: EXAMPLE, id: computer-mouse }
+members:
+  - ref: { source: EXAMPLE, id: mechanical-mouse }
+    delimitingCharacteristic: { eng: detecting movement by means of rollers }
+  - ref: { source: EXAMPLE, id: optomechanical-mouse }
+    delimitingCharacteristic: { eng: detecting movement by means of rollers and light sensors }
+  - ref: { source: EXAMPLE, id: optical-mouse }
+    delimitingCharacteristic: { eng: detecting movement by means of light sensors }
+completeness: complete
+criterion: { eng: by movement detection }
+sources:
+  - type: authoritative
+    origin:
+      ref: { source: ISO, id: "704:2022" }
+      locality: { type: figure, reference_from: "§5.5.4.2.1 Example 4" }
+```
+
+The companion rake lives next to it:
+
+```yaml
+# relations/example-computer-mouse/by-computer-connection.yaml
+$id: example-computer-mouse/by-computer-connection
+type: generic_relation
+status: valid
+comprehensive: { source: EXAMPLE, id: computer-mouse }
+members:
+  - ref: { source: EXAMPLE, id: wired-mouse }
+    delimitingCharacteristic: { eng: using a corded electrical connection }
+  - ref: { source: EXAMPLE, id: wireless-mouse }
+    delimitingCharacteristic: { eng: using a cordless light or sound connection }
+completeness: complete
+criterion: { eng: by computer connection }
+sources:
+  - type: authoritative
+    origin:
+      ref: { source: ISO, id: "704:2022" }
+      locality: { type: figure, reference_from: "§5.5.4.2.1 Example 4" }
+```
+
+The directory `relations/example-computer-mouse/` IS the index — every criterion group on `computer-mouse` enumerated as a sibling file.
+
+### OIML-scale example
+
+```yaml
+# relations/viml-5-1/by-realization-medium.yaml
+$id: viml-5-1/by-realization-medium
+type: generic_relation
+status: valid
+comprehensive:
+  source: VIML
+  id: "5.1"
+members:
+  - ref: { source: VIML, id: "5.13" }
+    delimitingCharacteristic: { eng: material sufficiently homogeneous and stable for a certified property }
+  - ref: { source: VIML, id: "3.2" }
+    delimitingCharacteristic: { eng: assembly of measuring instruments and auxiliary apparatus }
+  - ref: { source: VIML, id: "3.6" }
+    delimitingCharacteristic: { eng: device that reproduces a given quantity value during use }
+completeness: complete
+criterion:
+  eng: by realization medium
+  fra: par milieu de réalisation
+sources:
+  - type: authoritative
+    origin:
+      ref: { source: OIML, id: "V 2-200:2010" }
+      locality: { type: figure, reference_from: "5.1/Fig.1" }
+```
+
+The same genus carries 5 more hyperedges (one per remaining criterion group), each in its own file under `relations/viml-5-1/`.
+
+## Field reference
+
+| Field | Type | Notes |
+|-------|------|-------|
+| `$id` | string | `<comprehensive-id>/<criterion-slug>` — must match file path |
+| `type` | enum | `generic_relation` (wire discriminator) |
+| `comprehensive` | ConceptRef | The genus concept |
+| `members` | `GenericMember[2..*]` | The species concepts |
+| `completeness` | `complete` \| `partial` | Default: `complete` |
+| `criterion` | LocalizedString | ISO 12620 subdivision principle (disambiguates rakes on the same genus — multidimensionality) |
+| `sources` | ConceptSource[] | Bibliographic provenance |
+| `notes` | LocalizedString | Optional commentary |
+| `status` | ConceptStatus | Lifecycle (independent of genus) |
+
+### GenericMember fields
+
+`GenericMember` extends [`HyperedgeMember`](/model/hyperedges#model) with one required field:
+
+| Field | Type | Notes |
+|-------|------|-------|
+| `ref` | ConceptRef | The species concept (inherited from `HyperedgeMember`) |
+| `presence` | `required` \| `optional` | ISO 704 line style; default `required` (inherited) |
+| `count` | `exactly_one` \| `at_least_one` \| `multiple` | ISO 704 line count; default `exactly_one` (inherited) |
+| `delimitingCharacteristic` | LocalizedString | **Required** — ISO 704 §5.5.4.2.1 intension-difference from coordinate concepts |
+
+The shared MECE dimensions (`presence`, `count`) are documented under [Hyperedges — MECE member multiplicity](/model/hyperedges#mece-member-multiplicity).
+
+## RDF emission
+
+```turtle
+<concept/example-computer-mouse> gloss:hasGenericHyperedge [
+  a gloss:GenericHyperedge ;
+  gloss:comprehensive <concept/example-computer-mouse> ;
+  gloss:hasGeneric
+    [ a gloss:GenericMember ; gloss:ref <concept/mechanical-mouse> ;
+      gloss:delimitingCharacteristic "detecting movement by means of rollers"@en ] ,
+    [ a gloss:GenericMember ; gloss:ref <concept/optomechanical-mouse> ;
+      gloss:delimitingCharacteristic "detecting movement by means of rollers and light sensors"@en ] ,
+    [ a gloss:GenericMember ; gloss:ref <concept/optical-mouse> ;
+      gloss:delimitingCharacteristic "detecting movement by means of light sensors"@en ] ;
+  gloss:completeness <completeness/complete> ;
+  gloss:criterion "by movement detection"@en ;
+] .
+```
+
+## Validation
+
+The `check-generic-relation-coherence` validator (and `glossarist-js` construction-time checks) enforces generic-specific invariants:
+
+- Cardinality: ≥ 2 species per rake (ISO 704 "two or more")
+- `delimitingCharacteristic` required on every `GenericMember` (ISO 704 §5.5.4.2.1)
+- No duplicate `(comprehensive, criterion)` pairs on the same genus
+- Invalid MECE combo (`optional + at_least_one`) rejected
+- Warning when a genus has 2+ rakes and any lack `criterion` — multidimensionality can't be verified without it
+
+Shared validation rules are listed under [Hyperedges — Validators](/model/hyperedges#validators).
+
+## Relation to PartitiveHyperedge
+
+| | PartitiveHyperedge | GenericHyperedge |
+|---|---|---|
+| `comprehensive` means | the whole | the genus |
+| `members` are | parts | species |
+| ISO 704 section | §5.5.4.3 / §5.5.4.2.2 | §5.5.4.1 / §5.5.4.2.1 |
+| Member delimiting semantics | `is_delimiting: boolean` (optional flag — some parts delimit) | `delimitingCharacteristic: LocalizedString` (required text — every species carries one) |
+| Wire shape | identical | identical |
+| Validators | shared (`NaryCoherence`) | shared |
+
+The split between `is_delimiting` (on `PartitiveMember`) and `delimitingCharacteristic` (on `GenericMember`) is deliberate — the two leaves model genuinely different ISO 704 semantics, not a flag-vs-text rendering of the same concept. The abstract `HyperedgeMember` carries only the shared MECE pair; each leaf adds its own delimiting dimension.
 
 ## See also
 
-- [Hyperedges](/model/hyperedges) — unified model reference
-- [Partitive Relations (historical)](/model/partitive-relations) — whole/part mirror
-- [Relationships](/model/relationships) — binary typed edges
+- [Hyperedges](/model/hyperedges) — abstract base model (shared MECE, per-file storage, ExternalConcept)
+- [Partitive Relations](/model/partitive-relations) — whole/part specialization
+- [Relationships](/model/relationships) — binary typed edges (`broader_generic`, `narrower_generic`, etc.)
+- [Concepts](/model/concepts) — ManagedConcept, LocalizedConcept, ExternalConcept
+- [ISO 704:2022](https://www.iso.org/standard/38109.html) §5.5.4.1, §5.5.4.2.1, §5.6.3 — generic concept systems, generic relations, multidimensionality

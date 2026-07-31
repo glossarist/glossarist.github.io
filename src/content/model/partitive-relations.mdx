@@ -1,28 +1,153 @@
 ---
-title: "Partitive Relations (historical)"
-description: "Historical reference for the PartitiveRelation class, renamed to PartitiveHyperedge in Glossarist v3.3. See /model/hyperedges for the unified model."
+title: Partitive Relations
+description: "PartitiveHyperedge — the partitive (whole/part) specialization of Hyperedge per ISO 704:2022 §5.5.4.3. Delimiting parts, completeness, the canonical optomechanical mouse example, partitive-specific YAML/RDF."
 ---
 
-# Partitive Relations (historical)
+# Partitive Relations
 
-> **Renamed to `PartitiveHyperedge`** in Glossarist v3.3.
-> The partitive vs. generic distinction is now modeled as two leaf classes
-> (`PartitiveHyperedge`, `GenericHyperedge`) of a shared `AbstractHyperedge`
-> base. The wire discriminator `type: partitive_relation` is unchanged.
+`PartitiveHyperedge` is the partitive specialization of [`Hyperedge`](/model/hyperedges) — one comprehensive concept (the **whole**) decomposed into two or more partitive concepts (the **parts**) which fitted together constitute the comprehensive. Implements [ISO 704:2022](https://www.iso.org/standard/38109.html) §5.5.4.3.
 
-The full model — MECE member multiplicity, ExternalConcept as
-comprehensive, validators, per-file storage at
-`relations/<comprehensive-id>/<criterion-slug>.yaml` — lives on the
-unified page:
+This page covers what's **unique** to partitive rakes. The shared model — MECE member multiplicity, criterion of subdivision, per-file storage, ExternalConcept as comprehensive — lives on the [Hyperedges](/model/hyperedges) page.
 
-**[→ Hyperedges](/model/hyperedges)**
+## ISO 704:2022 terminology
 
-For the v3.3 release announcement covering the rename, the
-generalization parallel, and the move to per-file storage, see
-[Hyperedges, per-file storage, and definition types](/blog/2026-07-30-hyperedges-per-file-storage).
+| Role | ISO term |
+|------|----------|
+| The whole concept | comprehensive concept (superordinate concept partitive) |
+| Each part concept | partitive concept (subordinate concept partitive) |
+| The relation | partitive relation |
+| Siblings in one rake | coordinate concepts |
+
+All parts within one PartitiveHyperedge are **coordinate concepts** (ISO 12620): they share the comprehensive AND the criterion of subdivision.
+
+## Delimiting parts (ISO 704:2022 §5.5.4.2.2)
+
+A **delimiting part** behaves like a delimiting characteristic: it distinguishes the comprehensive from coordinate concepts. In ISO 704 diagrams, delimiting parts are drawn with a bold (3x-width) line. The `is_delimiting: true` flag on a `PartitiveMember` encodes this — `PartitiveMember` is the only place this flag lives (it's partitive-specific per ISO 704 §5.5.4.2.2; generic members carry `delimitingCharacteristic` text instead, see [Generic Relations](/model/generic-relations#per-species-delimiting-characteristic-iso-7042022-§55421)).
+
+Delimiting is **orthogonal** to presence and count — a delimiting part can be compulsory, optional, or any other multiplicity. See the [MECE multiplicity table](/model/hyperedges#mece-member-multiplicity) on the Hyperedges page.
+
+**Canonical example** (ISO 704:2022 §5.5.4.2.2): for "optomechanical mouse":
+
+| Part | Delimiting? | Why? |
+|------|-------------|------|
+| mouse ball | yes | distinguishes from optical mice |
+| x-axis roller | yes | distinguishes from optical mice |
+| y-axis roller | yes | distinguishes from optical mice |
+| infrared emitter | yes | distinguishes from mechanical mice |
+| infrared sensor | yes | distinguishes from mechanical mice |
+| circuit board | no | all mice have circuit boards |
+| mouse button | no | all computer mice have buttons |
+| mouse wheel | no | not found on all optomechanical mice (optional) |
+
+![Optomechanical mouse — ISO 704:2022 canonical partitive example](/images/hyperedge-optomechanical-mouse.svg)
+
+## YAML authoring
+
+Per-file layout: `relations/<comprehensive-id>/<criterion-slug>.yaml` (see [Hyperedges — Per-file storage](/model/hyperedges#per-file-storage) for the rationale).
+
+```yaml
+# relations/viml-112-02-09/measurement-result-composition.yaml
+$id: viml-112-02-09/measurement-result-composition
+type: partitive_relation
+status: valid
+comprehensive:
+  source: VIM
+  id: "112-02-09"
+members:
+  - ref: { source: VIM, id: "112-02-10" }
+  - ref: { source: VIM, id: "112-03-26" }
+completeness: complete
+criterion:
+  eng: measurement result composition
+```
+
+### Optomechanical mouse (ISO 704:2022 §5.5.4.2.2)
+
+```yaml
+# relations/example-optomechanical-mouse/physical-component-decomposition.yaml
+$id: example-optomechanical-mouse/physical-component-decomposition
+type: partitive_relation
+status: valid
+comprehensive: { source: EXAMPLE, id: optomechanical-mouse }
+members:
+  - ref: { source: EXAMPLE, id: mouse-ball }
+    is_delimiting: true
+  - ref: { source: EXAMPLE, id: x-axis-roller }
+    is_delimiting: true
+  - ref: { source: EXAMPLE, id: y-axis-roller }
+    is_delimiting: true
+  - ref: { source: EXAMPLE, id: infrared-emitter }
+    is_delimiting: true
+  - ref: { source: EXAMPLE, id: infrared-sensor }
+    is_delimiting: true
+  - ref: { source: EXAMPLE, id: circuit-board }
+  - ref: { source: EXAMPLE, id: mouse-button }
+  - ref: { source: EXAMPLE, id: mouse-wheel }
+    presence: optional
+completeness: complete
+criterion:
+  eng: physical component decomposition
+```
+
+Mouse wheel has `presence: optional` (not found on all optomechanical mice). The five delimiting parts distinguish "optomechanical mouse" from coordinate concepts "mechanical mouse" and "optical mouse".
+
+### Two decompositions of the same comprehensive
+
+A comprehensive can carry multiple partitive hyperedges, each with its own criterion:
+
+```yaml
+# relations/example-bicycle/by-physical-structure.yaml
+$id: example-bicycle/by-physical-structure
+type: partitive_relation
+comprehensive: { source: EXAMPLE, id: bicycle }
+members:
+  - ref: { source: EXAMPLE, id: frame }
+  - ref: { source: EXAMPLE, id: wheels }
+completeness: complete
+criterion: { eng: physical structure }
+
+# relations/example-bicycle/by-functional-subsystem.yaml
+$id: example-bicycle/by-functional-subsystem
+type: partitive_relation
+comprehensive: { source: EXAMPLE, id: bicycle }
+members:
+  - ref: { source: EXAMPLE, id: structural }
+  - ref: { source: EXAMPLE, id: propulsion }
+completeness: complete
+criterion: { eng: functional subsystem }
+```
+
+The coherence validator rejects duplicate `(comprehensive, criterion)` pairs as errors.
+
+## RDF emission
+
+```turtle
+<concept/optomechanical-mouse> gloss:hasPartitiveHyperedge [
+  a gloss:PartitiveHyperedge ;
+  gloss:comprehensive <concept/optomechanical-mouse> ;
+  gloss:hasPartitive
+    [ a gloss:PartitiveMember ; gloss:ref <concept/mouse-ball> ; gloss:isDelimiting true ] ,
+    [ a gloss:PartitiveMember ; gloss:ref <concept/mouse-wheel> ; gloss:presence <partitivePresence/optional> ] ;
+  gloss:completeness <completeness/complete> ;
+  gloss:criterion "physical component decomposition"@en ;
+] .
+```
+
+## Validation
+
+The `check-partitive-relation-coherence` validator enforces partitive-specific invariants:
+
+- Cardinality: ≥ 2 partitive members per rake (ISO 704 "two or more")
+- No duplicate `(comprehensive, criterion)` pairs
+- Invalid MECE combo (`optional + at_least_one`) rejected
+- Warning on `is_delimiting: true` + `presence: optional` — a delimiting part that's optional is semantically incoherent
+
+Shared validation rules (criterion-of-subdivision coherence, ExternalConcept-as-comprehensive, relation-file-shape) are listed under [Hyperedges — Validators](/model/hyperedges#validators).
 
 ## See also
 
-- [Hyperedges](/model/hyperedges) — unified model reference
-- [Generic Relations (historical)](/model/generic-relations) — genus/species mirror
-- [Relationships](/model/relationships) — binary typed edges
+- [Hyperedges](/model/hyperedges) — abstract base model (shared MECE, per-file storage, ExternalConcept)
+- [Generic Relations](/model/generic-relations) — genus/species specialization
+- [Relationships](/model/relationships) — binary typed edges (`has_part`, `is_part_of`, etc.)
+- [Concepts](/model/concepts) — ManagedConcept, LocalizedConcept, ExternalConcept
+- [ISO 704:2022](https://www.iso.org/standard/38109.html) §5.5.4.3 — partitive concept systems
