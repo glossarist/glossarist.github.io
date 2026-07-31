@@ -1,0 +1,184 @@
+---
+title: ISO 12620 Data Category Mapping
+description: "ISO 12620:1999 Annex A data category groups (term, term-related, equivalence, subject field, concept-related description, concept relation, conceptual structures, note, documentary language, administrative) mapped to Glossarist fields."
+---
+
+# ISO 12620 Data Category Mapping
+
+[ISO 12620:1999](https://www.iso.org/standard/37244.html) Annex A defines the canonical registry of data categories for terminology management — the vocabulary that TBX, TMX, and every modern terminology system uses. Glossarist's data model implements the same grouping; this page maps each ISO 12620 subgroup to where it lives in Glossarist.
+
+ISO 12620 organizes data categories into three major groups subdivided into ten subgroups. The mapping below follows that structure exactly.
+
+## Term and term-related data categories
+
+### A.1 — term
+
+> "A designation of a defined concept in a special language by a linguistic expression."
+
+| ISO 12620 | Glossarist | Notes |
+|-----------|-----------|-------|
+| term | `LocalizedConcept.designations[].designation` | One concept can carry many terms (preferred / admitted / deprecated); see [Designations](/model/designations) |
+
+### A.2 — term-related information
+
+| ISO 12620 | Glossarist | Notes |
+|-----------|-----------|-------|
+| term type (`A.2.1`) | `Designation.term_type` | Full enumeration in [Term Types](/model/term-types) |
+| part of speech (`A.2.2.x`) | `Designation.grammar.part_of_speech` | |
+| grammatical gender (`A.2.2.x`) | `Designation.grammar.gender` | |
+| grammatical number (`A.2.2.x`) | `Designation.grammar.number` | |
+| geographical usage (`A.2.2.x`) | `Designation.geographical_area` | ISO 3166 country code |
+| pronunciation (`A.2.2.x`) | `Designation.pronunciation` | IPA notation |
+| normative status (`A.2.2.x`) | `Designation.normative_status` | preferred / admitted / deprecated |
+| administrative status (`A.2.2.x`) | `Designation.entry_status` | |
+| processibility (`A.2.2.x`) | (not modeled) | — |
+| etymology (`A.2.2.x`) | (not modeled) | — |
+| equivalency (`A.2.2.x`) | (use cross-dataset `related.ref`) | — |
+
+### A.3 — equivalence
+
+| ISO 12620 | Glossarist | Notes |
+|-----------|-----------|-------|
+| equivalence in another language | `localizations` map on `ManagedConcept` | One concept, one entry per language |
+| cross-vocabulary equivalence | `ManagedConcept.related` with SKOS types | `exact_match`, `close_match`, `broad_match`, `narrow_match`, `related_match` — see [Relationships — SKOS Alignment](/model/relationships#skos-alignment) |
+| false friend | `related: { type: false_friend }` | |
+| homograph | `related: { type: homograph }` | |
+| equivalent | `related: { type: equivalent }` | Within-vocabulary equivalence |
+
+## Descriptive data categories
+
+### A.4 — subject field
+
+| ISO 12620 | Glossarist | Notes |
+|-----------|-----------|-------|
+| subject field (`A.4.1`) | `ManagedConcept.domains` | Subject-area references rendered as `<domain>` in TBX |
+| classification (`A.4.2`) | `ManagedConcept.tags` | Free-form organizational labels — see [Concepts — Tags vs domains](/model/concepts#tags-vs-domains) |
+| dependent terminology (`A.4.3`) | (not modeled) | — |
+
+### A.5 — concept-related description
+
+| ISO 12620 | Glossarist | Notes |
+|-----------|-----------|-------|
+| definition (`A.5.1`) | `LocalizedConcept.definition[]` | See [Definitions](/model/definitions) for the four-type discriminator |
+| context (`A.5.2`) | `LocalizedConcept.examples[]` with `kind: context` | ISO 704:2022 §6.6.2 contexts |
+| definition type (`A.5.1.1`) | `DetailedDefinition.type` | `intensional` / `extensional` / `partitive` / `translated` |
+| example (`A.5.3`) | `LocalizedConcept.examples[]` | |
+| explanation (`A.5.4`) | `LocalizedConcept.notes[]` with `kind: explanation` | ISO 704:2022 §6.6.4 |
+| encyclopaedic information (`A.5.5`) | `LocalizedConcept.notes[]` with `kind: encyclopaedic` | ISO 704:2022 §6.6.3 |
+
+### A.6 — concept relation
+
+| ISO 12620 | Glossarist | Notes |
+|-----------|-----------|-------|
+| broader (`A.6.1`) | `related: { type: broader }` | Derives inverse `narrower` |
+| narrower (`A.6.1`) | `related: { type: narrower }` | |
+| broader_generic / narrower_generic | `related: { type: broader_generic }` | ISO 25964 BTG/NTG |
+| broader_partitive / narrower_partitive | `related: { type: broader_partitive }` | ISO 25964 BTP/NTP |
+| broader_instantial / narrower_instantial | `related: { type: broader_instantial }` | ISO 25964 BTI/NTI |
+| sequential (`A.6.x`) | `related: { type: sequentially_related }` | |
+| associative (other) | `related: { type: see \| compare \| related_concept \| ... }` | Full 52-type enumeration in [Relationships](/model/relationships) |
+| **n-ary generic rake** | `GenericHyperedge` (per-file at `relations/<id>/`) | ISO 704:2022 §5.5.4.2.1 — see [Generic Relations](/model/generic-relations) |
+| **n-ary partitive rake** | `PartitiveHyperedge` (per-file at `relations/<id>/`) | ISO 704:2022 §5.5.4.3 — see [Partitive Relations](/model/partitive-relations) |
+
+ISO 12620:1999 only modeled binary concept relations. The n-ary rake category was added in Glossarist v3.2+ following ISO 704:2022's rake notation.
+
+### A.7 — conceptual structures
+
+| ISO 12620 | Glossarist | Notes |
+|-----------|-----------|-------|
+| concept system (`A.7.1`) | implicit in the `domains` + relations graph | |
+| concept system type | inferred from relation types | ISO 704:2022 §5.6.3 — see [Concept System Types](/model/concept-system-types) |
+| monodimensional / multidimensional | inferred from criterion count | Multiple `*Hyperedge` files on same comprehensive → multidimensional |
+| monohierarchical / polyhierarchical | inferred from graph | Cross-dataset `related` edges can produce polyhierarchy |
+
+### A.8 — note
+
+| ISO 12620 | Glossarist | Notes |
+|-----------|-----------|-------|
+| note (`A.8.1`) | `LocalizedConcept.notes[]` | |
+| note (on term) | `Designation.notes[]` | |
+| note (on definition) | `DetailedDefinition.notes[]` | |
+| annotation | `LocalizedConcept.annotations[]` | Distinct from `notes` — editorial vs reader-facing |
+
+## Administrative data categories
+
+### A.9 — documentary language
+
+| ISO 12620 | Glossarist | Notes |
+|-----------|-----------|-------|
+| documentary language | `ManagedConcept.tags` | Free-form labels for grouping/filtering in publication workflows |
+| thesaurus class | `tags: [thesaurus-X]` | Convention-based |
+
+### A.10 — administrative information
+
+| ISO 12620 | Glossarist | Notes |
+|-----------|-----------|-------|
+| origination (`A.10.1`) | `ConceptSource` with `type: original` | See [Sources](/model/sources) |
+| origination date | `ConceptSource.date` | |
+| modification (`A.10.2`) | `ConceptSource` with `type: modification` | |
+| modification date | `ConceptSource.date` | |
+| confirmation (`A.10.3`) | `ConceptSource` with `type: confirmation` | |
+| source (`A.10.4`) | `ConceptSource` with `type: authoritative \| lineage` | |
+| status (`A.10.5`) | `ManagedConcept.status` (concept-level) + `LocalizedConcept.entry_status` (per-language) | |
+| `valid` / `retired` / `superseded` | `conceptStatus` taxonomy | |
+| subjection (`A.10.6`) | `ManagedConcept.dates[]` | Governance events with type, date, source |
+| entry identifier | `ManagedConcept.identifier` (also `termid` in YAML) | |
+| external database reference (`A.10.7`) | `ManagedConcept.uri` | URN-based |
+
+## Annex B — bibliographic data categories
+
+ISO 12620 Annex B (informative) lists bibliographic data categories derived from ISO 12083. Glossarist models these via the `ConceptSource` entity — see [Sources](/model/sources). The bibliographic round-trip is:
+
+| ISO 12620 / ISO 12083 | Glossarist |
+|-----------------------|-----------|
+| `<citation>` | `ConceptSource.origin.ref` |
+| `<title>` | `ConceptSource.origin.title` |
+| `<author>` | `ConceptSource.origin.author` |
+| `<date>` | `ConceptSource.date` |
+| `<pages>` | `ConceptSource.origin.locality.reference_from/to` |
+| `<type>` | `ConceptSource.type` (authoritative / lineage / modification / ...) |
+
+## Term-type enumeration (the most direct ISO 12620 ↔ Glossarist mapping)
+
+Glossarist's `term_type` enumeration on `Designation` directly implements ISO 12620 §A.2.1. The full enumeration with definitions is on [Term Types](/model/term-types). Highlights:
+
+| ISO 12620 §A.2.1.x | `term_type` value |
+|--------------------|--------------------|
+| A.2.1.1 main entry term | `entry_term` |
+| A.2.1.2 full form | `full_form` |
+| A.2.1.3 abbreviation | `abbreviation` |
+| A.2.1.4 acronym | `acronym` |
+| A.2.1.5 initialism | `initialism` |
+| A.2.1.6 clipped term | `clipped_term` |
+| A.2.1.7 short form | `short_form` |
+| A.2.1.8 variant | `variant` |
+| A.2.1.9 transliterated form | `transliterated_form` |
+| A.2.1.10 transcribed form | `transcribed_form` |
+| A.2.1.11 symbol | `symbol` |
+| A.2.1.12 formula | `formula` |
+| A.2.1.13 equation | `equation` |
+| A.2.1.20 international scientific term | `international_scientific_term` |
+| A.2.1.21 common name | `common_name` |
+| A.2.1.22 scientific name | `scientific_name` |
+| A.2.1.25 phraseological unit | `phraseological_unit` |
+
+## What Glossarist adds beyond ISO 12620
+
+ISO 12620:1999 is a comprehensive registry but predates several things Glossarist now models:
+
+1. **n-ary rakes as first-class entities** (ISO 704:2022 §5.5.4 rakes) — ISO 12620 only modeled binary relations
+2. **Per-file relation storage** at `relations/<id>/<slug>.yaml` — ISO 12620 is storage-format-agnostic
+3. **ExternalConcept + `provided_by`** for cross-dataset placeholders — ISO 12620 has no equivalent
+4. **Delimiting characteristic as structured data** on GenericMember — ISO 12620 has no equivalent
+5. **Multiple definition types** on a single concept (`intensional` + `partitive` + `translated`) — ISO 12620 expects one definition per language
+
+These additions are documented on the relevant model pages and don't break ISO 12620 interchange — they round-trip into the "concept-related description" or "concept relation" subgroups.
+
+## See also
+
+- [ISO 10241-1 Data Category Mapping](/reference/iso-10241-1-mapping) — companion mapping for the standardized-terminological-entry structure
+- [Term Types](/model/term-types) — the canonical `term_type` enumeration
+- [Concepts](/model/concepts) — `ManagedConcept` / `LocalizedConcept` / `Designation` model
+- [Sources](/model/sources) — `ConceptSource` model (administrative + bibliographic)
+- [ISO 12620:1999](https://www.iso.org/standard/37244.html) — the authoritative reference
+- [ISO 30042](https://www.iso.org/standard/40362.html) — TBX format, which ISO 12620 was designed for

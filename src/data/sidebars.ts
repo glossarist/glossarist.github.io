@@ -48,6 +48,7 @@ export const sidebars: Record<string, SidebarGroup[]> = {
         { text: 'Ontology Browser', link: '/reference/ontology' },
         { text: 'Standards', link: '/reference/standards' },
         { text: 'ISO 10241-1 Mapping', link: '/reference/iso-10241-1-mapping' },
+        { text: 'ISO 12620 Mapping', link: '/reference/iso-12620-mapping' },
       ],
     },
     {
