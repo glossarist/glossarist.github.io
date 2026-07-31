@@ -1,0 +1,169 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import ValidatorPlayground from '../../components/ValidatorPlayground.vue'
+
+const title = 'Validator Playground'
+const description = 'Paste concept YAML, get categorized validation results against the same rules glossarist-js enforces. Five preset examples cover common shapes including several intentionally broken ones.'
+---
+
+<BaseLayout title={title} description={description} fullscreen={true}>
+  <main class="playground-page">
+    <header class="playground-header">
+      <div class="playground-header-inner">
+        <p class="playback-breadcrumb"><a href="/model/concepts">Concepts</a> · Playground</p>
+        <h1>Validator <em>Playground</em></h1>
+        <p class="playground-lede">
+          Paste concept YAML on the left; categorized validation results appear on
+          the right. Five preset examples cover common shapes including several
+          intentionally broken ones. Rules mirror glossarist-js's check-* validators;
+          for full SHACL + dataset coherence, use the SDK in your build pipeline.
+        </p>
+      </div>
+    </header>
+
+    <div class="playground-body">
+      <ValidatorPlayground client:load />
+    </div>
+
+    <section class="playground-docs">
+      <div class="playground-docs-inner">
+        <h2>What gets checked</h2>
+        <p>
+          Seven hand-rolled rules covering the structural checks glossarist-js
+          enforces at construction time. Each rule cites the relevant ISO standard
+          when applicable.
+        </p>
+        <ul>
+          <li><strong>Concept shape</strong> — required fields (<code>termid</code>, <code>status</code>)</li>
+          <li><strong>Localizations present</strong> — at least one language entry (<a href="https://www.iso.org/standard/40362.html">ISO 10241-1</a> §3)</li>
+          <li><strong>Definition present per language</strong> — mandatory unless non-verbal representation is used (<a href="https://www.iso.org/standard/40362.html">ISO 10241-1</a> §6.4)</li>
+          <li><strong>Designation shape</strong> — each term has a valid type and normative_status (<a href="https://www.iso.org/standard/37244.html">ISO 12620</a> §A.2.1)</li>
+          <li><strong>Related-edge type validity</strong> — every related.type in the 52-type enumeration (<a href="https://www.iso.org/standard/37244.html">ISO 12620</a> / SKOS / ISO 25964)</li>
+          <li><strong>ExternalConcept shape</strong> — status: external must not carry definitions; should have provided_by edge (<a href="https://www.iso.org/standard/38109.html">ISO 704</a> §5.5.4.2.2)</li>
+          <li><strong>Hyperedge cardinality + MECE</strong> — each rake ≥ 2 members, valid combos, generic requires delimitingCharacteristic (<a href="https://www.iso.org/standard/38109.html">ISO 704</a> §5.5.4)</li>
+        </ul>
+
+        <h2>What this playground does NOT check</h2>
+        <p>
+          Hand-rolled structural checks are a teaching tool. For production
+          validation you need the SDK, which adds:
+        </p>
+        <ul>
+          <li>SHACL shape validation against the canonical <code>glossarist.shacl.ttl</code></li>
+          <li>Cross-concept reference resolution (do all <code>ref.source</code> URNs exist?)</li>
+          <li>Dataset-level coherence (duplicate <code>(comprehensive, criterion)</code> pairs, etc.)</li>
+          <li>RDF emission correctness (TBX round-trip)</li>
+          <li>ConceptSource locality shape</li>
+          <li>Binary <code>has_part</code> redundancy against <code>PartitiveHyperedge</code></li>
+        </ul>
+        <p>
+          Use <a href="/docs/software/glossarist-ruby">glossarist-ruby</a> in
+          your dataset CI, or <a href="/docs/software/glossarist-js">glossarist-js</a>
+          in your build pipeline, to get the full validator suite.
+        </p>
+
+        <h2>Learn more</h2>
+        <ul>
+          <li><a href="/model/concepts">Concepts</a> — the data model being validated</li>
+          <li><a href="/reference/iso-10241-1-mapping">ISO 10241-1 mapping</a> — mandatory data categories</li>
+          <li><a href="/reference/iso-12620-mapping">ISO 12620 mapping</a> — term_type and related.type enumerations</li>
+          <li><a href="/playground/hyperedges">Hyperedge Playground</a> — focused YAML-to-rake tool with hyperedge-specific validation</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+.playground-page {
+  background: var(--g-bg);
+  color: var(--g-text-1);
+  min-height: 100vh;
+}
+.playground-header {
+  background: var(--g-bg-soft);
+  padding: 3rem 1.5rem 2rem;
+  border-bottom: 1px solid var(--g-divider);
+}
+.playground-header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.playback-breadcrumb {
+  font-size: 0.8125rem;
+  font-family: var(--g-font-display);
+  color: var(--g-text-3);
+  margin: 0 0 0.5rem;
+}
+.playback-breadcrumb a {
+  color: var(--g-brand);
+  text-decoration: none;
+}
+.playground-header h1 {
+  font-family: var(--g-font-display);
+  font-size: 2.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.75rem;
+  line-height: 1.15;
+}
+.playground-header h1 em {
+  color: var(--g-brand);
+  font-style: italic;
+}
+.playground-lede {
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  color: var(--g-text-2);
+  max-width: 640px;
+  margin: 0;
+}
+.playground-lede a {
+  color: var(--g-brand);
+  text-decoration: underline;
+}
+.playground-body {
+  padding: 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.playground-docs {
+  border-top: 1px solid var(--g-divider);
+  padding: 3rem 1.5rem 5rem;
+  background: var(--g-bg);
+}
+.playground-docs-inner {
+  max-width: 720px;
+  margin: 0 auto;
+}
+.playground-docs-inner h2 {
+  font-family: var(--g-font-display);
+  font-size: 1.375rem;
+  font-weight: 600;
+  margin: 2rem 0 0.75rem;
+  letter-spacing: -0.015em;
+}
+.playground-docs-inner p,
+.playground-docs-inner li {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--g-text-2);
+}
+.playground-docs-inner ul {
+  padding-left: 1.5rem;
+}
+.playground-docs-inner li {
+  margin-bottom: 0.4rem;
+}
+.playground-docs-inner code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.875em;
+  padding: 0.1rem 0.3rem;
+  background: var(--g-code-bg);
+  border-radius: 3px;
+}
+.playground-docs-inner a {
+  color: var(--g-brand);
+  text-decoration: underline;
+}
+</style>
