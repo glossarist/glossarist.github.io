@@ -10,6 +10,21 @@
     .char-label { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 9px; fill: #6c757d; font-style: italic; }
     .char-text { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 9.5px; fill: #212529; }
     .arrow { stroke: #0c5460; stroke-width: 2; fill: none; marker-end: url(#seq-arr); }
+  
+    @media (prefers-color-scheme: dark) {
+      .box, .genus-box { fill: #1a1a2e !important; stroke: #dee2e6 !important; }
+      .label, .char-text { fill: #e9ecef !important; }
+      .small, .char-label, .name { fill: #adb5bd !important; }
+      .opt-name { fill: #ffc107 !important; }
+      .backline, .solid, .tooth-solid, .dashed, .tooth-dashed,
+      .delimit, .delimit-multi, .tooth-delimit { stroke: #e9ecef !important; }
+      .crit { fill: #4dabf7 !important; }
+      .char-connector { stroke: #495057 !important; }
+      .backline-1 { stroke: #4dabf7 !important; }
+      .backline-2 { stroke: #ff922b !important; }
+      .tooth-1 { stroke: #4dabf7 !important; }
+      .tooth-2 { stroke: #ff922b !important; }
+    }
   </style>
 
   <defs>
