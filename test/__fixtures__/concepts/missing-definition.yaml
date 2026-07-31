@@ -1,0 +1,11 @@
+# Test fixture: concept missing required definition
+# Used by: ValidatorPlayground tests (definition-present rule)
+termid: "broken-1"
+status: valid
+
+localizations:
+  eng:
+    terms:
+      - type: expression
+        designation: broken concept
+        normative_status: preferred

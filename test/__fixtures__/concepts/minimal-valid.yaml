@@ -1,0 +1,20 @@
+# Test fixture: minimal valid concept (VIM measurement result, single language)
+# Used by: ValidatorPlayground tests, concept-shape rule tests
+termid: "vim-2.9"
+status: valid
+
+localizations:
+  eng:
+    language: eng
+    terms:
+      - type: expression
+        designation: measurement result
+        normative_status: preferred
+    definition:
+      - type: intensional
+        content: >
+          A set of quantity values being attributed to a measurand
+          together with any other available relevant information.
+    sources:
+      - type: authoritative
+        origin: "VIM 2.9"

@@ -1,0 +1,9 @@
+# Test fixture: partitive hyperedge with the invalid MECE combo
+# (optional + at_least_one) — should be rejected by validators.
+type: partitive_relation
+comprehensive: { source: VIM, id: "1" }
+members:
+  - ref: { source: VIM, id: "2" }
+    presence: optional
+    count: at_least_one
+  - ref: { source: VIM, id: "3" }

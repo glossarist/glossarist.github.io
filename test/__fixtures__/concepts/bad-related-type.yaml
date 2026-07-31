@@ -1,0 +1,17 @@
+# Test fixture: concept with an unknown related.type
+# Used by: ValidatorPlayground tests (related-types rule)
+termid: "broken-2"
+status: valid
+
+localizations:
+  eng:
+    terms:
+      - type: expression
+        designation: test
+        normative_status: preferred
+    definition:
+      - content: A test concept.
+
+related:
+  - type: is_kind_of        # not in the 52-type enum
+    ref: { source: VIM, id: "1" }

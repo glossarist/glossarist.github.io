@@ -1,0 +1,13 @@
+# Test fixture: ExternalConcept with no provided_by edge (dangling)
+# Used by: ValidatorPlayground tests (external-concept-shape rule)
+termid: "ext-qft"
+status: external
+
+localizations:
+  eng:
+    terms:
+      - type: expression
+        designation: quantum field theory
+        normative_status: preferred
+    # No definition — correct for ExternalConcept
+    # But also no provided_by edge — the concept dangles
