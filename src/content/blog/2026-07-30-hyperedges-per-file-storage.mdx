@@ -32,8 +32,10 @@ partial (continues off-page).
 
 Here's a PartitiveHyperedge — the VIM *measurement result* (2.9) rake:
 
-![Partitive hyperedge diagram showing measurement result with three parts](/images/hyperedge-partitive.svg)
-
+<figure class="g-figure-light">
+  <img src="/images/hyperedge-partitive.svg" alt="Partitive hyperedge diagram showing measurement result with three parts" loading="lazy" />
+  <figcaption>Partitive hyperedge — VIM measurement result rake showing three MECE member dimensions.</figcaption>
+</figure>
 Three teeth drop from a joined backline: one solid (required part), one
 bold 3x (required + delimiting — distinguishes from coordinate concepts),
 and one dashed (optional). All three share the comprehensive AND the
@@ -55,8 +57,10 @@ rakes on the same genus.
 
 Here's how that looks in source diagrams:
 
-![Generalization hyperedge with two criterion groups on measurement standard](/images/hyperedge-generalization.svg)
-
+<figure class="g-figure-light">
+  <img src="/images/hyperedge-generalization.svg" alt="Generalization hyperedge with two criterion groups on measurement standard" loading="lazy" />
+  <figcaption>Generalization hyperedge — OIML measurement standard with two criterion groups (multidimensionality).</figcaption>
+</figure>
 Binary `broader_generic` edges can't express this grouping coherently. You'd
 have six flat lists of narrower edges with no way to distinguish which
 species belong to which decomposition. GenericHyperedge groups species by
@@ -132,8 +136,10 @@ That worked when the array was small. With OIML-scale data it breaks:
 
 ### The new layout
 
-![Per-file storage layout with directory tree and YAML preview](/images/hyperedge-per-file-storage.svg)
-
+<figure class="g-figure-light">
+  <img src="/images/hyperedge-per-file-storage.svg" alt="Per-file storage layout with directory tree and YAML preview" loading="lazy" />
+  <figcaption>Per-file storage layout — concept files alongside relation files under <code>relations/&lt;id&gt;/</code>.</figcaption>
+</figure>
 Each file holds exactly one hyperedge (one comprehensive + one criterion
 + its members). The directory IS the index — `relations/5-1/` enumerates
 every decomposition of concept 5.1.
@@ -167,8 +173,10 @@ ISO 704:2022 encodes per-member multiplicity via two orthogonal diagram
 line dimensions. Glossarist decomposes this into a **MECE pair**: presence
 (solid vs dashed) × count (line count).
 
-![MECE member multiplicity table showing all 5 valid combinations plus the invalid combo](/images/hyperedge-mece-multiplicity.svg)
-
+<figure class="g-figure-light">
+  <img src="/images/hyperedge-mece-multiplicity.svg" alt="MECE member multiplicity table showing all 5 valid combinations plus the invalid combo" loading="lazy" />
+  <figcaption>MECE member multiplicity — all five valid presence × count combinations plus the invalid one.</figcaption>
+</figure>
 Five valid combinations, one invalid. The invalid `(optional, at_least_one)`
 combo is rejected: an optional part has vacuous at-least-one (it may not
 exist at all), so it collapses to `(optional, multiple)`. Both the JSON

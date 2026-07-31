@@ -26,8 +26,10 @@ ISO 704:2022 §5.5.4.2.1 works through *computer mouse* in detail. The genus is 
 
 Each rake is its own `GenericHyperedge` (its own file under `relations/<genus-id>/`):
 
-![Generic hyperedge — computer mouse with two criteria of subdivision (ISO 704:2022 §5.5.4.2.1)](/images/hyperedge-generic-computer-mouse.svg)
-
+<figure class="g-figure-light">
+  <img src="/images/hyperedge-generic-computer-mouse.svg" alt="Generic hyperedge — computer mouse with two criteria of subdivision (ISO 704:2022 §5.5.4.2.1)" loading="lazy" />
+  <figcaption>Generic hyperedge — ISO 704:2022 §5.5.4.2.1 canonical computer-mouse example with two criterion rakes.</figcaption>
+</figure>
 Species **within one rake** are coordinate concepts (share genus + share criterion). Species **across rakes** are NOT coordinate — *optical mouse* (criterion: movement detection) and *wireless mouse* (criterion: connection) share the genus but no criterion, so they don't belong to the same coordinate set.
 
 ### Per-species delimiting characteristic (ISO 704:2022 §5.5.4.2.1)
@@ -64,8 +66,10 @@ The *computer mouse* example has 2 criteria. Real terminology vocabularies go fu
 
 Each criterion group is a distinct `GenericHyperedge`. Without the hyperedge shape, these decompositions collapse into an undifferentiated list of binary `narrower_generic` edges with no way to say which species belong to which rake.
 
-![Generalization hyperedge — measurement standard with two criterion groups](/images/hyperedge-generalization.svg)
-
+<figure class="g-figure-light">
+  <img src="/images/hyperedge-generalization.svg" alt="Generalization hyperedge — measurement standard with two criterion groups" loading="lazy" />
+  <figcaption>Generalization hyperedge — OIML measurement standard with two criterion groups (multidimensionality).</figcaption>
+</figure>
 ## YAML authoring
 
 Per-file layout: `relations/<comprehensive-id>/<criterion-slug>.yaml` (see [Hyperedges — Per-file storage](/model/hyperedges#per-file-storage) for the rationale).

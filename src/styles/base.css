@@ -187,6 +187,18 @@
     padding: 1rem;
     background: var(--g-bg-soft);
   }
+  /* SVGs authored with light-mode palette (hyperedge diagrams, etc.)
+     must always render on a light card — otherwise their hardcoded
+     dark-on-light colors become unreadable in dark mode. */
+  figure.g-figure-light img,
+  .g-figure-light img {
+    background: #ffffff !important;
+    border-color: #dee2e6 !important;
+    padding: 1.5rem !important;
+  }
+  .g-figure-light figcaption {
+    color: var(--g-text-2);
+  }
   figcaption {
     margin-top: 0.75rem;
     font-size: 0.875rem;

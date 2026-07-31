@@ -319,3 +319,51 @@ describe('SEO invariants (JSON-LD + canonical)', () => {
   })
 })
 
+describe('Hyperedge SVG rendering invariants', () => {
+  // SVGs authored with a light-mode palette (dark text/strokes on light
+  // box fills) must be wrapped in <figure class="g-figure-light"> so
+  // they render on a forced-light card in dark mode. Otherwise they're
+  // unreadable. Also: the partitive SVG must not mark "measurement
+  // uncertainty" as a delimiting part (it isn't — every measurement
+  // result has measurement uncertainty; nothing is distinguished).
+
+  it('every hyperedge SVG reference is wrapped in g-figure-light', () => {
+    const files = [
+      'src/content/model/hyperedges.mdx',
+      'src/content/model/generic-relations.mdx',
+      'src/content/model/partitive-relations.mdx',
+      'src/content/blog/2026-07-30-hyperedges-per-file-storage.mdx',
+    ]
+    for (const rel of files) {
+      const src = readFileSync(join(root, rel), 'utf-8')
+      // Any line referencing a hyperedge SVG must be inside a figure.g-figure-light block.
+      // Find each SVG reference and check the surrounding block.
+      const lines = src.split('\n')
+      let inLightFigure = false
+      const offenders: string[] = []
+      for (const line of lines) {
+        if (/^<figure class="g-figure-light">/.test(line.trim())) inLightFigure = true
+        if (/^<\/figure>/.test(line.trim())) inLightFigure = false
+        if (/\/images\/hyperedge-[a-z-]+\.svg/.test(line) && !inLightFigure) {
+          offenders.push(line.trim())
+        }
+      }
+      expect(offenders, `${rel}: hyperedge SVGs outside g-figure-light wrapper:\n${offenders.join('\n')}`).toEqual([])
+    }
+  })
+
+  it('hyperedge-partitive.svg does NOT mark measurement uncertainty as delimiting', () => {
+    // Earlier version of this SVG incorrectly labeled "measurement
+    // uncertainty" as a delimiting part. Per VIM, measurement uncertainty
+    // is part of EVERY measurement result — it doesn't distinguish
+    // coordinate concepts, so it isn't delimiting.
+    const svg = readFileSync(join(root, 'public/images/hyperedge-partitive.svg'), 'utf-8')
+    expect(svg).not.toMatch(/delimiting/i)
+    expect(svg).not.toMatch(/tooth-delimit/)
+    // The corrected SVG must show three distinct MECE multiplicities
+    expect(svg).toMatch(/required · exactly_one/)
+    expect(svg).toMatch(/required · multiple/)
+    expect(svg).toMatch(/optional · exactly_one/)
+  })
+})
+
