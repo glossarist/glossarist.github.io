@@ -23,5 +23,9 @@ exclude = [
   ".sass-cache",
   ".jekyll-cache",
   # iso.org blocks bot user agents with 403; links are valid in browsers
-  "^https?://www\\.iso\\.org/"
+  "^https?://www\\.iso\\.org/",
+  # Self-referential canonical URLs — always 404 on production until
+  # the page is deployed. The local build is the source of truth for
+  # internal links (covered by the content-references vitest suite).
+  "^https?://www\\.glossarist\\.org/"
 ]
