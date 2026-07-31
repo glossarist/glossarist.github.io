@@ -7,6 +7,21 @@
     .ext-file { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; fill: #cc8800; }
     .note { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 10px; fill: #6c757d; }
     .arrow { stroke: #495057; stroke-width: 1.2; fill: none; marker-end: url(#arr); }
+  
+    @media (prefers-color-scheme: dark) {
+      .box, .genus-box { fill: #1a1a2e !important; stroke: #dee2e6 !important; }
+      .label, .char-text { fill: #e9ecef !important; }
+      .small, .char-label, .name { fill: #adb5bd !important; }
+      .opt-name { fill: #ffc107 !important; }
+      .backline, .solid, .tooth-solid, .dashed, .tooth-dashed,
+      .delimit, .delimit-multi, .tooth-delimit { stroke: #e9ecef !important; }
+      .crit { fill: #4dabf7 !important; }
+      .char-connector { stroke: #495057 !important; }
+      .backline-1 { stroke: #4dabf7 !important; }
+      .backline-2 { stroke: #ff922b !important; }
+      .tooth-1 { stroke: #4dabf7 !important; }
+      .tooth-2 { stroke: #ff922b !important; }
+    }
   </style>
 
   <defs>

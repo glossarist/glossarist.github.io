@@ -14,6 +14,21 @@
     .tooth-1 { stroke: #0c5460; stroke-width: 1.5; fill: none; }
     .tooth-2 { stroke: #8b4513; stroke-width: 1.5; fill: none; }
     .char-connector { stroke: #adb5bd; stroke-width: 1; stroke-dasharray: 2 2; fill: none; }
+  
+    @media (prefers-color-scheme: dark) {
+      .box, .genus-box { fill: #1a1a2e !important; stroke: #dee2e6 !important; }
+      .label, .char-text { fill: #e9ecef !important; }
+      .small, .char-label, .name { fill: #adb5bd !important; }
+      .opt-name { fill: #ffc107 !important; }
+      .backline, .solid, .tooth-solid, .dashed, .tooth-dashed,
+      .delimit, .delimit-multi, .tooth-delimit { stroke: #e9ecef !important; }
+      .crit { fill: #4dabf7 !important; }
+      .char-connector { stroke: #495057 !important; }
+      .backline-1 { stroke: #4dabf7 !important; }
+      .backline-2 { stroke: #ff922b !important; }
+      .tooth-1 { stroke: #4dabf7 !important; }
+      .tooth-2 { stroke: #ff922b !important; }
+    }
   </style>
 
   <!-- Genus -->

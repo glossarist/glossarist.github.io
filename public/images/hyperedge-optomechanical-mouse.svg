@@ -10,6 +10,21 @@
     .tooth-solid { stroke: #212529; stroke-width: 1.5; fill: none; }
     .tooth-dashed { stroke: #212529; stroke-width: 1.5; stroke-dasharray: 4 3; fill: none; }
     .tooth-delimit { stroke: #212529; stroke-width: 5; fill: none; }
+  
+    @media (prefers-color-scheme: dark) {
+      .box, .genus-box { fill: #1a1a2e !important; stroke: #dee2e6 !important; }
+      .label, .char-text { fill: #e9ecef !important; }
+      .small, .char-label, .name { fill: #adb5bd !important; }
+      .opt-name { fill: #ffc107 !important; }
+      .backline, .solid, .tooth-solid, .dashed, .tooth-dashed,
+      .delimit, .delimit-multi, .tooth-delimit { stroke: #e9ecef !important; }
+      .crit { fill: #4dabf7 !important; }
+      .char-connector { stroke: #495057 !important; }
+      .backline-1 { stroke: #4dabf7 !important; }
+      .backline-2 { stroke: #ff922b !important; }
+      .tooth-1 { stroke: #4dabf7 !important; }
+      .tooth-2 { stroke: #ff922b !important; }
+    }
   </style>
 
   <!-- Comprehensive concept -->
