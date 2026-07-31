@@ -2,8 +2,10 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import { premierProjects } from '../data/projects'
 import stats from '../data/stats.json'
+import { useI18n } from '../i18n'
 
 const st = stats
+const { t } = useI18n()
 
 const activeCodeTab = ref('yaml')
 
@@ -125,9 +127,7 @@ collection.to_skos(<span class="c-str">'output.ttl'</span>)`,
         </h1>
 
         <p class="hp-hero-lede" style="margin-bottom: 2.5rem;">
-          Glossarist is open-source software for maintaining multi-language
-          concept systems — aligned with ISO standards for terminology
-          management, from model to publication.
+          {{ t.hero_lede }}
         </p>
 
         <div class="hp-hero-actions">

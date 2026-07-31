@@ -64,6 +64,11 @@ describe('Markdown links resolve to content', () => {
     if (path.endsWith('/index')) builtRoutes.add('/' + withoutIndex)
   }
 
+  // Plus the .astro-only routes (no MDX content backing them).
+  for (const r of ['/playground/hyperedges', '/playground/validators']) {
+    builtRoutes.add(r)
+  }
+
   // Anchor-only and external links are skipped; only same-site paths matter.
   // Negative lookbehind on `!` excludes image syntax ![alt](/path) which
   // is covered by the image test below.
