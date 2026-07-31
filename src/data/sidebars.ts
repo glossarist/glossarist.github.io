@@ -122,6 +122,7 @@ export const sidebars: Record<string, SidebarGroup[]> = {
       text: 'Adopting Glossarist',
       items: [
         { text: 'Overview', link: '/docs/adopt/' },
+        { text: 'Quickstart (5 minutes)', link: '/docs/adopt/quickstart' },
         { text: '1. Concept Management Principles', link: '/docs/adopt/1-workflows/' },
         { text: '2. Infrastructure Setup', link: '/docs/adopt/2-infrastructure/' },
         { text: '3. Migrating Existing Data', link: '/docs/adopt/3-migration/' },

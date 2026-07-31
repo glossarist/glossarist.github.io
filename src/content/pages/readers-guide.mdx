@@ -1,0 +1,78 @@
+---
+title: "Reader's Guide"
+description: "Glossarist.org teaches authors. The concept-browser deployments teach readers. Use this guide to pick the right reader tool for your domain."
+---
+
+# Reader's Guide
+
+Glossarist's documentation is split across two surfaces with **distinct audiences**:
+
+| Surface | Audience | What it teaches |
+|---------|----------|-----------------|
+| **glossarist.org** (this site) | Authors, terminologists, standards editors | How to author, validate, and publish terminology datasets in Glossarist format |
+| **Concept Browser deployments** | Readers, translators, domain experts | How to read, navigate, and search published terminology registries |
+
+The concept-browser is a statically deployable SPA that consumes Glossarist datasets and renders them for human reading. Each deployment below also includes a `/learn` section with reader-focused teaching pages.
+
+## Live deployments
+
+Pick the deployment closest to your domain — each one demonstrates the same concept-browser features with different datasets and configurations.
+
+### [GeoLexica](https://www.geolexica.org) — Geographic information
+
+The flagship deployment. Aggregates ISO/TC 211 geographic information terminology with IEC Electropedia and other geospatial vocabularies.
+
+- **Scope:** 1,500+ concepts across multiple standards bodies
+- **Languages:** 15 (English, French, Russian, Spanish, German, Arabic, Chinese, Japanese, Korean, Polish, Dutch, Swedish, Finnish, Estonian, Slovak)
+- **Reader guide:** [geolexica.org/#/learn](https://www.geolexica.org/#/learn) — explains how to read relationships, designations, statuses, and the 3D relation sphere
+- **Use case story:** [/use-cases/geospatial](/use-cases/geospatial)
+
+### [VIML](https://www.oimlsmart.org/vocab/) — Legal metrology
+
+The International Vocabulary of Legal Metrology, maintained by OIML. Cross-edition navigation across VIM 1968/2000/2013/2022.
+
+- **Scope:** ~600 concepts across 4 vocabulary editions
+- **Languages:** English, French, Russian (varies by edition)
+- **Use case story:** [/use-cases/metrology](/use-cases/metrology)
+
+### [OIML Terms](https://metanorma.github.io/oiml-terms/) — OIML G 18 terminology
+
+2,100+ terms sourced from 88 OIML publications, with cross-references back to their authoritative VIM/VIML definitions.
+
+- **Use case story:** [/use-cases/metrology](/use-cases/metrology)
+
+## What concept-browser teaches (and glossarist.org doesn't)
+
+The concept-browser's `/learn` section covers reader-side concepts:
+
+- **Relationships** — how to read the rake diagrams, the bilateral relation types, the sphere visualization
+- **Designations** — preferred / admitted / deprecated status, term types (acronym, initialism, symbol)
+- **Statuses** — entry status, normative status, source status
+
+These topics are reader-focused: "what does this label mean when you see it?". The author-focused counterpart ("how do I write this?") lives on glossarist.org under [/model/](/model/).
+
+## What glossarist.org teaches (and concept-browser doesn't)
+
+This site covers authoring concerns:
+
+- **The data model** — `ManagedConcept`, `LocalizedConcept`, `Designation`, `Hyperedge`, etc. ([/model/](/model/))
+- **YAML authoring patterns** — how to write concept files, relation files, localization entries
+- **Validation** — the validators, the JSON Schema, the SHACL shapes
+- **Adoption** — how to set up a registry, migrate existing data, deploy
+
+## Deploying your own reader surface
+
+Once you've authored a Glossarist dataset, deploy your own concept-browser instance for your readers:
+
+```bash
+npm install --ignore-scripts @glossarist/concept-browser
+npx concept-browser build
+```
+
+See [Concept Browser](/docs/software/concept-browser) for the full deployment guide.
+
+## See also
+
+- [Adopting Glossarist](/docs/adopt/) — the author-side getting started
+- [Use cases](/use-cases/) — real-world deployments
+- [Concept Browser docs](/docs/software/concept-browser) — deployment reference

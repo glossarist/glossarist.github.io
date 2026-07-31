@@ -1,0 +1,149 @@
+---
+title: Quickstart — Your First Concept in 5 Minutes
+description: "The fastest path from zero to a working Glossarist concept registry. Author one concept, validate it, browse it."
+---
+
+# Quickstart — Your First Concept in 5 Minutes
+
+The fastest path from zero to a working Glossarist registry. By the end you'll have authored one concept, validated it, and browsed it locally.
+
+For the full adoption workflow (registry setup, infrastructure, migration), see the [Adoption Guide](/docs/adopt/).
+
+## What you'll need
+
+- A GitHub account (free)
+- A terminal with `git` and `npm` (Node 24+)
+- 5 minutes
+
+## 1. Create your registry from the template (1 minute)
+
+Open the [basic-concept-registry-template](https://github.com/glossarist/basic-concept-registry-template) repository on GitHub and click **"Use this template"** → **"Create a new repository"**.
+
+Name it (e.g. `my-glossary`), choose public or private, click **Create repository from template**.
+
+Clone your new repository locally:
+
+```bash
+git clone https://github.com/<your-username>/my-glossary.git
+cd my-glossary
+```
+
+## 2. Set your registry metadata (1 minute)
+
+Open `register.yaml` and edit the name, description, and supported languages:
+
+```yaml
+name: My Glossary
+description: A small terminology registry for my domain
+
+languages:
+  - eng         # English (default)
+  - fra         # French (add others as needed)
+```
+
+Open `roles.yaml` and assign yourself as both `registry_manager` and `register_manager` (your GitHub username):
+
+```yaml
+registry_manager:
+  - your-github-username
+register_manager:
+  - your-github-username
+```
+
+Commit and push.
+
+## 3. Author your first concept (2 minutes)
+
+Create a new file at `concepts/my-first-concept.yaml`:
+
+```yaml
+termid: "my-first-concept"
+status: valid
+
+localizations:
+  eng:
+    language: eng
+    terms:
+      - type: expression
+        designation: my first concept
+        normative_status: preferred
+    definition:
+      - type: intensional
+        content: >
+          A concrete or abstract thing that demonstrates the Glossarist
+          YAML authoring workflow.
+    examples:
+      - content: "The very concept you are reading right now."
+    sources:
+      - type: original
+        origin: "Quickstart tutorial"
+```
+
+The schema is intentionally minimal:
+
+| Field | Meaning |
+|-------|---------|
+| `termid` | Unique identifier within this registry |
+| `status` | Lifecycle status (`valid`, `retired`, `superseded`, ...) |
+| `localizations` | Per-language data, keyed by ISO 639-3 code |
+| `localizations.eng.terms` | One or more designations, each with a `normative_status` |
+| `localizations.eng.definition` | The definition(s) — `type: intensional` is the default |
+| `localizations.eng.sources` | Provenance (who said this, where) |
+
+See [Concepts](/model/concepts) and [Definitions](/model/definitions) for the full model.
+
+## 4. Validate (30 seconds)
+
+Run the Glossarist validator against your concept:
+
+```bash
+npx @glossarist/validator concepts/
+```
+
+You should see something like:
+
+```
+✓ concepts/my-first-concept.yaml — valid
+1 concept validated, 0 errors, 0 warnings
+```
+
+If you see errors, the validator tells you exactly which field is wrong and why. Common first-time issues:
+
+- Missing `termid` or `status`
+- Missing `definition` (mandatory per ISO 10241-1 — see [/reference/iso-10241-1-mapping](/reference/iso-10241-1-mapping))
+- `normative_status` not one of `preferred | admitted | deprecated`
+
+## 5. Browse locally (1 minute)
+
+Install and run the concept-browser to see your concept rendered:
+
+```bash
+npm install --ignore-scripts @glossarist/concept-browser
+npx concept-browser build
+npx concept-browser serve
+```
+
+Open [http://localhost:5173](http://localhost:5173). You should see your registry with your first concept listed. Click through to see the rendered concept page with definition, example, source, and the relation sphere (empty for now — add related concepts to see it come alive).
+
+## You're done
+
+You now have:
+
+- A versioned terminology registry on GitHub
+- One valid Glossarist concept
+- A locally-running concept-browser to browse it
+
+## Next steps
+
+1. **Add more concepts** — author friends for your first concept, link them via `related` (see [Relationships](/model/relationships)) and `relations/<id>/<slug>.yaml` hyperedge files (see [Hyperedges](/model/hyperedges)).
+2. **Add another language** — fill in `localizations.fra` (or any language) on your concept. The browser will display the language switcher automatically.
+3. **Set up the desktop app** — for a GUI authoring experience, install [Glossarist Desktop](/docs/software/desktop).
+4. **Deploy the concept-browser** — publish to GitHub Pages, Netlify, or any static host. See [Concept Browser deployment](/docs/software/concept-browser#quick-start-deployment-repo).
+5. **Read the adoption guide** — for full registry setup including collaborator roles, change request workflow, and migration from existing data, see [Adopting Glossarist](/docs/adopt/).
+
+## See also
+
+- [Adopting Glossarist (full guide)](/docs/adopt/) — three-step adoption workflow
+- [Concept Browser](/docs/software/concept-browser) — deployment reference
+- [Reader's Guide](/readers-guide) — what readers see when you publish
+- [Concepts](/model/concepts) — the data model
