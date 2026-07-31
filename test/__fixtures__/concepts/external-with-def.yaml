@@ -1,0 +1,17 @@
+# Test fixture: ExternalConcept wrongly carrying a definition
+# Used by: ValidatorPlayground tests (external-concept-shape rule)
+termid: "ext-broken"
+status: external
+
+localizations:
+  eng:
+    terms:
+      - type: expression
+        designation: broken external
+        normative_status: preferred
+    definition:
+      - content: This should not be here for an external concept.
+
+related:
+  - type: provided_by
+    ref: { source: urn:other-dataset, id: "broken" }

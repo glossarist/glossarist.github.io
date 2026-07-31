@@ -12,53 +12,40 @@
  */
 import { computed, ref } from 'vue'
 import { parse as parseYaml } from 'yaml'
+import {
+  RELATED_TYPE_SET,
+  TERM_TYPE_SET,
+  type ConceptYaml,
+  type HyperedgeYaml,
+  type HyperedgeMemberYaml,
+  type LocalizedConceptYaml,
+  type NormativeStatus,
+} from '@/types/concept-yaml'
 
-// ---------- The 52 known relationship types ----------
-const KNOWN_RELATED_TYPES = new Set([
-  // Hierarchical — Generic (SKOS)
-  'broader', 'narrower', 'broader_generic', 'narrower_generic',
-  // Hierarchical — Partitive
-  'broader_partitive', 'narrower_partitive', 'has_part', 'is_part_of',
-  // Hierarchical — Instantial
-  'broader_instantial', 'narrower_instantial', 'instance_of', 'has_instance',
-  // Register management
-  'has_concept', 'is_concept_of', 'inherits', 'inherited_by',
-  // Equivalence / mapping (SKOS)
-  'equivalent', 'exact_match', 'close_match', 'broad_match', 'narrow_match', 'related_match',
-  // Associative
-  'see', 'related_concept', 'related_concept_broader', 'related_concept_narrower', 'references',
-  // Lifecycle
-  'supersedes', 'superseded_by', 'deprecates', 'deprecated_by',
-  'replaces', 'replaced_by', 'invalidates', 'invalidated_by',
-  'retires', 'retired_by',
-  // Comparative
-  'compare', 'contrast',
-  // Versioning / definitional
-  'has_definition', 'definition_of', 'has_version', 'version_of',
-  'current_version', 'current_version_of',
-  // Spatiotemporal
-  'sequentially_related', 'spatially_related', 'temporally_related',
-  // Lexical
-  'homograph', 'false_friend',
-  // Designation-level
-  'abbreviated_form_for', 'short_form_for',
-  // ExternalConcept resolution
-  'provides', 'provided_by',
-])
+// ─────────────────────────────────────────────────────────────────────
+// Type guards — narrow the YAML parse result without `any`-casting.
+// ─────────────────────────────────────────────────────────────────────
 
-const KNOWN_TERM_TYPES = new Set([
-  'expression', 'symbol', 'abbreviation', 'acronym', 'initialism', 'clipped_term',
-  'short_form', 'transliterated_form', 'transcribed_form', 'truncation', 'variant',
-  'formula', 'equation', 'logical_expression', 'mathematical_expression',
-  'reference_symbol', 'figure_symbol', 'graphic_symbol', 'letter_symbol', 'roman_numeral',
-  'code', 'common_name', 'entry_term', 'internationalism', 'international_scientific_term',
-  'part_number', 'phrase', 'phraseological_unit', 'scientific_name', 'shortcut', 'sku',
-  'standard_text', 'synonym', 'synonymous_phrase',
-])
+function isObject(v: unknown): v is Record<string, unknown> {
+  return typeof v === 'object' && v !== null && !Array.isArray(v)
+}
 
-const KNOWN_NORMATIVE_STATUS = new Set(['preferred', 'admitted', 'deprecated'])
+function isHyperedge(data: unknown): data is HyperedgeYaml {
+  return isObject(data) && typeof data.type === 'string' && isObject(data.comprehensive ?? {})
+}
 
-// ---------- Rule definitions ----------
+// ─────────────────────────────────────────────────────────────────────
+// Canonical enumerations (single source of truth — concept-yaml.ts)
+// ─────────────────────────────────────────────────────────────────────
+
+const KNOWN_RELATED_TYPES = RELATED_TYPE_SET
+const KNOWN_TERM_TYPES = TERM_TYPE_SET
+const KNOWN_NORMATIVE_STATUS = new Set<NormativeStatus>(['preferred', 'admitted', 'deprecated'])
+
+// ─────────────────────────────────────────────────────────────────────
+// Rule definitions
+// ─────────────────────────────────────────────────────────────────────
+
 interface ValidationIssue {
   rule: string
   level: 'error' | 'warning' | 'info'
@@ -70,7 +57,7 @@ interface Rule {
   id: string
   label: string
   description: string
-  run: (data: any) => ValidationIssue[]
+  run: (data: ConceptYaml) => ValidationIssue[]
 }
 
 const rules: Rule[] = [
@@ -108,10 +95,10 @@ const rules: Rule[] = [
     description: 'ISO 10241-1 mandates a definition per language unless a non-verbal representation is used.',
     run: (data) => {
       const issues: ValidationIssue[] = []
-      const locs = data.localizations ?? (data.eng ? { eng: data } : {})
-      for (const [lang, entry] of Object.entries<any>(locs)) {
+      const locs = data.localizations ?? (data.eng ? { eng: data as unknown as LocalizedConceptYaml } : {})
+      for (const [lang, entry] of Object.entries(locs as Record<string, LocalizedConceptYaml>)) {
         const def = entry.definition
-        const nonVerbal = entry.examples?.some((e: any) => e.type === 'figure') ?? false
+        const nonVerbal = entry.examples?.some(e => typeof e.non_verbal === 'string') ?? false
         if ((!def || (Array.isArray(def) && def.length === 0)) && !nonVerbal) {
           issues.push({
             rule: 'definition-present',
@@ -130,9 +117,9 @@ const rules: Rule[] = [
     description: 'Each term must have a designation, a valid type, and a normative_status.',
     run: (data) => {
       const issues: ValidationIssue[] = []
-      const locs = data.localizations ?? (data.eng ? { eng: data } : {})
-      for (const [lang, entry] of Object.entries<any>(locs)) {
-        const terms = entry.terms ?? entry.designations
+      const locs = data.localizations ?? (data.eng ? { eng: data as unknown as LocalizedConceptYaml } : {})
+      for (const [lang, entry] of Object.entries(locs as Record<string, LocalizedConceptYaml>)) {
+        const terms = entry.terms ?? []
         if (!Array.isArray(terms) || terms.length === 0) {
           issues.push({ rule: 'designation-shape', level: 'error', message: `localizations.${lang}: missing terms[] — at least one designation required`, isoRef: 'ISO 10241-1 §6.2' })
           continue
@@ -149,7 +136,7 @@ const rules: Rule[] = [
           }
         }
         // ISO 10241-1 prefers exactly one preferred term per language
-        const preferred = terms.filter((t: any) => (t.normative_status ?? 'preferred') === 'preferred')
+        const preferred = terms.filter(t => (t.normative_status ?? 'preferred') === 'preferred')
         if (preferred.length > 1) {
           issues.push({ rule: 'designation-shape', level: 'warning', message: `localizations.${lang}: ${preferred.length} preferred terms — ISO 10241-1 prefers one` })
         }
@@ -187,8 +174,8 @@ const rules: Rule[] = [
     run: (data) => {
       const issues: ValidationIssue[] = []
       if (data.status !== 'external') return issues
-      const locs = data.localizations ?? (data.eng ? { eng: data } : {})
-      for (const [lang, entry] of Object.entries<any>(locs)) {
+      const locs = data.localizations ?? (data.eng ? { eng: data as unknown as LocalizedConceptYaml } : {})
+      for (const [lang, entry] of Object.entries(locs as Record<string, LocalizedConceptYaml>)) {
         if (entry.definition && (!Array.isArray(entry.definition) || entry.definition.length > 0)) {
           issues.push({
             rule: 'external-concept-shape',
@@ -198,7 +185,7 @@ const rules: Rule[] = [
           })
         }
       }
-      if (!Array.isArray(data.related) || !data.related.some((r: any) => r.type === 'provided_by')) {
+      if (!Array.isArray(data.related) || !data.related.some(r => r.type === 'provided_by')) {
         issues.push({
           rule: 'external-concept-shape',
           level: 'warning',
@@ -214,11 +201,14 @@ const rules: Rule[] = [
     description: 'partitive_relations / generic_relations arrays: each ≥2 members, valid MECE combos.',
     run: (data) => {
       const issues: ValidationIssue[] = []
-      for (const key of ['partitive_relations', 'generic_relations']) {
-        const arr = data[key]
-        if (!Array.isArray(arr)) continue
+      const edgeArrays: Array<[string, HyperedgeYaml[]]> = [
+        ['partitive_relations', data.partitive_relations ?? []],
+        ['generic_relations', data.generic_relations ?? []],
+      ]
+      for (const [key, arr] of edgeArrays) {
+        if (!Array.isArray(arr) || arr.length === 0) continue
         for (const [i, edge] of arr.entries()) {
-          const members = edge.members ?? edge.partitives ?? []
+          const members: HyperedgeMemberYaml[] = edge.members ?? edge.partitives ?? []
           if (members.length < 2) {
             issues.push({ rule: 'hyperedge-cardinality', level: 'error', message: `${key}[${i}]: ${members.length} member(s) — ISO 704 requires ≥2 per rake`, isoRef: 'ISO 704:2022 §5.5.4' })
           }
@@ -356,14 +346,15 @@ const result = computed<{ parseError: string | null; issues: ValidationIssue[]; 
   } catch (e) {
     return { parseError: (e as Error).message, issues: [], ruleStats: {} }
   }
-  if (!data || typeof data !== 'object') {
+  if (!isObject(data)) {
     return { parseError: 'Empty or non-object YAML', issues: [], ruleStats: {} }
   }
+  const conceptData = data as ConceptYaml
 
   const allIssues: ValidationIssue[] = []
   const ruleStats: Record<string, { errors: number; warnings: number; infos: number }> = {}
   for (const rule of rules) {
-    const ruleIssues = rule.run(data)
+    const ruleIssues = rule.run(conceptData)
     ruleStats[rule.id] = {
       errors: ruleIssues.filter(i => i.level === 'error').length,
       warnings: ruleIssues.filter(i => i.level === 'warning').length,

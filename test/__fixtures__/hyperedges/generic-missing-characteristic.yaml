@@ -1,0 +1,9 @@
+# Test fixture: generic hyperedge missing required delimitingCharacteristic
+# Should fail the hyperedge-cardinality rule.
+type: generic_relation
+comprehensive: { source: EXAMPLE, id: computer-mouse }
+members:
+  - ref: { source: EXAMPLE, id: mechanical-mouse }
+  - ref: { source: EXAMPLE, id: optical-mouse }
+completeness: complete
+criterion: { eng: by movement detection }

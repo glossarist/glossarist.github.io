@@ -1,0 +1,14 @@
+# Test fixture: valid generic hyperedge — ISO 704 §5.5.4.2.1 computer mouse
+$id: example-computer-mouse/by-movement-detection
+type: generic_relation
+status: valid
+comprehensive: { source: EXAMPLE, id: computer-mouse }
+members:
+  - ref: { source: EXAMPLE, id: mechanical-mouse }
+    delimitingCharacteristic: { eng: detecting movement by rollers }
+  - ref: { source: EXAMPLE, id: optomechanical-mouse }
+    delimitingCharacteristic: { eng: detecting movement by rollers and light sensors }
+  - ref: { source: EXAMPLE, id: optical-mouse }
+    delimitingCharacteristic: { eng: detecting movement by light sensors }
+completeness: complete
+criterion: { eng: by movement detection }

@@ -1,0 +1,20 @@
+# Test fixture: valid partitive hyperedge — VIM measurement result
+# Demonstrates three distinct MECE member multiplicities.
+$id: viml-112-02-09/measurement-result-composition
+type: partitive_relation
+status: valid
+comprehensive:
+  source: VIM
+  id: "112-02-09"
+members:
+  - ref: { source: VIM, id: "112-02-10" }
+    presence: required
+    count: exactly_one
+  - ref: { source: VIM, id: "112-03-26" }
+    presence: required
+    count: at_least_one
+  - ref: { source: VIM, id: "112-02-06" }
+    presence: optional
+    count: exactly_one
+completeness: complete
+criterion: { eng: measurement result composition }

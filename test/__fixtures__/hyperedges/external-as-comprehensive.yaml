@@ -1,0 +1,11 @@
+# Test fixture: hyperedge with ExternalConcept as comprehensive
+$id: ext-precision-condition/by-condition-type
+type: generic_relation
+status: valid
+comprehensive: { source: EXAMPLE, id: ext-precision-condition }
+members:
+  - ref: { source: VIML, id: "2.20" }
+  - ref: { source: VIML, id: "2.22" }
+    delimitingCharacteristic: { eng: by precision level }
+completeness: complete
+criterion: { eng: by condition type }
