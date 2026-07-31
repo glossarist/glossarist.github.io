@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 360" role="img" aria-labelledby="title desc">
-  <title id="title">Partitive hyperedge — measurement result decomposed into its parts</title>
-  <desc id="desc">A comprehensive concept "measurement result" at the top, with three parts dropping from a shared horizontal backline: measured quantity value (one solid line, compulsory), measurement uncertainty (one solid line, compulsory, delimiting), and measurement procedure (one dashed line, optional). The delimiting part is rendered with a 3x-width bold line per ISO 704:2022.</desc>
+  <title id="title">Partitive hyperedge — VIM measurement result decomposed into its parts</title>
+  <desc id="desc">Comprehensive concept "measurement result" (VIM 2.9) at the top. Three partitive members drop from a shared horizontal backline (complete decomposition). Left tooth: single solid line = compulsory, exactly_one (measured quantity value, VIM 2.10). Middle tooth: double solid line = compulsory, multiple (measurement uncertainties, VIM 2.26 — one or more per result). Right tooth: single dashed line = optional, exactly_one (measurement procedure, VIM 2.6 — sometimes cited alongside the result, sometimes not). Per ISO 704:2022 §5.5.4.3 line notation.</desc>
   <style>
     .box { fill: #f8f9fa; stroke: #343a40; stroke-width: 1.5; }
     .label { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 13px; fill: #212529; }
@@ -8,7 +8,6 @@
     .backline { stroke: #212529; stroke-width: 2; fill: none; }
     .tooth-solid { stroke: #212529; stroke-width: 1.5; fill: none; }
     .tooth-dashed { stroke: #212529; stroke-width: 1.5; stroke-dasharray: 4 3; fill: none; }
-    .tooth-delimit { stroke: #212529; stroke-width: 5; fill: none; }
   </style>
 
   <!-- Comprehensive concept -->
@@ -16,24 +15,24 @@
   <text x="360" y="40" text-anchor="middle" class="label" font-weight="600">measurement result</text>
   <text x="360" y="55" text-anchor="middle" class="small">comprehensive · VIM 2.9</text>
 
-  <!-- Backline (close-set = complete) -->
+  <!-- Backline (joined = complete decomposition) -->
   <line x1="120" y1="100" x2="600" y2="100" class="backline"/>
   <text x="60" y="104" class="small">complete</text>
 
-  <!-- Drop lines (the rake teeth) -->
-  <!-- Tooth 1: solid (compulsory, exactly_one) -->
+  <!-- Tooth 1: single solid (compulsory, exactly_one) -->
   <line x1="180" y1="100" x2="180" y2="200" class="tooth-solid"/>
-  <text x="190" y="160" class="small">compulsory</text>
+  <text x="180" y="160" text-anchor="middle" class="small">required · exactly_one</text>
 
-  <!-- Tooth 2: bold 3x (delimiting, compulsory, exactly_one) -->
-  <line x1="360" y1="100" x2="360" y2="200" class="tooth-delimit"/>
-  <text x="372" y="160" class="small" font-weight="600">delimiting</text>
+  <!-- Tooth 2: double solid (compulsory, multiple) -->
+  <line x1="356" y1="100" x2="356" y2="200" class="tooth-solid"/>
+  <line x1="364" y1="100" x2="364" y2="200" class="tooth-solid"/>
+  <text x="360" y="160" text-anchor="middle" class="small">required · multiple</text>
 
-  <!-- Tooth 3: dashed (optional, exactly_one) -->
+  <!-- Tooth 3: single dashed (optional, exactly_one) -->
   <line x1="540" y1="100" x2="540" y2="200" class="tooth-dashed"/>
-  <text x="490" y="160" class="small">optional</text>
+  <text x="540" y="160" text-anchor="middle" class="small">optional · exactly_one</text>
 
-  <!-- Partitive concept boxes -->
+  <!-- Partitive member boxes -->
   <rect x="100" y="220" width="160" height="40" rx="6" class="box"/>
   <text x="180" y="238" text-anchor="middle" class="label">measured quantity value</text>
   <text x="180" y="252" text-anchor="middle" class="small">VIM 2.10</text>
@@ -47,6 +46,7 @@
   <text x="540" y="252" text-anchor="middle" class="small">VIM 2.6</text>
 
   <!-- Footer legend -->
-  <text x="360" y="310" text-anchor="middle" class="small">ISO 704:2022 §5.5.4.3 — line notation: solid = required, dashed = optional, bold 3x = delimiting</text>
-  <text x="360" y="326" text-anchor="middle" class="small">All teeth share the comprehensive AND the criterion of subdivision (coordinate concepts, ISO 12620)</text>
+  <text x="360" y="310" text-anchor="middle" class="small">ISO 704:2022 §5.5.4.3 — line notation: single solid = required + exactly_one,</text>
+  <text x="360" y="326" text-anchor="middle" class="small">double solid = required + multiple, dashed = optional. All teeth share the comprehensive</text>
+  <text x="360" y="342" text-anchor="middle" class="small">AND the criterion of subdivision (coordinate concepts per ISO 12620).</text>
 </svg>

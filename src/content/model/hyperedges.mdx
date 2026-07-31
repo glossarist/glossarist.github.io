@@ -24,8 +24,10 @@ A hyperedge is drawn as a **rake**: a horizontal backline connects the comprehen
 
 The VIM *measurement result* (2.9) decomposes into three parts. The diagram encodes multiplicity per part:
 
-![Partitive hyperedge diagram](/images/hyperedge-partitive.svg)
-
+<figure class="g-figure-light">
+  <img src="/images/hyperedge-partitive.svg" alt="Partitive hyperedge diagram" loading="lazy" />
+  <figcaption>Partitive hyperedge — VIM measurement result rake showing three MECE member dimensions.</figcaption>
+</figure>
 - **Solid line** = required (must exist in every instance)
 - **Dashed line** = optional (exists in some instances only)
 - **Bold 3x-width line** = delimiting (distinguishes the comprehensive from coordinate concepts)
@@ -35,38 +37,48 @@ The VIM *measurement result* (2.9) decomposes into three parts. The diagram enco
 
 The OIML *measurement standard* (5.1) decomposes by **multiple criteria**. Each criterion is a distinct hyperedge on the same genus, and each species carries its delimiting characteristic in a side rectangle per ISO 704:2022 §5.5.4.2.1:
 
-![Generalization hyperedge with two criterion groups and delimiting characteristics](/images/hyperedge-generalization.svg)
-
+<figure class="g-figure-light">
+  <img src="/images/hyperedge-generalization.svg" alt="Generalization hyperedge with two criterion groups and delimiting characteristics" loading="lazy" />
+  <figcaption>Generalization hyperedge — OIML measurement standard with two criterion groups (multidimensionality).</figcaption>
+</figure>
 Two hyperedges, same comprehensive, different criteria. Species within one rake are coordinate concepts (share genus + share criterion). Species across rakes are NOT coordinate — they belong to different decompositions.
 
 ### The canonical ISO 704:2022 §5.5.4.2.1 example — computer mouse (generic)
 
 ISO 704:2022 §5.5.4.2.1 uses *computer mouse* as its canonical worked example for **generic relations**. The same genus is decomposed by two distinct criteria of subdivision (multidimensionality, §5.6.3): by means of movement detection (mechanical / optomechanical / optical) and by computer connection (wired / wireless). Each species carries a delimiting characteristic:
 
-![Computer mouse — ISO 704:2022 §5.5.4.2.1 canonical generic example with multidimensionality](/images/hyperedge-computer-mouse.svg)
-
+<figure class="g-figure-light">
+  <img src="/images/hyperedge-computer-mouse.svg" alt="Computer mouse — ISO 704:2022 §5.5.4.2.1 canonical generic example with multidimensionality" loading="lazy" />
+  <figcaption>Generic hyperedge — ISO 704:2022 §5.5.4.2.1 canonical computer-mouse example.</figcaption>
+</figure>
 The thicker blue and brown backlines distinguish the two criteria. The characteristic rectangles carry the intension-difference that makes each species distinct within its rake.
 
 ### The canonical ISO 704:2022 §5.5.4.2.2 example — optomechanical mouse (partitive)
 
 Distinct from §5.5.4.2.1 above. The optomechanical mouse is also used as the canonical **partitive** example — its parts (mouse ball, rollers, infrared emitter/sensor, etc.) are modeled as a PartitiveHyperedge. The five delimiting parts distinguish it from coordinate concepts (*mechanical mouse*, *optical mouse*):
 
-![Optomechanical mouse — ISO 704:2022 §5.5.4.2.2 canonical partitive example](/images/hyperedge-optomechanical-mouse.svg)
-
+<figure class="g-figure-light">
+  <img src="/images/hyperedge-optomechanical-mouse.svg" alt="Optomechanical mouse — ISO 704:2022 §5.5.4.2.2 canonical partitive example" loading="lazy" />
+  <figcaption>Partitive hyperedge — ISO 704:2022 §5.5.4.2.2 canonical optomechanical-mouse example with delimiting parts.</figcaption>
+</figure>
 ### Fictitious example — bicycle (partitive)
 
 A *bicycle* decomposed by physical structure, exercising every MECE dimension:
 
-![Bicycle partitive hyperedge — fictitious example](/images/hyperedge-bicycle.svg)
-
+<figure class="g-figure-light">
+  <img src="/images/hyperedge-bicycle.svg" alt="Bicycle partitive hyperedge — fictitious example" loading="lazy" />
+  <figcaption>Partitive hyperedge — fictitious bicycle example exercising every MECE dimension.</figcaption>
+</figure>
 Bold lines = delimiting (frame, wheel, handlebar distinguish bicycle from unicycle/tricycle/scooter/motorcycle). Double solid lines = `count: multiple` (typically 2 wheels, 2 pedals, 2 brakes). Dashed = `presence: optional` (bell, light). Some optional parts combine both — `optional + multiple` (light: 0, 1, or 2+).
 
 ### Fictitious example — vehicle (generic)
 
 A *vehicle* genus with **two distinct criterion groups** — by motive power and by terrain:
 
-![Vehicle generic hyperedge — fictitious example with two criterion groups](/images/hyperedge-vehicle.svg)
-
+<figure class="g-figure-light">
+  <img src="/images/hyperedge-vehicle.svg" alt="Vehicle generic hyperedge — fictitious example with two criterion groups" loading="lazy" />
+  <figcaption>Generic hyperedge — fictitious vehicle example with two criterion groups.</figcaption>
+</figure>
 Each rake is a distinct hyperedge (distinct file under `relations/example-vehicle/`). Species within one rake are coordinate (bicycle and car share "vehicle" + "by motive power"); species across rakes are not (bicycle and boat share the genus but not a criterion).
 
 ## How they work
@@ -80,8 +92,10 @@ ISO 704:2022 encodes per-member multiplicity via diagram line notation. Glossari
 
 The bold 3x-width line in ISO 704 diagrams is **not** a third MECE axis — it's modeled differently per leaf (`is_delimiting: boolean` on `PartitiveMember` for delimiting parts, `delimitingCharacteristic: LocalizedString` on `GenericMember` for the species intension-difference). See [Model](#model) below.
 
-![MECE member multiplicity table](/images/hyperedge-mece-multiplicity.svg)
-
+<figure class="g-figure-light">
+  <img src="/images/hyperedge-mece-multiplicity.svg" alt="MECE member multiplicity table" loading="lazy" />
+  <figcaption>MECE member multiplicity — all five valid presence × count combinations plus the invalid one.</figcaption>
+</figure>
 Six combinations mathematically possible; five valid. The invalid one (`optional + at_least_one`) collapses to `optional + multiple` because an optional part has vacuous at-least-one. Both the JSON Schema and the Ruby/JS validators reject it with a clear error message.
 
 ### Coordinate-concept coherence (ISO 12620)
@@ -115,8 +129,10 @@ relations/<comprehensive-id>/<criterion-slug>.yaml
 
 The concept file no longer carries hyperedges inline. The directory IS the index — `relations/viml-5-1/` enumerates every decomposition of concept 5.1.
 
-![Per-file storage layout](/images/hyperedge-per-file-storage.svg)
-
+<figure class="g-figure-light">
+  <img src="/images/hyperedge-per-file-storage.svg" alt="Per-file storage layout" loading="lazy" />
+  <figcaption>Per-file storage layout — concept files alongside relation files under <code>relations/&lt;id&gt;/</code>.</figcaption>
+</figure>
 Reasons for the move:
 
 - **i18n bloat** — a comprehensive with 6 hyperedges × 3 languages × (criterion + notes + sources' modification) is ~60+ localized strings piled into the concept file
