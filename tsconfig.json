@@ -5,7 +5,8 @@
     "paths": {
       "@/*": ["src/*"],
       "@data/*": ["src/data/*"],
-      "@components/*": ["src/components/*"]
+      "@components/*": ["src/components/*"],
+      "@layouts/*": ["src/layouts/*"]
     },
     "verbatimModuleSyntax": false
   },

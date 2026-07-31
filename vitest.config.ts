@@ -3,6 +3,14 @@ import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
   plugins: [vue()],
+  resolve: {
+    alias: {
+      '@': '/src',
+      '@data': '/src/data',
+      '@components': '/src/components',
+      '@layouts': '/src/layouts',
+    },
+  },
   test: {
     environment: 'jsdom',
     globals: true,

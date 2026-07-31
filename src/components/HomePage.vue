@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
-import { premierProjects } from '../data/projects'
-import stats from '../data/stats.json'
-import { useI18n } from '../i18n'
+import { premierProjects } from '@data/projects'
+import stats from '@data/stats.json'
+import { useI18n } from '@/i18n'
 
 const st = stats
 const { t } = useI18n()

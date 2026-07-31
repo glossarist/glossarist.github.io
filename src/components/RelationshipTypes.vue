@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { TaxonomyConcept } from '../data/types'
-import { useOntologyData } from '../data/useOntologyData'
+import type { TaxonomyConcept } from '@data/types'
+import { useOntologyData } from '@data/useOntologyData'
 
 const categories: { key: string; label: string; types: string[] }[] = [
   { key: 'hierarchical', label: 'Hierarchical — Generic (SKOS)', types: ['broader', 'narrower', 'broader_generic', 'narrower_generic'] },

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, watch, onMounted, nextTick } from 'vue'
-import type { OwlShape, OwlClass, TaxonomyConcept } from '../data/types'
-import { useOntologyData } from '../data/useOntologyData'
+import type { OwlShape, OwlClass, TaxonomyConcept } from '@data/types'
+import { useOntologyData } from '@data/useOntologyData'
 
 type SchemaTab = 'entities' | 'enums'
 

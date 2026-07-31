@@ -1,8 +1,8 @@
 ---
 import { getCollection, render } from 'astro:content'
-import DocLayout from '../../layouts/DocLayout.astro'
-import ModelLanding from '../../components/ModelLanding.astro'
-import RelationshipTypes from '../../components/RelationshipTypes.vue'
+import DocLayout from '@layouts/DocLayout.astro'
+import ModelLanding from '@components/ModelLanding.astro'
+import RelationshipTypes from '@components/RelationshipTypes.vue'
 
 export async function getStaticPaths() {
   const entries = await getCollection('model')
