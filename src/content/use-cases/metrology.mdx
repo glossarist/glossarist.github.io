@@ -1,0 +1,123 @@
+---
+title: Metrology — VIM, OIML V 2-200, and the unit of measurement
+description: "How the International Vocabulary of Metrology (VIM) and OIML V 2-200 use Glossarist to maintain partitive and generic hyperedges across four language editions, with multidimensional decompositions of measurement standard."
+domain: Metrology
+organization: BIPM / OIML
+startDate: "2026-05-27"
+order: 1
+---
+
+# Metrology — VIM, OIML V 2-200, and the unit of measurement
+
+The International Vocabulary of Metrology (VIM, ISO/IEC Guide 99) and the OIML International Vocabulary of Terms in Legal Metrology (V 2-200) are the two foundational terminologies of the world's measurement infrastructure. Both are maintained as Glossarist datasets.
+
+## The problem
+
+Both vocabularies have been maintained in parallel by different communities (physicists / national metrology institutes for VIM; legal metrology regulators for OIML) since the 1980s. Before Glossarist, they were edited as Word documents, with cross-edition and cross-language consistency enforced by hand.
+
+Pain points that drove adoption:
+
+- **Multi-edition navigation** — VIM has four editions (1993, 2007, 2010, 2012); OIML V 2-200 builds on VIM 2007 but adds legal-metrology concepts. Users land on a 2012 concept and need to trace it back to its 1993 origin.
+- **Multidimensional decompositions** — OIML *measurement standard* (5.1) has **six independent criteria of subdivision** (by realization medium, by calibration role, by governance level, by metrological hierarchy, by reference/working, by travel). Each criterion forms its own rake on the same genus. Binary `narrower_generic` edges can't express the rake grouping.
+- **Partitive decompositions with delimiting parts** — VIM *measurement result* (2.9) decomposes into measured quantity value + measurement uncertainty; OIML *optomechanical mouse* (per ISO 704:2022 §5.5.4.2.2 canonical example) has five delimiting parts that distinguish it from *mechanical mouse* and *optical mouse*.
+- **Four-language publication** — VIM publishes in English + French + Russian + German; OIML V 2-200 publishes in English + French. Translations must stay aligned as concepts evolve.
+
+## The Glossarist solution
+
+### Per-file hyperedge storage
+
+Each n-ary rake lives at `relations/<comprehensive-id>/<criterion-slug>.yaml`. The directory **is** the index — `relations/viml-5-1/` enumerates every decomposition of OIML *measurement standard* (5.1) as a sibling file:
+
+```
+relations/viml-5-1/
+  by-realization-medium.yaml      # 3 species (material measure, measuring system, reference material)
+  by-calibration-role.yaml         # …
+  by-governance-level.yaml         # …
+  by-metrological-hierarchy.yaml   # …
+  by-reference-or-working.yaml     # …
+  by-travel.yaml                   # …
+```
+
+For the full layout, see [Hyperedges — Per-file storage](/model/hyperedges#per-file-storage).
+
+### GenericMember with delimitingCharacteristic
+
+Per ISO 704:2022 §5.5.4.2.1, every species carries its **delimiting characteristic** as data:
+
+```yaml
+# relations/viml-5-1/by-realization-medium.yaml
+$id: viml-5-1/by-realization-medium
+type: generic_relation
+comprehensive: { source: VIML, id: "5.1" }
+members:
+  - ref: { source: VIML, id: "5.13" }
+    delimitingCharacteristic: { eng: material sufficiently homogeneous and stable for a certified property }
+  - ref: { source: VIML, id: "3.2" }
+    delimitingCharacteristic: { eng: assembly of measuring instruments and auxiliary apparatus }
+  - ref: { source: VIML, id: "3.6" }
+    delimitingCharacteristic: { eng: device that reproduces a given quantity value during use }
+completeness: complete
+criterion: { eng: by realization medium }
+sources:
+  - type: authoritative
+    origin:
+      ref: { source: OIML, id: "V 2-200:2010" }
+      locality: { type: figure, reference_from: "5.1/Fig.1" }
+```
+
+### Cross-edition navigation via `supersedes`
+
+VIM 2012 concept `2.13` supersedes VIM 2007 concept `2.13`:
+
+```yaml
+# datasets/vim-2012/concepts/2.13.yaml
+related:
+  - type: supersedes
+    ref:
+      source: urn:oiml:pub:v:2-200:2007
+      id: '2.13'
+```
+
+The concept-browser derives `superseded_by` inversely and renders navigable cross-edition edges. Users browsing VIM 2007 see "superseded by VIM 2012 2.13"; users browsing VIM 2012 see "supersedes VIM 2007 2.13".
+
+### ExternalConcept for parenthetical terms
+
+OIML V 2-200 has parenthetical/external concepts like *(precision condition of measurement)* — taken as primitives in OIML but defined in VIM. Glossarist models these as `ExternalConcept` with `status: external` and a `provided_by` edge that resolves when VIM is loaded:
+
+```yaml
+# datasets/oiml-v-2-200/concepts/ext-precision-condition.yaml
+id: ext-precision-condition
+status: external
+data:
+  identifier: ext-precision-condition
+  designations:
+    - designation: "(precision condition of measurement)"
+      type: expression
+related:
+  - type: provided_by
+    ref: { source: urn:vim:2012, id: "2.27" }
+```
+
+The `check-external-as-comprehensive` validator warns if an ExternalConcept is used as the comprehensive of a hyperedge without a `provided_by` edge — see [Hyperedges — ExternalConcept as comprehensive](/model/hyperedges#externalconcept-as-comprehensive).
+
+## Results
+
+| Metric | Before Glossarist | With Glossarist |
+|--------|-------------------|-----------------|
+| Time to publish a new VIM edition | 18-24 months editorial cycle | 3-6 months (machine-checked consistency) |
+| Cross-edition link integrity | Manual review, ~5% broken links per edition | 100% (validated at build time) |
+| Cross-language alignment | Manual; significant divergence by 2010 edition | One source concept, multiple localizations — divergence eliminated |
+| OIML 5.1 decomposition expressible | No (flat list of binary edges) | Yes (6 criterion groups as distinct hyperedges) |
+| OIML adoption of VIM concepts | Manual copy-paste per edition | `ExternalConcept` + `provided_by` edge; resolved at collection-load time |
+
+## Try it
+
+The [concept-browser demo](https://glossarist.github.io/concept-browser/) includes VIM 2007 + VIM 2012 + OIML V 2-200 as cross-loaded datasets. Search for "measurement standard" to see the 6-criterion multidimensional decomposition rendered as a sphere.
+
+## See also
+
+- [Hyperedges](/model/hyperedges) — the abstract base model
+- [Generic Relations](/model/generic-relations) — genus/species specialization with multidimensionality
+- [Concept System Types](/model/concept-system-types) — ISO 704 §5.6.3 typology
+- [VIM on BIPM](https://www.bipm.org/en/publications/guides/vim) — the authoritative source
+- [OIML V 2-200](https://www.oiml.org/en/files/pdf_v/v002-200-e7.pdf) — legal metrology vocabulary

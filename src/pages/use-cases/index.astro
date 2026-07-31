@@ -1,0 +1,143 @@
+---
+import { getEntry, render } from 'astro:content'
+import { getCollection } from 'astro:content'
+import BaseLayout from '../../layouts/BaseLayout.astro'
+
+const indexEntry = await getEntry('useCases', 'index')
+const { Content, headings } = indexEntry ? await render(indexEntry) : { Content: null, headings: [] }
+
+const cases = (await getCollection('useCases'))
+  .filter(c => c.id !== 'index')
+  .sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99))
+---
+
+<BaseLayout title="Use Cases" description="How standards bodies, scientific unions, and regulatory agencies use Glossarist to maintain multi-language concept systems.">
+  <section class="g-hero" style="min-height: auto;">
+    <div class="g-hero-grain"></div>
+    <div class="g-hero-inner" style="padding: 5rem 1.5rem 4rem;">
+      <div class="g-section-label g-label-light" style="margin-bottom: 1.5rem;">
+        <span class="g-label-num">·</span>
+        <span class="g-label-text">Use Cases</span>
+      </div>
+      <h1 class="g-display-title">
+        Real-world<br /><em>terminology work</em>.
+      </h1>
+      <p class="g-lede">
+        How standards bodies, scientific unions, and regulatory agencies use
+        Glossarist to maintain multi-language concept systems — covering the
+        metrology, geospatial, and chemistry communities.
+      </p>
+    </div>
+  </section>
+
+  <div class="use-cases-grid">
+    {cases.map(c => (
+      <article class="use-case-card">
+        <a href={`/use-cases/${c.id}`} class="use-case-link">
+          <div class="use-case-domain">{c.data.domain}</div>
+          <h2 class="use-case-title">{c.data.title.split('—')[0].trim()}</h2>
+          {c.data.description && (
+            <p class="use-case-desc">{c.data.description}</p>
+          )}
+          <span class="use-case-arrow">
+            Read
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M13 5l7 7-7 7"/>
+            </svg>
+          </span>
+        </a>
+      </article>
+    ))}
+  </div>
+
+  {Content && (
+    <article class="use-cases-prose">
+      <Content />
+    </article>
+  )}
+</BaseLayout>
+
+<style>
+.use-cases-prose {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 5rem;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: var(--g-text-2);
+}
+.use-cases-prose :global(h2) {
+  font-family: var(--g-font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  margin: 2.5rem 0 1rem;
+  color: var(--g-text-1);
+}
+.use-cases-grid {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 1.5rem 3rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+.use-case-card {
+  border: 1px solid var(--g-divider);
+  border-radius: 12px;
+  background: var(--g-bg-soft);
+  transition: transform 0.2s, border-color 0.2s;
+}
+.use-case-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--g-brand);
+}
+.use-case-link {
+  display: block;
+  padding: 1.5rem 1.5rem 1.75rem;
+  color: inherit;
+  text-decoration: none;
+  height: 100%;
+}
+.use-case-domain {
+  font-family: var(--g-font-display);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--g-teal);
+  margin-bottom: 0.5rem;
+}
+.use-case-title {
+  font-family: var(--g-font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.3;
+  margin: 0 0 0.5rem;
+  color: var(--g-text-1);
+}
+.use-case-desc {
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--g-text-2);
+  margin: 0 0 1rem;
+}
+.use-case-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  font-family: var(--g-font-display);
+  color: var(--g-text-3);
+  transition: color 0.15s;
+}
+.use-case-card:hover .use-case-arrow {
+  color: var(--g-teal);
+}
+.use-case-arrow svg { transition: transform 0.2s; }
+.use-case-card:hover .use-case-arrow svg {
+  transform: translateX(3px);
+}
+</style>

@@ -1,0 +1,42 @@
+---
+title: Use Cases
+description: "How standards bodies, scientific unions, and regulatory agencies use Glossarist to maintain multi-language concept systems — metrology, geospatial, chemistry, and more."
+---
+
+# Use Cases
+
+Glossarist powers terminology work for standards bodies, scientific unions, and regulatory agencies worldwide. The use cases below document real-world deployments — the problems they solve, the Glossarist patterns they use, and the measurable improvements they've seen.
+
+[**Metrology — VIM and OIML V 2-200**](/use-cases/metrology)
+
+The International Vocabulary of Metrology and OIML's legal-metrology companion. Six-criterion multidimensional decompositions of *measurement standard*; cross-edition `supersedes` chains across four VIM editions; `ExternalConcept` for parenthetical terms resolved from VIM to OIML.
+
+[**Geospatial — ISO 19135 and cross-vocabulary equivalences**](/use-cases/geospatial)
+
+ISO/TC 211, OGC, FAO, INSPIRE. SKOS mapping properties (`exact_match`, `close_match`, `broad_match`, `narrow_match`) for cross-vocabulary equivalence; ISO 19135 register lifecycle on every concept; UN-language coverage as a structural invariant.
+
+[**Chemistry — IUPAC nomenclature**](/use-cases/chemistry)
+
+IUPAC Gold Book, Colour Index, nomenclature recommendations. Multiple designation types per concept (systematic + common + trade names + structural formulas); ISO 704:2022 §7 appellations for unique entities; designation lifecycle dating.
+
+## Common patterns across use cases
+
+### Multi-language coverage
+
+Every use case above publishes in at least two languages. Glossarist's `localizations` map makes this structural — one concept, multiple language entries, all sharing the same `ManagedConcept` identity. Translations don't drift.
+
+### ISO 704 / 10241 / 12620 alignment
+
+Every use case can publish ISO 10241-1-compliant terminological entries directly from Glossarist — see [ISO 10241-1 Data Category Mapping](/reference/iso-10241-1-mapping) for the field-by-field correspondence.
+
+### Concept-system types
+
+Each use case fits into the ISO 704:2022 §5.6.3 typology — see [Concept System Types](/model/concept-system-types). Metrology's OIML 5.1 is generic + multidimensional + monohierarchical. Geospatial's *feature* is generic + monodimensional + monohierarchical. Chemistry's compound names are mostly associative (synonymy + equivalence).
+
+### Per-file n-ary relations
+
+Every use case with multidimensional concept systems uses Glossarist's per-file hyperedge storage at `relations/<comprehensive-id>/<criterion-slug>.yaml` — see [Hyperedges](/model/hyperedges). This pattern scales to dozens of criterion groups per comprehensive without file-size bloat or translator conflict.
+
+## Bring your use case
+
+Building terminology infrastructure for a domain we haven't covered? Glossarist is open-source and standards-aligned. See [Adopting Glossarist](/docs/adopt/) for the getting-started guide, or [open an issue](https://github.com/glossarist/concept-model/issues) to discuss your needs.

@@ -181,3 +181,101 @@ describe('Hyperedges content (PR #86)', () => {
     }
   })
 })
+
+describe('ISO 704 + ISO 10241-1 alignment', () => {
+  // These tests lock in the docs architecture for ISO-aligned content.
+  // If a page goes missing or drifts off-standard, fail loudly here.
+
+  it('builds /model/concept-system-types with ISO 704 §5.6.3 typology', () => {
+    expect(existsSync(join(root, 'dist/model/concept-system-types/index.html'))).toBe(true)
+    const html = readFileSync(join(root, 'dist/model/concept-system-types/index.html'), 'utf-8')
+    // All three dimensions from ISO 704 §5.6.3 must be present
+    expect(html).toContain('monodimensional')
+    expect(html).toContain('multidimensional')
+    expect(html).toContain('monohierarchical')
+    expect(html).toContain('polyhierarchical')
+    expect(html).toContain('§5.6.3')
+  })
+
+  it('builds /model/definitions with all four DetailedDefinition.type values', () => {
+    expect(existsSync(join(root, 'dist/model/definitions/index.html'))).toBe(true)
+    const html = readFileSync(join(root, 'dist/model/definitions/index.html'), 'utf-8')
+    expect(html).toContain('intensional')
+    expect(html).toContain('extensional')
+    expect(html).toContain('partitive')
+    expect(html).toContain('translated')
+    // Anti-patterns from ISO 704 §6.5 must be documented
+    expect(html).toContain('circular')
+    expect(html).toContain('inaccurate')
+    expect(html).toContain('negative')
+  })
+
+  it('builds /reference/iso-10241-1-mapping with the data-category table', () => {
+    expect(existsSync(join(root, 'dist/reference/iso-10241-1-mapping/index.html'))).toBe(true)
+    const html = readFileSync(join(root, 'dist/reference/iso-10241-1-mapping/index.html'), 'utf-8')
+    // Must cover the mandatory ISO 10241-1 data categories
+    expect(html).toContain('entry number')
+    expect(html).toContain('definition')
+    expect(html).toContain('normative status')
+  })
+
+  it('sidebar surfaces the new ISO-aligned pages', () => {
+    const sidebars = readFileSync(join(root, 'src/data/sidebars.ts'), 'utf-8')
+    expect(sidebars).toContain("/model/concept-system-types")
+    expect(sidebars).toContain("/model/definitions")
+    expect(sidebars).toContain("/reference/iso-10241-1-mapping")
+  })
+
+  it('nav dropdown includes the new pages', () => {
+    const nav = readFileSync(join(root, 'src/components/Nav.astro'), 'utf-8')
+    expect(nav).toContain("/model/concept-system-types")
+    expect(nav).toContain("/model/definitions")
+    expect(nav).toContain("/reference/iso-10241-1-mapping")
+    expect(nav).toContain("/use-cases/")
+  })
+})
+
+describe('Use cases collection', () => {
+  // Locks in the use-cases IA. Real-world stories are a key community-facing
+  // surface; if a file goes missing or the collection regresses, fail here.
+
+  it('builds /use-cases/ index', () => {
+    expect(existsSync(join(root, 'dist/use-cases/index.html'))).toBe(true)
+  })
+
+  it('builds every use-case detail page', () => {
+    const cases = readdirSync(join(root, 'src/content/use-cases'))
+      .map(f => f.replace(/\.mdx?$/, ''))
+      .filter(id => id !== 'index')
+    expect(cases.length).toBeGreaterThanOrEqual(3)
+    for (const id of cases) {
+      expect(existsSync(join(root, `dist/use-cases/${id}/index.html`)), `missing ${id}`).toBe(true)
+    }
+  })
+
+  it('every use case has a domain + ISO 704/10241 cross-link', () => {
+    const cases = readdirSync(join(root, 'src/content/use-cases'))
+      .filter(f => f.endsWith('.mdx') && f !== 'index.mdx')
+    for (const file of cases) {
+      const src = readFileSync(join(root, 'src/content/use-cases', file), 'utf-8')
+      // All use cases must declare a domain (metrology, geospatial, etc.)
+      expect(src, `${file} missing domain`).toMatch(/^domain:/m)
+      // All use cases must cross-link back to model pages
+      expect(src, `${file} must link to a /model/ page`).toMatch(/\]\(\/model\//)
+    }
+  })
+
+  it('use case order is stable (no alphabetical flapping)', () => {
+    const cases = readdirSync(join(root, 'src/content/use-cases'))
+      .filter(f => f.endsWith('.mdx') && f !== 'index.mdx')
+      .map(f => {
+        const src = readFileSync(join(root, 'src/content/use-cases', f), 'utf-8')
+        const m = src.match(/^order:\s*(\d+)/m)
+        return { f, order: m ? Number(m[1]) : 99 }
+      })
+      .sort((a, b) => a.order - b.order)
+    // Metrology should be order=1 (the canonical example)
+    expect(cases[0].f).toBe('metrology.mdx')
+  })
+})
+
