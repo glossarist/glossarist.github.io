@@ -1,0 +1,161 @@
+---
+title: Supplementary Information
+description: "ISO 704:2022 §6.6 — contexts, encyclopaedic descriptions, explanations, notes, examples, and other descriptions that supplement or replace definitions. How each maps to Glossarist's LocalizedConcept fields."
+---
+
+# Supplementary Information
+
+ISO 704:2022 §6.6 names six kinds of information that can supplement or replace a definition. Glossarist models them as separate fields on `LocalizedConcept` rather than as free-text blobs — each kind has distinct authoring rules per the standard.
+
+Use these fields when a definition alone is insufficient. Especially common in ad hoc terminology work for translation, education, and scientific/technical writing, where the emphasis is on how terminology is used in practice.
+
+## The six categories
+
+| ISO 704 §6.6 | Glossarist field | When to use |
+|--------------|------------------|-------------|
+| §6.6.2 Context | `LocalizedConcept.examples[]` with `kind: context` | Cited text that lets readers infer the concept by implication |
+| §6.6.3 Encyclopaedic description | `LocalizedConcept.notes[]` with `kind: encyclopaedic` | Detail beyond essential characteristics — non-delimiting info |
+| §6.6.4 Explanation | `LocalizedConcept.notes[]` with `kind: explanation` | Paraphrase in simpler/different words |
+| §6.6.5 Note | `LocalizedConcept.notes[]` | Non-essential characteristics or optional parts |
+| §6.6.6 Example | `LocalizedConcept.examples[]` | Specific object instantiating the concept |
+| §6.6.7 Other description | `LocalizedConcept.notes[]` with `kind: other` | Historical, cultural, or usage commentary |
+
+## Contexts (§6.6.2)
+
+A **context** is a cited passage that contains the relevant designation and lets users infer the concept by implication. Typically one or more complete sentences, cited or adapted from a source. Often collected at the beginning of terminology work, before coherent definitions exist.
+
+```yaml
+localizations:
+  eng:
+    language: eng
+    terms:
+      - designation: torque wrench
+        type: expression
+        normative_status: preferred
+    definition:
+      - content: "A wrench used to apply a measured torque..."
+    examples:
+      - kind: context
+        content: "Use a torque wrench to tighten the bolts to 25 N·m per the manufacturer's specification."
+        sources:
+          - type: authoritative
+            origin: "ISO 6789-1:2017, §6.2"
+```
+
+Per ISO 704:2022 §6.6.2, contexts are valuable because they show the term in actual use, which can be more informative than a definition for ambiguous concepts.
+
+## Encyclopaedic descriptions (§6.6.3)
+
+An **encyclopaedic description** provides detail beyond the essential characteristics — non-delimiting information that enriches understanding. Distinguished from a definition: a definition's main purpose is to distinguish the concept; an encyclopaedic description's main purpose is to inform.
+
+> **EXAMPLE (ISO 704:2022 §6.6.3)** — An encyclopaedic source for *penguin* would mention that they live in the south temperate and Antarctic regions. This information is NOT part of the definition (it doesn't distinguish penguins from other birds) but it's useful encyclopaedic context.
+
+```yaml
+localizations:
+  eng:
+    notes:
+      - kind: encyclopaedic
+        content: "Penguins are found in the Southern Hemisphere, with the exception of the Galápagos penguin which lives near the equator."
+```
+
+## Explanations (§6.6.4)
+
+An **explanation** paraphrases the concept in simpler or different words, often for non-experts. Sometimes more useful than a formal definition for practical communication.
+
+```yaml
+localizations:
+  eng:
+    definition:
+      - content: "Pointing device that detects movement by means of rollers and light sensors..."
+    notes:
+      - kind: explanation
+        content: "The computer mouse, named from its shape and size, is a piece of hardware used as a pointing device for onscreen data and for executing functions by clicking its surface."
+```
+
+## Notes (§6.6.5)
+
+A **note** describes non-essential characteristics or optional parts often associated with the concept. Typically one or more complete sentences. Notes can be part of terminological entries in International Standards per ISO 10241-1.
+
+```yaml
+localizations:
+  eng:
+    definition:
+      - content: "Computer mouse in which movement is detected by light sensors."
+    notes:
+      - content: "Optical mice are available in wired and wireless options."
+```
+
+Notes that don't have a `kind` are treated as the default §6.6.5 note.
+
+## Examples (§6.6.6)
+
+An **example** demonstrates how a concept can be instantiated by a specific object. Shows a possible form of realization at the object level. Can be running text or a graphic illustration.
+
+```yaml
+localizations:
+  eng:
+    examples:
+      - content: "ISO 7010 — P004 'Warning: Guarded machinery' instantiates the concept 'single safety sign'."
+        non_verbal: /images/iso-7010-p004.svg
+```
+
+## Other descriptions (§6.6.7)
+
+Historical, cultural, or usage commentary. Often cited from existing sources. No conventional format.
+
+```yaml
+localizations:
+  eng:
+    notes:
+      - kind: other
+        content: "The Internet of Things (IoT) has broad use in industry and society today. Various IoT applications and services have adopted techniques that were not possible a few years ago..."
+        sources:
+          - type: authoritative
+            origin: "ISO/IEC 30141:2018, Introduction"
+```
+
+## When to use each
+
+| If the reader needs... | Use |
+|-----------------------|-----|
+| To see the concept in actual use | Context |
+| Non-distinguishing background detail | Encyclopaedic description |
+| A simpler paraphrase of the definition | Explanation |
+| To know about optional/related characteristics | Note |
+| A concrete instance | Example |
+| Historical or cultural commentary | Other description |
+
+## Indicating sources (§6.7)
+
+ISO 704:2022 §6.7 requires that definitions and supplementary information be accompanied by **authoritative source identifiers**. Glossarist's `ConceptSource` entity handles this — see [Sources](/model/sources).
+
+```yaml
+notes:
+  - kind: encyclopaedic
+    content: "..."
+    sources:
+      - type: authoritative
+        origin: "ISO/IEC 30141:2018, Introduction"
+```
+
+## Validator support
+
+Glossarist's `concept-shape` validator checks:
+- `examples[]` entries have `content` (non-empty)
+- `notes[]` entries have `content` (non-empty)
+- `kind` values are in the known enumeration when present
+
+What is NOT auto-checked:
+- Whether the cited source actually exists (requires cross-dataset resolution)
+- Whether the context's `content` actually contains the designation (would require NLP)
+
+These are reviewer concerns.
+
+## See also
+
+- [Definitions](/model/definitions) — what these supplements complement
+- [Concepts](/model/concepts) — `LocalizedConcept.notes` / `examples` field reference
+- [Sources](/model/sources) — `ConceptSource` for source attribution
+- [Non-verbal Entities](/model/non-verbal) — when figures/formulas replace definitions
+- [ISO 704:2022](https://www.iso.org/standard/38109.html) §6.6 + §6.7 — the authoritative reference
+- [ISO 10241-1](https://www.iso.org/standard/40362.html) §6.6 — note and example presentation rules
