@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { readFileSync, readdirSync, existsSync } from 'node:fs'
 import { resolve, join, dirname } from 'node:path'
-import { root } from './_helpers'
+import { root, readBuilt } from './_helpers'
 
 const contentDir = join(root, 'src/content')
 const publicDir = join(root, 'public')
@@ -276,6 +276,46 @@ describe('Use cases collection', () => {
       .sort((a, b) => a.order - b.order)
     // Metrology should be order=1 (the canonical example)
     expect(cases[0].f).toBe('metrology.mdx')
+  })
+})
+
+describe('SEO invariants (JSON-LD + canonical)', () => {
+  // Locks in structured-data emission. JSON-LD helps search engines
+  // understand this is a TechArticle / WebSite; canonical prevents
+  // duplicate-content penalties from trailing-slash variants.
+
+  it('homepage emits WebSite JSON-LD with SearchAction', () => {
+    const html = readBuilt('dist/index.html')
+    expect(html).toMatch(/<script[^>]*application\/ld\+json[^>]*>/)
+    expect(html).toMatch(/"@type":"WebSite"/)
+    expect(html).toMatch(/SearchAction/)
+  })
+
+  it('docs/reference pages emit TechArticle JSON-LD', () => {
+    const cases = [
+      'dist/model/hyperedges/index.html',
+      'dist/model/concept-system-types/index.html',
+      'dist/model/definitions/index.html',
+      'dist/reference/iso-10241-1-mapping/index.html',
+      'dist/use-cases/metrology/index.html',
+    ]
+    for (const path of cases) {
+      const html = readBuilt(path)
+      expect(html, `${path} missing JSON-LD`).toMatch(/<script[^>]*application\/ld\+json[^>]*>/)
+      expect(html, `${path} not TechArticle`).toMatch(/"@type":"TechArticle"/)
+    }
+  })
+
+  it('every page has a canonical URL', () => {
+    const samples = [
+      'dist/index.html',
+      'dist/model/hyperedges/index.html',
+      'dist/use-cases/index.html',
+    ]
+    for (const path of samples) {
+      const html = readBuilt(path)
+      expect(html, `${path} missing canonical`).toMatch(/<link rel="canonical" href="https:\/\/www\.glossarist\.org[^"]*"/)
+    }
   })
 })
 
