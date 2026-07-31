@@ -1,5 +1,6 @@
 ---
 import BaseLayout from './BaseLayout.astro'
+import { deriveBreadcrumbs } from './seo'
 
 interface Props {
   title: string
@@ -23,9 +24,10 @@ function formatDate(dateStr: string): string {
 }
 
 const authorList = formatAuthors(authors)
+const breadcrumbs = deriveBreadcrumbs(Astro.url.pathname)
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout title={title} description={description} breadcrumbs={breadcrumbs} publishedAt={date}>
   <article class="blog-post">
     <header class="blog-header">
       <div class="blog-header-inner">

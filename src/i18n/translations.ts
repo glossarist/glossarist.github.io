@@ -15,6 +15,9 @@
  * Glossarist itself uses ISO 639-3 (eng/fra/zho) for localizations
  * on ManagedConcept; the chrome uses BCP 47 for the language switcher
  * because that's what browsers and hreflang tags expect.
+ *
+ * Keys are union-typed so call sites get compile-time safety:
+ *   translations[current.value][KEY_HERO_LEDE]  ← key must be TranslationKey
  */
 
 export type Locale = 'eng' | 'fra' | 'zho-Hans' | 'zho-Hant'
@@ -28,30 +31,38 @@ export const LOCALES: { code: Locale; label: string; nativeLabel: string; flag: 
 
 export const DEFAULT_LOCALE: Locale = 'eng'
 
-interface TranslationSet {
-  hero_eyebrow: string
-  hero_title_1: string
-  hero_title_2_em: string
-  hero_lede: string
-  hero_cta_primary: string
-  hero_cta_secondary: string
-  section_01_label: string
-  section_01_title_pre: string
-  section_01_title_em: string
-  section_01_title_post: string
-  section_01_lede: string
-  section_05_label: string
-  section_05_title_pre: string
-  section_05_title_em: string
-  section_05_title_post: string
-  section_05_lede_prefix: string
-  section_05_lede_link: string
-  cta_title_pre: string
-  cta_title_em: string
-  cta_title_post: string
-  language_switcher_label: string
-  language_switcher_help: string
-}
+/**
+ * Exhaustive key union for chrome strings.
+ *
+ * Adding a key = adding to this union. TypeScript then forces every
+ * locale's TranslationSet to implement it. Catches drift at compile
+ * time, not at runtime test.
+ */
+export type TranslationKey =
+  | 'hero_eyebrow'
+  | 'hero_title_1'
+  | 'hero_title_2_em'
+  | 'hero_lede'
+  | 'hero_cta_primary'
+  | 'hero_cta_secondary'
+  | 'section_01_label'
+  | 'section_01_title_pre'
+  | 'section_01_title_em'
+  | 'section_01_title_post'
+  | 'section_01_lede'
+  | 'section_05_label'
+  | 'section_05_title_pre'
+  | 'section_05_title_em'
+  | 'section_05_title_post'
+  | 'section_05_lede_prefix'
+  | 'section_05_lede_link'
+  | 'cta_title_pre'
+  | 'cta_title_em'
+  | 'cta_title_post'
+  | 'language_switcher_label'
+  | 'language_switcher_help'
+
+export type TranslationSet = Record<TranslationKey, string>
 
 export const translations: Record<Locale, TranslationSet> = {
   eng: {
