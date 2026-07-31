@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 360" role="img" aria-labelledby="title desc">
+  <title id="title">Sequential hyperedge — frog life cycle (ISO 704:2022 §5.5.5 developmental subtype)</title>
+  <desc id="desc">A "frog life cycle" comprehensive at the left. Five ordered stages flow rightward connected by arrows: egg, tadpole, tadpole-with-legs, froglet, adult frog. Each stage has a delimiting characteristic in a side rectangle. Arrows indicate temporal order.</desc>
+  <style>
+    .box { fill: #f8f9fa; stroke: #343a40; stroke-width: 1.5; }
+    .genus-box { fill: #e7f1fa; stroke: #0c5460; stroke-width: 2; }
+    .label { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 12px; fill: #212529; }
+    .small { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 10px; fill: #6c757d; }
+    .crit { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 10px; fill: #0c5460; font-style: italic; }
+    .char-label { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 9px; fill: #6c757d; font-style: italic; }
+    .char-text { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 9.5px; fill: #212529; }
+    .arrow { stroke: #0c5460; stroke-width: 2; fill: none; marker-end: url(#seq-arr); }
+  </style>
+
+  <defs>
+    <marker id="seq-arr" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#0c5460"/>
+    </marker>
+  </defs>
+
+  <text x="460" y="22" text-anchor="middle" class="crit" font-weight="600">criterion: developmental stage (temporal order)</text>
+
+  <!-- Stage 1: egg -->
+  <rect x="20" y="60" width="120" height="50" rx="6" class="box"/>
+  <text x="80" y="80" text-anchor="middle" class="label" font-weight="600">egg</text>
+  <text x="80" y="96" text-anchor="middle" class="small">stage 1</text>
+  <line x1="80" y1="115" x2="80" y2="135" stroke="#adb5bd" stroke-dasharray="2 2"/>
+  <rect x="20" y="135" width="120" height="55" rx="3" fill="#fff" stroke="#adb5bd"/>
+  <text x="80" y="150" text-anchor="middle" class="char-label">characteristic</text>
+  <text x="80" y="165" text-anchor="middle" class="char-text">"aquatic egg mass</text>
+  <text x="80" y="178" text-anchor="middle" class="char-text">laid in water"</text>
+
+  <!-- Arrow 1 → 2 -->
+  <line x1="145" y1="85" x2="190" y2="85" class="arrow"/>
+
+  <!-- Stage 2: tadpole -->
+  <rect x="195" y="60" width="120" height="50" rx="6" class="box"/>
+  <text x="255" y="80" text-anchor="middle" class="label" font-weight="600">tadpole</text>
+  <text x="255" y="96" text-anchor="middle" class="small">stage 2</text>
+  <line x1="255" y1="115" x2="255" y2="135" stroke="#adb5bd" stroke-dasharray="2 2"/>
+  <rect x="195" y="135" width="120" height="55" rx="3" fill="#fff" stroke="#adb5bd"/>
+  <text x="255" y="150" text-anchor="middle" class="char-label">characteristic</text>
+  <text x="255" y="165" text-anchor="middle" class="char-text">"aquatic larva with</text>
+  <text x="255" y="178" text-anchor="middle" class="char-text">gills and tail"</text>
+
+  <line x1="320" y1="85" x2="365" y2="85" class="arrow"/>
+
+  <!-- Stage 3: tadpole-with-legs -->
+  <rect x="370" y="60" width="120" height="50" rx="6" class="box"/>
+  <text x="430" y="78" text-anchor="middle" class="label" font-weight="600">tadpole</text>
+  <text x="430" y="92" text-anchor="middle" class="label" font-weight="600">(with legs)</text>
+  <text x="430" y="105" text-anchor="middle" class="small">stage 3</text>
+  <line x1="430" y1="115" x2="430" y2="135" stroke="#adb5bd" stroke-dasharray="2 2"/>
+  <rect x="370" y="135" width="120" height="55" rx="3" fill="#fff" stroke="#adb5bd"/>
+  <text x="430" y="150" text-anchor="middle" class="char-label">characteristic</text>
+  <text x="430" y="165" text-anchor="middle" class="char-text">"larva developing</text>
+  <text x="430" y="178" text-anchor="middle" class="char-text">hind legs"</text>
+
+  <line x1="495" y1="85" x2="540" y2="85" class="arrow"/>
+
+  <!-- Stage 4: froglet -->
+  <rect x="545" y="60" width="120" height="50" rx="6" class="box"/>
+  <text x="605" y="80" text-anchor="middle" class="label" font-weight="600">froglet</text>
+  <text x="605" y="96" text-anchor="middle" class="small">stage 4</text>
+  <line x1="605" y1="115" x2="605" y2="135" stroke="#adb5bd" stroke-dasharray="2 2"/>
+  <rect x="545" y="135" width="120" height="55" rx="3" fill="#fff" stroke="#adb5bd"/>
+  <text x="605" y="150" text-anchor="middle" class="char-label">characteristic</text>
+  <text x="605" y="165" text-anchor="middle" class="char-text">"tail + limbs both</text>
+  <text x="605" y="178" text-anchor="middle" class="char-text">present"</text>
+
+  <line x1="670" y1="85" x2="715" y2="85" class="arrow"/>
+
+  <!-- Stage 5: adult frog -->
+  <rect x="720" y="60" width="170" height="50" rx="6" class="box"/>
+  <text x="805" y="80" text-anchor="middle" class="label" font-weight="600">adult frog</text>
+  <text x="805" y="96" text-anchor="middle" class="small">stage 5 (terminal)</text>
+  <line x1="805" y1="115" x2="805" y2="135" stroke="#adb5bd" stroke-dasharray="2 2"/>
+  <rect x="720" y="135" width="170" height="55" rx="3" fill="#fff" stroke="#adb5bd"/>
+  <text x="805" y="150" text-anchor="middle" class="char-label">characteristic</text>
+  <text x="805" y="165" text-anchor="middle" class="char-text">"lungs, no tail,</text>
+  <text x="805" y="178" text-anchor="middle" class="char-text">four limbs"</text>
+
+  <!-- Footer -->
+  <text x="460" y="240" text-anchor="middle" class="small">ISO 12620 A.6.3 sequential relation — developmental subtype (ISO 704:2022 §5.5.5 Table 1).</text>
+  <text x="460" y="256" text-anchor="middle" class="small">Member array order IS significant (earliest → latest). Reverse the array → reverse the sequence.</text>
+  <text x="460" y="280" text-anchor="middle" class="small">Distinct from PartitiveHyperedge (frog is not "composed of" these stages) and</text>
+  <text x="460" y="294" text-anchor="middle" class="small">GenericHyperedge (a tadpole is not a "kind of" adult frog — it BECOMES one).</text>
+
+  <!-- Wire preview -->
+  <rect x="40" y="305" width="840" height="50" rx="4" fill="#f8f9fa" stroke="#dee2e6"/>
+  <text x="55" y="322" class="small" font-family="ui-monospace, monospace">$id: example-frog-life-cycle/by-developmental-stage</text>
+  <text x="55" y="338" class="small" font-family="ui-monospace, monospace">type: sequential_relation · members: [egg, tadpole, tadpole-with-legs, froglet, adult-frog]</text>
+  <text x="55" y="354" class="small" font-family="ui-monospace, monospace">criterion: { eng: developmental stage (temporal order) }</text>
+</svg>

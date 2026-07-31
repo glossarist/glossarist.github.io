@@ -1,0 +1,103 @@
+---
+title: Sequential Relations
+description: "ISO 12620 A.6.3 / ISO 704:2022 §5.5.5 sequential hyperedges — ordered n-ary relations for temporal, spatial, causal, and developmental sequences. Member array order is significant."
+---
+
+# Sequential Relations
+
+A **`SequentialHyperedge`** implements [ISO 12620](https://www.iso.org/standard/56034.html) A.6.3 sequential relations and [ISO 704:2022](https://www.iso.org/standard/38109.html) §5.5.5 Table 1's sequential relation subtypes. It connects a comprehensive concept (the start or whole) to two or more subordinate concepts in an **ordered** sequence — temporal, spatial, causal, or developmental.
+
+Sequential is the third n-ary hyperedge type, alongside [Partitive](/model/partitive-relations) and [Generic](/model/generic-relations). The structural difference: **member array order is significant** in sequential, whereas partitive and generic members are unordered sets.
+
+## How it looks
+
+The frog life cycle is ISO 704:2022 §5.5.5's canonical developmental subtype. Five stages flow in temporal order, each with its delimiting characteristic:
+
+![Frog life cycle — sequential hyperedge](/images/hyperedge-sequential.svg)
+
+Arrows (not rake teeth) indicate order. Reversing the array reverses the sequence — a property Partitive and Generic don't have.
+
+## When to use SequentialHyperedge vs. alternatives
+
+| Shape | Use when … |
+|-------|-----------|
+| Binary `sequentially_related` / `spatially_related` / `temporally_related` | Pairwise assertion with no completeness or multidimensionality claim |
+| `PartitiveHyperedge` | Whole is composed of parts (simultaneous) — a frog is **not** "composed of" its life stages |
+| `GenericHyperedge` | Species share a genus — a tadpole is **not** a "kind of" adult frog, it *becomes* one |
+| **`SequentialHyperedge`** | Steps in an ordered process; earlier → later; cause → effect; stage → stage |
+
+ISO 704:2022 §5.5.5 Table 1 enumerates the major sequential subtypes:
+
+| Subtype | Example |
+|---------|---------|
+| **temporal relation** (earlier–later) | production → consumption |
+| **causal relation** (cause–effect) | humidity → corrosion |
+| **spatial relation** (position in space) | floor → ceiling |
+| **developmental relation** (process step – process step) | tadpole → frog |
+
+## Multidimensionality (ISO 704:2022 §5.6.3)
+
+A single comprehensive can have **multiple sequential rakes** distinguished by criterion — same multidimensionality principle as Partitive and Generic. For example, a manufacturing process can be decomposed by:
+- **process step** (raw material → design → prototype → production → QC → packaging → distribution)
+- **organizational responsibility** (engineering → operations → quality → logistics)
+
+Each criterion is a distinct `SequentialHyperedge` file.
+
+## Model
+
+```
+SequentialHyperedge extends AbstractHyperedge
+  +comprehensive: ConceptRef [1]              # start of the sequence
+  +members:       SequentialMember [2..*]      # ORDERED — array order matters
+  +completeness:  Completeness [0..1]         # complete | partial
+  +criterion:     LocalizedString [0..1]      # sequencing criterion
+  +sources:       ConceptSource [0..*]
+  +notes:         LocalizedString [0..1]
+  +status:        ConceptStatus [0..1]
+
+SequentialMember extends HyperedgeMember
+  +ref:           ConceptRef [1]
+  +presence:      Presence [0..1]             # required | optional
+  +count:         Count [0..1]                # exactly_one | at_least_one | multiple
+  +is_delimiting: Boolean [0..1]
+```
+
+## Wire format
+
+```yaml
+# relations/example-frog-life-cycle/by-developmental-stage.yaml
+$id: example-frog-life-cycle/by-developmental-stage
+type: sequential_relation
+status: valid
+comprehensive:
+  source: EXAMPLE
+  id: "frog-life-cycle"
+members:
+  - ref: { source: EXAMPLE, id: "egg" }
+    characteristic: { eng: aquatic egg mass laid in water }
+  - ref: { source: EXAMPLE, id: "tadpole" }
+    characteristic: { eng: aquatic larval stage with gills and tail }
+  - ref: { source: EXAMPLE, id: "tadpole-with-legs" }
+    characteristic: { eng: larval stage developing hind legs }
+  - ref: { source: EXAMPLE, id: "froglet" }
+    characteristic: { eng: transitional stage with both tail and limbs }
+  - ref: { source: EXAMPLE, id: "adult-frog" }
+    characteristic: { eng: adult form with lungs, no tail, four limbs }
+completeness: complete
+criterion: { eng: developmental stage (temporal order) }
+```
+
+The `characteristic` field carries the intension-difference that distinguishes this stage from the others — same role as in `GenericMember`.
+
+## Validators
+
+- `check-sequential-relation-coherence` — same checks as partitive/generic coherence (cardinality, MECE combo, duplicate criterion), plus a sequential-specific check: warns when a member ref appears more than once in the same sequence (suggests the sequence is poorly defined).
+
+## See also
+
+- [Hyperedges](/model/hyperedges) — unified model page covering all three types
+- [Partitive Relations](/model/partitive-relations) — whole/part
+- [Generic Relations](/model/generic-relations) — genus/species
+- [Relationships](/model/relationships) — binary typed edges
+- [ISO 12620](https://www.iso.org/standard/56034.html) A.6.3 — sequential relation
+- [ISO 704:2022](https://www.iso.org/standard/38109.html) §5.5.5 Table 1 — associative relation subtypes
