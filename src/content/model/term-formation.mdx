@@ -1,0 +1,163 @@
+---
+title: Term Formation Principles
+description: "ISO 704:2022 §7.6 — the eight principles for forming new terms, appellations, and proper names: transparency, consistency, appropriateness, conciseness, derivability, linguistic correctness, language preference, transliteration. How Glossarist applies them."
+---
+
+# Term Formation Principles
+
+ISO 704:2022 §7.6 specifies eight principles for forming new terms (and appellations and proper names). Glossarist doesn't enforce these mechanically — they're reviewer guidance — but the data model surfaces the information reviewers need (term_type, grammar, sources, lineage) to apply them.
+
+## The eight principles
+
+| § | Principle | What it requires |
+|---|-----------|------------------|
+| §7.6.2.1 | **Transparency** | The concept can be inferred (at least partially) from the term itself, without a definition |
+| §7.6.2.2 | **Consistency** | New terms follow existing term-formation patterns in the concept system |
+| §7.6.2.3 | **Appropriateness** | Well-established usage is respected, even if poorly formed |
+| §7.6.2.4 | **Conciseness** | Terms are reasonably short |
+| §7.6.2.5 | **Derivability and compoundability** | Term supports derivation (noun → verb → adjective) and compounding |
+| §7.6.2.6 | **Linguistic correctness** | Term follows the morphological, phonological, and orthographic rules of the language |
+| §7.6.2.7 | **Preference for a given natural language** | Source language choice is intentional and documented |
+| §7.6.2.8 | **Transliteration and transcription** | Cross-script forms follow ISO standards |
+
+When several designations exist for one concept, ISO 704:2022 §7.6.1 requires picking the one that satisfies the largest number of principles as the **preferred** designation.
+
+## Transparency (§7.6.2.1)
+
+A term is transparent when the concept can be inferred from its linguistic elements — usually because a key (delimiting) characteristic is expressed in the term.
+
+| Transparent | Opaque |
+|-------------|--------|
+| *torque wrench* (wrench for measuring torque) | *monkey wrench* (named after inventor "Moncky") |
+| *thermal noise* (noise from thermal agitation) | *Johnson noise* (named after J.B. Johnson) |
+| *National Commission on Terrorist Attacks Upon the United States* | *Kean-Hamilton Commission* (named after chair/vice-chair) |
+
+Avoid characteristics that change quickly with technology — otherwise the term becomes misleading when the technology evolves.
+
+## Consistency (§7.6.2.2)
+
+If existing related concepts use a particular morphological pattern, new terms should follow it. Example: if *feline* / *canine* / *bovine* are established, a new family name should follow the *-ine* suffix pattern rather than introducing *-id* or *-ian*.
+
+## Appropriateness (§7.6.2.3)
+
+Established and widely used designations, even if poorly formed or opaque, should not be changed unless there are compelling reasons. Renaming *monkey wrench* to something transparent would break decades of usage for marginal benefit.
+
+## Conciseness (§7.6.2.4)
+
+Terms should be reasonably short. *Hydraulic excavator* is preferred over *machine for excavating earth by means of hydraulic actuators*.
+
+## Derivability and compoundability (§7.6.2.5)
+
+A term should support:
+- **Derivation** — *measure* → *measurement* → *measurable* → *measurably*
+- **Compounding** — *measure* + *instrument* → *measuring instrument*
+
+If a term doesn't derive or compound cleanly, it limits expressiveness in technical writing.
+
+## Linguistic correctness (§7.6.2.6)
+
+Follow the morphological, phonological, and orthographic rules of the target language. Including:
+- Plural forms (irregular plurals like *criteria* vs *criterias*)
+- Gender agreement in gendered languages
+- Phonotactic constraints
+- Spelling standardization (e.g. *sulfur* not *sulphur* per IUPAC 1990)
+
+## Preference for a given natural language (§7.6.2.7)
+
+When a concept is named in multiple languages, the source-language choice should be intentional and documented. ISO 704:2022 doesn't mandate a single source language — but the rationale should be clear.
+
+## Transliteration and transcription (§7.6.2.8)
+
+Cross-script forms follow ISO standards:
+- [ISO 9](https://www.iso.org/standard/37241.html) — Cyrillic to Latin
+- [ISO 233](https://www.iso.org/standard/37242.html) — Arabic to Latin
+- [ISO 259](https://www.iso.org/standard/37243.html) — Hebrew to Latin
+- [ISO 3602](https://www.iso.org/standard/37245.html) — Japanese to Latin
+- [ISO 7098](https://www.iso.org/standard/37246.html) — Chinese to Latin
+
+## How Glossarist surfaces these principles
+
+The data model captures the inputs reviewers need:
+
+### `term_type` (ISO 12620 enumeration)
+
+Distinguishes full_form / abbreviation / acronym / initialism / clipped_term / short_form / transliterated_form / transcribed_form / etc. — see [Term Types](/model/term-types). Reviewers use this to apply §7.6.2.5 (derivability) and §7.6.2.8 (transliteration).
+
+```yaml
+terms:
+  - designation: H₂SO₄
+    type: formula
+    normative_status: preferred
+  - designation: sulfuric acid
+    type: expression
+    normative_status: preferred
+    term_type: full_form
+  - designation: oil of vitriol
+    type: expression
+    normative_status: deprecated
+    term_type: variant
+```
+
+### `grammar` (part_of_speech, gender, number)
+
+Supports §7.6.2.6 (linguistic correctness):
+
+```yaml
+terms:
+  - designation: entité géographique
+    type: expression
+    grammar:
+      part_of_speech: noun
+      gender: feminine
+      number: singular
+```
+
+### `dates` (designation lifecycle)
+
+Supports §7.6.2.3 (appropriateness — established usage) by tracking when a designation was accepted or deprecated:
+
+```yaml
+terms:
+  - designation: sulphuric acid
+    normative_status: deprecated
+    dates:
+      - type: accepted
+        date: "1800-01-01"
+      - type: deprecated
+        date: "1990-01-01"
+        source: "IUPAC spelling standardization"
+```
+
+### `sources` (provenance)
+
+Supports §7.6.2.7 (language preference documentation):
+
+```yaml
+terms:
+  - designation: 自由落下
+    type: expression
+    normative_status: preferred
+    sources:
+      - type: authoritative
+        origin: "JIS Z 8103:2019"
+```
+
+## Validator support
+
+Glossarist does NOT auto-enforce term-formation principles. The principles are reviewer guidance — they require human judgment about transparency, consistency, etc. What IS validated:
+
+- `term_type` values are in the ISO 12620 enumeration
+- `grammar` values are in the language-appropriate taxonomy
+- `designation` text is non-empty
+- `normative_status` is one of preferred / admitted / deprecated
+- Exactly one preferred term per language is recommended (warning if > 1)
+
+For an authoring workflow that surfaces these principles during review, see [the Validator Playground](/playground/validators) — the *designation-shape* rule flags missing fields and unknown types.
+
+## See also
+
+- [Designations](/model/designations) — the data model for terms
+- [Term Types](/model/term-types) — the ISO 12620 enumeration
+- [Definitions](/model/definitions) — what terms point at
+- [ISO 704:2022](https://www.iso.org/standard/38109.html) §7.6 — the authoritative reference (and Annex B for English term-formation methods)
+- [ISO 12620](https://www.iso.org/standard/37244.html) §A.2.1 — term type data categories

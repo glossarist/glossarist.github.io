@@ -19,6 +19,7 @@ export const sidebars: Record<string, SidebarGroup[]> = {
         { text: 'Overview', link: '/model/' },
         { text: 'Concepts', link: '/model/concepts' },
         { text: 'Definitions', link: '/model/definitions' },
+        { text: 'Supplementary Info', link: '/model/supplementary-info' },
         { text: 'Designations', link: '/model/designations' },
         { text: 'Relationships', link: '/model/relationships' },
         { text: 'Hyperedges', link: '/model/hyperedges' },
@@ -30,6 +31,7 @@ export const sidebars: Record<string, SidebarGroup[]> = {
         { text: 'Datasets & Sections', link: '/model/datasets' },
         { text: 'Non-verbal Entities', link: '/model/non-verbal' },
         { text: 'Term Types', link: '/model/term-types' },
+        { text: 'Term Formation', link: '/model/term-formation' },
       ],
     },
     {
