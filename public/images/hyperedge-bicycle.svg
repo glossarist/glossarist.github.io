@@ -93,5 +93,5 @@
   <text x="480" y="320" text-anchor="middle" class="small">Criterion: physical structure. Delimiting parts distinguish "bicycle" from coordinate concepts:</text>
   <text x="480" y="336" text-anchor="middle" class="small">unicycle (1 wheel), tricycle (3 wheels), scooter (no pedals, no chain), motorcycle (motor-driven).</text>
   <text x="480" y="358" text-anchor="middle" class="small">Double lines indicate count=multiple (typically 2). Dashed lines indicate presence=optional.</text>
-  <text x="480" y="380" text-anchor="middle" class="small">Bold 3x-width = is_delimiting (behaves like a delimiting characteristic per ISO 704:2022 §5.5.4.2.1).</text>
+  <text x="480" y="380" text-anchor="middle" class="small">Bold 3x-width = is_delimiting (partitive delimiting part per ISO 704:2022 §5.5.4.2.2).</text>
 </svg>

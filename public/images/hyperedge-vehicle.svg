@@ -139,7 +139,7 @@
   <text x="55" y="512" class="small" font-family="ui-monospace, monospace">criterion: { eng: by motive power }</text>
   <text x="55" y="526" class="small" font-family="ui-monospace, monospace">members:</text>
   <text x="55" y="540" class="small" font-family="ui-monospace, monospace">  - ref: { source: EXAMPLE, id: "human-powered-vehicle" }</text>
-  <text x="55" y="554" class="small" font-family="ui-monospace, monospace">    characteristic: { eng: propelled by human force }</text>
+  <text x="55" y="554" class="small" font-family="ui-monospace, monospace">    delimitingCharacteristic: { eng: propelled by human force }</text>
 
   <text x="500" y="484" class="small" font-family="ui-monospace, monospace" fill="#6c757d"># relations/example-vehicle/by-terrain.yaml — distinct hyperedge</text>
   <text x="500" y="500" class="small" font-family="ui-monospace, monospace" fill="#6c757d"># same comprehensive, different criterion</text>
