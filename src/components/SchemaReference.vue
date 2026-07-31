@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import bundledData from '../data/schemas-bundled.json'
+import bundledData from '@data/schemas-bundled.json'
 
 type JsonSchema = {
   type?: string

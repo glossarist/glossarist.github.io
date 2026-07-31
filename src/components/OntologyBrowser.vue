@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, nextTick, onMounted, onUnmounted, watch } from 'vue'
-import type { OwlClass, OwlProperty, OwlShape, OwlOntology, AnnotationProperty, TaxonomyData, TaxonomyConcept, OntologyStats } from '../data/types'
-import { useOntologyData } from '../data/useOntologyData'
+import type { OwlClass, OwlProperty, OwlShape, OwlOntology, AnnotationProperty, TaxonomyData, TaxonomyConcept, OntologyStats } from '@data/types'
+import { useOntologyData } from '@data/useOntologyData'
 
 const isMac = typeof navigator !== 'undefined' && /Mac|iPod|iPhone|iPad/.test(navigator.userAgent)
 

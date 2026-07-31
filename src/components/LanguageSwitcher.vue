@@ -7,7 +7,7 @@
  * loads and updates the homepage chrome reactively.
  */
 import { ref } from 'vue'
-import { useI18n } from '../i18n'
+import { useI18n } from '@/i18n'
 
 const { current, setLocale, locales, t } = useI18n()
 const open = ref(false)

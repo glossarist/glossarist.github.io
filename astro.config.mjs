@@ -39,6 +39,7 @@ export default defineConfig({
         '@': '/src',
         '@data': '/src/data',
         '@components': '/src/components',
+        '@layouts': '/src/layouts',
       },
     },
   },

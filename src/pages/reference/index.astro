@@ -1,6 +1,6 @@
 ---
 import { getEntry, render } from 'astro:content'
-import DocLayout from '../../layouts/DocLayout.astro'
+import DocLayout from '@layouts/DocLayout.astro'
 
 const entry = await getEntry('reference', 'index')
 if (!entry) return Astro.redirect('/404')

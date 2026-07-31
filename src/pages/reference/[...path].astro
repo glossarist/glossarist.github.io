@@ -1,9 +1,9 @@
 ---
 import { getCollection, render } from 'astro:content'
-import DocLayout from '../../layouts/DocLayout.astro'
-import OntologyBrowser from '../../components/OntologyBrowser.vue'
-import SchemaReference from '../../components/SchemaReference.vue'
-import YamlSchemas from '../../components/YamlSchemas.vue'
+import DocLayout from '@layouts/DocLayout.astro'
+import OntologyBrowser from '@components/OntologyBrowser.vue'
+import SchemaReference from '@components/SchemaReference.vue'
+import YamlSchemas from '@components/YamlSchemas.vue'
 
 export async function getStaticPaths() {
   const refs = await getCollection('reference')
