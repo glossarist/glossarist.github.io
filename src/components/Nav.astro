@@ -1,5 +1,6 @@
 ---
 import { softwareNavItems } from '../data/projects'
+import LanguageSwitcher from './LanguageSwitcher.vue'
 
 const nav = [
   {
@@ -148,6 +149,7 @@ function parentActive(item: { items?: { link: string }[], link?: string }): bool
   </nav>
 
   <div class="flex items-center gap-2 ml-1">
+    <LanguageSwitcher client:idle />
     <button
       type="button"
       class="search-trigger flex items-center gap-2 bg-[var(--g-bg-soft)] border border-[var(--g-divider)] px-2.5 py-1.5 rounded-md text-[var(--g-text-2)] cursor-pointer font-inherit text-xs hover:bg-[var(--g-bg-alt)] hover:text-[var(--g-text-1)]"
