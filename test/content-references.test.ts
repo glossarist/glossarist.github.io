@@ -127,21 +127,27 @@ describe('Hyperedges content (PR #86)', () => {
     expect(html).toContain('HyperedgeMember')
   })
 
-  it('partitive-relations.mdx has a banner pointing to the unified page', () => {
+  it('partitive-relations.mdx frames as a specialization of Hyperedges', () => {
     const src = readSource('model/partitive-relations.mdx')
-    expect(src).toMatch(/\[Hyperedges\]\(\/model\/hyperedges\)/)
+    expect(src).toMatch(/specialization of \[?`?Hyperedge/)
+    expect(src).toMatch(/PartitiveHyperedge/)
+    expect(src).not.toMatch(/historical reference/i)
+    expect(src).not.toMatch(/Renamed to `PartitiveHyperedge`/)
   })
 
-  it('generic-relations.mdx has a banner pointing to the unified page', () => {
+  it('generic-relations.mdx frames as a specialization of Hyperedges', () => {
     const src = readSource('model/generic-relations.mdx')
-    expect(src).toMatch(/\[Hyperedges\]\(\/model\/hyperedges\)/)
+    expect(src).toMatch(/specialization of \[?`?Hyperedge/)
+    expect(src).toMatch(/GenericHyperedge/)
+    expect(src).not.toMatch(/historical reference/i)
+    expect(src).not.toMatch(/Renamed to `GenericHyperedge`/)
   })
 
-  it('sidebar lists Hyperedges (unified page only; historical stubs reachable via links)', () => {
+  it('sidebar lists Hyperedges (abstract) plus the two specialized leaves', () => {
     const sidebars = readFileSync(join(root, 'src/data/sidebars.ts'), 'utf-8')
     expect(sidebars).toContain("/model/hyperedges")
-    expect(sidebars).not.toContain("/model/partitive-relations")
-    expect(sidebars).not.toContain("/model/generic-relations")
+    expect(sidebars).toContain("/model/partitive-relations")
+    expect(sidebars).toContain("/model/generic-relations")
   })
 
   it('every hyperedge SVG referenced from MDX exists in public/', () => {
@@ -150,6 +156,7 @@ describe('Hyperedges content (PR #86)', () => {
       'hyperedge-generalization.svg',
       'hyperedge-mece-multiplicity.svg',
       'hyperedge-per-file-storage.svg',
+      'hyperedge-generic-computer-mouse.svg',
     ]
     for (const name of expected) {
       const path = join(publicDir, 'images', name)
@@ -157,13 +164,14 @@ describe('Hyperedges content (PR #86)', () => {
     }
   })
 
-  it('hyperedges SVGs include accessibility title + desc', () => {
+  it('every hyperedge SVG includes accessibility title + desc', () => {
     // Each SVG must carry role="img" plus <title> + <desc> for SR support.
     const expected = [
       'hyperedge-partitive.svg',
       'hyperedge-generalization.svg',
       'hyperedge-mece-multiplicity.svg',
       'hyperedge-per-file-storage.svg',
+      'hyperedge-generic-computer-mouse.svg',
     ]
     for (const name of expected) {
       const svg = readFileSync(join(publicDir, 'images', name), 'utf-8')

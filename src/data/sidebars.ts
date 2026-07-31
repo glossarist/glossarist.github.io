@@ -21,6 +21,8 @@ export const sidebars: Record<string, SidebarGroup[]> = {
         { text: 'Designations', link: '/model/designations' },
         { text: 'Relationships', link: '/model/relationships' },
         { text: 'Hyperedges', link: '/model/hyperedges' },
+        { text: 'Partitive Relations', link: '/model/partitive-relations' },
+        { text: 'Generic Relations', link: '/model/generic-relations' },
         { text: 'Sources', link: '/model/sources' },
         { text: 'Datasets & Sections', link: '/model/datasets' },
         { text: 'Non-verbal Entities', link: '/model/non-verbal' },
