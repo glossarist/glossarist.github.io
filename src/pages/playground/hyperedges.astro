@@ -1,0 +1,163 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import HyperedgePlayground from '../../components/HyperedgePlayground.vue'
+
+const title = 'Hyperedge Playground'
+const description = 'Live YAML to rake renderer. Edit hyperedge YAML on the left, see the rendered rake diagram and inline validation on the right. Three preset examples included.'
+---
+
+<BaseLayout title={title} description={description} fullscreen={true}>
+  <main class="playground-page">
+    <header class="playground-header">
+      <div class="playground-header-inner">
+        <p class="playback-breadcrumb"><a href="/model/hyperedges">Hyperedges</a> · Playground</p>
+        <h1>Hyperedge <em>Playground</em></h1>
+        <p class="playground-lede">
+          Edit hyperedge YAML on the left; the rake renders live on the right with
+          inline validation. Three preset examples cover the common shapes. This is
+          a teaching tool — for production validation use
+          <a href="/docs/software/glossarist-ruby">glossarist-ruby</a> or
+          <a href="/docs/software/glossarist-js">glossarist-js</a>.
+        </p>
+      </div>
+    </header>
+
+    <div class="playground-body">
+      <HyperedgePlayground client:load />
+    </div>
+
+    <section class="playground-docs">
+      <div class="playground-docs-inner">
+        <h2>What am I looking at?</h2>
+        <p>
+          The diagram follows <a href="https://www.iso.org/standard/38109.html">ISO 704:2022</a>
+          §5.5.4 line notation:
+        </p>
+        <ul>
+          <li><strong>Single solid line</strong> — <code>required · exactly_one</code> (compulsory part)</li>
+          <li><strong>Double solid line</strong> — <code>required · multiple</code> (compulsory multiple parts)</li>
+          <li><strong>Single dashed line</strong> — <code>optional · exactly_one</code></li>
+          <li><strong>Single solid + single dashed</strong> — <code>required · at_least_one</code></li>
+          <li><strong>Bold 3x-width line</strong> — <code>is_delimiting: true</code> (partitive only, distinguishes from coordinate concepts)</li>
+        </ul>
+        <p>
+          For <code>generic_relation</code>, every member must carry a <code>delimitingCharacteristic</code>
+          (the intension-difference text per ISO 704 §5.5.4.2.1). The renderer shows it under each species.
+        </p>
+
+        <h2>Validation rules checked</h2>
+        <ul>
+          <li><code>type</code> is <code>partitive_relation</code> or <code>generic_relation</code></li>
+          <li><code>comprehensive</code> is a non-empty <code>ConceptRef</code></li>
+          <li><code>members</code> has at least 2 entries (ISO 704 "two or more")</li>
+          <li>Every member's <code>ref</code> is a non-empty <code>ConceptRef</code></li>
+          <li>Invalid MECE combo <code>(optional + at_least_one)</code> rejected</li>
+          <li><code>generic_relation</code> members must carry <code>delimitingCharacteristic</code></li>
+          <li>Warning: <code>is_delimiting + presence: optional</code> is semantically incoherent</li>
+        </ul>
+
+        <h2>Learn more</h2>
+        <ul>
+          <li><a href="/model/hyperedges">Hyperedges</a> — the abstract model</li>
+          <li><a href="/model/partitive-relations">Partitive Relations</a> — whole/part specialization</li>
+          <li><a href="/model/generic-relations">Generic Relations</a> — genus/species specialization</li>
+          <li><a href="/model/concept-system-types">Concept System Types</a> — ISO 704 §5.6.3 typology</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+.playground-page {
+  background: var(--g-bg);
+  color: var(--g-text-1);
+  min-height: 100vh;
+}
+.playground-header {
+  background: var(--g-bg-soft);
+  padding: 3rem 1.5rem 2rem;
+  border-bottom: 1px solid var(--g-divider);
+}
+.playground-header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.playback-breadcrumb {
+  font-size: 0.8125rem;
+  font-family: var(--g-font-display);
+  color: var(--g-text-3);
+  margin: 0 0 0.5rem;
+}
+.playback-breadcrumb a {
+  color: var(--g-brand);
+  text-decoration: none;
+}
+.playground-header h1 {
+  font-family: var(--g-font-display);
+  font-size: 2.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.75rem;
+  line-height: 1.15;
+}
+.playground-header h1 em {
+  color: var(--g-brand);
+  font-style: italic;
+}
+.playground-lede {
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  color: var(--g-text-2);
+  max-width: 640px;
+  margin: 0;
+}
+.playground-lede a {
+  color: var(--g-brand);
+  text-decoration: underline;
+}
+.playground-body {
+  padding: 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.playground-docs {
+  border-top: 1px solid var(--g-divider);
+  padding: 3rem 1.5rem 5rem;
+  background: var(--g-bg);
+}
+.playground-docs-inner {
+  max-width: 720px;
+  margin: 0 auto;
+}
+.playground-docs-inner h2 {
+  font-family: var(--g-font-display);
+  font-size: 1.375rem;
+  font-weight: 600;
+  margin: 2rem 0 0.75rem;
+  letter-spacing: -0.015em;
+}
+.playground-docs-inner p,
+.playground-docs-inner li {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--g-text-2);
+}
+.playground-docs-inner ul {
+  padding-left: 1.5rem;
+}
+.playground-docs-inner li {
+  margin-bottom: 0.4rem;
+}
+.playground-docs-inner code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.875em;
+  padding: 0.1rem 0.3rem;
+  background: var(--g-code-bg);
+  border-radius: 3px;
+}
+.playground-docs-inner a {
+  color: var(--g-brand);
+  text-decoration: underline;
+}
+</style>

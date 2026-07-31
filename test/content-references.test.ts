@@ -303,6 +303,17 @@ describe('Use cases collection', () => {
   })
 })
 
+describe('Playground pages', () => {
+  it('builds /playground/hyperedges with the Vue island mount', () => {
+    expect(existsSync(join(root, 'dist/playground/hyperedges/index.html'))).toBe(true)
+    const html = readFileSync(join(root, 'dist/playground/hyperedges/index.html'), 'utf-8')
+    // Astro hydrates client:load islands with this attribute
+    expect(html).toMatch(/astro-island[^>]*HyperedgePlayground/)
+    // The preset YAML is embedded in the rendered HTML (serialized props)
+    expect(html).toMatch(/partitive_relation/)
+  })
+})
+
 describe('SEO invariants (JSON-LD + canonical)', () => {
   // Locks in structured-data emission. JSON-LD helps search engines
   // understand this is a TechArticle / WebSite; canonical prevents
