@@ -361,7 +361,7 @@ collection.to_skos(<span class="c-str">'output.ttl'</span>)`,
           <span class="g-label-text">In Production</span>
         </div>
         <h2 class="hp-section-title">Trusted by <em>standards bodies</em>.</h2>
-        <p class="g-lede" style="margin-bottom: 3rem;">Glossarist powers multilingual terminology registries for international standards organizations.</p>
+        <p class="g-lede" style="margin-bottom: 3rem;">Glossarist powers multilingual terminology registries for international standards organizations. <a href="/use-cases/" class="hp-inline-link">Read the use cases →</a></p>
 
         <div class="g-card-grid g-card-grid-2">
           <a href="https://isotc211.geolexica.org/" target="_blank" rel="noopener" class="g-card hp-user-card">
@@ -422,6 +422,7 @@ collection.to_skos(<span class="c-str">'output.ttl'</span>)`,
         <h2 class="hp-cta-title">Start building your<br /><em>concept system</em>.</h2>
         <div class="hp-cta-actions">
           <a href="/docs/adopt/" class="g-cta">Adoption Guide →</a>
+          <a href="/use-cases/" class="g-cta g-cta-light">Read Use Cases</a>
           <a href="/docs/software/desktop" class="g-cta g-cta-light">Download Desktop App</a>
           <a href="https://github.com/glossarist" class="g-cta g-cta-light" target="_blank" rel="noopener">Browse Source</a>
         </div>

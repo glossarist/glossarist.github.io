@@ -13,13 +13,52 @@ interface Props {
 
 const { title, description = 'Open-source software for maintaining multi-language concept systems', fullscreen = false } = Astro.props
 const pageTitle = title === 'Glossarist' ? title : `${title} | Glossarist`
+const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://www.glossarist.org').toString()
+
+// JSON-LD structured data: TechArticle for docs/reference/model pages,
+// WebSite for the homepage. Helps search engines understand that this
+// is technical documentation about terminology standards.
+const isHome = Astro.url.pathname === '/'
+const orgLd = {
+  '@type': 'Organization',
+  name: 'Glossarist',
+  url: 'https://www.glossarist.org/',
+  logo: 'https://www.glossarist.org/logo-glossarist.svg',
+  sameAs: ['https://github.com/glossarist'],
+}
+const structured = isHome
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: 'Glossarist',
+      url: 'https://www.glossarist.org/',
+      description,
+      publisher: orgLd,
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: 'https://www.glossarist.org/?q={search_term_string}',
+        'query-input': 'required name=search_term_string',
+      },
+    }
+  : {
+      '@context': 'https://schema.org',
+      '@type': 'TechArticle',
+      headline: title,
+      description,
+      url: canonical,
+      inLanguage: 'en-US',
+      publisher: orgLd,
+      about: ['Terminology management', 'ISO 704', 'ISO 10241-1', 'Concept systems'],
+    }
 ---
+
 <html lang="en-US">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="shortcut icon" href="/favicon.ico" />
@@ -34,6 +73,7 @@ const pageTitle = title === 'Glossarist' ? title : `${title} | Glossarist`
       const dark = stored === 'dark' || ((!stored || stored === 'auto') && prefersDark)
       if (dark) document.documentElement.classList.add('dark')
     </script>
+    <script type="application/ld+json" set:html={JSON.stringify(structured)} />
   </head>
   <body class={fullscreen ? 'fullscreen-page' : ''}>
     <Nav />
