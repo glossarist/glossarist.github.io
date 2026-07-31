@@ -18,11 +18,13 @@ export const sidebars: Record<string, SidebarGroup[]> = {
       items: [
         { text: 'Overview', link: '/model/' },
         { text: 'Concepts', link: '/model/concepts' },
+        { text: 'Definitions', link: '/model/definitions' },
         { text: 'Designations', link: '/model/designations' },
         { text: 'Relationships', link: '/model/relationships' },
         { text: 'Hyperedges', link: '/model/hyperedges' },
         { text: 'Partitive Relations', link: '/model/partitive-relations' },
         { text: 'Generic Relations', link: '/model/generic-relations' },
+        { text: 'Concept System Types', link: '/model/concept-system-types' },
         { text: 'Sources', link: '/model/sources' },
         { text: 'Datasets & Sections', link: '/model/datasets' },
         { text: 'Non-verbal Entities', link: '/model/non-verbal' },
@@ -45,6 +47,7 @@ export const sidebars: Record<string, SidebarGroup[]> = {
         { text: 'Entity Fields', link: '/reference/entity-fields' },
         { text: 'Ontology Browser', link: '/reference/ontology' },
         { text: 'Standards', link: '/reference/standards' },
+        { text: 'ISO 10241-1 Mapping', link: '/reference/iso-10241-1-mapping' },
       ],
     },
     {

@@ -1,0 +1,163 @@
+---
+title: Geospatial — ISO 19135 register and the ABFG concept register
+description: "How the geospatial community uses Glossarist to maintain the ISO 19135 register of geographic terms and cross-vocabulary concept equivalences across OGC, ISO/TC 211, and FAO."
+domain: Geospatial
+organization: ISO/TC 211 / OGC / FAO
+startDate: "2026-06-10"
+order: 2
+---
+
+# Geospatial — ISO 19135 register and cross-vocabulary equivalences
+
+Geospatial terminology lives across dozens of standards bodies: ISO/TC 211 (geographic information), the Open Geospatial Consortium (OGC), the UN Food and Agriculture Organization (FAO), and numerous national mapping agencies. Each maintains their own vocabulary; concepts overlap and diverge.
+
+Glossarist powers the multi-register concept graph that ties them together.
+
+## The problem
+
+Geospatial terminology work has unique pain points:
+
+- **Many overlapping vocabularies** — A concept like *feature* exists in ISO 19107 (spatial schema), OGC Simple Features, and INSPIRE; the designations and definitions overlap but aren't identical.
+- **Cross-vocabulary equivalences** — Adopters need to know "OGC's *feature* is `exact_match` to ISO 19107's *feature* and `close_match` to INSPIRE's *spatial object*".
+- **Register lifecycle** — ISO 19135 defines a register lifecycle (proposed → accepted → withdrawn) with governance semantics. Each concept's lifecycle must be auditable.
+- **Multilingual coverage** — UN languages (Arabic, Chinese, English, French, Russian, Spanish) plus regional languages.
+
+## The Glossarist solution
+
+### Cross-vocabulary equivalence via `exact_match` and friends
+
+Glossarist's relationship taxonomy implements SKOS mapping properties directly:
+
+```yaml
+# datasets/iso-19107/concepts/feature.yaml
+related:
+  - type: exact_match
+    ref: { source: urn:ogc:def:spec, id: "feature" }
+  - type: close_match
+    ref: { source: urn:eu:inspire, id: "spatial-object" }
+  - type: broad_match
+    ref: { source: urn:iso:19109, id: "gf-featuretype" }
+```
+
+These map to SKOS:
+- `exact_match` → `skos:exactMatch`
+- `close_match` → `skos:closeMatch`
+- `broad_match` → `skos:broadMatch`
+- `narrow_match` → `skos:narrowMatch`
+- `related_match` → `skos:relatedMatch`
+
+See [Relationships — SKOS Alignment](/model/relationships#skos-alignment) for the full table.
+
+### ISO 19135 register lifecycle
+
+`ManagedConcept.status` carries the ISO 19135 lifecycle states:
+
+```yaml
+termid: "iso-19107:feature"
+status: valid              # was 'accepted' in ISO 19135
+dates:
+  - type: accepted
+    date: "2003-12-01"
+    source: "ISO 19107:2003"
+  - type: last-reviewed
+    date: "2019-12-01"
+    source: "ISO 19107:2019"
+```
+
+The `dates` field captures governance events history — see [Concepts — ManagedConcept](/model/concepts#managedconcept).
+
+### Multilingual designations via localizations
+
+UN-language coverage is structural, not bolted on:
+
+```yaml
+termid: "iso-19107:feature"
+status: valid
+
+localizations:
+  eng:
+    language: eng
+    terms:
+      - type: expression
+        designation: feature
+        normative_status: preferred
+    definition:
+      - type: intensional
+        content: "Abstraction of real world phenomena."
+  ara:
+    language: ara
+    terms:
+      - type: expression
+        designation: عنصر
+        normative_status: preferred
+  rus:
+    language: rus
+    terms:
+      - type: expression
+        designation: объект
+        normative_status: preferred
+  zho:
+    language: zho
+    terms:
+      - type: expression
+        designation: 要素
+        normative_status: preferred
+  fra:
+    language: fra
+    terms:
+      - type: expression
+        designation: entité géographique
+        normative_status: preferred
+  spa:
+    language: spa
+    terms:
+      - type: expression
+        designation: objeto geográfico
+        normative_status: preferred
+```
+
+### Generic hyperedges for concept-system types
+
+ISO 19107 organizes *feature* under a genus/species rake by spatial dimension:
+
+```yaml
+# relations/iso-19107-feature/by-spatial-dimension.yaml
+$id: iso-19107-feature/by-spatial-dimension
+type: generic_relation
+comprehensive: { source: ISO, id: "19107:feature" }
+members:
+  - ref: { source: ISO, id: "19107:point-feature" }
+    delimitingCharacteristic: { eng: has zero spatial extent }
+  - ref: { source: ISO, id: "19107:curve-feature" }
+    delimitingCharacteristic: { eng: has one spatial extent dimension }
+  - ref: { source: ISO, id: "19107:surface-feature" }
+    delimitingCharacteristic: { eng: has two spatial extent dimensions }
+  - ref: { source: ISO, id: "19107:solid-feature" }
+    delimitingCharacteristic: { eng: has three spatial extent dimensions }
+completeness: complete
+criterion: { eng: by spatial dimension }
+```
+
+This is a **monodimensional monohierarchical generic** concept system in the ISO 704 §5.6.3 typology — see [Concept System Types](/model/concept-system-types).
+
+## Results
+
+| Metric | Before Glossarist | With Glossarist |
+|--------|-------------------|-----------------|
+| Cross-vocabulary equivalence lookup | Manual search across OGC/ISO/INSPIRE sites | One click in concept-browser; SPARQL queryable |
+| Register lifecycle auditability | Per-CVS-log archaeology | `dates[]` array on every concept; ISO 19135 states enforced |
+| UN language coverage | Maintained ad-hoc per project | All 6 UN languages structurally required by collection schema |
+| SKOS/RDF publication | Hand-crafted per release | Auto-generated from same YAML that produces the HTML register |
+| Time to add a new national-language term | Weeks (workflow coordination) | Minutes (one PR with a new localizations entry) |
+
+## Try it
+
+The concept-browser demo includes a 4-vocabulary cross-register graph (ISO 19107 + OGC + INSPIRE + FAO). Search for "feature" to see the equivalence cluster.
+
+## See also
+
+- [Relationships](/model/relationships) — full SKOS alignment table
+- [Concepts](/model/concepts) — register lifecycle
+- [Datasets & Sections](/model/datasets) — multi-dataset deployment
+- [ISO 19135-1:2019](https://www.iso.org/standard/71779.html) — register of geographic items
+- [SKOS](https://www.w3.org/TR/skos-reference/) — W3C Simple Knowledge Organization System

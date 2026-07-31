@@ -1,0 +1,164 @@
+---
+title: Chemistry — IUPAC nomenclature and term harmonization
+description: "How IUPAC uses Glossarist to maintain color nomenclature, gold book terms, and cross-language chemistry vocabularies with strict designations and appellations."
+domain: Chemistry
+organization: IUPAC
+startDate: "2026-06-15"
+order: 3
+---
+
+# Chemistry — IUPAC nomenclature and term harmonization
+
+The International Union of Pure and Applied Chemistry maintains several authoritative vocabularies: the [Gold Book](https://goldbook.iupac.org/) (terminology), the [Colour Index](https://colour-index.com/) (dyes and pigments), and numerous nomenclature recommendations for compounds, elements, and reactions. Each has distinct terminology work needs.
+
+## The problem
+
+Chemistry terminology is unusually designation-heavy:
+
+- **Multiple designation types per concept** — Every compound has a systematic name (IUPAC nomenclature), a common name, often a trade name, plus a molecular formula and a structural formula. All are designations of the same concept.
+- **Strict appellations** — Color names (e.g. "C.I. Acid Red 1") are appellations, not generic terms. ISO 704:2022 §7.3.3 categorizes appellations as designations of unique entities.
+- **Multi-script chemical names** — A compound's name in English, Chinese, Japanese, and Arabic all refer to the same molecule; structural formulas are language-independent.
+- **Term history** — Old names like *oil of vitriol* (sulfuric acid) are still encountered but deprecated. ISO 704:2022 §7.1 requires recording the temporal sequence of designations.
+
+## The Glossarist solution
+
+### Multiple designations per concept
+
+```yaml
+termid: "iupac:sulfuric-acid"
+status: valid
+
+localizations:
+  eng:
+    language: eng
+    terms:
+      - type: expression
+        designation: sulfuric acid
+        normative_status: preferred
+        term_type: full_form
+      - type: expression
+        designation: oil of vitriol
+        normative_status: deprecated
+        term_type: historical
+        dates:
+          - type: deprecated
+            date: "1950-01-01"
+            source: "IUPAC nomenclature reform"
+      - type: formula
+        designation: H₂SO₄
+        normative_status: preferred
+        term_type: formula
+    definition:
+      - type: intensional
+        content: "A strong mineral acid composed of sulfur, oxygen, and hydrogen."
+```
+
+See [Designations](/model/designations) for the designation model and [Term Types](/model/term-types) for the full term_type enumeration.
+
+### Appellations for Colour Index entries
+
+Colour Index appellations follow ISO 704:2022 §7.3.3 — they're designations of unique commercial/industrial entities:
+
+```yaml
+termid: "ci:14745"
+status: valid
+localizations:
+  eng:
+    terms:
+      - type: appellation
+        designation: "C.I. Acid Red 1"
+        normative_status: preferred
+      - type: expression
+        designation: "Acid Red 1"
+        normative_status: admitted
+    definition:
+      - type: intensional
+        content: "An azo dye used as a colorant in food, cosmetics, and textiles."
+```
+
+### Structural formula as non-verbal representation
+
+```yaml
+non_verbal_representations:
+  - type: structural_formula
+    content: "structures/sulfuric-acid.svg"
+    description: "H₂SO₄ — two hydroxyl groups bonded to a central sulfur atom with two double-bonded oxygens"
+```
+
+See [Non-verbal Entities](/model/non-verbal) for the model.
+
+### Cross-language nomenclature
+
+IUPAC publishes in English (preferred source) plus UN languages. Compound names are often transliterated rather than translated:
+
+```yaml
+localizations:
+  eng:
+    terms:
+      - designation: acetic acid
+        normative_status: preferred
+      - designation: ethanoic acid
+        normative_status: admitted
+        term_type: systematic_name
+  zho:
+    terms:
+      - designation: 醋酸
+        normative_status: preferred
+        term_type: common_name
+      - designation: 乙酸
+        normative_status: admitted
+        term_type: systematic_name
+  jpn:
+    terms:
+      - designation: 酢酸
+        normative_status: preferred
+        term_type: common_name
+```
+
+### Term formation history (ISO 704:2022 §7.1)
+
+ISO 704:2022 §7.1 requires recording the temporal sequence of designations. Glossarist's `dates` array on each designation captures this:
+
+```yaml
+terms:
+  - type: expression
+    designation: sulfuric acid
+    normative_status: preferred
+    dates:
+      - type: accepted
+        date: "1957-01-01"
+        source: "IUPAC 1957 nomenclature"
+  - type: expression
+    designation: sulphuric acid
+    normative_status: deprecated
+    term_type: variant
+    dates:
+      - type: accepted
+        date: "1800-01-01"
+      - type: deprecated
+        date: "1990-01-01"
+        source: "IUPAC spelling standardization to 'sulfur'"
+```
+
+## Results
+
+| Metric | Before Glossarist | With Glossarist |
+|--------|-------------------|-----------------|
+| Designation history auditability | Per-edition prose | Structured `dates[]` per designation |
+| Cross-language name alignment | Manual per release | Localizations map enforces structural parity |
+| Appellation vs term distinction | Conflated | Distinct `term_type: appellation` per ISO 704 §7.3.3 |
+| Structural formula preservation | Per-PDF | Non-verbal representations indexed alongside terms |
+| SKOS publication | Per-release manual export | Auto-generated RDF |
+
+## Try it
+
+The Gold Book dataset is included in the [concept-browser demo](https://glossarist.github.io/concept-browser/). Search for "acid" to see hundreds of designations with historical context.
+
+## See also
+
+- [Designations](/model/designations) — term, appellation, symbol distinction
+- [Term Types](/model/term-types) — ISO 12620 term_type enumeration
+- [Non-verbal Entities](/model/non-verbal) — structural formulas and figures
+- [Concepts](/model/concepts) — `ManagedConcept.dates` for lifecycle events
+- [IUPAC Gold Book](https://goldbook.iupac.org/) — the authoritative source
+- [ISO 704:2022](https://www.iso.org/standard/38109.html) §7 — designations and appellations

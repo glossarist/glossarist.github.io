@@ -1,0 +1,106 @@
+---
+import { getCollection, render } from 'astro:content'
+import BaseLayout from '../../layouts/BaseLayout.astro'
+
+export async function getStaticPaths() {
+  const cases = await getCollection('useCases')
+  return cases
+    .filter(c => c.id !== 'index')
+    .map(c => ({
+      params: { slug: c.id },
+      props: { case: c },
+    }))
+}
+
+const { case: caseEntry } = Astro.props
+const { Content } = await render(caseEntry)
+const { title, description, domain } = caseEntry.data
+---
+
+<BaseLayout title={`${title.split('—')[0].trim()} — Use Case`} description={description}>
+  <article class="use-case-page">
+    <div class="use-case-page-inner">
+      <div class="use-case-breadcrumb">
+        <a href="/use-cases/">Use Cases</a>
+        <span aria-hidden="true">/</span>
+        <span>{domain}</span>
+      </div>
+      <Content />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+.use-case-page {
+  background: var(--g-bg);
+  color: var(--g-text-1);
+  padding: 3rem 1.5rem 5rem;
+}
+.use-case-page-inner {
+  max-width: 760px;
+  margin: 0 auto;
+}
+.use-case-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+  font-family: var(--g-font-display);
+  color: var(--g-text-3);
+  margin-bottom: 2rem;
+}
+.use-case-breadcrumb a {
+  color: var(--g-brand);
+  text-decoration: none;
+}
+.use-case-breadcrumb a:hover { text-decoration: underline; }
+.use-case-page :global(h1) {
+  font-family: var(--g-font-display);
+  font-size: 2.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin: 0 0 1.5rem;
+  color: var(--g-text-1);
+}
+.use-case-page :global(h2) {
+  font-family: var(--g-font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  margin: 2.5rem 0 1rem;
+  color: var(--g-text-1);
+}
+.use-case-page :global(p),
+.use-case-page :global(li) {
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: var(--g-text-2);
+  margin: 0 0 1rem;
+}
+.use-case-page :global(pre) {
+  background: var(--g-code-bg);
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 0.875rem;
+  margin: 1rem 0 1.5rem;
+}
+.use-case-page :global(table) {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.9375rem;
+}
+.use-case-page :global(th),
+.use-case-page :global(td) {
+  padding: 0.6rem 0.8rem;
+  border-bottom: 1px solid var(--g-divider);
+  text-align: left;
+}
+.use-case-page :global(th) {
+  font-weight: 600;
+  color: var(--g-text-1);
+  background: var(--g-bg-soft);
+}
+</style>

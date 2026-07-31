@@ -1,0 +1,113 @@
+---
+title: ISO 10241-1 Data Category Mapping
+description: "ISO 10241-1:2011 §5.3 Table 1 data categories for standardized terminological entries, mapped to Glossarist's data model. A field-by-field reference for standards adopters migrating from TBX or building ISO 10241-compliant vocabularies."
+---
+
+# ISO 10241-1 Data Category Mapping
+
+[ISO 10241-1:2011](https://www.iso.org/standard/40362.html) §5.3 Table 1 specifies the **data categories** of a standardized terminological entry. Glossarist's model covers all mandatory and most optional categories. This page maps each ISO 10241-1 data category to its Glossarist field so standards adopters can build ISO 10241-compliant vocabularies directly.
+
+## Primary data categories (ISO 10241-1 §5.3 Table 1)
+
+| ISO 10241-1 data category | Mandatory? | Repeatable? | Glossarist field | Notes |
+|---------------------------|------------|-------------|------------------|-------|
+| entry number | mandatory | non-repeatable | `ManagedConcept.identifier` (rendered as `termid` in YAML) | Glossarist also accepts `uri` for URN-based identifiers |
+| term (in order: preferred, admitted, deprecated) | mandatory | repeatable | `LocalizedConcept.designations[]` with `normative_status: preferred \| admitted \| deprecated` | Five-half-high-dots slot holder (ISO 10241-1 §6.2) is not needed — Glossarist's `designation` field is optional during draft |
+| grammatical info (gender, number, part of speech) | optional | repeatable (per term) | `Designation.grammar.{gender, number, part_of_speech}` | Driven by [ISO 12620](https://www.iso.org/standard/56034.html) taxonomies in Glossarist |
+| language code / script code | optional | repeatable | `LocalizedConcept.language` (ISO 639-3) + `LocalizedConcept.script` (ISO 15924) | The localizations map is keyed by language code |
+| geographical use | optional | repeatable | `Designation.geographical_area` (country code) | |
+| pronunciation | optional | repeatable | `Designation.pronunciation` | IPA notation expected |
+| normative status | optional | repeatable | `Designation.normative_status` | `preferred \| admitted \| deprecated` |
+| letter symbol | optional (mandatory if internationally standardized) | repeatable | `Designation` with `type: symbol` and `kind: letter_symbol` | See [Term Types](/model/term-types) for the full designation vocabulary |
+| graphical symbol | optional (mandatory if internationally standardized) | repeatable | `Designation` with `type: symbol` and `kind: graphical_symbol` | |
+| definition | mandatory (unless non-verbal representation is used) | non-repeatable | `LocalizedConcept.definition[]` of `DetailedDefinition` objects | Glossarist permits multiple definitions per language (intensional + partitive + translated) — see [Definitions](/model/definitions) |
+| non-verbal representation | mandatory if exists | non-repeatable | `LocalizedConcept.examples[]` with `type: figure` or dedicated `non_verbal_representations[]` | See [Non-verbal Entities](/model/non-verbal) |
+| example | optional | repeatable | `LocalizedConcept.examples[]` | |
+| note to entry | optional | repeatable | `LocalizedConcept.notes[]` | Glossarist separates `notes` from `annotations` (editorial vs reader-facing) |
+| note to term | optional | repeatable | `LocalizedConcept.notes[]` with `kind: term` | |
+| note to definition | optional | repeatable | `DetailedDefinition.notes[]` | |
+| source | optional | repeatable | `ConceptSource` on the relevant object | See [Sources](/model/sources) for the model |
+
+## Mandatory/optional summary
+
+ISO 10241-1 mandates:
+
+1. **Entry number** → always present (Glossarist's `identifier`)
+2. **Term** → at least one preferred term per language
+3. **Definition** → unless replaced by a non-verbal representation
+
+Everything else is optional. Glossarist's validators enforce the same three invariants at the schema level.
+
+## Entry organization (ISO 10241-1 §5.1)
+
+ISO 10241-1 specifies three orders for terminological entries in a published standard:
+
+| Order | Description | Glossarist support |
+|-------|-------------|---------------------|
+| **Systematic** (preferred) | Arranged according to the concept system | The concept-browser renders datasets in concept-system order by default — see [Concept System Types](/model/concept-system-types) |
+| **Mixed** | Concept-system-derived headings, language-specific within | The `domains` field on `ManagedConcept` enables grouping; the browser can sort by domain |
+| **Language-specific** (least preferred) | Alphabetical or per-language convention | Not recommended; the browser can render this via `tags` filtering |
+
+For multilingual standards, ISO 10241-1 §5.1.4 requires the order within each subdivision to **not** be language-specific. Glossarist's localization-keyed model (`localizations: { eng: …, fra: … }`) makes this natural — the same concept appears once with multiple language entries.
+
+## Information required for standards (ISO 10241-1 §5.2)
+
+ISO 10241-1 §5.2 requires documentation of:
+
+- (a) **Order of terminological entries** — the dataset's `register.yaml` declares this
+- (b) **Method of accessing terminological data** — concept-browser provides systematic, alphabetical, and search access
+- (c) **Structuring and presentation rules** — the schemas in `/model/schemas/` are the authoritative source
+- (d) **Grammatical information and variant forms** — captured per designation via `grammar` and `variant_of`
+
+## TBX (ISO 30042) round-tripping
+
+Glossarist's data model maps cleanly to [TBX](https://www.iso.org/standard/40362.html) (TermBase eXchange, ISO 30042). The concept-browser emits TBX for any dataset. The mapping is:
+
+| TBX element | Glossarist field |
+|-------------|------------------|
+| `<termEntry>` | `ManagedConcept` |
+| `<descrip type="definition">` | `LocalizedConcept.definition[].content` |
+| `<descrip type="subjectField">` | `ManagedConcept.domains` |
+| `<term>` | `Designation.designation` |
+| `<termNote type="termType">` | `Designation.term_type` |
+| `<termNote type="partOfSpeech">` | `Designation.grammar.part_of_speech` |
+| `<admin type="source">` | `ConceptSource` |
+| `<admin type="entryStatus">` | `LocalizedConcept.entry_status` |
+
+For the full TBX emission reference, see the [glossarist-ruby](/docs/software/glossarist-ruby) documentation.
+
+## Adopting ISO 10241-1 with Glossarist
+
+A minimal ISO 10241-1-compliant terminological entry in Glossarist YAML:
+
+```yaml
+termid: "3.1.1.1"
+status: valid
+
+localizations:
+  eng:
+    language: eng
+    terms:
+      - type: expression
+        designation: entity
+        normative_status: preferred
+        grammar:
+          part_of_speech: noun
+    definition:
+      - type: intensional
+        content: "A concrete or abstract thing."
+    sources:
+      - type: authoritative
+        origin: "ISO 19107:2003"
+```
+
+This satisfies all three ISO 10241-1 mandatory categories (entry number, term, definition) plus several optional ones (part of speech, source).
+
+## See also
+
+- [Concepts](/model/concepts) — `ManagedConcept` / `LocalizedConcept` / `Designation` model
+- [Definitions](/model/definitions) — `DetailedDefinition.type` discriminator
+- [Sources](/model/sources) — `ConceptSource` model
+- [Term Types](/model/term-types) — full `term_type` enumeration
+- [ISO 10241-1:2011](https://www.iso.org/standard/40362.html) — the authoritative reference
+- [ISO 30042](https://www.iso.org/standard/40362.html) — TBX format

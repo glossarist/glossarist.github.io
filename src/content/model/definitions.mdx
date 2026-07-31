@@ -1,0 +1,166 @@
+---
+title: Definitions
+description: "ISO 704:2022 §6 definition types — intensional, extensional, partitive, translated. How Glossarist models DetailedDefinition.type. Plus §6.5 deficient definitions (circular, inaccurate, negative) and how validators catch them."
+---
+
+# Definitions
+
+A definition provides the essential characteristics that distinguish a concept from other concepts. ISO 704:2022 §6 distinguishes four writing strategies and three anti-patterns. Glossarist v3.3 added a `type` field to `DetailedDefinition` covering all four strategies.
+
+## The four definition types (ISO 704:2022 §6.4)
+
+Glossarist's `DetailedDefinition.type` discriminator:
+
+| `type` | ISO 704 § | When to use |
+|--------|----------|-------------|
+| `intensional` *(default)* | §6.4.3 | Most definitions. State the immediate superordinate concept + delimiting characteristics. |
+| `extensional` | §6.4.5 | Enumerate ALL subordinate concepts under one criterion of subdivision (only when the list is finite, complete, and each subordinate is well-known). |
+| `partitive` | §6.4.5.5 (analogue) | List the parts that constitute the whole — the definitional counterpart of a `PartitiveHyperedge`. |
+| `translated` | Glossarist extension | Definition translated from another language's definition (preserves provenance for multi-language datasets). |
+
+When `type` is omitted, the definition is treated as `intensional` — no migration needed for existing data.
+
+## Intensional definitions (§6.4.3)
+
+The default and preferred form. An intensional definition **begins by stating the immediate (closest) superordinate concept, followed by the delimiting characteristic(s)**.
+
+```yaml
+definitions:
+  - type: intensional
+    content: >
+      A pointing device that detects movement by means of rollers
+      and light sensors, for controlling the location of a pointer
+      on a computer screen.
+    # Superordinate: "pointing device"
+    # Delimiting characteristics: "detects movement by means of rollers and light sensors"
+    # Domain qualifier: "for controlling the location of a pointer on a computer screen"
+```
+
+ISO 704 §6.4.3 lays down ten writing rules. The load-bearing ones for Glossarist adopters:
+
+| Rule | What it requires |
+|------|------------------|
+| §6.4.3.1 | State essential characteristics only — no encyclopaedic detail |
+| §6.4.3.2 | Define exactly one concept — no hidden definitions |
+| §6.4.3.3 | Describe the concept, not the words in the designation |
+| §6.4.3.4 | Don't include characteristics that belong to the generic superordinate (genus already carries them — see [inheritance principle](/model/generic-relations#inheritance-principle-iso-7042022-§55421)) |
+| §6.4.3.5 | Generic-relation definitions name the genus + delimiting characteristic |
+| §6.4.3.6 | Partitive-relation definitions describe one level only (no recursive "a has part b, b is part of a") |
+
+## Extensional definitions (§6.4.5)
+
+Enumerate the immediate subordinate concepts. ISO 704 is strict: extensional definitions are useful **only in very limited circumstances** and shall be used only if **all three** conditions hold:
+
+1. The number of subordinate concepts is finite
+2. The list is complete under one criterion of subdivision
+3. Each subordinate is clarified by its own intensional definition OR is well-known
+
+```yaml
+definitions:
+  - type: extensional
+    content: >
+      A pointing device category comprising mechanical mice,
+      optomechanical mice, and optical mice.
+```
+
+If any of the three conditions fails, write an intensional definition instead.
+
+## Partitive definitions
+
+List the parts that constitute the whole. Often paired with a `PartitiveHyperedge` — the definition summarizes the rake for the entry's narrative, the hyperedge carries the structured per-part data.
+
+```yaml
+definitions:
+  - type: partitive
+    content: >
+      Composed of a mouse ball, two rollers (x-axis, y-axis),
+      an infrared emitter, an infrared sensor, a circuit board,
+      a mouse button, and (optionally) a mouse wheel.
+
+partitive_relations:
+  # See /model/partitive-relations for the structured rake
+```
+
+## Translated definitions (Glossarist extension)
+
+Marks a definition that has been translated from another language's definition rather than authored natively. Useful for tracking provenance in multi-language datasets where the original meaning must be preserved across translation.
+
+```yaml
+definitions:
+  - type: translated
+    content: "A measurement result is composed of a measured quantity value and a measurement uncertainty."
+    authoritative_source:
+      ref: { source: VIM, id: "112-02-09" }
+      lineage: "translated from eng → fra by AFNOR, 2024-03-12"
+```
+
+## Deficient definitions to avoid (§6.5)
+
+ISO 704 §6.5 names three anti-patterns. They are not separate `type` values — they are **bugs** to catch in review.
+
+### Circular definitions (§6.5.2)
+
+A concept defined using a second concept, where the second is defined using the first. Two flavors:
+
+- **Inner circle** — the designation is repeated in the definition ("tree height: tree height measured from…")
+- **Outer circle** — two concepts defined in terms of each other ("virgin forest: forest of natural tree stand" / "natural tree stand: stand in virgin forest")
+
+The **substitution principle** (§6.4.4) exposes outer circles: substitute the designation with its definition; if the result is recursive or tautological, the definition is circular.
+
+### Inaccurate definitions (§6.5.3)
+
+A definition that is too broad (includes objects that shouldn't be) or too narrow (excludes objects that should be). Usually caused by including non-delimiting or irrelevant characteristics.
+
+### Negative definitions (§6.5.4)
+
+A definition that describes what a concept is **not**, rather than what it is. Permitted only when the concept is inherently negative (e.g. "infinity: a value that is not finite").
+
+## YAML authoring
+
+```yaml
+termid: "112-02-09"
+status: valid
+localizations:
+  eng:
+    terms:
+      - type: expression
+        designation: measurement result
+        normative_status: preferred
+    definition:
+      - type: intensional
+        content: >
+          A set of quantity values being attributed to a measurand
+          together with any other available relevant information.
+        sources:
+          - type: authoritative
+            origin:
+              ref: { source: VIM, id: "112-02-09" }
+```
+
+Multiple definitions are permitted (e.g. an intensional primary + a partitive supplementary):
+
+```yaml
+definition:
+  - type: intensional
+    content: "A pointing device comprising…"
+  - type: partitive
+    content: "Composed of a mouse ball, two rollers, …"
+```
+
+## Validation
+
+Glossarist does not (yet) auto-detect circular or inaccurate definitions — these require human review per ISO 704 §6.4.4 (substitution principle). What is validated:
+
+- `type`, when present, must be one of `intensional | extensional | partitive | translated`
+- `content` must be non-empty
+- `sources`, when present, must follow the [ConceptSource](/model/sources) shape
+
+Future validator work: detect inner-circle circularity (designation repeated as the definition's opening phrase); flag negative patterns ("not", "without") for reviewer attention; flag extensional definitions whose enumerated count doesn't match the corresponding `*Hyperedge` member count.
+
+## See also
+
+- [Concepts](/model/concepts) — `LocalizedConcept.definition` field
+- [Concept System Types](/model/concept-system-types) — how definitions fit into the larger concept system
+- [Sources](/model/sources) — `ConceptSource` for definition provenance
+- [ISO 704:2022](https://www.iso.org/standard/38109.html) §6 — writing and validating definitions
+- [ISO 10241-1](https://www.iso.org/standard/40362.html) §6.4 — definition data category requirements

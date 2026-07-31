@@ -1,0 +1,110 @@
+---
+title: Concept System Types
+description: "ISO 704:2022 §5.6.3 concept system typology — by relation type (generic, partitive, associative, mixed), by criterion count (monodimensional, multidimensional), by hierarchy shape (monohierarchical, polyhierarchical). How Glossarist models each."
+---
+
+# Concept System Types
+
+ISO 704:2022 §5.6.3 classifies concept systems along three orthogonal dimensions. A real-world concept system carries one value from each dimension — e.g. the OIML *measurement standard* decomposition is **generic + multidimensional + monohierarchical**. Glossarist models each dimension independently so the type emerges from the data, not from a declarative tag.
+
+## The three dimensions
+
+### By relation type
+
+| Type | What it is | Glossarist shape |
+|------|------------|------------------|
+| **Generic** | All concepts relate as genus ↔ species ([§5.5.4.2.1](https://www.iso.org/standard/38109.html)) | `GenericHyperedge` rakes (see [Generic Relations](/model/generic-relations)) |
+| **Partitive** | All concepts relate as whole ↔ part ([§5.5.4.3](https://www.iso.org/standard/38109.html)) | `PartitiveHyperedge` rakes (see [Partitive Relations](/model/partitive-relations)) |
+| **Associative** | All concepts relate thematically (no hierarchy) ([§5.5.5](https://www.iso.org/standard/38109.html)) | Binary `related` edges — `see`, `compare`, `related_concept`, etc. (see [Relationships](/model/relationships)) |
+| **Mixed** | Combination of two or more relation types | All of the above, coexisting on the same `ManagedConcept` |
+
+Most real-world terminological vocabularies are **mixed**. Glossarist's separation of n-ary hyperedges (per-file at `relations/<id>/`) from binary edges (inline on the concept) makes the mix explicit in the file layout — see [Hyperedges — Per-file storage](/model/hyperedges#per-file-storage).
+
+### By criterion count
+
+| Type | What it is | Trigger |
+|------|------------|---------|
+| **Monodimensional** | Superordinate concepts subdivided under **one** criterion ([§5.5.4.2.1 Example 1](https://www.iso.org/standard/38109.html)) | One `*Hyperedge` per comprehensive, OR multiple binary edges without grouping |
+| **Multidimensional** | Superordinate concepts subdivided under **two or more** criteria ([§5.5.4.2.1 Example 4](https://www.iso.org/standard/38109.html); [§5.6.3](https://www.iso.org/standard/38109.html)) | Two or more `*Hyperedge` files on the same comprehensive, each carrying a distinct `criterion` |
+
+Multidimensionality is what hyperedges were designed for — binary edges can't express "these species belong to this rake, those species belong to that rake" without the criterion dimension. See [Generic Relations — Multidimensionality](/model/generic-relations#multidimensionality-in-real-data--oiml-v-2-2002010).
+
+The `check-partitive-relation-coherence` and `check-generic-relation-coherence` validators warn when a comprehensive carries 2+ rakes and any lack a `criterion` — without `criterion`, multidimensionality can't be verified.
+
+### By hierarchy shape
+
+| Type | What it is | Glossarist shape |
+|------|------------|------------------|
+| **Monohierarchical** | Each concept has at most one immediate superordinate ([§5.5.4.2.1 Example 1](https://www.iso.org/standard/38109.html)) | Tree-shaped concept graph |
+| **Polyhierarchical** | One or more concepts have multiple immediate superordinates ([§5.6.3 Example 5](https://www.iso.org/standard/38109.html)) | DAG-shaped concept graph (directed acyclic) |
+
+Polyhierarchy emerges naturally from cross-dataset `related` edges — e.g. an OIML G18 term may `see` a VIM concept (its origin) and also `broader` an OIML V 2-200 concept (its genus in the OIML hierarchy). Glossarist's directional `related` graph supports polyhierarchy without special handling; the concept-browser renders it as a DAG.
+
+## Worked example — OIML V 2-200:2010 *measurement standard*
+
+> Type: **generic + multidimensional + monohierarchical**
+
+| Dimension | Value | Evidence |
+|-----------|-------|----------|
+| Relation type | generic | Genus/species rakes per [§5.5.4.2.1](https://www.iso.org/standard/38109.html) |
+| Criterion count | multidimensional | 6 distinct criteria on the same genus (by realization medium, by calibration role, by governance level, by metrological hierarchy, by reference/working, by travel) |
+| Hierarchy shape | monohierarchical | Each species has exactly one genus (`measurement standard`) — no concept is a species of two different genera |
+
+In Glossarist this is 6 `GenericHyperedge` files under `relations/viml-5-1/`, each carrying its own `criterion`:
+
+```
+relations/viml-5-1/
+  by-realization-medium.yaml      # criterion: { eng: by realization medium }
+  by-calibration-role.yaml         # criterion: { eng: by calibration role }
+  by-governance-level.yaml         # criterion: { eng: by governance level }
+  by-metrological-hierarchy.yaml   # criterion: { eng: by metrological hierarchy }
+  by-reference-or-working.yaml     # criterion: { eng: by reference or working }
+  by-travel.yaml                   # criterion: { eng: by travel }
+```
+
+See the [Generic Relations — canonical computer mouse example](/model/generic-relations#the-canonical-iso-7042022-example--computer-mouse) for a 2-criterion worked example with delimiting characteristics.
+
+## Worked example — optomechanical mouse (mixed system)
+
+> Type: **mixed + multidimensional + monohierarchical**
+
+ISO 704:2022 §5.5.4.2.2 uses *optomechanical mouse* as both:
+- A **species** in a generic rake under *computer mouse* (criterion: by movement detection)
+- A **comprehensive** in a partitive rake decomposing it into physical parts
+
+| Dimension | Value | Evidence |
+|-----------|-------|----------|
+| Relation type | mixed | Both generic and partitive rakes on the same comprehensive |
+| Criterion count | multidimensional | At minimum: one criterion per rake type |
+| Hierarchy shape | monohierarchical | Each concept has one parent in each rake; cross-rake parents are different roles |
+
+Glossarist's file layout makes the mixed nature explicit:
+
+```
+concepts/optomechanical-mouse.yaml     # status: valid
+
+relations/example-computer-mouse/
+  by-movement-detection.yaml           # type: generic_relation
+
+relations/example-optomechanical-mouse/
+  physical-component-decomposition.yaml # type: partitive_relation
+```
+
+## Choosing a concept system type
+
+| If your domain… | Use |
+|-----------------|-----|
+| Has strict taxonomy (biology, chemistry nomenclature) | Generic + monodimensional + monohierarchical |
+| Decomposes physical objects (anatomy, mechanical assemblies) | Partitive + monodimensional + monohierarchical |
+| Has multiple independent classification axes (metrology, standards) | Generic + multidimensional + monohierarchical |
+| Has overlapping categories (library science, indexing) | Generic + multidimensional + polyhierarchical |
+| Has no hierarchy, just thematic links (collections, catalogs) | Associative (binary edges only) |
+| Combines several of the above (most real domains) | Mixed + multidimensional + polyhierarchical |
+
+## See also
+
+- [Hyperedges](/model/hyperedges) — abstract base for n-ary rakes
+- [Generic Relations](/model/generic-relations) — genus/species specialization
+- [Partitive Relations](/model/partitive-relations) — whole/part specialization
+- [Relationships](/model/relationships) — binary typed edges (associative)
+- [ISO 704:2022](https://www.iso.org/standard/38109.html) §5.6.3 — concept system types

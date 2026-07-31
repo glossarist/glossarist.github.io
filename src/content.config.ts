@@ -58,4 +58,17 @@ const pages = defineCollection({
   }),
 })
 
-export const collections = { blog, docs, model, reference, pages }
+const useCases = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/use-cases', generateId }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string().optional(),
+    domain: z.string().optional(),
+    organization: z.string().optional(),
+    startDate: z.string().optional(),
+    endDate: z.string().optional(),
+    order: z.number().default(99),
+  }),
+})
+
+export const collections = { blog, docs, model, reference, pages, useCases }
