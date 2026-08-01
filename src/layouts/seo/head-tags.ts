@@ -37,12 +37,15 @@ export function buildHeadTags(data: SeoData): HeadTag[] {
   const isHome = data.path === '/'
   const canonical = buildCanonical(data)
   const ogType = isHome ? 'website' : (data.type ?? 'article')
-  const ogImage = data.ogImage ?? (SITE_ORIGIN + '/og-default.png')
+  const ogImage = data.ogImage ?? (SITE_ORIGIN + '/logo-glossarist.svg')
   const pageTitle = data.title === 'Glossarist' ? data.title : `${data.title} | Glossarist`
 
   const tags: HeadTag[] = [
     // Canonical
     { tag: 'link', attrs: { rel: 'canonical', href: canonical } },
+
+    // RSS feed
+    { tag: 'link', attrs: { rel: 'alternate', type: 'application/rss+xml', title: 'Glossarist Blog', href: SITE_ORIGIN + '/rss.xml' } },
 
     // hreflang alternates — only the homepage has locale variants
     // (content pages are English-only for now, per i18n PR scope)
