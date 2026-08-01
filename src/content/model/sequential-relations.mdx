@@ -56,10 +56,10 @@ SequentialHyperedge extends AbstractHyperedge
   +status:        ConceptStatus [0..1]
 
 SequentialMember extends HyperedgeMember
-  +ref:           ConceptRef [1]
-  +presence:      Presence [0..1]             # required | optional
-  +count:         Count [0..1]                # exactly_one | at_least_one | multiple
-  +is_delimiting: Boolean [0..1]
+  # Inherits the shared MECE pair (ref, presence, count) from HyperedgeMember.
+  # Adds NO additional fields — sequential members are distinguished by
+  # their array position, not by a characteristic text or boolean flag.
+  # This mirrors glossarist-js's SequentialMember implementation (Phase 1).
 ```
 
 ## Wire format
@@ -74,20 +74,16 @@ comprehensive:
   id: "frog-life-cycle"
 members:
   - ref: { source: EXAMPLE, id: "egg" }
-    characteristic: { eng: aquatic egg mass laid in water }
   - ref: { source: EXAMPLE, id: "tadpole" }
-    characteristic: { eng: aquatic larval stage with gills and tail }
   - ref: { source: EXAMPLE, id: "tadpole-with-legs" }
-    characteristic: { eng: larval stage developing hind legs }
   - ref: { source: EXAMPLE, id: "froglet" }
-    characteristic: { eng: transitional stage with both tail and limbs }
   - ref: { source: EXAMPLE, id: "adult-frog" }
     characteristic: { eng: adult form with lungs, no tail, four limbs }
 completeness: complete
 criterion: { eng: developmental stage (temporal order) }
 ```
 
-The `characteristic` field carries the intension-difference that distinguishes this stage from the others — same role as in `GenericMember`.
+The member array order IS significant — earliest member first, latest last. Reverse the array → reverse the sequence. This is the structural difference from Partitive and Generic (whose members are unordered sets).
 
 ## Validators
 

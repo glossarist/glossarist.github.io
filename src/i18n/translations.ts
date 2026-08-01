@@ -1,28 +1,20 @@
 /**
  * i18n string registry for the Glossarist chrome.
  *
+ * Type definitions live in types.ts (separate module so other code can
+ * import types without pulling the full translation data).
+ *
  * Scope: this covers the homepage hero, the major CTAs, and the
  * language switcher itself. Other pages (model/, reference/, docs/,
  * blog/) stay English-only — full content localization is a
- * separate effort.
- *
- * Locale codes follow BCP 47 + ISO 639-1 + ISO 15924 conventions:
- *   eng   — English (default; also "en" web code)
- *   fra   — French ("fr")
- *   zho-Hans — Simplified Chinese ("zh-Hans", mainland China + Singapore)
- *   zho-Hant — Traditional Chinese ("zh-Hant", Taiwan + HK + Macao)
- *
- * Glossarist itself uses ISO 639-3 (eng/fra/zho) for localizations
- * on ManagedConcept; the chrome uses BCP 47 for the language switcher
- * because that's what browsers and hreflang tags expect.
- *
- * Keys are union-typed so call sites get compile-time safety:
- *   translations[current.value][KEY_HERO_LEDE]  ← key must be TranslationKey
+ * separate effort (see TODO.refactor/16).
  */
 
-export type Locale = 'eng' | 'fra' | 'zho-Hans' | 'zho-Hant'
+import type { Locale, LocaleMeta, TranslationKey, TranslationSet } from './types'
 
-export const LOCALES: { code: Locale; label: string; nativeLabel: string; flag: string }[] = [
+export type { Locale, LocaleMeta, TranslationKey, TranslationSet }
+
+export const LOCALES: LocaleMeta[] = [
   { code: 'eng',      label: 'English',            nativeLabel: 'English',  flag: '🇬🇧' },
   { code: 'fra',      label: 'French',             nativeLabel: 'Français', flag: '🇫🇷' },
   { code: 'zho-Hans', label: 'Chinese (Simplified)', nativeLabel: '简体中文', flag: '🇨🇳' },
@@ -31,38 +23,7 @@ export const LOCALES: { code: Locale; label: string; nativeLabel: string; flag: 
 
 export const DEFAULT_LOCALE: Locale = 'eng'
 
-/**
- * Exhaustive key union for chrome strings.
- *
- * Adding a key = adding to this union. TypeScript then forces every
- * locale's TranslationSet to implement it. Catches drift at compile
- * time, not at runtime test.
- */
-export type TranslationKey =
-  | 'hero_eyebrow'
-  | 'hero_title_1'
-  | 'hero_title_2_em'
-  | 'hero_lede'
-  | 'hero_cta_primary'
-  | 'hero_cta_secondary'
-  | 'section_01_label'
-  | 'section_01_title_pre'
-  | 'section_01_title_em'
-  | 'section_01_title_post'
-  | 'section_01_lede'
-  | 'section_05_label'
-  | 'section_05_title_pre'
-  | 'section_05_title_em'
-  | 'section_05_title_post'
-  | 'section_05_lede_prefix'
-  | 'section_05_lede_link'
-  | 'cta_title_pre'
-  | 'cta_title_em'
-  | 'cta_title_post'
-  | 'language_switcher_label'
-  | 'language_switcher_help'
-
-export type TranslationSet = Record<TranslationKey, string>
+// TranslationKey and TranslationSet types live in ./types.ts
 
 export const translations: Record<Locale, TranslationSet> = {
   eng: {

@@ -56,10 +56,10 @@ const releasesURL = 'https://github.com/glossarist/glossarist-desktop/releases'
 
       const res = await fetch('https://api.github.com/repos/glossarist/glossarist-desktop/releases/latest')
       if (!res.ok) throw new Error('GitHub API error')
-      const data = await res.json()
+      const data = await res.json() as { name: string; assets: { name: string; browser_download_url: string }[]; published_at: string; body: string }
       const release: Release = {
         name: data.name,
-        assets: (data.assets as any[]).map(a => ({ name: a.name, browser_download_url: a.browser_download_url })),
+        assets: data.assets.map(a => ({ name: a.name, browser_download_url: a.browser_download_url })),
         published_at: data.published_at,
         body: data.body,
       }
