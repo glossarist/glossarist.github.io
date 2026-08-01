@@ -1,0 +1,6 @@
+{
+  "_comment": "lint-staged config (TODO.refactor/12). Run by Husky pre-commit hook.",
+  "*.{ts,vue,astro}": ["eslint --fix", "prettier --write"],
+  "*.{md,mdx,json,yaml,yml}": ["prettier --write"],
+  "*.svg": ["node scripts/svg-a11y-check.mjs || true"]
+}
