@@ -198,12 +198,13 @@ const rules: Rule[] = [
   {
     id: 'hyperedge-cardinality',
     label: 'Hyperedge cardinality + MECE',
-    description: 'partitive_relations / generic_relations arrays: each ≥2 members, valid MECE combos.',
+    description: 'partitive_relations / generic_relations / sequential_relations arrays: each ≥2 members, valid MECE combos.',
     run: (data) => {
       const issues: ValidationIssue[] = []
       const edgeArrays: Array<[string, HyperedgeYaml[]]> = [
         ['partitive_relations', data.partitive_relations ?? []],
         ['generic_relations', data.generic_relations ?? []],
+        ['sequential_relations', data.sequential_relations ?? []],
       ]
       for (const [key, arr] of edgeArrays) {
         if (!Array.isArray(arr) || arr.length === 0) continue
