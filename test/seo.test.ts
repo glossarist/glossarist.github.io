@@ -38,7 +38,7 @@ describe('SEO module: buildHeadTags', () => {
 
   it('homepage emits hreflang alternates for every supported locale', () => {
     const tags = buildHeadTags(homeData)
-    const hreflangs = tags.filter(t => t.tag === 'link' && t.attrs.rel === 'alternate')
+    const hreflangs = tags.filter(t => t.tag === 'link' && t.attrs.rel === 'alternate' && 'hreflang' in t.attrs)
     expect(hreflangs.length).toBe(HREFLANG_LOCALES.length + 1)  // +1 for x-default
     const locales = hreflangs.map(t => t.attrs.hreflang)
     for (const loc of HREFLANG_LOCALES) {
@@ -49,7 +49,7 @@ describe('SEO module: buildHeadTags', () => {
 
   it('content pages do NOT emit hreflang (English-only)', () => {
     const tags = buildHeadTags(articleData)
-    const hreflangs = tags.filter(t => t.attrs.rel === 'alternate')
+    const hreflangs = tags.filter(t => t.tag === 'link' && t.attrs.rel === 'alternate' && 'hreflang' in t.attrs)
     expect(hreflangs).toEqual([])
   })
 
@@ -72,10 +72,10 @@ describe('SEO module: buildHeadTags', () => {
     expect(buildHeadTags(articleData).find(t => t.attrs.property === 'og:type')?.attrs.content).toBe('article')
   })
 
-  it('og:image defaults to og-default.png when not provided', () => {
+  it('og:image defaults to logo when not provided', () => {
     const tags = buildHeadTags(articleData)
     const img = tags.find(t => t.attrs.property === 'og:image')
-    expect(img?.attrs.content).toContain('og-default.png')
+    expect(img?.attrs.content).toContain('logo-glossarist')
   })
 })
 
