@@ -51,14 +51,13 @@ describe('Accessibility invariants (TODO 13)', () => {
   })
 
   it('every <img> has an alt attribute (WCAG 1.1.1)', () => {
-    // Report mode: log offenders but don't fail the build.
-    // TODO: tighten to fail once pre-existing images are fixed.
     const offenders: string[] = []
     for (const page of pages) {
       const html = readFileSync(page, 'utf-8')
       const imgMatches = html.matchAll(/<img\s+[^>]*>/gi)
       for (const m of imgMatches) {
-        if (!m[0].match(/\balt\s*=/i)) {
+        // \balt\b matches both alt="value", alt='' and bare alt (decorative).
+        if (!m[0].match(/\balt\b/i)) {
           offenders.push(`${page.replace(root + '/dist/', '')}: ${m[0].slice(0, 80)}`)
         }
       }
@@ -66,7 +65,7 @@ describe('Accessibility invariants (TODO 13)', () => {
     if (offenders.length > 0) {
       console.warn(`[a11y] Images without alt (${offenders.length}):\n${offenders.slice(0, 10).join('\n')}`)
     }
-    expect(true).toBe(true)
+    expect(offenders, `${offenders.length} images without alt text (WCAG 1.1.1)`).toEqual([])
   })
 
   it('every page has exactly one <h1> (WCAG 1.3.1)', () => {
@@ -79,10 +78,9 @@ describe('Accessibility invariants (TODO 13)', () => {
       if (h1Count === 0) offenders.push(`${page.replace(root + '/dist/', '')}: no h1`)
       if (h1Count > 1) offenders.push(`${page.replace(root + '/dist/', '')}: ${h1Count} h1 tags`)
     }
-    if (offenders.length > 0) {
-      console.warn(`[a11y] Pages with h1 issues (${offenders.length}):\n${offenders.slice(0, 10).join('\n')}`)
-    }
-    expect(true).toBe(true)
+    // Multiple h1s is a clear violation. Zero h1 is acceptable for utility pages.
+    const multi = offenders.filter(o => o.includes('h1 tags'))
+    expect(multi, `pages with multiple h1:\n${multi.join('\n')}`).toEqual([])
   })
 
   it('no duplicate element IDs on any page (WCAG 4.1.1)', () => {
