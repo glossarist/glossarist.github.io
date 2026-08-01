@@ -1,0 +1,18 @@
+{
+  "_comment": "Bundle size budget (TODO.refactor/08). Values in KB gzipped. Run: node scripts/check-bundle-budget.mjs",
+  "routes": {
+    "/": { "maxTotalJsKb": 200, "description": "Homepage — Vue island (HomePage) + nav" },
+    "/playground/hyperedges": { "maxTotalJsKb": 350, "description": "YAML parser + Vue island" },
+    "/playground/validators": { "maxTotalJsKb": 350, "description": "YAML parser + Vue island" },
+    "/reference/schema-browser": { "maxTotalJsKb": 300, "description": "SchemaReference Vue island" },
+    "/reference/ontology": { "maxTotalJsKb": 300, "description": "OntologyBrowser Vue island" },
+    "/model/**": { "maxTotalJsKb": 120, "description": "Mostly static MDX; minimal JS" },
+    "/docs/**": { "maxTotalJsKb": 120, "description": "Mostly static MDX" },
+    "/blog/**": { "maxTotalJsKb": 120, "description": "Static blog pages" },
+    "/use-cases/**": { "maxTotalJsKb": 120, "description": "Static use case pages" }
+  },
+  "global": {
+    "maxTotalAssetsKb": 1500,
+    "description": "Total _astro/ assets across all pages"
+  }
+}

@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Pre-commit hook (TODO.refactor/12)
+# Runs lint-staged on changed files. Bypass with --no-verify in emergencies.
+npx lint-staged
