@@ -322,14 +322,29 @@ function parentActive(item: { items?: { link: string }[], link?: string }): bool
   let currentIdx = -1
 
   // ----- Pagefind -----
-  let pagefind: any = null
+  // Minimal Pagefind client types — enough for type safety without
+  // pulling in the full @pagefind/default-ui type package.
+  interface PagefindSearchResult {
+    url: string
+    excerpt: string
+    meta?: { title?: string }
+    data(): Promise<PagefindSearchResult>
+  }
+  interface PagefindInstance {
+    options(opts: Record<string, unknown>): Promise<void>
+    init(): Promise<void>
+    search(query: string): { results: PagefindSearchResult[] }
+  }
+
+  let pagefind: PagefindInstance | null = null
   // Pagefind's entry module only exists after `astro build` (it writes dist/pagefind/).
   // Hide the dynamic import from Vite's static analyzer via `new Function`.
-  const runtimeImport = new Function('url', 'return import(url)') as (url: string) => Promise<any>
-  async function ensurePagefind() {
+  const runtimeImport = new Function('url', 'return import(url)') as (url: string) => Promise<{ default: PagefindInstance }>
+  async function ensurePagefind(): Promise<PagefindInstance | null> {
     if (pagefind) return pagefind
     try {
-      pagefind = await runtimeImport('/pagefind/pagefind.js')
+      const mod = await runtimeImport('/pagefind/pagefind.js')
+      pagefind = mod.default ?? mod
       await pagefind.options?.({ basePath: '/pagefind/' })
       await pagefind.init()
     } catch {
@@ -358,13 +373,13 @@ function parentActive(item: { items?: { link: string }[], link?: string }): bool
       }
       const search = await pf.search(q)
       const top = search.results.slice(0, 10)
-      const rendered = await Promise.all(top.map((r: any) => r.data()))
+      const rendered = await Promise.all(top.map(r => r.data()))
       currentIdx = -1
       if (rendered.length === 0) {
         resultsEl.innerHTML = '<div class="search-empty">No results.</div>'
         return
       }
-      resultsEl.innerHTML = rendered.map((r: any) => {
+      resultsEl.innerHTML = rendered.map(r => {
         const title = r.meta?.title ?? r.url
         return `<a href="${r.url}" class="search-result">
           <div class="search-result-title">${escapeHtml(title)}</div>
