@@ -396,3 +396,24 @@ function parentActive(item: { items?: { link: string }[], link?: string }): bool
     return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
   }
 </script>
+
+{/* Client-side nav/footer i18n (TODO 15). Swaps text of [data-i18n]
+    elements based on localStorage locale. Server renders English;
+    this script overrides after hydration. */}
+<script is:inline>
+  (function() {
+    const NAV_TRANSLATIONS = {
+      fra: { 'Model': 'Modèle', 'Reference': 'Référence', 'Software': 'Logiciel', 'Docs': 'Documentation', 'Playground': 'Terrain de jeu', 'Use Cases': "Cas d'usage", 'Blog': 'Blog', 'About': 'À propos', "Reader's Guide": 'Guide du lecteur' },
+      'zho-Hans': { 'Model': '概念模型', 'Reference': '参考', 'Software': '软件', 'Docs': '文档', 'Playground': '练习场', 'Use Cases': '使用案例', 'Blog': '博客', 'About': '关于', "Reader's Guide": '读者指南' },
+      'zho-Hant': { 'Model': '概念模型', 'Reference': '參考', 'Software': '軟件', 'Docs': '文件', 'Playground': '練習場', 'Use Cases': '使用案例', 'Blog': '部落格', 'About': '關於', "Reader's Guide": '讀者指南' },
+    }
+    const locale = localStorage.getItem('glossarist-locale')
+    if (locale && locale !== 'eng' && NAV_TRANSLATIONS[locale]) {
+      const map = NAV_TRANSLATIONS[locale]
+      document.querySelectorAll('[data-i18n]').forEach(function(el) {
+        const key = el.getAttribute('data-i18n')
+        if (map[key]) el.textContent = map[key]
+      })
+    }
+  })()
+</script>
