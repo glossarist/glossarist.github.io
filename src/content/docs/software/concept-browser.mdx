@@ -196,9 +196,9 @@ This keeps the build pipeline stable as new dataset shapes and group kinds are a
 
 As of v0.7.67 the in-repo `src/components/concept-rdf/` layer is gone — ~2,300 LOC of duplicate emitters, writers, and graph abstractions deleted. The Vue UI now consumes [glossarist-js](/docs/software/glossarist-js) v0.4.51+ directly: `conceptToQuads` and `provenanceToQuads` for the graph, `writeTurtleSync` + canonical prefixes for CURIE-form Turtle, and `formatJsonLd` for JSON-LD. This makes glossarist-js the single source of truth for RDF emission across the ecosystem — fixes land once and propagate to every consumer.
 
-### TypeScript migration (v0.7.101+)
+### TypeScript migration (v0.7.101+) — COMPLETE
 
-The CLI (`cli/index.ts`) is now fully typed TypeScript. The composables (`src/composables/*.ts`) are converting. A 15-item roadmap (`TODO.typescript/`) tracks progress. The glossarist-js upgrade to v0.4.51 achieved zero TypeScript errors across the codebase.
+The CLI (`cli/index.ts`), composables (`src/composables/*.ts`), and all Vue components are now fully typed TypeScript. The glossarist-js upgrade to v0.4.51 achieved zero TypeScript errors across the codebase. A `/learn` teaching section provides reader-focused guides to the site's terminology concepts.
 
 ## Links
 

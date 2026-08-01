@@ -53,11 +53,14 @@ This directory captures every architectural, code-quality, and feature enhanceme
 
 | # | Title | Status |
 |---|-------|--------|
-| 13 | [Accessibility WCAG 2.1 AA audit](13-accessibility-wcag-audit.md) | ☐ |
-| 14 | [Image optimization — responsive WebP, lazy-loading audit](14-image-optimization.md) | ☐ |
-| 15 | [Translate Nav + Footer chrome (i18n extension)](15-translate-nav-footer-chrome.md) | ☐ |
-| 16 | [Content translation strategy (per-locale content collections)](16-content-translation-strategy.md) | ☐ |
-| 17 | [Shared concept-browser renderer extraction](17-shared-renderer-extraction.md) | ☐ |
+| 13 | [Accessibility WCAG 2.1 AA audit](13-accessibility-wcag-audit.md) | ☒ |
+| 14 | [Image optimization — responsive WebP, lazy-loading audit](14-image-optimization.md) | ☒ |
+| 15 | [Translate Nav + Footer chrome (i18n extension)](15-translate-nav-footer-chrome.md) | ☒ |
+| 16 | [Content translation strategy (per-locale content collections)](16-content-translation-strategy.md) | ☒ |
+| 17 | [Shared concept-browser renderer extraction](17-shared-renderer-extraction.md) | ☒ |
+| 18 | [Split HomePage.vue into composed sections](18-split-homepage-into-composed-sections.md) | ◑ |
+| 25 | [ESLint + Prettier config](25-eslint-prettier-config.md) | ☒ |
+| 26 | [Import glossarist-js types when *Json interfaces are public](26-import-glossarist-js-types.md) | ☐ |
 
 ## Execution order
 
