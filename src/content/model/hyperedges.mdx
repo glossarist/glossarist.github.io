@@ -85,12 +85,41 @@ Each rake is a distinct hyperedge (distinct file under `relations/example-vehicl
 
 ### MECE member multiplicity
 
-ISO 704:2022 encodes per-member multiplicity via diagram line notation. Glossarist decomposes this into two orthogonal dimensions (Mutually Exclusive, Collectively Exhaustive):
+ISO 704:2022 encodes per-member multiplicity via diagram line notation. Glossarist decomposes this into **three independent axes** (Mutually Exclusive, Collectively Exhaustive):
 
-- **Presence** (`required` | `optional`) — line style
-- **Count** (`exactly_one` | `at_least_one` | `multiple`) — line count
+| Axis | Values | ISO 704 visual encoding |
+|------|--------|------------------------|
+| **Presence** | `required` \| `optional` | Line style (solid vs dashed) |
+| **Count** | `exactly_one` \| `at_least_one` \| `multiple` | Line count (1, 1+1, 2) |
+| **is_delimiting** | `true` \| `false` | Line weight (bold 3x vs normal) |
 
-The bold 3x-width line in ISO 704 diagrams is **not** a third MECE axis — it's modeled differently per leaf (`is_delimiting: boolean` on `PartitiveMember` for delimiting parts, `delimitingCharacteristic: LocalizedString` on `GenericMember` for the species intension-difference). See [Model](#model) below.
+These three axes are **independent** — every combination is valid or explicitly rejected. There are 2 × 3 = 6 mathematically possible presence × count combos; **5 valid, 1 rejected**.
+
+The third axis (`is_delimiting`) is modeled differently per leaf class:
+- `PartitiveMember` carries `is_delimiting: boolean` (some parts delimit; ISO 704 §5.5.4.2.2)
+- `GenericMember` carries `delimitingCharacteristic: LocalizedString` (every species has one; ISO 704 §5.5.4.2.1)
+- `HyperedgeMember` (abstract base) carries only `presence` × `count` — the shared MECE pair
+
+### The 5 valid + 1 invalid combinations
+
+| UML | Glossarist model | ISO 704:2022 visual | ISO 704 name |
+|-----|------------------|---------------------|--------------|
+| `1..1` | `required` + `exactly_one` | 1 solid line | compulsory |
+| `0..1` | `optional` + `exactly_one` | 1 dashed line | optional |
+| `2..*` | `required` + `multiple` | 2 solid lines | compulsory multiple |
+| `0..*` | `optional` + `multiple` | 2 dashed lines | optional multiple |
+| `1..*` | `required` + `at_least_one` | 1 solid + 1 dashed | compulsory at-least-one |
+| — | `optional` + `at_least_one` | **INVALID** | — |
+
+The invalid combination (`optional` + `at_least_one`) is rejected because if a member is optional (may be zero), the "at least one" constraint is vacuous — it collapses to `(optional, multiple)`. Both the JSON Schema and the Ruby/JS validators reject it with a clear error message.
+
+### Why decompose instead of using a flat enum
+
+A flat 5-value enum (`compulsory`, `optional`, `compulsory_multiple`, `optional_multiple`, `compulsory_at_least_one`) would express the same data. The MECE decomposition (2 + 3 = 5 values across 2 axes) is preferred because:
+
+- **DRY** — adding a new count type (e.g. `zero_or_two`) is one enum entry, not N×presence entries
+- **MECE** — every dimension is independent; no overlap
+- **OCP** — validators, schema, and SHACL shapes each check one dimension independently
 
 <figure class="g-figure-light">
   <img src="/images/hyperedge-mece-multiplicity.svg" alt="MECE member multiplicity table" loading="lazy" />
