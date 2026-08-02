@@ -1,0 +1,113 @@
+---
+title: Concept Browser Architecture
+description: "How concept-browser turns YAML datasets into a browsable terminology site — data pipeline, citation resolution, TypeScript layers, and deployment model."
+---
+
+# Concept Browser Architecture
+
+Concept-browser is a statically deployable terminology browser. You install it as an npm package, point it at your YAML datasets, run `build`, and deploy the output to any static host. No server, no runtime dependencies, no database.
+
+## Data pipeline
+
+```
+Author YAML                Build pipeline              Browser
+─────────────              ───────────────              ──────────────────
+
+concepts/*.yaml  ──────┐
+bibliography.yaml ─────┤    scripts/generate-data.ts    src/adapters/model-bridge.ts
+figures/          ─────┼──> │  harmonize concepts      │ ──>  Concept instances  ──>  Vue SPA
+tables/           ─────┤    │  emit JSON-LD + RDF      │      (glossarist-js)
+site-config.yml   ─────┘    │  build manifest + edges  │
+                           │  copy assets             │
+                           └──────────────────────────┘
+                                      │
+                                      ▼
+                               dist/ (static files)
+                               ├── data/{id}/concepts/*.json
+                               ├── data/{id}/manifest.json
+                               └── data/{id}/*.ttl (RDF)
+```
+
+### What each script does
+
+| Script | Responsibility |
+|--------|---------------|
+| `generate-data.ts` | Orchestrator: YAML → JSON-LD + RDF + manifest |
+| `build-edges.ts` | Pre-compute cross-reference edges between concepts |
+| `bridge-to-astro.ts` | Bridge generated data to Astro content collections |
+| `process-about-pages.ts` | Compile markdown/AsciiDoc about pages |
+| `generate-ontology-data.ts` | Parse OWL ontology into browsable JSON |
+| `generate-ontology-schema.ts` | Extract SHACL shapes from ontology |
+
+## TypeScript layers
+
+All code is TypeScript, with two graduated strictness levels:
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│ tsconfig.json (strict)        tsconfig.scripts.json (relaxed)   │
+│ ┌──────────────────────┐      ┌──────────────────────────────┐  │
+│ │ src/**/*.vue         │      │ scripts/**/*.ts              │  │
+│ │ src/**/*.ts (prod)   │      │ cli/**/*.ts                  │  │
+│ └──────────────────────┘      └──────────────────────────────┘  │
+│   vue-tsc checks this           tsc -p tsconfig.scripts.json   │
+│   during `npm run build`        checks scripts separately      │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### Wire types
+
+Three MECE layers describe the data shapes that cross system boundaries:
+
+| Layer | File | What it types |
+|-------|------|---------------|
+| YAML author format | `scripts/lib/yaml-types.ts` | What dataset authors write |
+| JSON-LD browser format | `src/adapters/jsonld-types.ts` | What the SPA reads |
+| Runtime model | `glossarist` npm package | Concept, LocalizedConcept, etc. |
+
+Single barrel at `src/adapters/wire/index.ts` re-exports all three layers — one import path for consumers.
+
+### The model-bridge
+
+`src/adapters/model-bridge.ts` converts JSON-LD wire objects → glossarist-js `Concept` instances. All downstream Vue components work exclusively with `Concept` instances — they never touch raw JSON-LD.
+
+This means:
+- Changing the wire format (e.g., renaming a `gl:*` key) is a one-place edit in the bridge
+- Adding a new glossarist-js field is a one-place edit in the bridge
+- Vue components are insulated from wire-format evolution
+
+## Citation resolution
+
+When concept text contains `{{cite:sourceId}}`, the browser walks a 4-step cascade:
+
+1. **uriPatterns** — Is there a co-deployed dataset whose URI matches? → internal link
+2. **routing[]** — Is there a routing entry in `site-config.yml`? → external link
+3. **citation.link** — Does the source have a canonical link? → flat bibliography record
+4. **unresolved** — plain text
+
+The same citation resolves differently depending on deployment. A dataset author writes `{{cite:iso704}}` without knowing where their dataset will be deployed — the deployer's `site-config.yml` decides.
+
+## Deployment model
+
+```
+Your project (CWD)                    Package (read-only)
+├── site-config.yml          ──┐
+├── datasets/                 ─┤
+│   └── my-vocab/             ─┤     ┌──────────────────────────┐
+│       └── concepts/*.yaml   ─┤     │ @glossarist/concept-browser │
+├── public/                   ─┤ ──> │                          │
+│   └── (logos, favicons)     ─┤     │ generate-data.ts         │
+├── .cb-content/   ← generated │     │ bridge-to-astro.ts       │
+└── dist/          ← output    │     │ astro build              │
+                             ──┘     └──────────────────────────┘
+```
+
+The package is **read-only after installation**. All generated output goes to the consumer's working directory (`.cb-content/` and `dist/`). The package directory (`node_modules/`) is never modified — this is a core principle of library packages.
+
+## Further reading
+
+- [Inline Mentions](/model/inline-mentions) — the `{{kind:target}}` syntax
+- [Concepts](/model/concepts) — the concept data model
+- [Relationships](/model/relationships) — bilateral and hyperedge relations
+- [Hyperedges](/model/hyperedges) — pipe-and-thread visualization
+- [Sources](/model/sources) — concept provenance and citations
