@@ -1,0 +1,105 @@
+---
+title: Inline Mentions
+description: "Unified {{kind:target}} syntax for inline references in concept text — citations, URNs, figures, tables, formulas, bibliography, external links, images, and concept designations."
+---
+
+# Inline Mentions
+
+Inline references in concept text (definitions, notes, examples) use a **unified mention syntax**: `{{kind:target}}`. Every mention is typed — the kind prefix determines how concept-browser resolves and renders it.
+
+## The mental model
+
+> Everything in `{{...}}` is a typed reference or embed. The first word (before `:`) tells you what kind. The rest is the target identifier. Optionally, a comma + label gives the display text.
+
+## Kind reference
+
+| Kind | Syntax | Example | Resolves to |
+|------|--------|---------|-------------|
+| `cite` | `{{cite:id}}` | `{{cite:iso704}}` | A `ConceptSource` in this concept's `sources[]` (by `id`) — walks the full resolution cascade |
+| `cite` + label | `{{cite:id, label}}` | `{{cite:iso704, rice}}` | Same, with explicit display text |
+| `urn` | `{{urn:URN}}` | `{{urn:iso:std:iso:704}}` | A concept via URN routing |
+| `fig` | `{{fig:id}}` | `{{fig:diagram_3}}` | A figure entity in the same dataset |
+| `table` | `{{table:id}}` | `{{table:units}}` | A table entity |
+| `formula` | `{{formula:id}}` | `{{formula:ohm_law}}` | A formula entity |
+| `bib` | `{{bib:id}}` | `{{bib:ref_1}}` | A bibliography entry (no underlying concept) |
+| `link` | `{{link:URL}}` | `{{link:https://example.com}}` | An external URL (canonical, deployment-independent) |
+| `image` | `{{image:src}}` | `{{image:diagram.png}}` | An inline image embed |
+| *(none)* | `{{designation}}` | `{{measurement unit}}` | A concept by designation match (same dataset) |
+| *(none)* | `{{numeric}}` | `{{112-01-10}}` | A concept by numeric ID (same dataset) |
+
+## Data / Deployment Boundary
+
+Mention syntax is **deployment-agnostic**. The dataset author writes the same mention regardless of where the dataset will be deployed.
+
+The **deployment** (via `site-config.yml`) determines how each mention resolves:
+
+1. **Is the target in a co-deployed dataset?** → internal link (case 1)
+2. **Is the target in the routing table?** → external link (case 2)
+3. **Does the source have a canonical link?** → flat bib record (case 3)
+4. **No match** → plain text
+
+The same YAML renders differently in different deployments. The data never changes.
+
+## Citation resolution cascade
+
+For `{{cite:id}}` and `{{urn:...}}` mentions, concept-browser walks this cascade at render time:
+
+| Step | Check | Result |
+|------|-------|--------|
+| 1 | `uriPatterns` — co-deployed dataset match? | **Internal** link to local concept page |
+| 2 | `routing[]` — external routing entry? | **External** link to routed URL |
+| 3 | `citation.link` — canonical source link? | **Self-contained** flat bib record |
+| 4 | (no match) | **Unresolved** — plain text |
+
+## Cite mentions
+
+`{{cite:sourceId}}` looks up a `ConceptSource` in the concept's own `sources[]` list by its `id` field:
+
+::: v-pre
+```yaml
+sources:
+  - id: iso-704
+    type: authoritative
+    origin:
+      ref: { source: ISO, id: "704", version: "2009" }
+      link: https://www.iso.org/standard/38109.html
+
+definition:
+  - content: >-
+      Concepts are identified by their characteristics
+      (see {{cite:iso-704}} §3.2).
+```
+:::
+
+The citation resolves through the full cascade. If ISO 704 is co-deployed, it links locally. If only the routing table knows about it, it links externally. If neither, it renders as a flat reference with the `link` URL.
+
+See [Authoritative Sources](/model/sources) for the full `ConceptSource` model.
+
+## External links and images
+
+`{{link:URL}}` and `{{image:src}}` are for resources **external to all datasets**. The URL/src is the canonical target — the deployment has nothing to decide.
+
+::: v-pre
+```yaml
+definition:
+  - content: >-
+      See {{link:https://www.iso.org/obp/ui/#iso:std:iso:704:ed-3:v1:en, ISO 704 online}}
+      for the full standard text.
+
+      The measurement setup is shown in {{image:setup.png, Measurement apparatus}}.
+```
+:::
+
+## Deprecated: `<<ref,title>>`
+
+The AsciiDoc xref syntax `<<ref,title>>` is deprecated. It emits a console warning and renders as plain text. Migrate to the unified syntax:
+
+- `<<fig_3, Figure 3>>` → `{{fig:fig_3, Figure 3}}`
+- `<<845-01-01, 845-01-01>>` → `{{cite:iev_845-01-01}}`
+- `<<ref_1, ISO 704>>` → `{{bib:ref_1, ISO 704}}`
+
+## Related
+
+- [Authoritative Sources](/model/sources) — the `ConceptSource` model and citation cascade
+- [Non-verbal entities](/model/non-verbal) — figure/table/formula entities
+- [Datasets](/model/datasets) — dataset identity and URN routing
