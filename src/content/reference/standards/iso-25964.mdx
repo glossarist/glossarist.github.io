@@ -67,7 +67,7 @@ ISO 25964 / SKOS defines five mapping types for aligning concepts across differe
 
 | SKOS property | Glossarist type | Meaning |
 |---------------|-----------------|---------|
-| `skos:exactMatch` | `exact_match` | Concepts are exactly equivalent |
+| `skos:exactMatch` | `equivalent` | Concepts are exactly equivalent |
 | `skos:closeMatch` | `close_match` | Concepts are approximately equivalent |
 | `skos:broadMatch` | `broad_match` | Target concept is broader |
 | `skos:narrowMatch` | `narrow_match` | Target concept is narrower |
@@ -84,10 +84,10 @@ Glossarist implements 52 typed semantic relationship types spanning five standar
 | Hierarchical — generic | ISO 25964 / SKOS | `broader`, `narrower`, `broader_generic`, `narrower_generic` |
 | Hierarchical — partitive | ISO 25964 / ISO 19135 | `broader_partitive`, `narrower_partitive`, `has_part`, `is_part_of` |
 | Hierarchical — instantial | ISO 25964 / ISO 19135 | `broader_instantial`, `narrower_instantial`, `instance_of`, `has_instance` |
-| Equivalence | ISO 10241-1 / SKOS | `equivalent`, `exact_match` |
+| Equivalence | ISO 10241-1 / SKOS | `equivalent` |
 | SKOS mapping | SKOS | `close_match`, `broad_match`, `narrow_match`, `related_match` |
 | Associative | ISO 10241-1 / ISO 25964 | `see`, `references`, `related_concept`, `related_concept_broader`, `related_concept_narrower` |
-| Spatiotemporal | ISO 25964 / TBX | `sequentially_related`, `spatially_related`, `temporally_related` |
+| Spatiotemporal | ISO 25964 / TBX | `sequentially_related_concept`, `spatially_related_concept`, `temporally_related_concept` |
 | Lifecycle | ISO 10241-1 / ISO 19135 | `deprecates`, `deprecated_by`, `supersedes`, `superseded_by`, `replaces`, `replaced_by`, `invalidates`, `invalidated_by`, `retires`, `retired_by` |
 | Lexical | ISO 12620 / TBX | `homograph`, `false_friend` |
 | Comparative | ISO 10241-1 | `compare`, `contrast` |

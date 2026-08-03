@@ -18,20 +18,20 @@ Glossarist powers the multi-register concept graph that ties them together.
 Geospatial terminology work has unique pain points:
 
 - **Many overlapping vocabularies** — A concept like *feature* exists in ISO 19107 (spatial schema), OGC Simple Features, and INSPIRE; the designations and definitions overlap but aren't identical.
-- **Cross-vocabulary equivalences** — Adopters need to know "OGC's *feature* is `exact_match` to ISO 19107's *feature* and `close_match` to INSPIRE's *spatial object*".
+- **Cross-vocabulary equivalences** — Adopters need to know "OGC's *feature* is `equivalent` to ISO 19107's *feature* and `close_match` to INSPIRE's *spatial object*".
 - **Register lifecycle** — ISO 19135 defines a register lifecycle (proposed → accepted → withdrawn) with governance semantics. Each concept's lifecycle must be auditable.
 - **Multilingual coverage** — UN languages (Arabic, Chinese, English, French, Russian, Spanish) plus regional languages.
 
 ## The Glossarist solution
 
-### Cross-vocabulary equivalence via `exact_match` and friends
+### Cross-vocabulary equivalence via `equivalent` and friends
 
 Glossarist's relationship taxonomy implements SKOS mapping properties directly:
 
 ```yaml
 # datasets/iso-19107/concepts/feature.yaml
 related:
-  - type: exact_match
+  - type: equivalent
     ref: { source: urn:ogc:def:spec, id: "feature" }
   - type: close_match
     ref: { source: urn:eu:inspire, id: "spatial-object" }
@@ -40,7 +40,7 @@ related:
 ```
 
 These map to SKOS:
-- `exact_match` → `skos:exactMatch`
+- `equivalent` → `skos:exactMatch`
 - `close_match` → `skos:closeMatch`
 - `broad_match` → `skos:broadMatch`
 - `narrow_match` → `skos:narrowMatch`

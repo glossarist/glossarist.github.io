@@ -128,12 +128,12 @@ external concept stays; its substance just comes from elsewhere.
 
 ```yaml
 related:
-  - type: exact_match
-    content: "iso-19107:entity"   # Exact match in another vocabulary
+  - type: equivalent         # Exact match in another vocabulary
+    content: "iso-19107:entity"
   - type: broad_match
     content: "iso-19109:object"   # Broader concept in another vocabulary
-  - type: equivalent
-    content: "3.1.1.1"            # Equivalent concept in same vocabulary
+  - type: close_match
+    content: "3.1.1.1"            # Close match in same vocabulary
 ```
 
 ### Associative and lifecycle
@@ -182,7 +182,7 @@ related:
     content: "3.2.5"
   - type: compare
     content: "3.1.2"
-  - type: exact_match
+  - type: equivalent
     content: "iso-tc211:entity"
 ```
 
@@ -281,13 +281,12 @@ Glossarist relationship types map to standard SKOS and ISO 25964 ontology proper
 | `narrower_partitive` | `iso-thes:narrowerPartitive` | ISO 25964 NTP |
 | `broader_instantial` | `iso-thes:broaderInstantial` | ISO 25964 BTI |
 | `narrower_instantial` | `iso-thes:narrowerInstantial` | ISO 25964 NTI |
-| `exact_match` | `skos:exactMatch` | Cross-vocabulary |
+| `equivalent` | `skos:exactMatch` | Within- and cross-vocabulary |
 | `close_match` | `skos:closeMatch` | Cross-vocabulary |
 | `broad_match` | `skos:broadMatch` | Cross-vocabulary |
 | `narrow_match` | `skos:narrowMatch` | Cross-vocabulary |
 | `related_match` | `skos:relatedMatch` | Cross-vocabulary |
 | `related_concept` | `skos:semanticRelation` | General associative |
-| `equivalent` | `skos:exactMatch` | Within-vocabulary |
 
 Types without a direct SKOS equivalent (`compare`, `contrast`, `see`, `deprecates`, `supersedes`, `homograph`, `false_friend`, ISO 19135 register management types, etc.) are expressed as `gloss:` properties in the Glossarist OWL ontology and serialized as-is in TBX output using the corresponding TBX data category.
 

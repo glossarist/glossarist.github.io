@@ -7,6 +7,13 @@
  * so this file can be replaced with native glossarist-js types when
  * that library ships them.
  *
+ * Enumerations (relationship types, presence, count, completeness,
+ * definition types, designation relationship types) are imported
+ * directly from glossarist-js — the SDK is the single source of truth
+ * for the wire format's vocabulary. The interface shapes below remain
+ * hand-rolled because glossarist-js does not yet re-export its internal
+ * `*Json` interfaces publicly (tracked in TODO.refactor/26).
+ *
  * The type is permissive (every field optional except where ISO 704 /
  * ISO 10241-1 makes it mandatory) — strict validation is the job of
  * the validators in src/components/ValidatorPlayground.vue, not the
@@ -18,6 +25,15 @@
  * - glossarist-js/src/models/*.js for the runtime shapes
  * - ISO 12620 §A for the data-category source of truth
  */
+
+import {
+  RELATIONSHIP_TYPES,
+  PARTITIVE_PRESENCE_VALUES,
+  PARTITIVE_COUNT_VALUES,
+  COMPLETENESS_VALUES,
+  DEFINITION_TYPE,
+  DESIGNATION_RELATIONSHIP_TYPES,
+} from 'glossarist/models'
 
 // ─────────────────────────────────────────────────────────────────────
 // Primitives
@@ -31,22 +47,20 @@ export interface ConceptRef {
 
 export type NormativeStatus = 'preferred' | 'admitted' | 'deprecated'
 
-export type DetailedDefinitionType =
-  | 'intensional'
-  | 'extensional'
-  | 'partitive'
-  | 'translated'
+export type PartitivePresence = typeof PARTITIVE_PRESENCE_VALUES[number]
 
-export type PartitivePresence = 'required' | 'optional'
-
-export type PartitiveCount = 'exactly_one' | 'at_least_one' | 'multiple'
+export type PartitiveCount = typeof PARTITIVE_COUNT_VALUES[number]
 
 export type HyperedgeWireType =
   | 'partitive_relation'
   | 'generic_relation'
   | 'sequential_relation'
 
-export type Completeness = 'complete' | 'partial'
+export type Completeness = typeof COMPLETENESS_VALUES[number]
+
+export type DetailedDefinitionType = typeof DEFINITION_TYPE.VALUES[number]
+
+export type DesignationRelationshipType = typeof DESIGNATION_RELATIONSHIP_TYPES[number]
 
 // ─────────────────────────────────────────────────────────────────────
 // Sources + dates
@@ -233,17 +247,22 @@ export type ConceptYaml = ManagedConceptYaml
 // ─────────────────────────────────────────────────────────────────────
 
 /**
- * Relationship types come directly from glossarist-js's RELATIONSHIP_TYPES.
- * Importing the SDK's canonical enum eliminates drift between our types
- * and the actual wire format. With `sideEffects: false` on the
- * glossarist package, Vite tree-shakes the unused module graph and
- * only includes the const array (51 strings, <1KB).
+ * Relationship types come directly from glossarist-js's RELATIONSHIP_TYPES
+ * const. The SDK is the authoritative source for the wire format's
+ * relationship vocabulary. With `sideEffects: false` on the glossarist
+ * package, Vite tree-shakes the unused module graph and only includes
+ * the const arrays (<2KB total).
  */
-import { RELATIONSHIP_TYPES } from 'glossarist/models'
-
 export const RELATED_TYPE_ENUM = RELATIONSHIP_TYPES as readonly string[]
 export type RelatedType = typeof RELATIONSHIP_TYPES[number]
 export const RELATED_TYPE_SET: ReadonlySet<string> = new Set(RELATED_TYPE_ENUM)
+
+/**
+ * Designation-level relationship types (term-to-term, not concept-to-concept).
+ * A separate SDK enum — these belong to designations, not to concepts.
+ */
+export const DESIGNATION_RELATION_ENUM = DESIGNATION_RELATIONSHIP_TYPES as readonly string[]
+export type DesignationRelationType = typeof DESIGNATION_RELATIONSHIP_TYPES[number]
 
 /**
  * The ISO 12620 §A.2.1 term_type enumeration.

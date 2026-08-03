@@ -117,7 +117,7 @@ Beyond per-concept serialization, v0.4.9 adds emitters for the surrounding linke
 | `bibliography-emitter` | `dcterms:BibliographicResource` | Bibliography graph from `bibliography.yaml` |
 | `provenance-emitters` | `prov:Activity`, `prov:SoftwareAgent`, `foaf:Person`, `prov:Entity` | Build run, contributors, version chain |
 
-Section membership is closed downward — `section.descendants()` returns the transitive set of child sections, so a concept tagged with `1.2` is also a member of `1` and the dataset root. Relation categories are reconciled with concept-browser so both libraries agree on `broader`/`narrower`/`exact_match`/etc. coloring.
+Section membership is closed downward — `section.descendants()` returns the transitive set of child sections, so a concept tagged with `1.2` is also a member of `1` and the dataset root. Relation categories are reconciled with concept-browser so both libraries agree on `broader`/`narrower`/`equivalent`/etc. coloring.
 
 ### Mention syntax
 

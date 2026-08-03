@@ -11,7 +11,7 @@ const { useOntologyDataMock } = {
         schemeLabel: 'Relationship type',
         schemeDefinition: null,
         concepts: Object.fromEntries(
-          ['broader', 'narrower', 'related', 'exact_match', 'equivalent'].map(id => [
+          ['broader', 'narrower', 'related_concept', 'equivalent', 'close_match'].map(id => [
             id,
             { id, prefLabel: id, definition: `${id} relationship` },
           ])

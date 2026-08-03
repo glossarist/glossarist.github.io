@@ -40,7 +40,7 @@ ISO 12620 organizes data categories into three major groups subdivided into ten 
 | ISO 12620 | Glossarist | Notes |
 |-----------|-----------|-------|
 | equivalence in another language | `localizations` map on `ManagedConcept` | One concept, one entry per language |
-| cross-vocabulary equivalence | `ManagedConcept.related` with SKOS types | `exact_match`, `close_match`, `broad_match`, `narrow_match`, `related_match` — see [Relationships — SKOS Alignment](/model/relationships#skos-alignment) |
+| cross-vocabulary equivalence | `ManagedConcept.related` with SKOS types | `equivalent`, `close_match`, `broad_match`, `narrow_match`, `related_match` — see [Relationships — SKOS Alignment](/model/relationships#skos-alignment) |
 | false friend | `related: { type: false_friend }` | |
 | homograph | `related: { type: homograph }` | |
 | equivalent | `related: { type: equivalent }` | Within-vocabulary equivalence |
@@ -75,7 +75,7 @@ ISO 12620 organizes data categories into three major groups subdivided into ten 
 | broader_generic / narrower_generic | `related: { type: broader_generic }` | ISO 25964 BTG/NTG |
 | broader_partitive / narrower_partitive | `related: { type: broader_partitive }` | ISO 25964 BTP/NTP |
 | broader_instantial / narrower_instantial | `related: { type: broader_instantial }` | ISO 25964 BTI/NTI |
-| sequential (`A.6.x`) | `related: { type: sequentially_related }` | |
+| sequential (`A.6.x`) | `related: { type: sequentially_related_concept }` | |
 | associative (other) | `related: { type: see \| compare \| related_concept \| ... }` | Full 52-type enumeration in [Relationships](/model/relationships) |
 | **n-ary generic rake** | `GenericHyperedge` (per-file at `relations/<id>/`) | ISO 704:2022 §5.5.4.2.1 — see [Generic Relations](/model/generic-relations) |
 | **n-ary partitive rake** | `PartitiveHyperedge` (per-file at `relations/<id>/`) | ISO 704:2022 §5.5.4.3 — see [Partitive Relations](/model/partitive-relations) |
