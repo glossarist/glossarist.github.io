@@ -25,6 +25,7 @@
     "@astrojs/vue": "^7.0.0",
     "astro": "^7.0.0",
     "astro-pagefind": "^2.0.0",
+    "glossarist": "^0.4.53",
     "vue": "^3.5.13",
     "yaml": "^2.9.0"
   },
