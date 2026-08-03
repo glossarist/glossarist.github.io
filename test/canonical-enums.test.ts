@@ -13,10 +13,18 @@ describe('Canonical enumerations (src/types/concept-yaml.ts)', () => {
   // and term types across the site. Drift between this file and the
   // docs / playgrounds / SDK = silent bugs.
 
-  it('RELATED_TYPE_ENUM has exactly 54 entries (52 ISO-standard + 2 Glossarist extensions)', () => {
-    // 52 from ISO 12620 / SKOS / ISO 25964 / ISO 19135
-    // + 2 Glossarist extensions: provides / provided_by (ExternalConcept resolution)
-    expect(RELATED_TYPE_ENUM.length).toBe(54)
+  it('RELATED_TYPE_ENUM matches glossarist-js RELATIONSHIP_TYPES exactly', () => {
+    // The enum is now imported directly from glossarist-js's
+    // RELATIONSHIP_TYPES const (see src/types/concept-yaml.ts), so this
+    // test guards against silent drift if the SDK adds/removes entries.
+    //
+    // Known drift (2026-08-03): taxonomies.json (from concept-model TTL)
+    // still carries `exact_match`, `abbreviated_form_for`, `short_form_for`,
+    // and the short spatiotemporal names. The SDK has renamed the
+    // spatiotemporal ones to `*_related_concept` and dropped the others.
+    // The SDK is authoritative for wire-format validation;
+    // RelationshipTypes.vue renders from taxonomies.json for documentation.
+    expect(RELATED_TYPE_ENUM.length).toBe(51)
   })
 
   it('RELATED_TYPE_ENUM entries are unique', () => {

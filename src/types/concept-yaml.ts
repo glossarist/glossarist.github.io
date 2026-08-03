@@ -229,54 +229,20 @@ export interface ManagedConceptYaml {
 export type ConceptYaml = ManagedConceptYaml
 
 // ─────────────────────────────────────────────────────────────────────
-// Canonical enumerations (mirror glossarist-js's wire keys)
+// Canonical enumerations — imported from glossarist-js (single source of truth)
 // ─────────────────────────────────────────────────────────────────────
 
 /**
- * The full relationship-type enumeration.
- *
- * 54 total: 52 from ISO 12620 / SKOS / ISO 25964 / ISO 19135 + 2
- * Glossarist extensions (provides / provided_by for ExternalConcept
- * resolution).
- *
- * Source: see /reference/iso-12620-mapping and /model/relationships.
- * Keep in sync with src/components/ValidatorPlayground.vue (which now
- * imports RELATED_TYPE_SET from here — single source of truth).
+ * Relationship types come directly from glossarist-js's RELATIONSHIP_TYPES.
+ * Importing the SDK's canonical enum eliminates drift between our types
+ * and the actual wire format. With `sideEffects: false` on the
+ * glossarist package, Vite tree-shakes the unused module graph and
+ * only includes the const array (51 strings, <1KB).
  */
-export const RELATED_TYPE_ENUM = [
-  // Hierarchical — Generic (SKOS)
-  'broader', 'narrower', 'broader_generic', 'narrower_generic',
-  // Hierarchical — Partitive
-  'broader_partitive', 'narrower_partitive', 'has_part', 'is_part_of',
-  // Hierarchical — Instantial
-  'broader_instantial', 'narrower_instantial', 'instance_of', 'has_instance',
-  // Register management
-  'has_concept', 'is_concept_of', 'inherits', 'inherited_by',
-  // Equivalence / mapping (SKOS)
-  'equivalent', 'exact_match', 'close_match', 'broad_match', 'narrow_match', 'related_match',
-  // Associative
-  'see', 'related_concept', 'related_concept_broader', 'related_concept_narrower', 'references',
-  // Lifecycle
-  'supersedes', 'superseded_by', 'deprecates', 'deprecated_by',
-  'replaces', 'replaced_by', 'invalidates', 'invalidated_by',
-  'retires', 'retired_by',
-  // Comparative
-  'compare', 'contrast',
-  // Versioning / definitional
-  'has_definition', 'definition_of', 'has_version', 'version_of',
-  'current_version', 'current_version_of',
-  // Spatiotemporal
-  'sequentially_related', 'spatially_related', 'temporally_related',
-  // Lexical
-  'homograph', 'false_friend',
-  // Designation-level
-  'abbreviated_form_for', 'short_form_for',
-  // ExternalConcept resolution
-  'provides', 'provided_by',
-] as const
+import { RELATIONSHIP_TYPES } from 'glossarist/models'
 
-export type RelatedType = typeof RELATED_TYPE_ENUM[number]
-
+export const RELATED_TYPE_ENUM = RELATIONSHIP_TYPES as readonly string[]
+export type RelatedType = typeof RELATIONSHIP_TYPES[number]
 export const RELATED_TYPE_SET: ReadonlySet<string> = new Set(RELATED_TYPE_ENUM)
 
 /**
