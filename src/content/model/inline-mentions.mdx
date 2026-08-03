@@ -1,106 +1,138 @@
 ---
 title: Inline Mentions
-description: "Unified {{kind:target}} syntax for inline references in concept text — citations, URNs, figures, tables, formulas, bibliography, external links, images, and concept designations."
+description: "Unified {{kind:target}} syntax for inline references in concept text — concept links, citations, figures, tables, formulas, bibliography, external links, and images."
 ---
 
 # Inline Mentions
 
-Inline references in concept text (definitions, notes, examples) use a **unified mention syntax**: `{{kind:target}}`. Every mention is typed — the kind prefix determines how concept-browser resolves and renders it.
+Inline references in concept text (definitions, notes, examples) use a **unified mention syntax**: `{{kind:target}}`. Every mention carries an explicit `kind` prefix — the renderer always knows what type of thing it is resolving.
 
-## The mental model
-
-> Everything in `{{...}}` is a typed reference or embed. The first word (before `:`) tells you what kind. The rest is the target identifier. Optionally, a comma + label gives the display text.
+> **One rule to remember:** every mention is `{{kind:target}}`. The `kind` says what type of thing you're referencing. The `target` is the canonical identifier (never a local alias, never bare text). If in doubt, qualify with the dataset name: `DATASET:ID`.
 
 ## Kind reference
 
 | Kind | Syntax | Example | Resolves to |
 |------|--------|---------|-------------|
-| `cite` | `{{cite:id}}` | `{{cite:iso704}}` | A `ConceptSource` in this concept's `sources[]` (by `id`) — walks the full resolution cascade |
-| `cite` + label | `{{cite:id, label}}` | `{{cite:iso704, rice}}` | Same, with explicit display text |
-| `urn` | `{{urn:URN}}` | `{{urn:iso:std:iso:704}}` | A concept via URN routing |
-| `fig` | `{{fig:id}}` | `{{fig:diagram_3}}` | A figure entity in the same dataset |
-| `table` | `{{table:id}}` | `{{table:units}}` | A table entity |
-| `formula` | `{{formula:id}}` | `{{formula:ohm_law}}` | A formula entity |
-| `bib` | `{{bib:id}}` | `{{bib:ref_1}}` | A bibliography entry (no underlying concept) |
-| `link` | `{{link:URL}}` | `{{link:https://example.com}}` | An external URL (canonical, deployment-independent) |
-| `image` | `{{image:src}}` | `{{image:diagram.png}}` | An inline image embed |
-| *(none)* | `{{designation}}` | `{{measurement unit}}` | A concept by designation match (same dataset) |
-| *(none)* | `{{numeric}}` | `{{112-01-10}}` | A concept by numeric ID (same dataset) |
+| `concept` | `{{concept:DATASET:ID}}` | `{{concept:IEV:702-02-07}}` | A concept (link, no source metadata) |
+| `cite` | `{{cite:DATASET:ID}}` | `{{cite:IEV:702-02-07, IEV 702-02-07}}` | A concept cited as a source (carries `ConceptSource` metadata if matched) |
+| `fig` | `{{fig:ID}}` | `{{fig:diagram_3, Figure 3: Signal flow}}` | A figure entity in the same dataset |
+| `table` | `{{table:ID}}` | `{{table:units}}` | A table entity |
+| `formula` | `{{formula:ID}}` | `{{formula:ohm_law}}` | A formula entity |
+| `bib` | `{{bib:ID}}` | `{{bib:ref_1, ISO 704:2022}}` | A bibliography entry (no underlying concept) |
+| `link` | `{{link:URL}}` | `{{link:https://example.com, Example Site}}` | An external URL (`https://` or `http://` only) |
+| `image` | `{{image:path}}` | `{{image:figures/wave.svg, Sine wave}}` | An inline image (path or URL) |
+
+Every mention requires a `kind`. Bare `{{designation}}` or `{{112-01-10}}` are rejected at parse time.
+
+## Target types
+
+The target (everything after `kind:` and before the optional `, label`) is parsed into a structured shape:
+
+| Target text | Parsed as | Structured shape |
+|-------------|-----------|------------------|
+| `urn:iec:std:iec:60050:702-02-07` | URN | `{ type: "urn", urn: "urn:iec:std:iec:60050:702-02-07" }` |
+| `IEV:702-02-07` | Dataset-qualified | `{ type: "dataset_qualified", dataset: "IEV", id: "702-02-07" }` |
+| `ISO:10241-1:2011` | Dataset-qualified (last colon splits) | `{ type: "dataset_qualified", dataset: "ISO", id: "10241-1:2011" }` |
+| `diagram_3` | Plain entity ID | `{ type: "entity_id", id: "diagram_3" }` |
+| `https://example.com` | URL | `{ type: "url", url: "https://example.com" }` |
+| `figures/img.svg` | File path | `{ type: "path", path: "figures/img.svg" }` |
+
+For `DATASET:ID`, the parser splits on the **last** colon — everything before is the dataset name, everything after is the entity ID. This handles dataset names with internal colons like `ISO:10241-1:2011`.
+
+## Per-kind target validation
+
+Each kind accepts only certain target types. Invalid combinations throw `InvalidMentionError` at parse time:
+
+| Kind | Accepts | Rejects |
+|------|---------|---------|
+| `concept` | `DATASET:ID`, `URN` | bare ID, URL, path |
+| `cite` | `DATASET:ID`, `URN` | bare ID, URL, path |
+| `fig` | plain ID, `URN` | `DATASET:ID` (use URN for cross-dataset) |
+| `table` | plain ID, `URN` | `DATASET:ID` |
+| `formula` | plain ID, `URN` | `DATASET:ID` |
+| `bib` | plain ID only | `URN`, `DATASET:ID`, URL |
+| `link` | `https://` or `http://` URL | bare text, path, `DATASET:ID` |
+| `image` | path or URL | `DATASET:ID`, `URN` |
+
+## Resolution
+
+Mentions resolve in two phases: **parse** (pure, no I/O) produces segments; **resolve** looks each mention up against the loaded dataset.
+
+### `concept:DATASET:ID` / `concept:URN`
+
+Looks up the concept in the vocabulary store. If found, renders as an inline link. If not found, renders as plain text with a dashed underline and tooltip — authoring errors are visible, not silent.
+
+### `cite:DATASET:ID` / `cite:URN`
+
+Resolves the concept (same as `concept:` above). If the surrounding concept has a `ConceptSource` whose `origin.ref` matches `{ source: dataset, id: entity_id }`, the citation **carries the source metadata** (type, status, modification). If no source matches, the citation still resolves as a plain concept link — no pre-declaration required.
+
+```yaml
+sources:
+  - type: authoritative
+    origin:
+      ref: { source: IEV, id: "702-02-07" }
+
+notes:
+  - content: "See {{cite:IEV:702-02-07, IEV 702-02-07}} for the definition of signal."
+```
+
+### `fig` / `table` / `formula` / `bib`
+
+Look up the entity by plain ID in the same dataset. Cross-dataset URN lookups for non-concept entities are planned for a future phase.
+
+### `link` and `image`
+
+Always resolve — the URL or path is the canonical target. The renderer handles missing image files.
 
 ## Data / Deployment Boundary
 
-Mention syntax is **deployment-agnostic**. The dataset author writes the same mention regardless of where the dataset will be deployed.
+Mention syntax is **deployment-agnostic**. The dataset author writes `{{cite:IEV:702-02-07}}` regardless of where the dataset will be deployed.
 
-The **deployment** (via `site-config.yml`) determines how each mention resolves:
+The **deployment** (via `site-config.yml`) determines how each `DATASET:ID` or URN target resolves at render time:
 
-1. **Is the target in a co-deployed dataset?** → internal link (case 1)
-2. **Is the target in the routing table?** → external link (case 2)
-3. **Does the source have a canonical link?** → flat bib record (case 3)
-4. **No match** → plain text
+1. **Is the target in a co-deployed dataset?** → internal link to the local concept page
+2. **Is the target in the routing table?** → external link via the deployment's `uriPatterns`
+3. **Does the source have a canonical `link`?** → flat self-contained bib record
+4. **No match** → plain text with dashed-underline indicator
 
-The same YAML renders differently in different deployments. The data never changes.
+The same YAML renders differently in different deployments. The data never changes — only the routing does.
 
-## Citation resolution cascade
+## URN variant (cross-dataset universal)
 
-For `{{cite:id}}` and `{{urn:...}}` mentions, concept-browser walks this cascade at render time:
+When you know the canonical URN but not the dataset-qualified ID, use the URN form with `concept:` or `cite:`:
 
-| Step | Check | Result |
-|------|-------|--------|
-| 1 | `uriPatterns` — co-deployed dataset match? | **Internal** link to local concept page |
-| 2 | `routing[]` — external routing entry? | **External** link to routed URL |
-| 3 | `citation.link` — canonical source link? | **Self-contained** flat bib record |
-| 4 | (no match) | **Unresolved** — plain text |
-
-## Cite mentions
-
-`{{cite:sourceId}}` looks up a `ConceptSource` in the concept's own `sources[]` list by its `id` field:
-
-::: v-pre
-```yaml
-sources:
-  - id: iso-704
-    type: authoritative
-    origin:
-      ref: { source: ISO, id: "704", version: "2009" }
-      link: https://www.iso.org/standard/38109.html
-
-definition:
-  - content: >-
-      Concepts are identified by their characteristics
-      (see {{cite:iso-704}} §3.2).
+```text
+{{concept:urn:iec:std:iec:60050:702-02-07}}
+{{cite:urn:iso:std:iso:704:2022, ISO 704:2022}}
 ```
-:::
 
-The citation resolves through the full cascade. If ISO 704 is co-deployed, it links locally. If only the routing table knows about it, it links externally. If neither, it renders as a flat reference with the `link` URL.
+The deployment's `uriPatterns` in `site-config.yml` routes the URN to the canonical source.
 
-See [Authoritative Sources](/model/sources) for the full `ConceptSource` model.
+## Common errors and fixes
 
-## External links and images
-
-`{{link:URL}}` and `{{image:src}}` are for resources **external to all datasets**. The URL/src is the canonical target — the deployment has nothing to decide.
-
-::: v-pre
-```yaml
-definition:
-  - content: >-
-      See {{link:https://www.iso.org/obp/ui/#iso:std:iso:704:ed-3:v1:en, ISO 704 online}}
-      for the full standard text.
-
-      The measurement setup is shown in {{image:setup.png, Measurement apparatus}}.
-```
-:::
+| Error | Cause | Fix |
+|-------|-------|-----|
+| `missing kind prefix` | Wrote `{{measurement unit}}` or `{{112-01-10}}` | Add kind: `{{concept:VIM:112-01-10}}` |
+| `must be DATASET:ID or URN; got bare ID` | Wrote `{{cite:sourceId1}}` (local alias) | Use canonical: `{{cite:IEV:702-02-07}}` |
+| `concept target must be DATASET:ID or URN` | Wrote `{{concept:112-01-10}}` | Add dataset: `{{concept:VIM:112-01-10}}` |
+| `link target must be https:// or http://` | Wrote `{{link:/internal/page}}` | Use full URL: `{{link:https://...}}` |
+| `bib entries do not have URNs` | Wrote `{{bib:urn:...}}` | Use plain ID: `{{bib:ref_1}}` |
+| `unknown kind 'ref'` | Wrote `{{ref:IEV:702-02-07}}` | Use `cite` or `concept` |
+| Raw HTML rejected | Wrote `<a href="...">` or `<img src="...">` | Use `{{link:...}}` or `{{image:...}}` |
+| Deprecated syntax | Wrote `<<target, caption>>` | Use `{{fig:target, caption}}` |
 
 ## Deprecated: `<<ref,title>>`
 
 The AsciiDoc xref syntax `<<ref,title>>` is deprecated. It emits a console warning and renders as plain text. Migrate to the unified syntax:
 
 - `<<fig_3, Figure 3>>` → `{{fig:fig_3, Figure 3}}`
-- `<<845-01-01, 845-01-01>>` → `{{cite:iev_845-01-01}}`
+- `<<845-01-01, 845-01-01>>` → `{{cite:IEV:845-01-01, 845-01-01}}`
 - `<<ref_1, ISO 704>>` → `{{bib:ref_1, ISO 704}}`
 
 ## Related
 
-- [Concept Browser Architecture](/model/concept-browser) — how mentions resolve at runtime
-- [Authoritative Sources](/model/sources) — the `ConceptSource` model and citation cascade
+- [Inline Mentions Specification](https://github.com/glossarist/concept-model/blob/main/docs/design/inline-mentions.md) — full formal spec on the concept-model repo
+- [Implementation Guide](https://github.com/glossarist/concept-model/blob/main/docs/design/inline-mentions-implementation-guide.md) — parser and resolver contracts for glossarist-js / glossarist-ruby / concept-browser
+- [Authoritative Sources](/model/sources) — the `ConceptSource` model that `cite:` matches against
 - [Non-verbal entities](/model/non-verbal) — figure/table/formula entities
 - [Datasets](/model/datasets) — dataset identity and URN routing

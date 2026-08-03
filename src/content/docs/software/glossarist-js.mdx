@@ -121,17 +121,27 @@ Section membership is closed downward — `section.descendants()` returns the tr
 
 ### Mention syntax
 
-Concept text supports inline mentions for sources, figures, and designations:
+Concept text supports inline mentions for concepts, sources, figures, and bibliography. Every mention is `{{kind:target}}`:
 
 ```js
-import { parseMention } from 'glossarist';
+import { parseMentions } from 'glossarist';
 
-parseMention('{{cite:iso-704}}');       // → { kind: 'cite', id: 'iso-704' }
-parseMention('{{fig:quantity-diagram}}'); // → { kind: 'fig', id: 'quantity-diagram' }
-parseMention('{{urn:iso:...:1.1}}');    // → { kind: 'urn', id: 'urn:iso:...:1.1', text: undefined }
+// Returns segments: text + typed mentions. Throws InvalidMentionError
+// on bad syntax (missing kind, wrong target shape, deprecated <<..>>).
+parseMentions('See {{cite:IEV:702-02-07, IEV 702-02-07}} and {{fig:diagram_3}}');
+// → [
+//   { kind: 'text', content: 'See ' },
+//   { kind: 'cite', target: { type: 'dataset_qualified', dataset: 'IEV', id: '702-02-07' }, label: 'IEV 702-02-07', raw: '...', start: 4, end: 41 },
+//   { kind: 'text', content: ' and ' },
+//   { kind: 'fig', target: { type: 'entity_id', id: 'diagram_3' }, label: null, raw: '...', start: 46, end: 63 },
+// ]
+
+// URN form for cross-dataset universal references:
+parseMentions('{{concept:urn:iso:std:iso:704:2022}}');
+// → [{ kind: 'concept', target: { type: 'urn', urn: 'urn:iso:std:iso:704:2022' }, ... }]
 ```
 
-The ID always comes first; display text, when present, comes last.
+See [Inline Mentions](/model/inline-mentions) for the full kind reference, target types, and resolution algorithm.
 
 ### Dataset model (v3)
 
