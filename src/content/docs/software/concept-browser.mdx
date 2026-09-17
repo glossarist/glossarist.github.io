@@ -138,6 +138,10 @@ relationTypeColors:
   broader:        { light: "#3b82f6", dark: "#60a5fa" }
   narrower:       { light: "#ef4444", dark: "#f87171" }
   equivalent:     { light: "#10b981", dark: "#34d399" }
+
+bulk_exports:                           # Restrict the dataset page's Downloads
+  - csv                                # card (v0.7.135+). Absent/empty = all.
+  - ttl
 ```
 
 Adding a new dataset requires **zero code changes** — just add an entry and rebuild.
@@ -157,7 +161,7 @@ Each kind has distinct sidebar rendering: lineage shows a timeline with current-
 
 ## Relation sphere
 
-The 3D **relation sphere** visualizes a concept's neighborhood as an interactive force-directed sphere. Each surrounding node is a directly related concept, color-coded by relationship type. A degree filter lets users collapse the sphere to specific relationship categories (e.g. show only broader/narrower, or only cross-vocabulary matches).
+The 3D **relation sphere** visualizes a concept's neighborhood as an interactive force-directed sphere. Each surrounding node is a directly related concept, color-coded by relationship type. A degree filter lets users collapse the sphere to specific relationship categories (e.g. show only broader/narrower, or only cross-vocabulary matches); whole legend rows toggle their category on and off, and an info icon links to the relationship type's description. References that point outside the dataset (or are partially elided in source data) render as ghost nodes, so unresolved links are visible rather than silently dropped.
 
 This is built on d3-force-3d and is fully static — no WebGL backend or server required.
 
@@ -181,6 +185,26 @@ Every concept emits SHACL-conformant Turtle + JSON-LD. Dataset-level artifacts i
 | `versions.ttl` | `prov:Entity` | Version chain |
 
 The build pipeline runs the canonical SHACL shapes from the [concept-model](https://github.com/glossarist/concept-model) against every concept before serialization.
+
+## Bulk exports (v0.7.135+)
+
+Every build also emits single-file aggregate distributions per dataset into `public/data/{id}/`:
+
+| File | Format | Contents |
+|------|--------|----------|
+| `{id}.csv` | CSV (UTF-8 BOM + CRLF, RFC 4180) | One row per concept × language — termid, uri, status, section, language, term, alt terms, definition, notes, examples, sources, source links. Opens directly in Excel. |
+| `{id}.jsonld` | SKOS JSON-LD | All concepts in one `@graph` document |
+| `{id}.ttl` | Turtle | `dcat:Dataset` + `skos:ConceptScheme` metadata |
+
+Files from the dataset's GCR `compiled/` directory (TBX, JSON-LD, YAML…) are copied alongside and listed too. The dataset page's **Downloads** card offers everything found, unless you restrict it with `bulk_exports` in `site-config.yml`:
+
+```yaml
+bulk_exports:
+  - csv
+  - ttl
+```
+
+Values: `ttl`, `jsonld`, `csv`, `tbx`, `jsonl`, `yaml`. Absent or empty = offer all available.
 
 ## Architecture
 
