@@ -16,8 +16,47 @@ const ROOT = resolve(__dirname, '..');
 const TAXONOMY_DIR = resolve(ROOT, 'concept-model', 'ontologies', 'taxonomies');
 const OUTPUT = resolve(ROOT, 'public', 'data', 'taxonomies.json');
 
+// Comment stripping must respect Turtle spans: a naive `#…` to end-of-line
+// replace truncates fragment IRIs (`<http://…/owl#>` loses its `#>`), the
+// unclosed `<` then swallows the following subject statement during block
+// splitting — silently dropping schemes (the relationshipType taxonomy lost
+// its ConceptScheme this way).
+function stripComments(text) {
+  let out = '';
+  let i = 0;
+  while (i < text.length) {
+    const ch = text[i];
+    if (ch === '<') {
+      const end = text.indexOf('>', i);
+      const stop = end === -1 ? text.length : end + 1;
+      out += text.slice(i, stop);
+      i = stop;
+      continue;
+    }
+    if (ch === '"') {
+      let j = i + 1;
+      while (j < text.length) {
+        if (text[j] === '\\') { j += 2; continue; }
+        if (text[j] === '"') break;
+        j++;
+      }
+      out += text.slice(i, j + 1);
+      i = j + 1;
+      continue;
+    }
+    if (ch === '#') {
+      const nl = text.indexOf('\n', i);
+      i = nl === -1 ? text.length : nl;
+      continue;
+    }
+    out += ch;
+    i++;
+  }
+  return out;
+}
+
 function parseTurtle(text) {
-  const cleaned = text.replace(/#[^\n]*/g, '');
+  const cleaned = stripComments(text);
   const subjectBlocks = splitSubjects(cleaned);
 
   const concepts = {};

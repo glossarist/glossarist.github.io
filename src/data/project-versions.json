@@ -1,0 +1,26 @@
+{
+  "glossarist-ruby": {
+    "version": "v2.14.16",
+    "htmlUrl": "https://github.com/glossarist/glossarist-ruby/releases/tag/v2.14.16",
+    "fetchedAt": "2026-11-14T03:48:28.422Z",
+    "source": "github"
+  },
+  "glossarist-js": {
+    "version": "v0.4.65",
+    "htmlUrl": "https://github.com/glossarist/glossarist-js/releases/tag/v0.4.65",
+    "fetchedAt": "2026-11-14T03:48:28.749Z",
+    "source": "github"
+  },
+  "desktop": {
+    "version": "v1.6.40",
+    "htmlUrl": "https://github.com/glossarist/glossarist-desktop/releases/tag/v1.6.40",
+    "fetchedAt": "2026-11-14T03:48:29.156Z",
+    "source": "github"
+  },
+  "concept-browser": {
+    "version": "v0.7.141",
+    "htmlUrl": "https://github.com/glossarist/concept-browser/releases/tag/v0.7.141",
+    "fetchedAt": "2026-11-14T03:48:29.925Z",
+    "source": "github"
+  }
+}
