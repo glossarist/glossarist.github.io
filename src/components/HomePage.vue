@@ -1,11 +1,18 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { premierProjects } from '@data/projects'
+import projectVersions from '@data/project-versions.json'
 import { useI18n } from '@/i18n'
 import HomeHeroSection from './home/HomeHeroSection.vue'
 import HomeStatsSection from './home/HomeStatsSection.vue'
 
 const { t } = useI18n()
+
+// Build-time SSOT (latest GitHub release per project); falls back to the
+// static value in projects.ts when the API was unreachable at build time.
+const versionFor = (slug: string) =>
+  projectVersions[slug as keyof typeof projectVersions]?.version
+  ?? premierProjects.find(p => p.slug === slug)?.version
 
 const activeCodeTab = ref('yaml')
 
@@ -140,7 +147,7 @@ collection.to_skos(<span class="c-str">'output.ttl'</span>)`,
               <div class="g-card-accent"></div>
               <div class="hp-sw-header">
                 <h3>{{ p.name.startsWith('glossarist-') ? 'Glossarist ' + p.name.replace('glossarist-', '') : p.name === 'concept-browser' ? 'Concept Browser' : p.name }}</h3>
-                <span class="hp-sw-version">{{ p.version }}</span>
+                <span class="hp-sw-version">{{ versionFor(p.slug) }}</span>
               </div>
               <p>{{ p.description }}</p>
               <div class="hp-sw-footer">

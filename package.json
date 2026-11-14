@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "npm run build:data && astro build",
+    "build": "npm run build:data && npm run build:versions && astro build",
     "build:data": "node scripts/generate-ontology-data.mjs && node scripts/generate-ontology-schema.mjs && node scripts/copy-schemas.mjs && node scripts/bundle-schemas.mjs",
+    "build:versions": "node scripts/generate-project-versions.mjs",
     "preview": "astro preview",
     "test": "vitest run",
     "test:watch": "vitest",

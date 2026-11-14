@@ -18,16 +18,20 @@ const st = stats
         <span class="hp-stat-label">Entity Types</span>
       </div>
       <div class="hp-stat">
-        <span class="hp-stat-num">{{ st.relationship_types }}</span>
+        <span class="hp-stat-num">{{ st.relationships }}</span>
         <span class="hp-stat-label">Relationship Types</span>
       </div>
       <div class="hp-stat">
-        <span class="hp-stat-num">{{ st.languages }}</span>
-        <span class="hp-stat-label">Languages</span>
+        <span class="hp-stat-num">{{ st.properties }}</span>
+        <span class="hp-stat-label">Properties</span>
       </div>
       <div class="hp-stat">
-        <span class="hp-stat-num">{{ st.datasets }}</span>
-        <span class="hp-stat-label">Datasets</span>
+        <span class="hp-stat-num">{{ st.designations }}</span>
+        <span class="hp-stat-label">Designation Types</span>
+      </div>
+      <div class="hp-stat">
+        <span class="hp-stat-num">{{ st.shapes }}</span>
+        <span class="hp-stat-label">SHACL Shapes</span>
       </div>
     </div>
   </section>
